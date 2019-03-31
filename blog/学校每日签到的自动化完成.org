@@ -1,13 +1,17 @@
-#+HUGO_BASE_DIR: ~/Documents/blog/
-#+hugo_section: posts
-#+hugo_auto_set_lstmod: t
-
+#+AUTHOR:      hiro
+#+EMAIL:       wfy11235813@gmail.com
+#+URI:         /blog/%y/%m/%d/auto-signin
+#+KEYWORDS:    life
+#+TAGS:        python, collage
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: 自动签到
 #+TITLE: 学校每日签到的自动化完成
 
 #+DATE: 2017-09-18
 #+OPTIONS: toc:nil
 
-我们学院比较奇葩，开学了规定我们使用一个叫“数据分析”的 APP 每天晚上都要归寝签到，每天上课都要在课前签到。签到这东西很烦，索然可能是督促我们更好的学习吧，但我在知道自己一定会按时晚归和准时上课的前提下，通过合理的方法来自动化的完成这些事情，不算过分吧。
+我们学院规定我们使用一个叫“数据分析”的 APP 每天晚上都要归寝签到，每天上课都要在课前签到。签到这东西很烦，索然可能是督促我们更好的学习吧，但我在知道自己一定会按时晚归和准时上课的前提下，通过合理的方法来自动化的完成这些事情，不算过分吧。
 
 ** 登录
 竟然都不加密登录的，虽然方便了我，但是这样也太不安全了啊……
@@ -34,7 +38,7 @@ login = ('__device__={}&__mobileapp__=true&cmd=login'
 
 #+BEGIN_CENTER
 #+ATTR_HTML: :width 400
-[[./image/jsession_cookies.png]]
+[[./assets/images/jsession_cookies.png]]
 #+END_CENTER
 
 cookies 中有一个 =jsessionid= 的变量将作为本次操作请求的 id 。

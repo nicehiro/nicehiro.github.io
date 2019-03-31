@@ -1,6 +1,11 @@
-#+HUGO_BASE_DIR: ~/Documents/blog/
-#+hugo_section: notes
-#+hugo_auto_set_lstmod: t
+#+AUTHOR:      hiro
+#+EMAIL:       wfy11235813@gmail.com
+#+URI:         /blog/%y/%m/%d/my-collage-life
+#+KEYWORDS:    collage
+#+TAGS:        life
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: 大学生活总结
 
 #+TITLE: 我的大学
 

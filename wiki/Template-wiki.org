@@ -1,0 +1,10 @@
+#+TITLE:       Wiki
+#+AUTHOR:      hiro
+#+EMAIL:       hiro@hiro-pc
+#+DATE:        2019-04-01 一
+#+URI:         /wiki/%y/%m/%d/wiki
+#+KEYWORDS:    wiki
+#+TAGS:        wiki
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: wiki

@@ -1,11 +1,13 @@
-#+HUGO_BASE_DIR: ~/Documents/blog/
-#+hugo_section: notes
-#+hugo_auto_set_lstmod: t
-
-#+TITLE: 学习使用 orgmode gvhx 
-
-#+DATE: 2017-05-17
-#+OPTIONS: toc:nil
+#+TITLE:       测试Org-page
+#+AUTHOR:      hiro
+#+EMAIL:       wfy11235813@gmail.com
+#+DATE:        2019-04-01 一
+#+URI:         /blog/%y/%m/%d/test-org-page
+#+KEYWORDS:    test
+#+TAGS:        test
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: 测试
 
 这段时间准备着考研，发现每天的规划有些随意，你定好的目标总是会向现实妥协，往往莫名其妙遇到一些不可推脱的琐事，浪费我的时间。或者有时候突然有些问题或是想法在脑袋一闪而过，想提笔记下来可不久后别说想法就连纸条也不知道飞哪里去了。
 

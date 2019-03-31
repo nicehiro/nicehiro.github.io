@@ -1,8 +1,12 @@
-#+HUGO_BASE_DIR: ~/Documents/hugo-static/
-#+hugo_section: notes
-#+hugo_auto_set_lstmod: t
-
-#+TITLE: Git 笔记
+#+TITLE:       Git笔记
+#+AUTHOR:      hiro
+#+EMAIL:       wfy11235813@gmail.com
+#+URI:         /wiki/%y/%m/%d/git
+#+KEYWORDS:    git
+#+TAGS:        git 
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: git 笔记
 
 #+DATE: 2018-03-31
 #+OPTIONS: toc:nil
