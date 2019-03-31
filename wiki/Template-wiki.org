@@ -1,6 +1,6 @@
 #+TITLE:       Wiki
 #+AUTHOR:      hiro
-#+EMAIL:       hiro@hiro-pc
+#+EMAIL:       wfy11235813@gmail.com
 #+DATE:        2019-04-01 一
 #+URI:         /wiki/%y/%m/%d/wiki
 #+KEYWORDS:    wiki
