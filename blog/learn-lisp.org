@@ -1,7 +1,12 @@
-#+HUGO_BASE_DIR: ~/Documents/blog/
-#+hugo_section: notes
-#+hugo_auto_set_lstmod: t
-
+#+AUTHOR:      hiro
+#+EMAIL:       wfy11235813@gmail.com
+#+DATE:        2019-04-02 一
+#+URI:         /blog/%y/%m/%d/test-org-page
+#+KEYWORDS:    lisp
+#+TAGS:        lisp
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: 学习elisp
 #+TITLE: Lisp 学习笔记
 
 #+DATE: 2018-01-03

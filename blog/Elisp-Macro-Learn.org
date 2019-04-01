@@ -1,7 +1,11 @@
-#+HUGO_BASE_DIR: ~/Documents/blog/
-#+hugo_section: notes
-#+hugo_auto_set_lstmod: t
-
+#+AUTHOR:      hiro
+#+EMAIL:       wfy11235813@gmail.com
+#+URI:         /blog/%y/%m/%d/test-org-page
+#+KEYWORDS:    macro
+#+TAGS:        macro
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: Emacs Macro
 #+TITLE: Elisp Macro 学习笔记
 
 #+DATE: 2017-08-09

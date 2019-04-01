@@ -1,0 +1,14 @@
+#+TITLE:       使用org-page搭建博客
+#+AUTHOR:      hiro
+#+EMAIL:       hiro@hiro-pc
+#+DATE:        2019-04-01 一
+#+URI:         /blog/%y/%m/%d/use-org-page-blog
+#+KEYWORDS:    blog,orgpage
+#+TAGS:        org
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: 使用org-page搭建博客
+
+纯Emacs+Orgmode写作。记一下一些问题以及之后可能会着手优化的地方。
+
+** 
