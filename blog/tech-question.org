@@ -1,7 +1,6 @@
 #+AUTHOR:      hiro
 #+EMAIL:       wfy11235813@gmail.com
-#+DATE:        2019-04-02 一
-#+URI:         /blog/%y/%m/%d/test-org-page
+#+URI:         /blog/%y/%m/%d/tech-question
 #+KEYWORDS:    tech
 #+TAGS:        tech
 #+LANGUAGE:    en

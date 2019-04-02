@@ -1,7 +1,6 @@
 #+AUTHOR:      hiro
 #+EMAIL:       wfy11235813@gmail.com
-#+DATE:        2019-04-02 一
-#+URI:         /blog/%y/%m/%d/test-org-page
+#+URI:         /blog/%y/%m/%d/lex-analyze
 #+KEYWORDS:    lex
 #+TAGS:        lex
 #+LANGUAGE:    en

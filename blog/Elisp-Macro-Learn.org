@@ -1,6 +1,6 @@
 #+AUTHOR:      hiro
 #+EMAIL:       wfy11235813@gmail.com
-#+URI:         /blog/%y/%m/%d/test-org-page
+#+URI:         /blog/%y/%m/%d/elisp-macro
 #+KEYWORDS:    macro
 #+TAGS:        macro
 #+LANGUAGE:    en

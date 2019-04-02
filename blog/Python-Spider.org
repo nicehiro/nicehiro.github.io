@@ -1,6 +1,11 @@
-#+HUGO_BASE_DIR: ~/Documents/blog/
-#+hugo_section: notes
-#+hugo_auto_set_lstmod: t
+#+AUTHOR:      hiro
+#+EMAIL:       wfy11235813@gmail.com
+#+URI:         /blog/%y/%m/%d/python-spider
+#+KEYWORDS:    python,spider
+#+TAGS:        python,spider
+#+LANGUAGE:    en
+#+OPTIONS:     H:3 num:nil toc:nil \n:nil ::t |:t ^:nil -:nil f:t *:t <:t
+#+DESCRIPTION: python spider acknowledge
 
 #+TITLE: Python 爬虫知识点整理
 
