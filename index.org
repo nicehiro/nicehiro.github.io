@@ -1,0 +1,5 @@
+ # Workflow
+Emacs写东西 -> =magit commit= -> org-page导出 -> =magit push=
+
+# 几点需要注意的地方
+- 发布新东西必须要先手动commit，然后再使用org-page
