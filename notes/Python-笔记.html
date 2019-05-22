@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-05-22 三 23:10 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python 学习笔记</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python 学习笔记</h1>
+
+<div id="outline-container-orgdabaed0" class="outline-2">
+<h2 id="orgdabaed0"><span class="section-number-2">1</span> 基础</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li>Python中所有对象都是引用</li>
+</ul>
+</div>
+<div id="outline-container-orgeebbaf5" class="outline-3">
+<h3 id="orgeebbaf5"><span class="section-number-3">1.1</span> 计算</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>空值 None，java 中是 Null；</li>
+<li><code>/</code> 取精确值； <code>//</code> 取整； <code>%</code> 取余；</li>
+<li>** 乘方</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0437636" class="outline-3">
+<h3 id="org0437636"><span class="section-number-3">1.2</span> 字符串</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>python 中转义与 java 不同，java 需要两个 <code>\\</code> 完成一次转义，而 python 只需要一次；还可以使用 r 来表示字符串不需要转义；</li>
+<li>string 可以加、乘；字符串的本质是字符数组</li>
+<li>print会自动生成可读性更强的输出文本</li>
+<li>字符串索引过大会报错；但切片过大会自动处理</li>
+
+<li>list：列表，python 中使用 <code>[]</code> 来表示；而 elisp 中使用 <code>()</code> 表示， <code>len()</code> 查看长度。list 中的内容可以是任何类型</li>
+<li>turple：和 list 一样，但一旦创建就不可变</li>
+<li>break：跳出循环体；continue：执行下一循环</li>
+<li>dict，字典，python 中用于存储 key-value 的数据结构。在 lisp 中只需要使用 ((a . b) (c .d)) 即可实现类似功能；dict 和 list 取值的时候方法相同（d[i]/l[i]）</li>
+<li>set，集合，通过函数 <code>set(list)</code> 构建。在 lisp 中为 <code>[]</code></li>
+<li>所谓可变不可变对象，在 lisp 就是是否改变自身的类型。对于函数式编程很有意义。str，None 都是不可变对象</li>
+<li>返回多个值：其实只是返回了一个 turple，然而 python 的语法糖可以允许你直接赋多个值</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfe06237" class="outline-3">
+<h3 id="orgfe06237"><span class="section-number-3">1.3</span> 列表</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>列表是 mutable 类型，字符串是 immutable类型，list可以被赋值</li>
+<li>append 把一个元素（可以是列表）添加到list之后；+ 可以把两个list合并为一个list</li>
+<li>切片相当于是开了一个新的对象</li>
+<li>del移除某个对象，可以与切片一起使用</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #e7c547;">l</span> = <span style="color: #eaeaea;">[</span>1, 2, 3, 4<span style="color: #eaeaea;">]</span>
+l.append<span style="color: #eaeaea;">(</span>5<span style="color: #eaeaea;">)</span> <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">=&gt; [1, 2, 3, 4, 5]</span>
+l.append<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">[</span>5<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">)</span> <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">=&gt; [1,2,3,4,[5]]</span>
+
+l + <span style="color: #eaeaea;">[</span>5<span style="color: #eaeaea;">]</span> <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">=&gt; [1,2,3,4,5]</span>
+
+<span style="color: #eaeaea;">[</span>l, <span style="color: #70c0b1;">[</span>5<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">]</span> <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">=&gt; [[1,2,3,4], [5]]</span>
+
+l.extend<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">[</span>5<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">)</span> <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">=&gt; [1,2,3,4,5]</span>
+
+<span style="color: #b9ca4a;">del</span> a<span style="color: #eaeaea;">[</span>2:4<span style="color: #eaeaea;">]</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org0230718" class="outline-3">
+<h3 id="org0230718"><span class="section-number-3">1.4</span> turple</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>元组 是不可变的，可以有不同类型的共同存放</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #e7c547;">t</span> = <span style="color: #eaeaea;">()</span> <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">=&gt; empty turple</span>
+<span style="color: #e7c547;">t</span> = 123, <span style="color: #969896; font-style: italic;">#</span><span style="color: #969896; font-style: italic;">=&gt; one parameter's turple</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgaf38b95" class="outline-3">
+<h3 id="orgaf38b95"><span class="section-number-3">1.5</span> set</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>使用 {} 包起来，或者使用函数 set()，空集合不能使用 {} 表示</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd9cae95" class="outline-3">
+<h3 id="orgd9cae95"><span class="section-number-3">1.6</span> dict</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li>当关键字是字符串时，可以直接指定</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #e7c547;">d</span> = <span style="color: #eaeaea;">{</span><span style="color: #70c0b1;">'jack'</span> : 1, <span style="color: #70c0b1;">'marry'</span> : 2<span style="color: #eaeaea;">}</span>
+
+<span style="color: #e7c547;">d</span> = dick<span style="color: #eaeaea;">(</span>jack=1, marry=2<span style="color: #eaeaea;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8398181" class="outline-3">
+<h3 id="org8398181"><span class="section-number-3">1.7</span> for</h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li>如果循环过程中需要列表， 循环体最好提前复制一份，使用切片是个不错的选择 list[:]</li>
+<li>break 循环中的break只在for语句结束，或者while的条件判断为False时执行</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org65bc344" class="outline-3">
+<h3 id="org65bc344"><span class="section-number-3">1.8</span> range</h3>
+<div class="outline-text-3" id="text-1-8">
+<ul class="org-ul">
+<li>是一个对象，不是一个list，可以节省存储空间 在取某个数的时候返回这个数</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfbab2d6" class="outline-3">
+<h3 id="orgfbab2d6"><span class="section-number-3">1.9</span> zip</h3>
+<div class="outline-text-3" id="text-1-9">
+<ul class="org-ul">
+<li>将集合 拆开 按首字母拆分</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1197c54" class="outline-3">
+<h3 id="org1197c54"><span class="section-number-3">1.10</span> 条件控制</h3>
+<div class="outline-text-3" id="text-1-10">
+<ul class="org-ul">
+<li>in &amp; not in 和 is &amp; is not</li>
+<li>比较可以传递</li>
+<li>not &gt; and &gt; or</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgee409b1" class="outline-2">
+<h2 id="orgee409b1"><span class="section-number-2">2</span> 参数</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>位置参数（position） 最普通</li>
+<li>默认参数（default）</li>
+<li>可变参数（*args） 也是一个语法糖，可以将 *args 看作一个 turple 对象，调用时候传入的多个参数其实可以组成一个 turple，当需要调用这个</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b9ca4a;">def</span> <span style="color: #e78c45;">temp</span><span style="color: #eaeaea;">(</span>*args<span style="color: #eaeaea;">)</span>:
+    ....
+</pre>
+</div>
+<ul class="org-ul">
+<li>解包 * 调用函数的时候，使用 * 可以将参数解包，比如list拆分成元素，range也可以被拆分；同样，map也可以被拆分，使用 ** 可以将map拆分成关键字参数</li>
+<li>关键字参数（**args） 同上。无非是将多个字对参数组成一个 dict 传入</li>
+<li>命名关键字参数（*, args）/（*args, arg, arg）必须要有 * 做标记，后面的关键字参数必须是指定的某项。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org61fd4e8" class="outline-2">
+<h2 id="org61fd4e8"><span class="section-number-2">3</span> 高级特性（语法糖）</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>切片</li>
+<li>generator：使用 yield 让函数在运行过程中停下来，使用 <code>next()</code> 不断拿到下一次计算的结果</li>
+<li>iterator 对象，有 <code>next()</code> 方法可以不断迭代，当迭代完时可以抛出 <code>StopIteration</code> 错误</li>
+<li><p>
+凡可以作用于 <code>for</code> 的都是 iterable 类型；凡可以被 <code>next()</code> 的都是 iterator。Python 的 <code>for</code> 就是通过 iterator 来实现的。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b9ca4a;">for</span> x <span style="color: #b9ca4a;">in</span> <span style="color: #eaeaea;">[</span>1,2,3,4<span style="color: #eaeaea;">]</span>:
+
+<span style="color: #e7c547;">it</span> = <span style="color: #c397d8;">iter</span><span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">[</span>1,2,3,4<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">)</span>
+<span style="color: #b9ca4a;">while</span> <span style="color: #7aa6da;">True</span>:
+    <span style="color: #b9ca4a;">try</span>:
+        <span style="color: #e7c547;">x</span> = <span style="color: #c397d8;">next</span><span style="color: #eaeaea;">(</span>it<span style="color: #eaeaea;">)</span>
+    <span style="color: #b9ca4a;">except</span> <span style="color: #7aa6da;">StopIteration</span>:
+        <span style="color: #b9ca4a;">break</span>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgdef29a4" class="outline-2">
+<h2 id="orgdef29a4"><span class="section-number-2">4</span> 函数式编程（变量可以是函数）</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>map(function, Iterable), returns iterator</li>
+<li>reduce</li>
+<li>filter 把返回为 True 的保留</li>
+<li>闭包：函数体内部定义函数。返回函数不要用任何循环变量，或者后续会发生变化的变量。因为在外部函数执行时，内部函数不会被执行。</li>
+<li>lambda x: x*x</li>
+<li>装饰器</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b9ca4a;">def</span> <span style="color: #e78c45;">log</span><span style="color: #eaeaea;">(</span>func<span style="color: #eaeaea;">)</span>:
+    <span style="color: #b9ca4a;">def</span> <span style="color: #e78c45;">wrapper</span><span style="color: #eaeaea;">(</span>*args<span style="color: #eaeaea;">)</span>:
+        ...
+    <span style="color: #b9ca4a;">return</span> wrapper
+
+<span style="color: #7aa6da;">@log</span>
+<span style="color: #b9ca4a;">def</span> <span style="color: #e78c45;">print_time</span>:
+    ...
+
+=&gt; <span style="color: #e7c547;">print_time</span> = log<span style="color: #eaeaea;">(</span>print_time<span style="color: #eaeaea;">)</span>
+print_time.<span style="color: #c397d8;">__name__</span> =&gt; wrapper
+</pre>
+</div>
+<ul class="org-ul">
+<li>偏函数 创建函数时候固定一些函数位置参数用以简化操作。</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd4d04a7" class="outline-2">
+<h2 id="orgd4d04a7"><span class="section-number-2">5</span> 模块化</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+可以自定义一个包，包下必须有 <code>__init__.py</code> 才能被当作一个模块。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf527825" class="outline-2">
+<h2 id="orgf527825"><span class="section-number-2">6</span> 面向对象</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li>class 命名一般大写</li>
+<li><code>__init__()</code> 方法相当于 java 的构造函数，必传参数 <code>self</code> ，相当于 java 的 <code>this</code> 指针</li>
+<li>私有属性的定义：_<sub>name</sub>，其实解释器只是把这个变量重命名为 <code>_Classname__name</code> ，所以在外部可以换个方法访问； <code>_name</code> 表示这个变量可以被外部直接访问，但你假装不知道不要访问好了。这样看，Python 的类私有是需要自觉遵守的。</li>
+<li>Python 是动态语言，所以可以直接在类外部定义新的属性。</li>
+<li>继承和多态 可以覆写 因为里面私有属性不相同</li>
+<li><code>type()</code> 返回对象类型</li>
+<li><code>dir()</code> 返回这个对象的所有属性和方法。以双下划线开头的都是特殊方法。</li>
+<li><code>hasattr()</code> 、 <code>getattr()</code> 、 <code>setattr()</code> ，在 elisp 中只需要一个 <code>(slot-value)</code> 就可以搞定。</li>
+<li><p>
+给一个实例还可以绑定方法：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b9ca4a;">from</span> types <span style="color: #b9ca4a;">import</span> MethodType
+<span style="color: #e7c547;">s.set_age</span> = Methodtype<span style="color: #eaeaea;">(</span>set_age, s<span style="color: #eaeaea;">)</span>
+</pre>
+</div>
+<p>
+给一个类绑定方法让这个类的所有实例都可以使用：
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #e7c547;">Student.set_age</span> = set_age
+</pre>
+</div></li>
+<li><code>__slots__</code> 属性用以限制类中可以添加的属性。但不对继承的类起作用。</li>
+<li><p>
+<code>@property</code> 装饰器的使用。限制一个私有变量的访问和设置，可以通过给这个私有变量加 set 和 get 的方法，在 set 中作出限制来达到封装的目的，但在调用的过程中需要写 <code>xx.get()</code> 等方法有些不好看，所以 python 加入了这个装饰器。
+</p>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b9ca4a;">class</span> <span style="color: #7aa6da;">Student</span><span style="color: #eaeaea;">()</span>:
+    <span style="color: #7aa6da;">@property</span>
+    <span style="color: #b9ca4a;">def</span> <span style="color: #e78c45;">score</span><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">self</span><span style="color: #eaeaea;">)</span>:
+        <span style="color: #b9ca4a;">return</span> <span style="color: #b9ca4a;">self</span>.score
+    <span style="color: #7aa6da;">@score.setter</span>
+    <span style="color: #b9ca4a;">def</span> <span style="color: #e78c45;">score</span><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">self</span><span style="color: #eaeaea;">)</span>:
+        ...
+        <span style="color: #b9ca4a;">self</span>.score = xx
+</pre>
+</div>
+<p>
+调用时候直接使用 <code>s.score = xx</code> 来设置，使用 <code>s.score</code> 来得到值。
+</p></li>
+<li>类似 java，可以重写 <code>__str__()</code> 方法让 <code>print()</code> 输出自己想要的格式</li>
+<li><code>__repr__()</code> 重写可以让 类 不使用 print 输出自己想要的格式</li>
+<li>重写 <code>__iter()</code> 和 <code>__next()__</code> 方法实现迭代器</li>
+<li>重写 <code>__getitem__()</code> 方法让函数像数组一样可以取数</li>
+<li>重写 <code>__getattr__(self, attr)</code> 在调用不存在的属性时，会调用这个方法。调用 api 的时候会用到。</li>
+<li>类变量 实例变量</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #b9ca4a;">class</span> <span style="color: #7aa6da;">MyClass</span>:
+    <span style="color: #e7c547;">a</span> = 1 <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">class variable</span>
+
+    <span style="color: #b9ca4a;">def</span> <span style="color: #e78c45;">t</span><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">self</span><span style="color: #eaeaea;">)</span>:
+        <span style="color: #b9ca4a;">self</span>.b = 2 <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">instance variable</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf3291f5" class="outline-2">
+<h2 id="orgf3291f5"><span class="section-number-2">7</span> IO</h2>
+<div class="outline-text-2" id="text-7">
+<ul class="org-ul">
+<li>文件读： <code>f=open("file-path", r)</code> 拿到文件指针（返回的是 <code>file-like object</code> 对象 ）， <code>f.read()</code> 读文件到内存，最后 <code>f.close()</code> 关闭文件指针；读二进制文件需要使用 <code>'rb'</code></li>
+<li>文件写： <code>f.open("file-path", w)</code> ， <code>f.write('str')</code> ，追加文本使用 <code>'a'</code></li>
+<li>StringIO：起始上面文件读使用的 <code>'r'</code> 模式打开的文件就是以 <code>StringIO</code> 的模式保存在内存中</li>
+<li>BytesIO：如上使用 <code>'rb'</code> 打开的就是这个类型</li>
+<li>os 、 os.path 库提供了一系列可以与 系统 交互的库， <code>os.path.join()</code> 与 <code>os.path.split()</code> 两个函数可以省去多平台的麻烦</li>
+<li>使用 pickle 库的 <code>dumps</code> 将文件序列化为 bytes；使用 <code>loads</code> 从文件中恢复这个对象</li>
+<li>json 模块的 dumps 和 loads 可以将 dict str 序列化。遇到类对象，使用 <code>__dict__</code> 先将类对象转为 dict 对象再序列化</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-orgd90fc48" class="outline-2">
+<h2 id="orgd90fc48"><span class="section-number-2">8</span> 线程</h2>
+</div>
+
+<div id="outline-container-org1a897f4" class="outline-2">
+<h2 id="org1a897f4"><span class="section-number-2">9</span> trick</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+<div id="outline-container-orged854c1" class="outline-3">
+<h3 id="orged854c1"><span class="section-number-3">9.1</span> for list</h3>
+<div class="outline-text-3" id="text-9-1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Iterate list's key and value.</span>
+<span style="color: #b9ca4a;">for</span> i <span style="color: #b9ca4a;">in</span> <span style="color: #c397d8;">range</span><span style="color: #eaeaea;">(</span><span style="color: #c397d8;">len</span><span style="color: #70c0b1;">(</span>lst<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>:
+  <span style="color: #70c0b1;">"{}:{}"</span>.<span style="color: #c397d8;">format</span><span style="color: #eaeaea;">(</span>i, lst<span style="color: #70c0b1;">[</span>i<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">)</span>
+
+<span style="color: #b9ca4a;">for</span> k,v <span style="color: #b9ca4a;">in</span> <span style="color: #c397d8;">enumerate</span><span style="color: #eaeaea;">(</span>lst<span style="color: #eaeaea;">)</span>:
+  <span style="color: #70c0b1;">"{}:{}"</span>.<span style="color: #c397d8;">format</span><span style="color: #eaeaea;">(</span>k, v<span style="color: #eaeaea;">)</span>
+
+<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">Iterate two list</span>
+<span style="color: #b9ca4a;">for</span> a,b <span style="color: #b9ca4a;">in</span> <span style="color: #c397d8;">zip</span><span style="color: #eaeaea;">(</span>lst1, lst2<span style="color: #eaeaea;">)</span>:
+  <span style="color: #70c0b1;">"{}:{}"</span>.<span style="color: #c397d8;">format</span><span style="color: #eaeaea;">(</span>a, b<span style="color: #eaeaea;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org424bbf5" class="outline-2">
+<h2 id="org424bbf5"><span class="section-number-2">10</span> 感触</h2>
+<div class="outline-text-2" id="text-10">
+<ul class="org-ul">
+<li>看似有很多语法糖，其实是有些罗嗦的。不如 lisp 只用 list 一种数据类型来拓展所有的数据类型。</li>
+<li>学会了如何查看 python library 而不是随随便便取网上乱搜……</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-03-26</p>
+<p class="author">Author: hiro</p>
+<p class="date">Created: 2019-05-22 三 23:10</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.2 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>

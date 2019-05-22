@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-05-19 日 23:12 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lisp 学习笔记</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Lisp 学习笔记</h1>
+<p>
+啃Elisp手册，加油！
+</p>
+
+<div id="outline-container-orgff91ca0" class="outline-2">
+<h2 id="orgff91ca0"><span class="section-number-2">1</span> Basic Program</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org28201d9" class="outline-3">
+<h3 id="org28201d9"><span class="section-number-3">1.1</span> defvar，给一个变量赋值。</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>如果该变量有初值，新赋的值不会改变以前的值。</li>
+<li>可以给变量提供文档字符串——用 C-h v 后给出的变量的定义。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org68a9e27" class="outline-3">
+<h3 id="org68a9e27"><span class="section-number-3">1.2</span> 进制表示。</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>#b101100 =&gt; 44</li>
+<li>#o10     =&gt; 8</li>
+<li>#x10     =&gt; 10</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org685a494" class="outline-3">
+<h3 id="org685a494"><span class="section-number-3">1.3</span> 测试变量是否相同：</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>(= 1.0 1)   =&gt; t</li>
+<li>(eql 1.0 1) =&gt; nil =&gt; 还要比较两数的数据类型是否相同</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9ec2629" class="outline-3">
+<h3 id="org9ec2629"><span class="section-number-3">1.4</span> 数的转换：</h3>
+<div class="outline-text-3" id="text-1-4">
+<ul class="org-ul">
+<li>truncate，靠近0</li>
+<li>floor，不比自身大的整数</li>
+<li>ceiling，不比本身小的整数</li>
+<li>round，四舍无入</li>
+</ul>
+
+<p>
+mod sin cos tan asin acos atan sqrt exp
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgec16257" class="outline-3">
+<h3 id="orgec16257"><span class="section-number-3">1.5</span> String，字符串。</h3>
+<div class="outline-text-3" id="text-1-5">
+<ul class="org-ul">
+<li>?x 表示一个字符</li>
+<li>(make-string 5 ?x) =&gt; "xxxxx"</li>
+<li>(string ?a ?b ?c)  =&gt; "abc"</li>
+<li>(string-to-number "256") =&gt; 256</li>
+<li>(format "%#o" 256) =&gt; "0400"</li>
+<li>downcase upcase capitalize</li>
+<li>string-match</li>
+<li>replace-match</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0d2533f" class="outline-3">
+<h3 id="org0d2533f"><span class="section-number-3">1.6</span> 自求值表达式，求值前后值不变。</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+quote，`，只读入，不求值。
+</p>
+
+<p>
+(cons 1 2) =&gt; (1 . 2)
+(cons 1 '()) =&gt; (1)
+</p>
+
+<p>
+cons &amp; list:
+</p>
+<ul class="org-ul">
+<li>cons (1 . 2)</li>
+<li>list (1 2)</li>
+</ul>
+
+<p>
+函数式编程的特点：不会修改已有变量。
+破坏性函数：nreverse sort setcar setcdr
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfd2c3a8" class="outline-3">
+<h3 id="orgfd2c3a8"><span class="section-number-3">1.7</span> 关联表：</h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li>(assoc "a" '(("a" 97) ("b" 98))) =&gt; ("a" 97) =&gt; eq</li>
+<li>(assoc 'a '((a . 97) (b . 98))) =&gt; (a . 97) =&gt; equal</li>
+<li>(assoc-default)</li>
+<li>(rassoc '(97) '(("a" 97) ("b" 98))) =&gt; ("a" 97)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1f63a41" class="outline-3">
+<h3 id="org1f63a41"><span class="section-number-3">1.8</span> 遍历列表：</h3>
+<div class="outline-text-3" id="text-1-8">
+<ul class="org-ul">
+<li>(mapc '1+ '(1 2 3)) =&gt; (1 2 3)</li>
+<li>(mapcar '1+ '(1 2 3)) =&gt; (2 3 4)</li>
+<li>(dolist (var list [result]) body &#x2026;)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org9f0226e" class="outline-3">
+<h3 id="org9f0226e"><span class="section-number-3">1.9</span> 序列</h3>
+<div class="outline-text-3" id="text-1-9">
+<ul class="org-ul">
+<li>包括列表（list）和数组（Array），数组中包括向量（vector）、字符串（string）、字符表（char-table）和布尔向量（bool-vector）。</li>
+<li>数组是自求值的，其中每个元素都可以使用 aref 访问，aset 设置。</li>
+<li>sequencep arrayp vectorp char-table-p &#x2026;</li>
+<li>fillarray 整个数组用某个元素填充</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7f844d3" class="outline-3">
+<h3 id="org7f844d3"><span class="section-number-3">1.10</span> 符号机制。</h3>
+<div class="outline-text-3" id="text-1-10">
+<ul class="org-ul">
+<li>elisp 中有一个符号向量表 obarray（vector），维护惟一的符号；</li>
+<li>通过 hash 散列的方法插入和查找；</li>
+<li>intern：lisp 读入一个符号时，会先查找该符号是否在 obarray 中，不在的话，使用 intern 插入。</li>
+<li>mapatom 来遍历整个 obarray</li>
+<li>组成：symbol-name, symbol-value, symbol-function, property list</li>
+<li>set 设置 symbol-value，fset 设置 symbol-function，put、get、symbol-plist 设置 property list</li>
+<li>obarray 实质：用链表实现的hash表，每个元素都有相对的一个链表，hash 值相同的元素放在这个列表上。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfa2e023" class="outline-3">
+<h3 id="orgfa2e023"><span class="section-number-3">1.11</span> 变量。</h3>
+<div class="outline-text-3" id="text-1-11">
+<ul class="org-ul">
+<li>全局变量。只有当退出 emacs 或是使用 unintern 从 obarray 中除去才能消除。</li>
+<li>buffer-local变量，make-local-variable, with-current-buffer。只有关闭缓存区或是 kill-local-variable 才能消除。</li>
+<li>let 绑定的局部变量。特别注意，这货绑定的变量在整个表达式都是可见的，不算什么所谓的局部变量。动态生存期，只有绑定的表达式运行时才是有效的。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org6438b14" class="outline-3">
+<h3 id="org6438b14"><span class="section-number-3">1.12</span> funcall &amp; apply:</h3>
+<div class="outline-text-3" id="text-1-12">
+<ul class="org-ul">
+<li>funcall 直接把所有参数参入调用函数</li>
+<li>apply 最后一个参数必须是 list，传入时将最后一个参数展开再传入。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgffe9512" class="outline-3">
+<h3 id="orgffe9512"><span class="section-number-3">1.13</span> 宏。</h3>
+<div class="outline-text-3" id="text-1-13">
+<ul class="org-ul">
+<li>` 反引号和 , 逗号配合使用。反引号包住的都只读入而不 eval，在反引号中再用逗号包住的需要 eval。</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge508a09" class="outline-3">
+<h3 id="orge508a09"><span class="section-number-3">1.14</span> 缓存区操作。</h3>
+<div class="outline-text-3" id="text-1-14">
+<ul class="org-ul">
+<li>buffer-name 获取 buffer name；rename-buffer 重命名 buffer</li>
+<li>set-buffer 指定当前缓存区，但在 scratch buffer 中执行的时候，光标所在的缓存区会自动成为当前缓存区。</li>
+<li>with-current-buffer &amp; save-current-buffer 想要切换buffer取执行别的buffer中的命令时，先使用save-current-buffer来保存当前缓存区，然后再使用set-buffer切换去执行；也可以直接使用with-current-buffer来执行。想想这就是前不久python加入的所谓新特性。</li>
+<li>get-buffer-create 生成一个新buffer，如果buffer存在，就返回已存在的buffer
+generate-new-buffer 只能新建一个缓冲区</li>
+<li>kill-buffer 关闭缓存区
+kill-buffer-query-functions 有确认的关闭缓存区
+kill-buffer-hook 关闭缓存区并做善后处理</li>
+<li>buffer-live-p 检测buffer是否还存在</li>
+<li>buffer-list with-temp-buffer(临时buffer)</li>
+<li>point（位置）和 marker（标记）
+point 是指一个缓存区中固定的一个位置，某两个字符之间的唯一的位置；
+marker 可以是特殊标记一个字符的位置，当前面插入新的字符时，marker 的值会相应改变</li>
+<li>goto-char 到某个位置 （point-min） 到开始位置
+forward-char 以point为开始向前移动
+forward-word 按词移动
+forward-line 按行移动 (forward-line 0) 移动到当前行首
+line-beginning-position 获得行首位置
+line-end-position 获得行尾位置
+bobp eobp bolp eolp(end of line predicate)</li>
+<li>获取缓存区的内容
+buffer-string buffer-substring
+char-after char-before
+current-word thing-at-point（得到当前的表达式、符号、数字等）</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfd1837e" class="outline-3">
+<h3 id="orgfd1837e"><span class="section-number-3">1.15</span> 窗口</h3>
+<div class="outline-text-3" id="text-1-15">
+<ul class="org-ul">
+<li>frame &amp; window 一个frame可以包含多个window</li>
+<li>选择窗口 selected-window获得当前窗口对象</li>
+<li>save-selected-window &amp; with-selected-window 执行语句结束后窗口回到执行前的那个位置</li>
+<li>next-window previous-window other-window 得到当前Frame的另一个window</li>
+<li>获得窗口信息等</li>
+<li>窗口缓存区 window-buffer get-buffer-window get-buffer-window-list
+set-window-buffer：设置某个窗口显示某个缓存区
+switch-to-buffer：让某个窗口显示某个缓存区</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org949df77" class="outline-3">
+<h3 id="org949df77"><span class="section-number-3">1.16</span> 文件</h3>
+<div class="outline-text-3" id="text-1-16">
+<p>
+需要理解，文件和缓存区（buffer）是两个不同的概念。buffer 是保存在内存中的对象，平时的修改只会对缓存区中的对象做改动，只有作了保存操作才会保存到磁盘。
+</p>
+<ul class="org-ul">
+<li>修改某个 buffer 对应的文件使用 set-vistited-file-name</li>
+<li>获得某个 buffer 的对应的文件名 find-buffer-visiting &amp; get-file-buffer</li>
+<li>write-file <code>= 另存为；save-buffer =</code> 保存当前 buffer 到文件</li>
+<li>insert-file-contents &amp; wirte-region 高级插入，将文件指定部分插入到当前缓存区</li>
+<li>file-exists-p file-writeable-p file executable-p file-modes（位模式）
+file-regular-p（普通文件） file-directory-p file symlink-p（符号链接）</li>
+<li>file-attribute 可以得到文件几乎所有信息，可以查看文档看各个信息是干嘛的</li>
+<li>修改文件信息
+rename-file copy-file delete-file make-directory delete-directory
+set-file-times set-file-modes set-file-modes</li>
+<li>file-name-absolute-p 是否为绝对路径
+expand-file-name 扩展程绝对路径
+file-relative-name 绝对转相对路径</li>
+<li>convert-standard-filename 得到系统使用的文件名</li>
+<li>directory-file 得到某个目录中的全部或者符合某个正则表达式的文件名</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2bd03a2" class="outline-2">
+<h2 id="org2bd03a2"><span class="section-number-2">2</span> Tricky</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org92998ed" class="outline-3">
+<h3 id="org92998ed"><span class="section-number-3">2.1</span> interactive</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+几个从 pdf 里面抄到的例子，写一个自己的理解。
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">hello-world</span> <span style="color: #70c0b1;">(</span>name<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">interactive</span> <span style="color: #70c0b1;">"sWhat's your name? "</span><span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span>message <span style="color: #70c0b1;">"Hello, %s"</span> name<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+</pre>
+</div>
+<p>
+interactive 顾名思义，就是一个搞交互的函数，可以通过 interactive 这个表达式交互性的获取到这个函数所需的参数。如上，可以通过提示获得上诉函数的参数 name。
+其中，s 代表参数的类型是字符串，还有多种类型可以通过查看 interactive 函数来看到。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">read-hiden-file</span> <span style="color: #70c0b1;">(</span>file arg<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">interactive</span>
+   <span style="color: #e7c547;">(</span>list <span style="color: #b9ca4a;">(</span>read-file-name <span style="color: #70c0b1;">"Choose a hiden file: "</span> <span style="color: #70c0b1;">"~/"</span> nil nil nil
+                         <span style="color: #7aa6da;">(</span><span style="color: #b9ca4a;">lambda</span> <span style="color: #eaeaea;">(</span>name<span style="color: #eaeaea;">)</span>
+                           <span style="color: #eaeaea;">(</span>string-match <span style="color: #70c0b1;">"^</span><span style="color: #e7c547;">\</span><span style="color: #c397d8;">\</span><span style="color: #70c0b1;">."</span> <span style="color: #70c0b1;">(</span>file-name-nondirectory name<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
+         current-prefix-arg<span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span>message <span style="color: #70c0b1;">"%s, %s"</span> file arg<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+read-hiden-file
+</pre>
+</div>
+<p>
+interactive 对应的代码字符很多，一整张表，所以这里还提供了另一张方法。s 对应的函数是 read-string，读文件是 f，对应的函数是 read-file-name。
+如果 interactive 后面接的是表达式，那么表达式求值之后的列表元素就是这个函数对应的参数。如上，两个参数，一个是 file，一个是 arg。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defvar</span> <span style="color: #e7c547;">switch-major-mode-history</span> nil<span style="color: #eaeaea;">)</span>
+switch-major-mode-history
+<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">switch-major-mode</span> <span style="color: #70c0b1;">(</span>mode<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">interactive</span>
+   <span style="color: #e7c547;">(</span>list
+    <span style="color: #b9ca4a;">(</span>intern
+     <span style="color: #7aa6da;">(</span>completing-read <span style="color: #70c0b1;">"Switch to mode: "</span>
+                      obarray <span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">lambda</span> <span style="color: #70c0b1;">(</span>s<span style="color: #70c0b1;">)</span>
+                                <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">and</span> <span style="color: #e7c547;">(</span>fboundp s<span style="color: #e7c547;">)</span>
+                                     <span style="color: #e7c547;">(</span>string-match <span style="color: #70c0b1;">"-mode$"</span> <span style="color: #b9ca4a;">(</span>symbol-name s<span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+                      t nil <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">switch-major-mode-history</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">setq</span> switch-major-mode-history
+        <span style="color: #e7c547;">(</span>cons <span style="color: #b9ca4a;">(</span>symbol-name major-mode<span style="color: #b9ca4a;">)</span> switch-major-mode-history<span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span>funcall mode<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+switch-major-mode
+</pre>
+</div>
+<p>
+这个函数可以切换 major-mode，completing-read 提供可补全的方法在 obarray 搜索 major-mode。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org887f49b" class="outline-3">
+<h3 id="org887f49b"><span class="section-number-3">2.2</span> 正则表达式</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+Emacs 正则表达式太恶心人了，还好本书作者给了一个简单的方法。
+首先想想没有引号引起时的正则表达式是怎样。比如对于特殊字符 \$ 要用 \$，对于反斜线结构是 \(，\)，\{，\}，\|等。知道这个之后，再把所有的 \ 替换成 \\，这就是写到最后的双引号里面的形式。所以要匹配一个 \，应该用 \\，然后在引号里用 \\\\ 来匹配。
+在使用 [] 表示一个字符集时，如果字符集里包括 ] 时，要把 ] 放在第一位；如果要包括 - ，只能放在最后一位；如果要包括 ^ ，不能放在第一位，如果只想匹配一个 ^，就使用 \^ 的形式。
+使用 M-x describe-syntax 查看语法表。
+使用 regexp-opt 产生一个更好的正则表达式；regexp-quote 可以让字符串中的特殊字符自动转义。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4782429" class="outline-3">
+<h3 id="org4782429"><span class="section-number-3">2.3</span> 显示当前桌面信息</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+例子来自于书中。
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">&#26681;&#25454; dir &#26159;&#21542;&#26159; nil &#21028;&#26029;&#26159;&#27700;&#24179;&#36824;&#26159;&#31446;&#30452;&#20998;&#21106;</span>
+<span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">&#36820;&#22238;&#26684;&#24335;&#65306;(DIR heigth/width win ...)</span>
+<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-window-tree-to-list</span> <span style="color: #70c0b1;">(</span>tree<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">if</span> <span style="color: #e7c547;">(</span>windowp tree<span style="color: #e7c547;">)</span>
+      <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">win</span>
+    <span style="color: #e7c547;">(</span><span style="color: #b9ca4a;">let</span> <span style="color: #b9ca4a;">(</span><span style="color: #7aa6da;">(</span>dir <span style="color: #eaeaea;">(</span>car tree<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span>
+          <span style="color: #7aa6da;">(</span>children <span style="color: #eaeaea;">(</span>cddr tree<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
+      <span style="color: #b9ca4a;">(</span>list <span style="color: #7aa6da;">(</span><span style="color: #b9ca4a;">if</span> dir <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">vertical</span> <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">horizontal</span><span style="color: #7aa6da;">)</span>
+            <span style="color: #7aa6da;">(</span><span style="color: #b9ca4a;">if</span> dir
+                <span style="color: #eaeaea;">(</span>my-window-height <span style="color: #70c0b1;">(</span>car children<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+              <span style="color: #eaeaea;">(</span>my-window-width <span style="color: #70c0b1;">(</span>car children<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span>
+            <span style="color: #7aa6da;">(</span>my-window-tree-to-list <span style="color: #eaeaea;">(</span>car children<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span>
+            <span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">&#22914;&#26524; &#23376;&#31383;&#21475; &#34920;&#36798;&#24335;&#30340;&#38271;&#24230;&#22823;&#20110; 2,&#20063;&#23601;&#26159;&#26377;&#34987;&#20998;&#21106;&#65292;&#21017;&#32487;&#32493;</span>
+            <span style="color: #7aa6da;">(</span><span style="color: #b9ca4a;">if</span> <span style="color: #eaeaea;">(</span>&gt; <span style="color: #70c0b1;">(</span>length children<span style="color: #70c0b1;">)</span> 2<span style="color: #eaeaea;">)</span>
+                <span style="color: #eaeaea;">(</span>my-window-tree-to-list <span style="color: #70c0b1;">(</span>cons dir <span style="color: #e7c547;">(</span>cons nil <span style="color: #b9ca4a;">(</span>cdr children<span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+              <span style="color: #eaeaea;">(</span>my-window-tree-to-list <span style="color: #70c0b1;">(</span>cadr children<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+
+<span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">window-tree &#36820;&#22238;&#26684;&#24335;&#20013;&#26377;&#20004;&#31181;&#19981;&#21516;&#30340;&#26684;&#24335;&#26469;&#34920;&#29616; edge &#36825;&#20010;&#21464;&#37327;</span>
+<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-window-width</span> <span style="color: #70c0b1;">(</span>win<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">if</span> <span style="color: #e7c547;">(</span>windowp win<span style="color: #e7c547;">)</span>
+      <span style="color: #e7c547;">(</span>window-width win<span style="color: #e7c547;">)</span>
+    <span style="color: #e7c547;">(</span><span style="color: #b9ca4a;">let</span> <span style="color: #b9ca4a;">(</span><span style="color: #7aa6da;">(</span>edge <span style="color: #eaeaea;">(</span>cadr win<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
+      <span style="color: #b9ca4a;">(</span>- <span style="color: #7aa6da;">(</span>nth 2 edge<span style="color: #7aa6da;">)</span> <span style="color: #7aa6da;">(</span>car edge<span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+
+<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-window-height</span> <span style="color: #70c0b1;">(</span>win<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">if</span> <span style="color: #e7c547;">(</span>windowp win<span style="color: #e7c547;">)</span>
+      <span style="color: #e7c547;">(</span>window-height win<span style="color: #e7c547;">)</span>
+    <span style="color: #e7c547;">(</span><span style="color: #b9ca4a;">let</span> <span style="color: #b9ca4a;">(</span><span style="color: #7aa6da;">(</span>edge <span style="color: #eaeaea;">(</span>cadr win<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
+      <span style="color: #b9ca4a;">(</span>- <span style="color: #7aa6da;">(</span>nth 3 edge<span style="color: #7aa6da;">)</span> <span style="color: #7aa6da;">(</span>cadr edge<span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+
+<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-list-to-window-tree</span> <span style="color: #70c0b1;">(</span>conf<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">when</span> <span style="color: #e7c547;">(</span>listp conf<span style="color: #e7c547;">)</span>
+    <span style="color: #e7c547;">(</span><span style="color: #b9ca4a;">let</span> <span style="color: #b9ca4a;">(</span>newwin<span style="color: #b9ca4a;">)</span>
+      <span style="color: #b9ca4a;">(</span><span style="color: #b9ca4a;">setq</span> newwin <span style="color: #7aa6da;">(</span>split-window nil <span style="color: #eaeaea;">(</span>cadr conf<span style="color: #eaeaea;">)</span>
+                                 <span style="color: #eaeaea;">(</span>eq <span style="color: #70c0b1;">(</span>car conf<span style="color: #70c0b1;">)</span> <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">horizontal</span><span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
+      <span style="color: #b9ca4a;">(</span>my-list-to-window-tree <span style="color: #7aa6da;">(</span>nth 2 conf<span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
+      <span style="color: #b9ca4a;">(</span>select-window newwin<span style="color: #b9ca4a;">)</span>
+      <span style="color: #b9ca4a;">(</span>my-list-to-window-tree <span style="color: #7aa6da;">(</span>nth 3 conf<span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+
+<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-restore-window-configuration</span> <span style="color: #70c0b1;">(</span>winconf<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span>delete-other-windows<span style="color: #70c0b1;">)</span>
+  <span style="color: #70c0b1;">(</span>my-list-to-window-tree winconf<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+
+<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-current-window-configuration</span> <span style="color: #70c0b1;">()</span>
+  <span style="color: #70c0b1;">(</span>my-window-tree-to-list <span style="color: #e7c547;">(</span>car <span style="color: #b9ca4a;">(</span>window-tree<span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+
+<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">setq</span> foo <span style="color: #70c0b1;">(</span>my-current-window-configuration<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<span style="color: #eaeaea;">(</span>horizontal 76 win <span style="color: #70c0b1;">(</span>vertical 20 win win<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+
+<span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">&#23384;&#20648;&#31383;&#21475;&#20449;&#24687;</span>
+<span style="color: #eaeaea;">(</span>my-restore-window-configuration foo<span style="color: #eaeaea;">)</span>
+</pre>
+</div>
+<p>
+理解上面这个例子一定要先了解清楚 window-tree 返回的格式。
+</p>
+
+<p>
+如果 Frame 只有一个窗口，window-tree 返回只有一个窗口；如果 Frame 有被分割，那么返回的窗口中也会分割出几个不同的窗口：具体的格式是这样的，(DIR EDGE window &#x2026;)，DIR 为 <code>nil</code> 时表示水平分成两块——指竖着分，DIR 为 <code>t</code> 时表示竖直分成两块——指横着分，edge 表示这个窗口的范围，也是一个 list——(left top right bottom)，如果后面的窗口还有被分割，就继续按上面的方法分。
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #eaeaea;">(</span>window-tree<span style="color: #eaeaea;">)</span>
+<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">(</span>nil <span style="color: #e7c547;">(</span>0 0 160 40<span style="color: #e7c547;">)</span> #&lt;window 3 on *scratch*&gt; <span style="color: #e7c547;">(</span>t <span style="color: #b9ca4a;">(</span>80 0 160 40<span style="color: #b9ca4a;">)</span> #&lt;window 34 on learn-lisp.org&gt; #&lt;window 36 on *Messages*&gt;<span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span> #&lt;window 4 on  *Minibuf-0*&gt;<span style="color: #eaeaea;">)</span>
+</pre>
+</div>
+</div>
+</div>
+<div id="outline-container-orgf2a60a0" class="outline-3">
+<h3 id="orgf2a60a0"><span class="section-number-3">2.4</span> 符号链接文件</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+文件是否存在可以使用 file-exists-p 来判断，对于符号链接只有当文件存在时才返回 t。
+file-symlink-p 在文件是符号链接时返回目标文件名，而文件的真实名字可以用 file-truename 得到。
+</p>
+</div>
+</div>
+<div id="outline-container-org1b275e9" class="outline-3">
+<h3 id="org1b275e9"><span class="section-number-3">2.5</span> 文件目录</h3>
+<div class="outline-text-3" id="text-2-5">
+<p>
+目录名的写法要确保是以路径分隔符结束，可以用 file-name-as-directory 来转换。不用硬编码（concat dir "/"） 转换，遇到 win 系统怎么办？
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org77ba8e0" class="outline-2">
+<h2 id="org77ba8e0"><span class="section-number-2">3</span> 看源码</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>define-namespace
+<ul class="org-ul">
+<li>为该 namespace 下所有变量都加上一个前缀</li>
+<li>为该 namespace 下所有函数及函数内部变量都加上一个前缀</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-01-03</p>
+<p class="author">Author: hiro</p>
+<p class="date">Created: 2019-05-19 日 23:12</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.2 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>

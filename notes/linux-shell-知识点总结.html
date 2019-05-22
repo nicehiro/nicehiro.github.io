@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-05-19 日 23:12 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Linux Shell 知识点总结</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Linux Shell 知识点总结</h1>
+<p>
+为春招做准备。知识点从《Linux Shell 脚本攻略》和网上一些博客中总结。
+一下脚本使用 bash 执行，使用其他 sh 可能会有不同输出！
+</p>
+
+<div id="outline-container-org8807da6" class="outline-2">
+<h2 id="org8807da6"><span class="section-number-2">1</span> 基础知识</h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><code>$</code> &amp; <code>#</code> 如果是默认未被修改过的 bash， <code>$</code> 表示普通用户； <code>#</code> 表示 root 用户</li>
+
+<li>shebang：行话，即 <code>#!/bin/bash</code> ，shell 文件开头添加，可以确定脚本由谁来执行</li>
+
+<li><p>
+echo 的用法： <code>'</code> 中包含字符都无特殊含义； <code>"</code> 中包含字符可以有特殊含义
+echo 默认会添加换行符在字符串结尾
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #c397d8;">echo</span> hello      <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">right</span>
+<span style="color: #c397d8;">echo</span> <span style="color: #70c0b1;">'hello'</span>    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">right</span>
+<span style="color: #c397d8;">echo</span> <span style="color: #70c0b1;">"hello"</span>    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">right</span>
+
+<span style="color: #c397d8;">echo</span> <span style="color: #70c0b1;">"hello\!"</span>  <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#36716;&#20041;</span>
+<span style="color: #c397d8;">echo</span> hello!     <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#30452;&#25509;&#25171;"</span>
+<span style="color: #c397d8;">echo</span> <span style="color: #70c0b1;">'hello!'</span>   <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#20063;&#27491;&#30830;</span>
+
+<span style="color: #c397d8;">echo</span> $<span style="color: #e7c547;">USER</span>
+<span style="color: #c397d8;">echo</span> $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">USER</span><span style="color: #eaeaea;">}</span>
+</pre>
+</div></li>
+
+<li><p>
+printf：类似 c 中的用法
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">printf <span style="color: #70c0b1;">"%s haha %-4.2f"</span> hiro 23.9898
+=&gt; hiro haha 23.99
+</pre>
+</div></li>
+
+<li><p>
+赋值，不可添加空格！切记
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #e7c547;">GOD</span>=<span style="color: #70c0b1;">"hiro"</span>    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">right</span>
+<span style="color: #e7c547;">GOD</span> = <span style="color: #70c0b1;">"hiro"</span>  <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">wrong</span>
+</pre>
+</div></li>
+
+<li><p>
+<code>let</code> , <code>[]</code> 可以执行基本的算术操作
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #c397d8;">let</span> <span style="color: #e7c547;">a</span>=1+2
+<span style="color: #e7c547;">result</span>=$<span style="color: #eaeaea;">[</span> 1+2 <span style="color: #eaeaea;">]</span>
+</pre>
+</div></li>
+
+<li>文件描述符，0 &#x2013; stdin；1 &#x2013; stdout；2 &#x2013; stderr
+<code>&gt;</code> 输入； <code>&gt;&gt;</code> 追加； <code>2&gt;</code> 错误信息输入</li>
+
+<li><p>
+alias：别名
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #c397d8;">alias</span> <span style="color: #e7c547;">install</span>=<span style="color: #70c0b1;">'sudo pacman -S'</span>
+</pre>
+</div></li>
+
+<li><p>
+时间：date
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">date
+date +%s     <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#32426;&#20803;&#26102;</span>
+</pre>
+</div></li>
+
+<li><p>
+数组一般使用 <code>()</code> ，里面放入元素直接生成；也可以使用下标来调用元素（默认从 1 开始）
+</p>
+<div class="org-src-container">
+<pre class="src src-sh">&#8594; echo $<span style="color: #e7c547;">array</span>
+1 2 3 4 test1
+&#8594; echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">array</span><span style="color: #70c0b1;">[</span>1<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+1
+&#8594; echo $<span style="color: #eaeaea;">{</span>#<span style="color: #e7c547;">array</span><span style="color: #70c0b1;">[</span>*<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+5
+</pre>
+</div></li>
+
+<li><p>
+关联列表 使用 <code>{[]</code>'' []=''}= 这个形式。
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ declare -A temp
+<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ <span style="color: #e7c547;">temp</span>=<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">[</span>apple<span style="color: #70c0b1;">]</span>=100 <span style="color: #70c0b1;">[</span>orange<span style="color: #70c0b1;">]</span>=50<span style="color: #eaeaea;">)</span>
+<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #e7c547;">temp</span>
+
+<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">temp</span><span style="color: #70c0b1;">[</span>apple<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+100
+<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">temp</span><span style="color: #70c0b1;">[</span>orange<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+50
+<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ <span style="color: #e7c547;">temp</span><span style="color: #eaeaea;">[</span>pear<span style="color: #eaeaea;">]</span>=80
+<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">temp</span><span style="color: #70c0b1;">[</span>pear<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+80
+<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">!</span>temp<span style="color: #70c0b1;">[</span>*<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#25343;&#32034;&#24341;</span>
+apple orange pear
+</pre>
+</div></li>
+
+<li><p>
+函数与参数
+函数可以这样定义（function 可去）：
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #b9ca4a;">function</span> <span style="color: #e78c45;">fname</span><span style="color: #eaeaea;">()</span>
+<span style="color: #eaeaea;">{}</span>
+</pre>
+</div>
+<p>
+传参数时像在外面打命令一样传。
+函数内部对参数的访问：
+</p>
+<ul class="org-ul">
+<li>$1 $2 表示传入的第几个参数</li>
+<li>$@ 以列表的方式打印所有参数 "$1" "$2" &#x2026;</li>
+<li>$* 同上，但每个参数作为单独实体 "$1c$2c&#x2026;"</li>
+</ul></li>
+
+<li>read：读入字符，可以查看文档来使用</li>
+
+<li>内部字段分隔符：IFS，使用时先把原来的 IFS 保存，用过之后复原。</li>
+
+<li><p>
+循环
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #b9ca4a;">for</span> item<span style="color: #b9ca4a;"> in</span> items:
+<span style="color: #b9ca4a;">do</span>
+  ...
+<span style="color: #b9ca4a;">done</span>
+
+<span style="color: #b9ca4a;">for</span> <span style="color: #eaeaea;">(</span><span style="color: #e7c547;">x</span>=0; x&lt;10; i++<span style="color: #eaeaea;">)</span>
+<span style="color: #eaeaea;">{}</span>
+
+<span style="color: #b9ca4a;">while </span><span style="color: #c397d8;">true</span>:
+<span style="color: #b9ca4a;">do</span>
+  ...
+<span style="color: #b9ca4a;">done</span>
+</pre>
+</div></li>
+
+<li><p>
+比较： 只有 if 子句之后需要加 <code>;</code>
+</p>
+<div class="org-src-container">
+<pre class="src src-sh"><span style="color: #b9ca4a;">if</span> conditions;
+<span style="color: #b9ca4a;">then</span>
+  ...;
+<span style="color: #b9ca4a;">else if</span> conditions;
+<span style="color: #b9ca4a;">then</span>
+  ...;
+<span style="color: #b9ca4a;">else</span>
+  ...;
+<span style="color: #b9ca4a;">fi</span>
+</pre>
+</div></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org99df771" class="outline-2">
+<h2 id="org99df771"><span class="section-number-2">2</span> Tips</h2>
+<div class="outline-text-2" id="text-2">
+<ul class="org-ul">
+<li>null 字符使用 <code>\0</code> 表示</li>
+
+<li><code>echo $?</code> 会返回上一个命令执行的状态，0 表示正常执行，其他都是非正常执行，127 执行出错</li>
+
+<li>反引用，和 <code>$()</code> 作用一样，用于存储命令输出，相当于生成一个子 shell，在其中操作不会影响到外部独立进程。如果将子 shell 的输出保存到变量中，是以 <code>''</code> 的方式保存的，所以里面的 <code>\n</code> 不会转型，使用 <code>""</code> 包起来可以是特殊字符转型。</li>
+</ul>
+</div>
+
+<div id="outline-container-org80ef58e" class="outline-3">
+<h3 id="org80ef58e"><span class="section-number-3">2.1</span> 调试脚本</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+使用 <code>bash -x script.sh</code> 来调试脚本，会运行打印每一行命令以及当前状态；也可以使用 <code>set -x</code> 与 <code>set +x</code> 将需要调试的代码包起来；也可以直接修改 shebang <code>#!/bin/bash -xv</code> 来调试
+</p>
+</div>
+</div>
+
+<div id="outline-container-org845df73" class="outline-3">
+<h3 id="org845df73"><span class="section-number-3">2.2</span> 各文件夹的作用</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>/etc 存放系统配置文件</li>
+
+<li>/bin 存放二进制脚本文件</li>
+
+<li>/proc 虚拟目录，用来查看系统运行内存的信息</li>
+
+<li>/lib 共享文件目录，存放许多程序运行所必须的文件</li>
+
+<li>/dev 设备目录，linux 理念之一：一切皆文件</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2018-03-22</p>
+<p class="author">Author: hiro</p>
+<p class="date">Created: 2019-05-19 日 23:12</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.2 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>

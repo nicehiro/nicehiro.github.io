@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-05-22 三 22:03 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>GFW 原理解析</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">GFW 原理解析</h1>
+<p>
+看完了计算机网络就想了解一下防火长城（The GreatFirewall）的原理，于是网上找了不少文章，简单总结一下。 纯技术角度
+:expressionless:
+</p>
+
+<div id="outline-container-org73def6c" class="outline-2">
+<h2 id="gfw-封锁方式"><a id="org73def6c"></a><span class="section-number-2">1</span> GFW 封锁方式</h2>
+<div class="outline-text-2" id="text-gfw-封锁方式">
+<p>
+GFW
+主要是指公共网络监控系统。尤其是指对境外涉及敏感内容的网站、IP地址、关键字等的过滤。GFW
+在其他国家也有，会对危害国家安全的信息进行监听。
+一般有以下几种方式进行封锁。最普遍的是 DNS 缓存污染。
+</p>
+</div>
+
+<div id="outline-container-org6f5f239" class="outline-3">
+<h3 id="dns-缓存污染"><a id="org6f5f239"></a><span class="section-number-3">1.1</span> DNS 缓存污染</h3>
+<div class="outline-text-3" id="text-dns-缓存污染">
+<p>
+DNS 是什么？全称是 Domain Name
+System，即域名系统。可以把你在浏览器中输入的域名（www.baidu.com）解析成对应的
+IP 地址（183.232.231.172）。为什么要存在域名系统？-&#x2013;&#x2014;你觉得你是记
+baidu.com 容易还是一堆数字容易？为什么不直接使用域名来找网页而非要使用
+IP 地址？-&#x2013;&#x2014;IP 地址有很多作用，分级，容易的用二进制表示和识别等。
+</p>
+
+<p>
+可以简单想象一张表，表中一条域名对应一个 IP
+地址，在域名解析的时候，实际上查看的就是这些表的内容，根据浏览器输的域名来查找
+IP 地址。具体查询步骤如下：
+</p>
+
+<ol class="org-ol">
+<li>当要确定 IP 地址时，系统首先会去本地 DNS
+缓存中去查，如果没有，便会像你电脑配置的 DNS 服务器去查，DNS
+服务器会先去查询根域名服务器，然后在去查找域名服务器，一级一级的查询直到确定。
+&gt; 根域名服务器：全世界一共有 504
+台（2014），知道所有的顶级域名服务器的域名和 IP 地址。所有需要查询的
+DNS 记录都要先访问根域名服务器进行解析。 &gt; &gt;
+顶级域名服务器：.com、.cn、.org 等都是顶级域名服务器。</li>
+
+<li>每次查询到一个对应的 IP
+记录，就保存到你自己的电脑上，这样下次在访问这个域名就先从本地 DNS
+缓存中拿。</li>
+</ol>
+
+<p>
+可见在访问一条本地 DNS 缓存中没有的记录需要多台 DNS
+服务器解析域名，然后从 DNS
+服务器传回到你本地。传回到本地的过程中需要经过多台路由器、服务器，只要有一台服务器被“污染”，传回到你本地的就不是你所请求的
+IP 地址。
+</p>
+
+<p>
+DNS 缓存污染就是指解析好的 IP
+地址在传到本地的过程中被中途篡改，传回来无效的 IP
+地址。那么到底是篡改哪些 IP 地址呢？总不能把所有的 IP
+地址都篡改吧-&#x2013;&#x2014;这里用到的是应该是正则匹配。比如说，凡是包含=google=这个字符的所有
+IP 地址，这台被污染的服务器就把 IP 地址换成其他的 IP
+地址，有可能根本不存在，也有可能直接就是广告页面。
+</p>
+
+<p>
+另外，前不久我用手机浏览器上网时（中国移动），网页右下角出现中国移动的“恶心”的流量提醒和广告。这也是
+DNS
+缓存污染。在返回的网页中加入了中国移动自己的广告，不爽的可以直接电话投诉。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0dd8cfb" class="outline-3">
+<h3 id="限定特定-ip-访问"><a id="org0dd8cfb"></a><span class="section-number-3">1.2</span> 限定特定 IP 访问</h3>
+<div class="outline-text-3" id="text-限定特定-ip-访问">
+<p>
+实现原理： 你要和 google
+的服务器进行数据传输，数据包通过一层一层的路由传送到 google
+的服务器，但中途有一个静态路由，它会引导发送给 google
+的数据包转发到一个“黑洞服务器”上，这个“黑洞服务器”什么都不做，这样你的请求就被丢掉了，好像你从来都没有传过这条数据一样。
+</p>
+
+<blockquote>
+<p>
+静态路由：静态路由是指由用户或网络管理员手工配置的路由信息。当网络的拓扑结构或链路的状态发生变化时，网络管理员需要手工去修改路由表中相关的静态路由信息。
+</p>
+</blockquote>
+
+<p>
+网络管理员知道这个路由的下一条地址的情况下才能使用静态路由，这样才能保证网络中的请求可以传到正确的位置。而
+GFW 设置的静态路由是将路由表故意填错的，导致数据包传送出错。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3dbf2b3" class="outline-3">
+<h3 id="其他方法"><a id="org3dbf2b3"></a><span class="section-number-3">1.3</span> 其他方法</h3>
+<div class="outline-text-3" id="text-其他方法">
+<p>
+还有对 IP 地址特定端口封锁、对加密链接的干扰、TCP
+协议关键字阻断等方法来实现屏蔽功能。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga3b6c6f" class="outline-2">
+<h2 id="fq"><a id="orga3b6c6f"></a><span class="section-number-2">2</span> FQ</h2>
+<div class="outline-text-2" id="text-fq">
+</div>
+
+<div id="outline-container-orgbf51d8d" class="outline-3">
+<h3 id="修改-host"><a id="orgbf51d8d"></a><span class="section-number-3">2.1</span> 修改 Host</h3>
+<div class="outline-text-3" id="text-修改-host">
+<p>
+针对的是 DNS 缓存污染。Host 文件相当于 DNS
+在本地的缓存。进行域名解析时，先查询本地 DNS 缓存，就不需要去访问 DNS
+服务器来解析域名了。
+</p>
+
+<p>
+github 上有一个不断更新的 Host，有所需自己去取。
+</p>
+
+<p>
+但无法针对对特定 IP 封锁的 GFW 方法。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7f35e56" class="outline-3">
+<h3 id="vpn"><a id="org7f35e56"></a><span class="section-number-3">2.2</span> VPN</h3>
+<div class="outline-text-3" id="text-vpn">
+<p>
+全称是虚拟专用网（Virtual Private Network）。
+</p>
+
+<p>
+原理图：
+</p>
+
+
+<div class="figure">
+<p><img src="http://oeoaak94a.bkt.clouddn.com/vpn.jpg" alt="vpn.jpg" width="600" />
+</p>
+</div>
+
+<p>
+建立一个绕过 GFW 的专用通道传送数据包，当然数据是加密过的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3f98862" class="outline-3">
+<h3 id="shadowsocks"><a id="org3f98862"></a><span class="section-number-3">2.3</span> Shadowsocks</h3>
+<div class="outline-text-3" id="text-shadowsocks">
+<p>
+原理图：
+</p>
+
+
+<div class="figure">
+<p><img src="http://oeoaak94a.bkt.clouddn.com/shadowsocks-4.png" alt="shadowsocks-4.png" />
+</p>
+</div>
+
+<p>
+国外服务器将所要查询的数据包通过 ss 加密后，通过 GFW 传送到本机的 ss。而
+GFW 无法对数据包进行解密，因而无法过滤数据包。由本地的 ss
+对收到的数据进行解密，然后显示原数据包。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1b5f70e" class="outline-2">
+<h2 id="linux-下查询域名-ip-的工具"><a id="org1b5f70e"></a><span class="section-number-2">3</span> Linux 下查询域名 ip 的工具</h2>
+<div class="outline-text-2" id="text-linux-下查询域名-ip-的工具">
+<ul class="org-ul">
+<li>nslookup</li>
+</ul>
+
+<pre class="example">
+➜  ~ nslookup
+&gt; www.baidu.com
+Server:         192.168.1.1             // 链接默认上连的 DNS 服务器查询 ip，这里应该是学校的 DNS
+Address:        192.168.1.1#53          // DNS 服务器 ip 及 端口号
+
+Non-authoritative answer:               // 指直接从 DNS 服务器缓存中拿到的
+www.baidu.com   canonical name = www.a.shifen.com.  // baidu 别名
+Name:   www.a.shifen.com
+Address: 183.232.231.172
+Name:   www.a.shifen.com
+Address: 183.232.231.173
+</pre>
+
+<p>
+更多用法请=man nslookup=或是参考<a href="http://roclinux.cn/?p=2441">nslookup通往DNS的桥梁</a>。
+</p>
+
+<ul class="org-ul">
+<li>dig</li>
+</ul>
+
+<pre class="example">
+➜  ~ dig www.baidu.com
+
+; &lt;&lt;&gt;&gt; DiG 9.10.3-P4-Debian &lt;&lt;&gt;&gt; www.baidu.com
+;; global options: +cmd
+;; Got answer:
+;; -&gt;&gt;HEADER&lt;&lt;- opcode: QUERY, status: NOERROR, id: 38515
+;; flags: qr rd ra; QUERY: 1, ANSWER: 3, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;www.baidu.com.                 IN      A
+
+;; ANSWER SECTION:
+www.baidu.com.          600     IN      CNAME   www.a.shifen.com.
+www.a.shifen.com.       600     IN      A       183.232.231.172
+www.a.shifen.com.       600     IN      A       183.232.231.173
+
+;; Query time: 144 msec
+;; SERVER: 192.168.1.1#53(192.168.1.1)
+;; WHEN: Mon Jun 05 10:24:06 CST 2017
+;; MSG SIZE  rcvd: 90
+</pre>
+
+<p>
+相对来说信息较多一些，看着也舒服。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: 2017-06-05</p>
+<p class="author">Author: hiro</p>
+<p class="date">Created: 2019-05-22 三 22:03</p>
+<p class="creator"><a href="https://www.gnu.org/software/emacs/">Emacs</a> 26.2 (<a href="https://orgmode.org">Org</a> mode 9.1.9)</p>
+<p class="validation"></p>
+</div>
+</body>
+</html>
