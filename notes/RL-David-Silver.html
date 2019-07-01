@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-06-09 日 21:43 -->
+<!-- 2019-07-01 一 21:11 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>强化学习 &#x2013; David Silver Course</title>
@@ -262,25 +262,50 @@ for the JavaScript code in this tag.
 <h3 id="org4966f61"><span class="section-number-3">1.1</span> 强化学习和其他机器学习之间的区别是什么？</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
-<li>没有监督者，只有反馈信号</li>
+<li>没有监督者，只有反馈信号 reward signal</li>
 <li>反馈会有延迟，不是立刻就能得到反馈</li>
+<li>每个样本非独立同分布 每次获取的信息都不是独立同分布的</li>
+<li>action 对之后的结果会有影响</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgfb736bc" class="outline-3">
-<h3 id="orgfb736bc"><span class="section-number-3">1.2</span> Agent &amp; Environment</h3>
+
+<div id="outline-container-orga99317c" class="outline-3">
+<h3 id="orga99317c"><span class="section-number-3">1.2</span> Reward</h3>
 <div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Reward 代表一个反馈的信号，一般用来表示某一时刻的 action 的表现如何</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1c8a6f6" class="outline-3">
+<h3 id="org1c8a6f6"><span class="section-number-3">1.3</span> Goal</h3>
+<div class="outline-text-3" id="text-1-3">
+<ul class="org-ul">
+<li>对于任何的任务，我们的统一目标是：得到 reward 的累积最大值</li>
+<li>基于上诉的要求，agent 需要计算未来的 reward，而不只是计算当前时间的 reward</li>
+<li>有时，会为了未来的 reward 最大化 放弃当前的利益</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgfb736bc" class="outline-3">
+<h3 id="orgfb736bc"><span class="section-number-3">1.4</span> Agent &amp; Environment</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-center">
 
 <div class="figure">
-<p><img src="../img/agent-environment.png" alt="agent-environment.png" />
+<p><img src="../img/agent-envir-david.png" alt="agent-envir-david.png" />
 </p>
+</div>
 </div>
 </div>
 </div>
 
 <div id="outline-container-org4971d0b" class="outline-3">
-<h3 id="org4971d0b"><span class="section-number-3">1.3</span> History</h3>
-<div class="outline-text-3" id="text-1-3">
+<h3 id="org4971d0b"><span class="section-number-3">1.5</span> History</h3>
+<div class="outline-text-3" id="text-1-5">
 <p>
 \[ H_t = A_1, O_1, R_1, .... , A_t, O_t, R_t \]
 </p>
@@ -302,56 +327,60 @@ R: Reward(from environment)
 </div>
 </div>
 <div id="outline-container-orgda4c5d3" class="outline-3">
-<h3 id="orgda4c5d3"><span class="section-number-3">1.4</span> State</h3>
-<div class="outline-text-3" id="text-1-4">
+<h3 id="orgda4c5d3"><span class="section-number-3">1.6</span> State</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li>State 是对 History 的一个总结，用来决定下一个Action 是什么</li>
+</ul>
 <p>
-State是用来决定下一个Action的信息状态。
 \[ S_t = f(H_t) \]
 </p>
 
-<p>
-Environment State(\(S_t^e\))，对于agent来说，可能不是可见的，也可能会包含过多无用的信息。
-Agent State(\(S_t^a\))，是把 \(S_t^e\) 经过agent抽象、整理之后的State，是RL用来分析的State。
-</p>
+<ul class="org-ul">
+<li>Environment State(\(S_t^e\))，对于agent来说，可能不是可见的，也可能会包含过多无用的信息。</li>
+<li>Agent State(\(S_t^a\))，是把 \(S_t^e\) 经过agent抽象、整理之后的State，是RL用来分析的State。</li>
+<li>State 相对于 Agent 来说最大的好处是他的信息量很少，我们不需要得到所有的 History 来得到下一步的 Action</li>
+</ul>
 </div>
+
 <div id="outline-container-orgf20410e" class="outline-4">
-<h4 id="orgf20410e"><span class="section-number-4">1.4.1</span> Markov</h4>
-<div class="outline-text-4" id="text-1-4-1">
+<h4 id="orgf20410e"><span class="section-number-4">1.6.1</span> Markov</h4>
+<div class="outline-text-4" id="text-1-6-1">
 <p>
 如果一个State满足：
 \[ P[S_{t+1} | S_t] = P[S_{t+1} | S_1, S_2, ... S_t] \]
 那么这个状态就是Markov
-简单来说，P的下一个阶段的state（\(P_{t+1}\)）只和当前state（\(P_t\)）有关，与之前的状态无关，那就称这个state为Markov。
+简单来说，P的下一个阶段的state（\(P_{t+1}\)）只和当前state（\(P_t\)）有关，与之前的状态无关，那就称这个state为Markov
 </p>
 </div>
 </div>
 </div>
+
 <div id="outline-container-orgfb6d922" class="outline-3">
-<h3 id="orgfb6d922"><span class="section-number-3">1.5</span> RL Agent的主要元素</h3>
-<div class="outline-text-3" id="text-1-5">
+<h3 id="orgfb6d922"><span class="section-number-3">1.7</span> RL Agent的主要元素</h3>
+<div class="outline-text-3" id="text-1-7">
 <ul class="org-ul">
-<li>Policy 决策，agent的行为函数（agent采取什么action取决于这个函数）</li>
-<li>Value function 评价函数，用来判断当前状态的好坏，当前action的好坏</li>
+<li>Policy 决策，agent的行为函数（agent采取什么action取决于这个函数） 输入状态，输出动作或者各个动作的概率</li>
+<li>Value function 评价函数，用来判断当前状态或者行为的好坏</li>
 <li>Model agent对当前环境的表述</li>
 </ul>
 </div>
 <div id="outline-container-orgc5193af" class="outline-4">
-<h4 id="orgc5193af"><span class="section-number-4">1.5.1</span> Policy</h4>
-<div class="outline-text-4" id="text-1-5-1">
+<h4 id="orgc5193af"><span class="section-number-4">1.7.1</span> Policy</h4>
+<div class="outline-text-4" id="text-1-7-1">
 <ul class="org-ul">
-<li>从state到 action 的映射 mapping</li>
+<li>Deterministic policy：每个状态都有一个对应的确定的决策，从state到 action 的映射 mapping \( a = \pi(s) \)</li>
+<li>Stochastic policy：输入状态，输出某种决策的概率 \(\pi(a|s) = P[A=a | S=s]\)</li>
 </ul>
-<p>
-\[ a = \pi(s) \]
-</p>
 </div>
 </div>
-<div id="outline-container-org0a79aa0" class="outline-4">
-<h4 id="org0a79aa0"><span class="section-number-4">1.5.2</span> Value Function</h4>
-<div class="outline-text-4" id="text-1-5-2">
+<div id="outline-container-org13b6b9f" class="outline-4">
+<h4 id="org13b6b9f"><span class="section-number-4">1.7.2</span> Value Function</h4>
+<div class="outline-text-4" id="text-1-7-2">
 <ul class="org-ul">
-<li>对未来reward的预测函数</li>
+<li>对未来return的预测函数</li>
 <li>评价state的好坏</li>
+<li>当前状态为 S，假设你有两个选择 A1 和 A2，对应的状态为 S1 和 S2；选择的时候比较 S1 和 S2 状态的累积 reward 的大小</li>
 <li>评价函数会计算未来一段时间的累积reward值的大小，而不只是当下。但是也不能考虑太远的未来，因为未来是无限长的，而且也没有必要去计算那么长的未来，所有会添加discount因子，即下述的\(\gamma\)</li>
 </ul>
 <p>
@@ -361,22 +390,22 @@ Agent State(\(S_t^a\))，是把 \(S_t^e\) 经过agent抽象、整理之后的Sta
 </div>
 </div>
 <div id="outline-container-orgc3e13a2" class="outline-3">
-<h3 id="orgc3e13a2"><span class="section-number-3">1.6</span> RL Agent的分类</h3>
-<div class="outline-text-3" id="text-1-6">
+<h3 id="orgc3e13a2"><span class="section-number-3">1.8</span> RL Agent的分类</h3>
+<div class="outline-text-3" id="text-1-8">
 </div>
 <div id="outline-container-orgdcfa768" class="outline-4">
-<h4 id="orgdcfa768"><span class="section-number-4">1.6.1</span> 分类1</h4>
-<div class="outline-text-4" id="text-1-6-1">
+<h4 id="orgdcfa768"><span class="section-number-4">1.8.1</span> 分类1</h4>
+<div class="outline-text-4" id="text-1-8-1">
 <ul class="org-ul">
-<li>Value based</li>
-<li>Policy based</li>
+<li>Value based 根据 Value function 计算，其中 Policy 是隐含的，不需要直接定义</li>
+<li>Policy based 根据 State、Action 的映射关系</li>
 <li>Actor Critic(Both)</li>
 </ul>
 </div>
 </div>
 <div id="outline-container-org640841b" class="outline-4">
-<h4 id="org640841b"><span class="section-number-4">1.6.2</span> 分类2</h4>
-<div class="outline-text-4" id="text-1-6-2">
+<h4 id="org640841b"><span class="section-number-4">1.8.2</span> 分类2</h4>
+<div class="outline-text-4" id="text-1-8-2">
 <ul class="org-ul">
 <li>Model Free
 <ul class="org-ul">
@@ -410,8 +439,8 @@ Markov Reward Process 可以用元祖表示 (S, P, R, \(\gamma\))
 </p>
 <ul class="org-ul">
 <li>S 有限的State集合</li>
-<li>P 状态转移矩阵</li>
-<li>R Reward Function 反馈方程</li>
+<li>P 状态转移矩阵（状态之间转移的概率）</li>
+<li>R Reward Function 奖励函数</li>
 <li>\(\gamma\) discount因子</li>
 </ul>
 </div>
@@ -421,6 +450,10 @@ Markov Reward Process 可以用元祖表示 (S, P, R, \(\gamma\))
 <p>
 Return（Environment 给 Agent）\(G_t\)是从 t 阶段之后的总的discounted reward之和。
 \[ G_t = R_{t+1} + \gamma R_{t+2} + ... = \sum_{k=0}^{\infty}\gamma ^kR_{t+k+1} \]
+</p>
+
+<p>
+其中，G 来自一个随机样本，累计了从当前状态的奖励（immediate reward）一直到未来的奖励（delay reward）
 </p>
 </div>
 </div>
@@ -439,12 +472,16 @@ Return（Environment 给 Agent）\(G_t\)是从 t 阶段之后的总的discounted
 </div>
 </div>
 </div>
-<div id="outline-container-orgb6a9676" class="outline-4">
-<h4 id="orgb6a9676"><span class="section-number-4">2.2.3</span> Value Function</h4>
+<div id="outline-container-orgf550491" class="outline-4">
+<h4 id="orgf550491"><span class="section-number-4">2.2.3</span> Value Function</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
-Value Function 会给出当前状态下的预计return（\(G_t\)）
+Value Function 会给出当前状态以及到未来所有状态下的期望 return（\(G_t\)）
 \[ v(s) = E[G_t | S_t = s] \]
+</p>
+
+<p>
+根据 value function 选择 \(G_t\) 最大的那个状态的方向。
 </p>
 </div>
 </div>
@@ -490,8 +527,8 @@ Agent的行为完全取决于Policy。
 </p>
 </div>
 </div>
-<div id="outline-container-org626de21" class="outline-4">
-<h4 id="org626de21"><span class="section-number-4">2.3.2</span> Value Function</h4>
+<div id="outline-container-orgdd4a50c" class="outline-4">
+<h4 id="orgdd4a50c"><span class="section-number-4">2.3.2</span> Value Function</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 \(\pi\) ：policy
@@ -511,6 +548,15 @@ Agent的行为完全取决于Policy。
 <div id="outline-container-org150d2c4" class="outline-4">
 <h4 id="org150d2c4"><span class="section-number-4">2.3.3</span> Bellman Expectation Equation</h4>
 <div class="outline-text-4" id="text-2-3-3">
+<div class="org-src-container">
+<pre class="src src-quote">v ：当前 state 的 value
+q ：当前 action 的value
+</pre>
+</div>
+</div>
+<div id="outline-container-orga4d702c" class="outline-5">
+<h5 id="orga4d702c"><span class="section-number-5">2.3.3.1</span> State 与 State ，Action 与 Action 之间的转换</h5>
+<div class="outline-text-5" id="text-2-3-3-1">
 <p>
 \[ v_{\pi}(s) = E_{\pi}[R_{t+1} + \gamma v_{\pi}(S_{t+1}) | S_t = s] \]
 </p>
@@ -518,10 +564,38 @@ Agent的行为完全取决于Policy。
 <p>
 \[ q_{\pi}(s, a) = E_{\pi}[R_{t+1} + \gamma q_{\pi}(S_{t+1}, A_{t+1}) | S_t = s, A_t = a] \]
 </p>
+</div>
+</div>
+
+<div id="outline-container-org06902fe" class="outline-5">
+<h5 id="org06902fe"><span class="section-number-5">2.3.3.2</span> 相互之间的转换</h5>
+<div class="outline-text-5" id="text-2-3-3-2">
+<p>
+当前 State 的 \(v_{\pi}\) ，等同于当前 State 选某个 Action 的 Reward（0）+ 后续 （Action 对应的 Value * 当前策略下在 State 选这个 Action 的概率） 之和
+</p>
 
 <p>
-核心和之前相同，当前状态的value，由下一个状态的即时reward和discounted下个状态的value来决定。
+\[ v_{\pi}(s) = \sum_{a \in A} \pi(a|s) q_{\pi}(s, a) \]
 </p>
+
+<p>
+当前 Action 的 \(v_{\pi}\) ，等同于 执行当前 Action 的 Reward（\(R_s^a\)） + discounted（\(\gamma\)） 后续的（执行这个 Action 到达另一个 State 的概率（\(P^a_{ss^{\prime}}\)） * 这个 State 的 Value）之和
+</p>
+
+<p>
+\[ q_{\pi}(s, a) = R_s^a + \gamma \sum_{s^{\prime} \in S} P^a_{ss^{\prime}} v_{\prime}(s^{\prime}) \]
+</p>
+
+<p>
+讲两个式子合起来：
+\[ v_{\pi}(s) = \sum_{a \in A} \pi(a|s) (R_s^a + \gamma \sum_{s^{\prime} \in S} P^a_{ss^{\prime}} v_{\pi}(s^{\prime})) \]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-quote">理解这些式子要抓住：当前状态的预测 reward value：当前的 reward value 和之后的 reward value 之和
+</pre>
+</div>
+</div>
 </div>
 </div>
 <div id="outline-container-org84210cb" class="outline-4">
@@ -530,6 +604,11 @@ Agent的行为完全取决于Policy。
 <p>
 \[ \pi > \pi^{\prime} \text{ if } v_{\pi}(s) > v_{\pi^{\prime}}(s) \]
 </p>
+<ul class="org-ul">
+<li>任意性 一个 policy 比另一个好，意味着它的所有 value function 的取值都比原来的 policy 要好，不存在差的情况</li>
+<li>对于任意的 MDP 过程，一定存在一个 policy，比任何一个 policy 的表现要好</li>
+<li>最优的 policy 可以不止一个</li>
+</ul>
 </div>
 </div>
 </div>
@@ -556,20 +635,153 @@ Agent的行为完全取决于Policy。
 </ul>
 </div>
 </div>
+<div id="outline-container-org89b9247" class="outline-3">
+<h3 id="org89b9247"><span class="section-number-3">3.3</span> 动态规划在求解 MDP 的应用</h3>
+<div class="outline-text-3" id="text-3-3">
+</div>
+<div id="outline-container-orgae07796" class="outline-4">
+<h4 id="orgae07796"><span class="section-number-4">3.3.1</span> 预测问题</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<p>
+策略已知，根据策略和当前环境求在此策略下每个状态的 value
+</p>
+</div>
+</div>
+<div id="outline-container-org55d182d" class="outline-4">
+<h4 id="org55d182d"><span class="section-number-4">3.3.2</span> 控制问题</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<p>
+未知策略，一次次迭代求出最优策略下的 value
+</p>
+</div>
+</div>
+</div>
+<div id="outline-container-org4b2af57" class="outline-3">
+<h3 id="org4b2af57"><span class="section-number-3">3.4</span> Policy Iteration</h3>
+<div class="outline-text-3" id="text-3-4">
+<ul class="org-ul">
+<li>Policy evaluation：评估当前策略 \(\pi\) 下计算出来每个状态的 value</li>
+<li>Policy improvement：利用贪心算法优化当前 Policy</li>
+<li>迭代</li>
+</ul>
+</div>
+<div id="outline-container-orga748ff6" class="outline-4">
+<h4 id="orga748ff6"><span class="section-number-4">3.4.1</span> Evaluation Example</h4>
+<div class="outline-text-4" id="text-3-4-1">
+<p>
+<b>注意：evaluation 步骤没有更新 policy</b>
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/policy_eveluation.png" alt="policy_eveluation.png" width="100%" />
+</p>
 </div>
 
-<div id="outline-container-org3239377" class="outline-2">
-<h2 id="org3239377"><span class="section-number-2">4</span> 心得</h2>
+
+<div class="figure">
+<p><img src="../img/policy_eveluation_example.png" alt="policy_eveluation_example.png" width="100%" />
+</p>
+</div>
+
+
+<div class="figure">
+<p><img src="../img/policy_eveluation_solution.png" alt="policy_eveluation_solution.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+不要被右边的 Greedy Policy 迷惑，计算的时候 Policy 不是实时更新的：以 <code>k=2</code> 时 <code>-1.7</code> 的计算为例说明：
+\[ -1.7 = 0.25 * (-1 + 1 * 1 * 0 + 3 * (-1 + 1 * 1 * -1)) \]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org5d51e66" class="outline-3">
+<h3 id="org5d51e66"><span class="section-number-3">3.5</span> Policy improvement</h3>
+<div class="outline-text-3" id="text-3-5">
+<p>
+实时更新 Policy，如果新的 policy 和之前的相同，那么表示当前 policy 已经收敛，为最佳 policy
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgee7cd23" class="outline-2">
+<h2 id="orgee7cd23"><span class="section-number-2">4</span> 免模型预测 Model-Free prediction</h2>
 <div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org8307b4a" class="outline-3">
+<h3 id="org8307b4a"><span class="section-number-3">4.1</span> Monte-Carlo RL</h3>
+<div class="outline-text-3" id="text-4-1">
+<ul class="org-ul">
+<li>目标： 在随机策略 \(\pi\) 下，agent 和环境不停的交互，得到一系列 state、action、return 的值，用来计算 \(v^{\pi}\)</li>
+<li>Return：折扣 reward \(G_t = R_{t+1} + \gamma R_{t+2} + ...\)</li>
+<li>不知道环境的情况下，只能使用蒙特卡罗抽样的方法，一次次试验，从经验中求 Return 的均值</li>
+<li>片段（episodes）：agent 在环境中执行某些动作得到一系列反馈。类似，一个机器人在地上，可以前进或者后退，执行一系列操作，得到 \(S_1, A_1, R_1, ..., S_k ~ \pi\)，被称作一个片段</li>
+</ul>
+</div>
+
+<div id="outline-container-org6115210" class="outline-4">
+<h4 id="org6115210"><span class="section-number-4">4.1.1</span> 两种 value function 的计算方式</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<ul class="org-ul">
+<li>First-Visit：在同一个片段中，第一次访问到状态 s ，累加次数</li>
+<li>Every-Visit：在同一个片段中，每一次访问到状态 s ，累加次数</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1a4fde4" class="outline-4">
+<h4 id="org1a4fde4"><span class="section-number-4">4.1.2</span> 增量更新</h4>
+<div class="outline-text-4" id="text-4-1-2">
+\begin{align}
+\mu_k &= \frac{1}{k} \sum^k_{j=1} x_j\\
+&= \frac{1}{k} (x_k + \sum^{k-1}_{j=1} x_j)\\
+&= \frac{1}{k}(x_k + (k-1)\mu_{k-1})\\
+&= \mu_{k-1} + \frac{1}{k}(x_k-\mu_{k-1})
+\end{align}
+</div>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="outline-container-org3239377" class="outline-2">
+<h2 id="org3239377"><span class="section-number-2">5</span> 心得</h2>
+<div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li>不要被符号所局限，也不要完全脱离数学符号。</li>
 <li>听不懂的先跳过，因为你一直重复听也是听不懂的</li>
 </ul>
 </div>
+<div id="outline-container-org00a74a6" class="outline-4">
+<h4 id="org00a74a6"><span class="section-number-4">5.0.1</span> 口头禅</h4>
+<div class="outline-text-4" id="text-5-0-1">
+<div class="org-src-container">
+<pre class="src src-quote">... becoming better better and better ...
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdc0492f" class="outline-2">
+<h2 id="orgdc0492f"><span class="section-number-2">6</span> Ref</h2>
+<div class="outline-text-2" id="text-6">
+<ul class="org-ul">
+<li><a href="https://zhuanlan.zhihu.com/c_135909947">强化学习基础David Silver笔记</a></li>
+</ul>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-06-09 日 21:43. Created by hiro</p>
+<p class="postamble">Last Updated 2019-07-01 一 21:08. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"

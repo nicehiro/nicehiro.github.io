@@ -56,6 +56,7 @@ pre {
     border: 1px solid #ccc;
     box-shadow: 3px 3px 3px #eee;
     font-size: large;
+    word-wrap: break-word;
     background: #f0f8ff;
 }
 

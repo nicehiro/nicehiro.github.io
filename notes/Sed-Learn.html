@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-01 一 21:12 -->
+<!-- 2019-07-01 一 21:28 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hiro's Blog</title>
+<title>Sed 学习笔记</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="hiro" />
 <style type="text/css">
@@ -180,7 +180,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/index.css"/>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -227,78 +227,143 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">Hiro's Blog</h1>
-
-<div id="outline-container-orgcade63e" class="outline-2">
-<h2 id="orgcade63e"><span class="section-number-2">1</span> Notes</h2>
-<div class="outline-text-2" id="text-1">
+<h1 class="title">Sed 学习笔记</h1>
 <p>
-学习笔记
+测试文件：txt
 </p>
+<pre class="example">
+This is my cat
+  my cat's name is betty
+This is my dog
+  my dog's name is frank
+This is my goat
+  my goat's name is adam
+</pre>
 
+<div id="outline-container-org052a70b" class="outline-2">
+<h2 id="org052a70b"><span class="section-number-2">1</span> s 命令替换</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+<pre class="src src-Sed"># 替换 3-5 行的 my 成 your
+sed "3,5s/my/your/g" txt
+
+# 替换一行中的第 2 个匹配到的
+sed "s/s/S/2" txt
+
+# 多行匹配
+sed "s/my/your/g; 3,$s/This/That/g" txt
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org4de107d" class="outline-3">
+<h3 id="org4de107d"><span class="section-number-3">1.1</span> 正则表达式</h3>
+<div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
-<li><a href="notes/Math.html">高数</a></li>
-
-<li><a href="notes/Probability.html">概率论</a></li>
-
-<li><a href="notes/线性代数.html">线性代数</a></li>
-
-<li><a href="notes/Network.html">计算机网络</a></li>
-
-<li><a href="notes/OS.html">操作系统</a></li>
-
-<li><a href="notes/Computer_Architecture.html">计算机组成原理</a></li>
-
-<li><a href="notes/Data_Structure.html">数据结构</a></li>
-
-<li><a href="notes/Python-笔记.html">Python笔记</a></li>
-
-<li><a href="notes/learn-lisp.html">Lisp笔记</a></li>
-
-<li><a href="notes/linux-shell-知识点总结.html">Shell笔记</a></li>
-
-<li><a href="notes/RL-David-Silver.html">RL 学习笔记</a></li>
-
-<li><a href="notes/Sed-Learn.html">Sed 学习笔记</a></li>
+<li>`^` 表示行头 `^#`</li>
+<li>`\(` 表示行尾 `}\)`</li>
+<li>`\&lt;` 表示词头 `\&lt;abc`</li>
+<li>`\&gt;` 表示词尾 `abc\&gt;`</li>
 </ul>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org24cf158" class="outline-2">
-<h2 id="org24cf158"><span class="section-number-2">2</span> Tech</h2>
+<div id="outline-container-orgb3ec217" class="outline-2">
+<h2 id="orgb3ec217"><span class="section-number-2">2</span> N 命令</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-谈谈技术
+将下一行的内容纳入当前缓存区匹配。将两行合并在一起。
 </p>
 
-<ul class="org-ul">
-<li><a href="tech/GFW-原理简析.html">GFW原理解析</a></li>
+<div class="org-src-container">
+<pre class="src src-Sed"># 将两行之间的 换行 转为 , 拼接两行
+sed "N; s/\n/,/g" txt
 
-<li><a href="tech/Vim-进阶.html">Vim 进阶</a></li>
-
-<li><a href="tech/all_kinds_tech.html">技术杂集</a></li>
-</ul>
+sed "N; s/\n/,/; s/This is my \([^, &amp;]*\), .* is \(.*\)/\1:\2/g" pets.txt
+========&gt;
+cat:betty
+dog:frank
+goat:adam
+</pre>
 </div>
 </div>
+</div>
 
-<div id="outline-container-org46c693a" class="outline-2">
-<h2 id="org46c693a"><span class="section-number-2">3</span> Life</h2>
+<div id="outline-container-org4d3a562" class="outline-2">
+<h2 id="org4d3a562"><span class="section-number-2">3</span> a &amp; i &amp; c &amp; d &amp; p</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-分享生活
+`a` 就是 append，`i` 就是 insert，`c` 就是 change，`d` 就是 delete，`p` 就是 print
 </p>
 
-<ul class="org-ul">
-<li><a href="life/学校每日签到的自动化完成.html">学校每日签到的自动化完成</a></li>
-</ul>
+<div class="org-src-container">
+<pre class="src src-Sed"># 行前插入
+sed "1 i Insert one line before line 1" txt
+
+# 行后插入
+sed "$ a Append one line after last line" txt
+
+# 匹配到之后 行后插入
+sed "/fish/a Append one line when get the *fish* line" txt
+
+# 替换匹配行
+sed "2 c This is a new line, replace the old line" txt
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge509375" class="outline-2">
+<h2 id="orge509375"><span class="section-number-2">4</span> address</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-src-container">
+<pre class="src src-Sed">[address[,address]][!]{cmd}
+</pre>
+</div>
+
+<p>
+address 可以是相对的，例如：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-Sed">sed "/dog/, +3s/^/# /g" txt
+</pre>
+</div>
+
+<p>
+cmd 可以是多个命令，使用 {} 包起来作为嵌套命令。
+</p>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-07-01 一 21:12. Created by hiro</p>
+<p class="postamble">Last Updated 2019-07-01 一 21:28. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"
