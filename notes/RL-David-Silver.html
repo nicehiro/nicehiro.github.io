@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-10 三 09:00 -->
+<!-- 2019-07-12 五 22:46 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>强化学习 &#x2013; David Silver Course</title>
@@ -253,6 +253,137 @@ for the JavaScript code in this tag.
 <body>
 <div id="content">
 <h1 class="title">强化学习 &#x2013; David Silver Course</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org12c3c90">1. Lession 1</a>
+<ul>
+<li><a href="#org4966f61">1.1. 强化学习和其他机器学习之间的区别是什么？</a></li>
+<li><a href="#orga99317c">1.2. Reward</a></li>
+<li><a href="#org1c8a6f6">1.3. Goal</a></li>
+<li><a href="#orgfb736bc">1.4. Agent &amp; Environment</a></li>
+<li><a href="#org4971d0b">1.5. History</a></li>
+<li><a href="#orgda4c5d3">1.6. State</a>
+<ul>
+<li><a href="#orgf20410e">1.6.1. Markov</a></li>
+</ul>
+</li>
+<li><a href="#orgfb6d922">1.7. RL Agent的主要元素</a>
+<ul>
+<li><a href="#orgc5193af">1.7.1. Policy</a></li>
+<li><a href="#org7562237">1.7.2. Value Function</a></li>
+</ul>
+</li>
+<li><a href="#orgc3e13a2">1.8. RL Agent的分类</a>
+<ul>
+<li><a href="#orgdcfa768">1.8.1. 分类1</a></li>
+<li><a href="#org640841b">1.8.2. 分类2</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org8afb8ba">2. Lession 2</a>
+<ul>
+<li><a href="#org55f6810">2.1. State Transition Matrix 状态转移矩阵</a></li>
+<li><a href="#org18b1610">2.2. Markov Reward Process</a>
+<ul>
+<li><a href="#orgc877db7">2.2.1. Return</a></li>
+<li><a href="#org676cdaf">2.2.2. Why discount</a></li>
+<li><a href="#org09f4c48">2.2.3. Value Function</a></li>
+<li><a href="#orgf3afae3">2.2.4. Bellman 等式</a></li>
+</ul>
+</li>
+<li><a href="#orgc0894bc">2.3. Markov Decision Process</a>
+<ul>
+<li><a href="#org7162c6c">2.3.1. Policies</a></li>
+<li><a href="#org4b32d43">2.3.2. Value Function</a></li>
+<li><a href="#org150d2c4">2.3.3. Bellman Expectation Equation</a>
+<ul>
+<li><a href="#orga4d702c">2.3.3.1. State 与 State ，Action 与 Action 之间的转换</a></li>
+<li><a href="#org06902fe">2.3.3.2. 相互之间的转换</a></li>
+</ul>
+</li>
+<li><a href="#org84210cb">2.3.4. Optimal Policy</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orge531dcb">3. Lession 3</a>
+<ul>
+<li><a href="#org3260dd5">3.1. 动态规划</a></li>
+<li><a href="#org6fb1192">3.2. 为啥使用动态规划的方法解决RL？</a></li>
+<li><a href="#org89b9247">3.3. 动态规划在求解 MDP 的应用</a>
+<ul>
+<li><a href="#orgae07796">3.3.1. 预测问题</a></li>
+<li><a href="#org55d182d">3.3.2. 控制问题</a></li>
+</ul>
+</li>
+<li><a href="#org4b2af57">3.4. Policy Iteration</a>
+<ul>
+<li><a href="#orga748ff6">3.4.1. Evaluation Example</a></li>
+</ul>
+</li>
+<li><a href="#org5d51e66">3.5. Policy improvement</a></li>
+</ul>
+</li>
+<li><a href="#org6893007">4. Lession 4免模型预测 Model-Free prediction</a>
+<ul>
+<li><a href="#org8307b4a">4.1. Monte-Carlo RL</a>
+<ul>
+<li><a href="#org6115210">4.1.1. 两种 value function 的计算方式</a></li>
+<li><a href="#org1a4fde4">4.1.2. 增量更新</a></li>
+</ul>
+</li>
+<li><a href="#org669804e">4.2. Temporal-Difference RL</a></li>
+<li><a href="#org7eee946">4.3. MC vs. TD</a>
+<ul>
+<li><a href="#org353e647">4.3.1. MC Backup</a></li>
+<li><a href="#org6495f14">4.3.2. TD Backup</a></li>
+<li><a href="#orgcf1c27a">4.3.3. DP Backup</a></li>
+</ul>
+</li>
+<li><a href="#org7aae21e">4.4. n-Step Return</a></li>
+<li><a href="#org8d2674f">4.5. Backward-View TD(\(\lambda\))</a>
+<ul>
+<li><a href="#org810b085">4.5.1. 资格迹 Eligibility Traces</a></li>
+<li><a href="#org7a3dabb">4.5.2. Backward-View</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org6dceddb">5. Lession 5 Model-Free Control</a>
+<ul>
+<li><a href="#orgdaa39ca">5.1. On and Off-Policy Learning</a></li>
+<li><a href="#orgec6570c">5.2. Model-Free 使用 Action Value Function</a>
+<ul>
+<li><a href="#orge739aae">5.2.1. \(\epsilon\)-Greedy</a></li>
+<li><a href="#org46a9ee0">5.2.2. GLIE</a></li>
+</ul>
+</li>
+<li><a href="#org45c882f">5.3. Sarsa</a></li>
+<li><a href="#org3ad13b6">5.4. n-Step Sarsa</a>
+<ul>
+<li><a href="#org53526e3">5.4.1. Forward view</a></li>
+<li><a href="#org40fd9b1">5.4.2. Backward View</a></li>
+<li><a href="#org1a9cfae">5.4.3. Sarsa Compare</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org3239377">6. 心得</a>
+<ul>
+<li>
+<ul>
+<li><a href="#org00a74a6">6.0.1. 口头禅</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orgdc0492f">7. Ref</a></li>
+</ul>
+</div>
+</div>
 
 <div id="outline-container-org12c3c90" class="outline-2">
 <h2 id="org12c3c90"><span class="section-number-2">1</span> Lession 1</h2>
@@ -374,8 +505,8 @@ R: Reward(from environment)
 </ul>
 </div>
 </div>
-<div id="outline-container-orgdb10bec" class="outline-4">
-<h4 id="orgdb10bec"><span class="section-number-4">1.7.2</span> Value Function</h4>
+<div id="outline-container-org7562237" class="outline-4">
+<h4 id="org7562237"><span class="section-number-4">1.7.2</span> Value Function</h4>
 <div class="outline-text-4" id="text-1-7-2">
 <ul class="org-ul">
 <li>对未来return的预测函数</li>
@@ -472,8 +603,8 @@ Return（Environment 给 Agent）\(G_t\)是从 t 阶段之后的总的discounted
 </div>
 </div>
 </div>
-<div id="outline-container-orga1d2764" class="outline-4">
-<h4 id="orga1d2764"><span class="section-number-4">2.2.3</span> Value Function</h4>
+<div id="outline-container-org09f4c48" class="outline-4">
+<h4 id="org09f4c48"><span class="section-number-4">2.2.3</span> Value Function</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 Value Function 会给出当前状态以及到未来所有状态下的期望 return（\(G_t\)）
@@ -527,8 +658,8 @@ Agent的行为完全取决于Policy。
 </p>
 </div>
 </div>
-<div id="outline-container-org7372755" class="outline-4">
-<h4 id="org7372755"><span class="section-number-4">2.3.2</span> Value Function</h4>
+<div id="outline-container-org4b32d43" class="outline-4">
+<h4 id="org4b32d43"><span class="section-number-4">2.3.2</span> Value Function</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 \(\pi\) ：policy
@@ -867,10 +998,53 @@ TD(0) 指 \( G_t = R_{t+1} + \lambda G_{t+1} \)，TD(\(\lambda\)) 就是，有 \
 </div>
 </div>
 </div>
+
+<div id="outline-container-org8d2674f" class="outline-3">
+<h3 id="org8d2674f"><span class="section-number-3">4.5</span> Backward-View TD(\(\lambda\))</h3>
+<div class="outline-text-3" id="text-4-5">
+</div>
+<div id="outline-container-org810b085" class="outline-4">
+<h4 id="org810b085"><span class="section-number-4">4.5.1</span> 资格迹 Eligibility Traces</h4>
+<div class="outline-text-4" id="text-4-5-1">
+<ul class="org-ul">
+<li>Frequency heuristic：这个片段中 某个状态出现的次数越频繁，对当前状态的reward 影响越大</li>
+<li>Recency heuristic：离当前状态越近的状态，对当前状态影响越大</li>
+</ul>
+
+<p>
+\[ E_t(s) = \gamma \lambda E_{t-1}(s) + 1(S_t = s) \]
+</p>
+
+<p>
+每经过一个 Step，通过 \(\gamma \lambda\) 减小 E(s)；如果再次遇到 s 这个状态，将 E(s) + 1
+</p>
+</div>
 </div>
 
-<div id="outline-container-orgcbe1925" class="outline-2">
-<h2 id="orgcbe1925"><span class="section-number-2">5</span> Lession 5</h2>
+<div id="outline-container-org7a3dabb" class="outline-4">
+<h4 id="org7a3dabb"><span class="section-number-4">4.5.2</span> Backward-View</h4>
+<div class="outline-text-4" id="text-4-5-2">
+<ul class="org-ul">
+<li>为每个 state 保留一个资格迹</li>
+<li>每走一个 state，E(s)</li>
+<li>更新 V(s)</li>
+</ul>
+
+<p>
+\[ \delta_t = R_{t+1} + \gamma V(S_{t+1}) - V(S_t) \]
+\[ V(s) \leftarrow V(s) + \alpha \delta_t E_t(s) \]
+</p>
+
+<p>
+\(\lambda = 0\)，TD(\(\lambda\)) 相当于 TD(0).
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6dceddb" class="outline-2">
+<h2 id="org6dceddb"><span class="section-number-2">5</span> Lession 5 Model-Free Control</h2>
 <div class="outline-text-2" id="text-5">
 </div>
 <div id="outline-container-orgdaa39ca" class="outline-3">
@@ -880,7 +1054,7 @@ TD(0) 指 \( G_t = R_{t+1} + \lambda G_{t+1} \)，TD(\(\lambda\)) 就是，有 \
 <li>On-Policy
 <ul class="org-ul">
 <li>Learn on the job</li>
-<li>根据 Policy 的执行，在这个过程中学习</li>
+<li>根据 Policy 的执行，在这个过程中学习，sample 遵循 policy</li>
 </ul></li>
 <li>Off-Policy
 <ul class="org-ul">
@@ -890,9 +1064,205 @@ TD(0) 指 \( G_t = R_{t+1} + \lambda G_{t+1} \)，TD(\(\lambda\)) 就是，有 \
 </ul>
 </div>
 </div>
+
+<div id="outline-container-orgec6570c" class="outline-3">
+<h3 id="orgec6570c"><span class="section-number-3">5.2</span> Model-Free 使用 Action Value Function</h3>
+<div class="outline-text-3" id="text-5-2">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/mc-action-value.png" alt="mc-action-value.png" width="100%" />
+</p>
+</div>
 </div>
 
+<div class="org-center">
 
+<div class="figure">
+<p><img src="../img/mc-iteration.png" alt="mc-iteration.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+Evaluation 的时候，使用 MC 的方法，跑几组 sample 计算出 Value Function，然后 greedy。
+</p>
+
+<p>
+此方法的问题是：MC 是 model-free 的，没有全部的 state 信息，因此可能会漏掉很多概率小但是 return 非常大的状态。因此需要给当前 return 小的 state 一些机会。
+</p>
+</div>
+
+<div id="outline-container-orge739aae" class="outline-4">
+<h4 id="orge739aae"><span class="section-number-4">5.2.1</span> \(\epsilon\)-Greedy</h4>
+<div class="outline-text-4" id="text-5-2-1">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/mc-greedy.png" alt="mc-greedy.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+每次 greedy，不直接选 Q 最大的，而是会给其他的 Action 留点机会（m：一共有 m 个 action）：
+\[ 1 = \epsilon / m * (m - 1) + (\epsilon / m + 1 - \epsilon) \]
+</p>
+
+<p>
+优化之后的 Iteration：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/mc-iteration-2.png" alt="mc-iteration-2.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org46a9ee0" class="outline-4">
+<h4 id="org46a9ee0"><span class="section-number-4">5.2.2</span> GLIE</h4>
+<div class="outline-text-4" id="text-5-2-2">
+<p>
+Greedy in the Limit with Infinite Exploration.
+</p>
+<ul class="org-ul">
+<li>action-state 对 是无限的，一直会重新出现</li>
+<li>\( lim_{k \rightarrow \infty} \pi_k(a|s) = 1 (a = argmax Q_k(s,a') ) \)</li>
+</ul>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/glie-mc-interation.png" alt="glie-mc-interation.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org45c882f" class="outline-3">
+<h3 id="org45c882f"><span class="section-number-3">5.3</span> Sarsa</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+由 TD(0) 延伸。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/sarsa-name.png" alt="sarsa-name.png" />
+</p>
+</div>
+</div>
+
+<p>
+\[ Q(S, A) \leftarrow Q(S, A) + \alpha (R + \gamma Q(S', A') - Q(S, A)) \]
+</p>
+
+<p>
+相比于 MC，Sarsa 不同的地方在于：原来每个 episode 更新一次策略，现在每个 timestep 更新一次；因此 Q 不能直接计算，而是需要预测。
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/sarsa-iteration.png" alt="sarsa-iteration.png" width="100%" />
+</p>
+</div>
+</div>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/sarsa-algorithm.png" alt="sarsa-algorithm.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3ad13b6" class="outline-3">
+<h3 id="org3ad13b6"><span class="section-number-3">5.4</span> n-Step Sarsa</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+由 TD(\(\lambda\)) 延伸。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/n-step-sarsa.png" alt="n-step-sarsa.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org53526e3" class="outline-4">
+<h4 id="org53526e3"><span class="section-number-4">5.4.1</span> Forward view</h4>
+<div class="outline-text-4" id="text-5-4-1">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/forward-sarsa.png" alt="forward-sarsa.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+这个方法将 TD(0) 到 TD(n) 的预计做了平均，唯一的缺点就是需要执行完整个 episode 才可以更新 value function。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org40fd9b1" class="outline-4">
+<h4 id="org40fd9b1"><span class="section-number-4">5.4.2</span> Backward View</h4>
+<div class="outline-text-4" id="text-5-4-2">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/sarsa-lambda.png" alt="sarsa-lambda.png" width="100%" />
+</p>
+</div>
+</div>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/sarsa-lambda-algorithm.png" alt="sarsa-lambda-algorithm.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+Sarsa(\(\lambda\)) 算法其实就是对 Sarsa(0) 算法的基础上增加了资格迹（Eligibility Trace）。算法中有两处更新 E(s)，第一次是访问到的状态的更新，直接加 1；第二次是将所有状态衰减。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1a9cfae" class="outline-4">
+<h4 id="org1a9cfae"><span class="section-number-4">5.4.3</span> Sarsa Compare</h4>
+<div class="outline-text-4" id="text-5-4-3">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/sarsa-compare.png" alt="sarsa-compare.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+假设：只有到达终点时候才会得到 reward 1，情况都是 0
+</p>
+
+<p>
+如果使用 Sarsa(0)，那么一次 sample 完成之后，只会更新离终点最近那个状态的 value，而不会更新其他状态；如果使用 Sarsa(\(\lambda\))，一次 sample 完成之后，会更新此次 sample 路径上所有的 value，因为在取样的时候已经更新过 E 了，而当获得一次 1 时，也会去更新其他状态的 value。
+</p>
+</div>
+</div>
+</div>
+</div>
 
 
 
@@ -926,7 +1296,7 @@ TD(0) 指 \( G_t = R_{t+1} + \lambda G_{t+1} \)，TD(\(\lambda\)) 就是，有 \
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-07-10 三 08:39. Created by hiro</p>
+<p class="postamble">Last Updated 2019-07-12 五 22:46. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"
