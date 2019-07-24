@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-23 四 23:52 -->
+<!-- 2019-07-24 三 18:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python 数据分析知识点总结</title>
@@ -231,48 +231,43 @@ for the JavaScript code in this tag.
 <body>
 <div id="content">
 <h1 class="title">Python 数据分析知识点总结</h1>
-<p>
-学习这本书，反正这几天真的是厌倦了去考研教室，去了也是不知疲倦的玩手机，不如在寝室学点别的东西呢……
-这是我自己记得学习笔记，在查一些函数时候比较方便，但是可能不适合当博客阅读。
-</p>
-
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orga5df42d">1. 开始之前</a></li>
-<li><a href="#orga3b41d4">2. Pandas 库一些使用</a></li>
-<li><a href="#org72db642">3. IPython</a>
+<li><a href="#orga09224b">1. 开始之前</a></li>
+<li><a href="#orgeaeb38e">2. Pandas 库一些使用</a></li>
+<li><a href="#org3fba6b7">3. IPython</a>
 <ul>
-<li><a href="#orgc301c92">3.1. 内省</a></li>
-<li><a href="#org9266111">3.2. %run</a></li>
-<li><a href="#orgd3e5a10">3.3. %paste</a></li>
-<li><a href="#orge10d799">3.4. 和 shell 的交互</a></li>
+<li><a href="#org73f0972">3.1. 内省</a></li>
+<li><a href="#org604fbfe">3.2. %run</a></li>
+<li><a href="#org066832c">3.3. %paste</a></li>
+<li><a href="#orgf963799">3.4. 和 shell 的交互</a></li>
 </ul>
 </li>
-<li><a href="#org27facdc">4. Numpy 库</a>
+<li><a href="#orga5c5c20">4. Numpy 库</a>
 <ul>
-<li><a href="#org78e6264">4.1. 生成数组</a></li>
+<li><a href="#orgb5c7e87">4.1. 生成数组</a></li>
 </ul>
 </li>
-<li><a href="#org0def795">5. Pandas 库使用</a>
+<li><a href="#org71db003">5. Pandas 库使用</a>
 <ul>
-<li><a href="#org23b2e46">5.1. Series 使用</a></li>
-<li><a href="#org2c33302">5.2. DataFrame 使用</a></li>
-<li><a href="#org03c7a8c">5.3. Index 对象</a></li>
-<li><a href="#org0eb1063">5.4. 删除元素</a></li>
-<li><a href="#org373690f">5.5. 处理丢失数据</a></li>
-<li><a href="#orgea21c83">5.6. 层次化索引</a></li>
+<li><a href="#org4a70857">5.1. Series 使用</a></li>
+<li><a href="#orge12ab5e">5.2. DataFrame 使用</a></li>
+<li><a href="#org67f30b7">5.3. Index 对象</a></li>
+<li><a href="#orgf2dae74">5.4. 删除元素</a></li>
+<li><a href="#orgb48afb0">5.5. 处理丢失数据</a></li>
+<li><a href="#org88957f0">5.6. 层次化索引</a></li>
 </ul>
 </li>
-<li><a href="#orgc530180">6. 数据加载与存储</a></li>
-<li><a href="#orgfa6f153">7. Basemap API 解析</a></li>
+<li><a href="#org2da7371">6. 数据加载与存储</a></li>
+<li><a href="#orgd38d4c4">7. Basemap API 解析</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga5df42d" class="outline-2">
-<h2 id="orga5df42d"><span class="section-number-2">1</span> 开始之前</h2>
+<div id="outline-container-orga09224b" class="outline-2">
+<h2 id="orga09224b"><span class="section-number-2">1</span> 开始之前</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li>安装必须的一些库，pandas，numpy 等。其中有一个库 tk 图形界面库需要注意一下，tk 库在 python 里是自带的，但第一次运行的时候需要额外配置。</li>
@@ -286,8 +281,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga3b41d4" class="outline-2">
-<h2 id="orga3b41d4"><span class="section-number-2">2</span> Pandas 库一些使用</h2>
+<div id="outline-container-orgeaeb38e" class="outline-2">
+<h2 id="orgeaeb38e"><span class="section-number-2">2</span> Pandas 库一些使用</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 records 是一个 list，里面每个元素是一个字典 dict，pandas 的 DataFrame 将 records 转为一个表格，其中，每个元素占一行，每个元素中字典各占一列。
@@ -295,45 +290,45 @@ records 是一个 list，里面每个元素是一个字典 dict，pandas 的 Dat
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #e7c547;">frame</span> = DataFrame<span style="color: #eaeaea;">(</span>records<span style="color: #eaeaea;">)</span>
-<span style="color: #e7c547;">tz_counts</span> = frame<span style="color: #eaeaea;">[</span><span style="color: #70c0b1;">'tz'</span><span style="color: #eaeaea;">]</span>.valun_counts<span style="color: #eaeaea;">()</span>
+<pre class="src src-python"><span style="color: #268bd2;">frame</span> = DataFrame<span style="color: #268bd2;">(</span>records<span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">tz_counts</span> = frame<span style="color: #268bd2;">[</span><span style="color: #2aa198;">'tz'</span><span style="color: #268bd2;">]</span>.valun_counts<span style="color: #268bd2;">()</span>
 
-<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#21487;&#20197;&#20351;&#29992; =fillna()= &#20989;&#25968;&#26367;&#25442;&#32570;&#22833;&#20540;&#12290;</span>
-<span style="color: #e7c547;">clean_tz</span> = frame<span style="color: #eaeaea;">[</span><span style="color: #70c0b1;">'tz'</span><span style="color: #eaeaea;">]</span>.fillna<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">'Missing'</span><span style="color: #eaeaea;">)</span>
-<span style="color: #e7c547;">clean_tz</span> = <span style="color: #e7c547;">frame</span><span style="color: #eaeaea;">[</span>clean_tz == <span style="color: #70c0b1;">''</span><span style="color: #eaeaea;">]</span> = <span style="color: #70c0b1;">'Unknown'</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#21487;&#20197;&#20351;&#29992; =fillna()= &#20989;&#25968;&#26367;&#25442;&#32570;&#22833;&#20540;&#12290;</span>
+<span style="color: #268bd2;">clean_tz</span> = frame<span style="color: #268bd2;">[</span><span style="color: #2aa198;">'tz'</span><span style="color: #268bd2;">]</span>.fillna<span style="color: #268bd2;">(</span><span style="color: #2aa198;">'Missing'</span><span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">clean_tz</span> = <span style="color: #268bd2;">frame</span><span style="color: #268bd2;">[</span>clean_tz == <span style="color: #2aa198;">''</span><span style="color: #268bd2;">]</span> = <span style="color: #2aa198;">'Unknown'</span>
 
-<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">plot &#20989;&#25968;&#20570;&#22270;&#65292;&#20855;&#20307; api &#29992;&#21040;&#30340;&#26102;&#20505;&#20877;&#30475;&#25991;&#26723;&#65292;&#36825;&#37324; =barh= &#25351;&#22402;&#30452;&#22359;&#22270;&#65307; =rot= &#25351;&#26059;&#36716;&#12290;</span>
-tz_counts<span style="color: #eaeaea;">[</span>:10<span style="color: #eaeaea;">]</span>.plot<span style="color: #eaeaea;">(</span>kind=<span style="color: #70c0b1;">'barh'</span>, rot=0<span style="color: #eaeaea;">)</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">plot &#20989;&#25968;&#20570;&#22270;&#65292;&#20855;&#20307; api &#29992;&#21040;&#30340;&#26102;&#20505;&#20877;&#30475;&#25991;&#26723;&#65292;&#36825;&#37324; =barh= &#25351;&#22402;&#30452;&#22359;&#22270;&#65307; =rot= &#25351;&#26059;&#36716;&#12290;</span>
+tz_counts<span style="color: #268bd2;">[</span>:10<span style="color: #268bd2;">]</span>.plot<span style="color: #268bd2;">(</span>kind=<span style="color: #2aa198;">'barh'</span>, rot=0<span style="color: #268bd2;">)</span>
 
-<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">frame.a &#36820;&#22238;&#30340;&#23545;&#35937;&#26159;&#19968;&#20010; Series &#23545;&#35937;&#65292;dropna() &#36820;&#22238;&#21435;&#25481;&#20102;&#31354;&#20540;</span>
-<span style="color: #e7c547;">results</span> = Series<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">[</span>x.split<span style="color: #e7c547;">()[</span>0<span style="color: #e7c547;">]</span> <span style="color: #b9ca4a;">for</span> x <span style="color: #b9ca4a;">in</span> frame.a.dropna<span style="color: #e7c547;">()</span><span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">)</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">frame.a &#36820;&#22238;&#30340;&#23545;&#35937;&#26159;&#19968;&#20010; Series &#23545;&#35937;&#65292;dropna() &#36820;&#22238;&#21435;&#25481;&#20102;&#31354;&#20540;</span>
+<span style="color: #268bd2;">results</span> = Series<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>x.split<span style="color: #859900;">()[</span>0<span style="color: #859900;">]</span> <span style="color: #859900;">for</span> x <span style="color: #859900;">in</span> frame.a.dropna<span style="color: #859900;">()</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">return a frame &#20854;&#20013; a &#20803;&#32032;&#27809;&#26377;&#31354;&#20540;</span>
-<span style="color: #e7c547;">cframe</span> = frame<span style="color: #eaeaea;">[</span>frame.a.notnull<span style="color: #70c0b1;">()</span><span style="color: #eaeaea;">]</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">return a frame &#20854;&#20013; a &#20803;&#32032;&#27809;&#26377;&#31354;&#20540;</span>
+<span style="color: #268bd2;">cframe</span> = frame<span style="color: #268bd2;">[</span>frame.a.notnull<span style="color: #d33682;">()</span><span style="color: #268bd2;">]</span>
 
-<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">numpy &#30340; where &#20989;&#25968;&#65292;where(condition, true, false)&#65307;&#22914;&#26524; condition &#20026;true &#20869;&#23481;&#23601;&#21464;&#20026; true &#35774;&#32622;&#30340;&#20869;&#23481;&#65292;false &#21516;&#26679;</span>
-<span style="color: #e7c547;">operating_system</span> = np.where<span style="color: #eaeaea;">(</span>cframe<span style="color: #70c0b1;">[</span><span style="color: #70c0b1;">'a'</span><span style="color: #70c0b1;">]</span>.<span style="color: #c397d8;">str</span>.contains<span style="color: #70c0b1;">(</span><span style="color: #70c0b1;">'Windows'</span><span style="color: #70c0b1;">)</span>, <span style="color: #70c0b1;">'Windows'</span>, <span style="color: #70c0b1;">'Not Windows'</span><span style="color: #eaeaea;">)</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">numpy &#30340; where &#20989;&#25968;&#65292;where(condition, true, false)&#65307;&#22914;&#26524; condition &#20026;true &#20869;&#23481;&#23601;&#21464;&#20026; true &#35774;&#32622;&#30340;&#20869;&#23481;&#65292;false &#21516;&#26679;</span>
+<span style="color: #268bd2;">operating_system</span> = np.where<span style="color: #268bd2;">(</span>cframe<span style="color: #d33682;">[</span><span style="color: #2aa198;">'a'</span><span style="color: #d33682;">]</span>.<span style="color: #d33682; font-style: italic;">str</span>.contains<span style="color: #d33682;">(</span><span style="color: #2aa198;">'Windows'</span><span style="color: #d33682;">)</span>, <span style="color: #2aa198;">'Windows'</span>, <span style="color: #2aa198;">'Not Windows'</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#36890;&#36807; tz &#21644; operating_system &#26469;&#20998;&#32452;&#65292;&#36820;&#22238;&#32467;&#26524;&#20381;&#28982;&#26159; series&#65292;&#22810;&#20010;&#20998;&#32452;&#23545;&#35937;&#30340;&#35805;&#20250;&#24471;&#21040;&#23618;&#27425;&#21270;&#30340;&#32467;&#26524;</span>
-<span style="color: #e7c547;">by_tz_os</span> = cframe.groupby<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">[</span><span style="color: #70c0b1;">'tz'</span>, operating_system<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">)</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#36890;&#36807; tz &#21644; operating_system &#26469;&#20998;&#32452;&#65292;&#36820;&#22238;&#32467;&#26524;&#20381;&#28982;&#26159; series&#65292;&#22810;&#20010;&#20998;&#32452;&#23545;&#35937;&#30340;&#35805;&#20250;&#24471;&#21040;&#23618;&#27425;&#21270;&#30340;&#32467;&#26524;</span>
+<span style="color: #268bd2;">by_tz_os</span> = cframe.groupby<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #2aa198;">'tz'</span>, operating_system<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#36825;&#37324;&#30340; size() &#21487;&#20197;&#26597;&#30475;&#20998;&#32452;&#21518;&#30340;&#21508;&#32452;&#22823;&#23567;</span>
-<span style="color: #e7c547;">agg_counts</span> = by_tz_os.size<span style="color: #eaeaea;">()</span>.unstack<span style="color: #eaeaea;">()</span>.fillna<span style="color: #eaeaea;">(</span>0<span style="color: #eaeaea;">)</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#36825;&#37324;&#30340; size() &#21487;&#20197;&#26597;&#30475;&#20998;&#32452;&#21518;&#30340;&#21508;&#32452;&#22823;&#23567;</span>
+<span style="color: #268bd2;">agg_counts</span> = by_tz_os.size<span style="color: #268bd2;">()</span>.unstack<span style="color: #268bd2;">()</span>.fillna<span style="color: #268bd2;">(</span>0<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org72db642" class="outline-2">
-<h2 id="org72db642"><span class="section-number-2">3</span> IPython</h2>
+<div id="outline-container-org3fba6b7" class="outline-2">
+<h2 id="org3fba6b7"><span class="section-number-2">3</span> IPython</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 作为一个比原始 Python Shell 好不知道多少倍的 shell，我竟然才开始用……
 </p>
 </div>
 
-<div id="outline-container-orgc301c92" class="outline-3">
-<h3 id="orgc301c92"><span class="section-number-3">3.1</span> 内省</h3>
+<div id="outline-container-org73f0972" class="outline-3">
+<h3 id="org73f0972"><span class="section-number-3">3.1</span> 内省</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 这简直就是神器！
@@ -353,8 +348,8 @@ tz_counts<span style="color: #eaeaea;">[</span>:10<span style="color: #eaeaea;">
 </div>
 </div>
 
-<div id="outline-container-org9266111" class="outline-3">
-<h3 id="org9266111"><span class="section-number-3">3.2</span> %run</h3>
+<div id="outline-container-org604fbfe" class="outline-3">
+<h3 id="org604fbfe"><span class="section-number-3">3.2</span> %run</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 可以使脚本在当前的会话中运行。不用重新开一个 shell 就是爽；并且运行之后，脚本中的所有变量在此会话下都可以使用，大大方便了我们的调试。
@@ -366,16 +361,16 @@ tz_counts<span style="color: #eaeaea;">[</span>:10<span style="color: #eaeaea;">
 </p>
 </div>
 </div>
-<div id="outline-container-orgd3e5a10" class="outline-3">
-<h3 id="orgd3e5a10"><span class="section-number-3">3.3</span> %paste</h3>
+<div id="outline-container-org066832c" class="outline-3">
+<h3 id="org066832c"><span class="section-number-3">3.3</span> %paste</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 直接使用这个函数将剪贴板中的代码贴到 shell 中就可以执行了。
 </p>
 </div>
 </div>
-<div id="outline-container-orge10d799" class="outline-3">
-<h3 id="orge10d799"><span class="section-number-3">3.4</span> 和 shell 的交互</h3>
+<div id="outline-container-orgf963799" class="outline-3">
+<h3 id="orgf963799"><span class="section-number-3">3.4</span> 和 shell 的交互</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 这东西还是用的多了自然就熟悉了。
@@ -384,12 +379,12 @@ tz_counts<span style="color: #eaeaea;">[</span>:10<span style="color: #eaeaea;">
 </div>
 </div>
 
-<div id="outline-container-org27facdc" class="outline-2">
-<h2 id="org27facdc"><span class="section-number-2">4</span> Numpy 库</h2>
+<div id="outline-container-orga5c5c20" class="outline-2">
+<h2 id="orga5c5c20"><span class="section-number-2">4</span> Numpy 库</h2>
 <div class="outline-text-2" id="text-4">
 </div>
-<div id="outline-container-org78e6264" class="outline-3">
-<h3 id="org78e6264"><span class="section-number-3">4.1</span> 生成数组</h3>
+<div id="outline-container-orgb5c7e87" class="outline-3">
+<h3 id="orgb5c7e87"><span class="section-number-3">4.1</span> 生成数组</h3>
 <div class="outline-text-3" id="text-4-1">
 <p>
 传入一个嵌套的 list 到 <code>np.array()</code> 中可以生成一个数组，几个重要的属性：
@@ -446,12 +441,12 @@ Numpy 的数组始终只有一个备份！所有的修改都在这一个地方�
 </div>
 </div>
 
-<div id="outline-container-org0def795" class="outline-2">
-<h2 id="org0def795"><span class="section-number-2">5</span> Pandas 库使用</h2>
+<div id="outline-container-org71db003" class="outline-2">
+<h2 id="org71db003"><span class="section-number-2">5</span> Pandas 库使用</h2>
 <div class="outline-text-2" id="text-5">
 </div>
-<div id="outline-container-org23b2e46" class="outline-3">
-<h3 id="org23b2e46"><span class="section-number-3">5.1</span> Series 使用</h3>
+<div id="outline-container-org4a70857" class="outline-3">
+<h3 id="org4a70857"><span class="section-number-3">5.1</span> Series 使用</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 传入的参数有一个 value list，一个 index list（缺省为数字）；也可以直接传入字典参数来来构建 Series。再有参数就是设置 dtype，用到的时候查文档吧。
@@ -467,8 +462,8 @@ index 可以通过赋值的方法更改。
 </div>
 </div>
 
-<div id="outline-container-org2c33302" class="outline-3">
-<h3 id="org2c33302"><span class="section-number-3">5.2</span> DataFrame 使用</h3>
+<div id="outline-container-orge12ab5e" class="outline-3">
+<h3 id="orge12ab5e"><span class="section-number-3">5.2</span> DataFrame 使用</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 DataFrame 可以理解为一个表格，其中每一列都是 Series 对象。生成的时候传入一个字典，字典中每个索引指向一个 list，每个索引在生成后都是一个列。
@@ -492,8 +487,8 @@ DataFrame 可以理解为一个表格，其中每一列都是 Series 对象。�
 </div>
 </div>
 
-<div id="outline-container-org03c7a8c" class="outline-3">
-<h3 id="org03c7a8c"><span class="section-number-3">5.3</span> Index 对象</h3>
+<div id="outline-container-org67f30b7" class="outline-3">
+<h3 id="org67f30b7"><span class="section-number-3">5.3</span> Index 对象</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 Series 和 DataFrame 对象中的索引，它是不可修改的。
@@ -509,8 +504,8 @@ reindex(index, method=None, fill<sub>value</sub>=None)，这个方法中，metho
 </div>
 </div>
 
-<div id="outline-container-org0eb1063" class="outline-3">
-<h3 id="org0eb1063"><span class="section-number-3">5.4</span> 删除元素</h3>
+<div id="outline-container-orgf2dae74" class="outline-3">
+<h3 id="orgf2dae74"><span class="section-number-3">5.4</span> 删除元素</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 drop 方法。
@@ -542,8 +537,8 @@ applymap，类似 map，是某个函数应用到整个 Frame 中；apply 只会�
 </div>
 </div>
 
-<div id="outline-container-org373690f" class="outline-3">
-<h3 id="org373690f"><span class="section-number-3">5.5</span> 处理丢失数据</h3>
+<div id="outline-container-orgb48afb0" class="outline-3">
+<h3 id="orgb48afb0"><span class="section-number-3">5.5</span> 处理丢失数据</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 使用 <code>numpy.NaN</code> 来表示缺失值。
@@ -559,8 +554,8 @@ applymap，类似 map，是某个函数应用到整个 Frame 中；apply 只会�
 </div>
 </div>
 
-<div id="outline-container-orgea21c83" class="outline-3">
-<h3 id="orgea21c83"><span class="section-number-3">5.6</span> 层次化索引</h3>
+<div id="outline-container-org88957f0" class="outline-3">
+<h3 id="org88957f0"><span class="section-number-3">5.6</span> 层次化索引</h3>
 <div class="outline-text-3" id="text-5-6">
 <p>
 给 Series 对象加多个索引，可以通过 <code>unstack()</code> 方法变为 DataFrame，在通过 <code>stack()</code> 变回来。
@@ -585,8 +580,8 @@ applymap，类似 map，是某个函数应用到整个 Frame 中；apply 只会�
 </div>
 </div>
 
-<div id="outline-container-orgc530180" class="outline-2">
-<h2 id="orgc530180"><span class="section-number-2">6</span> 数据加载与存储</h2>
+<div id="outline-container-org2da7371" class="outline-2">
+<h2 id="org2da7371"><span class="section-number-2">6</span> 数据加载与存储</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 看 <code>read_csv</code> 文档。还有各种 read。
@@ -596,9 +591,9 @@ applymap，类似 map，是某个函数应用到整个 Frame 中；apply 只会�
 与数据库交互：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b9ca4a;">import</span> pandas.io.sql <span style="color: #b9ca4a;">as</span> sql
+<pre class="src src-python"><span style="color: #859900;">import</span> pandas.io.sql <span style="color: #859900;">as</span> sql
 
-sql.read_frame<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">'sql_query'</span>, conn<span style="color: #eaeaea;">)</span>
+sql.read_frame<span style="color: #268bd2;">(</span><span style="color: #2aa198;">'sql_query'</span>, conn<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 
@@ -613,18 +608,18 @@ DataFrame 取多个列是，将列对象组成一个list传入
 </div>
 </div>
 
-<div id="outline-container-orgfa6f153" class="outline-2">
-<h2 id="orgfa6f153"><span class="section-number-2">7</span> Basemap API 解析</h2>
+<div id="outline-container-orgd38d4c4" class="outline-2">
+<h2 id="orgd38d4c4"><span class="section-number-2">7</span> Basemap API 解析</h2>
 <div class="outline-text-2" id="text-7">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #b9ca4a;">class</span> <span style="color: #7aa6da;">mpl_toolkits</span>.basemap.Basemap<span style="color: #eaeaea;">(</span>llcrnrlon=<span style="color: #7aa6da;">None</span>, llcrnrlat=<span style="color: #7aa6da;">None</span>, 
-urcrnrlon=<span style="color: #7aa6da;">None</span>, urcrnrlat=<span style="color: #7aa6da;">None</span>, llcrnrx=<span style="color: #7aa6da;">None</span>, llcrnry=<span style="color: #7aa6da;">None</span>, urcrnrx=<span style="color: #7aa6da;">None</span>,
-urcrnry=<span style="color: #7aa6da;">None</span>, width=<span style="color: #7aa6da;">None</span>, height=<span style="color: #7aa6da;">None</span>, projection=<span style="color: #70c0b1;">'cyl'</span>, resolution=<span style="color: #70c0b1;">'c'</span>, 
-area_thresh=<span style="color: #7aa6da;">None</span>, rsphere=6370997.0, ellps=<span style="color: #7aa6da;">None</span>, lat_ts=<span style="color: #7aa6da;">None</span>, lat_1=<span style="color: #7aa6da;">None</span>, 
-lat_2=<span style="color: #7aa6da;">None</span>, lat_0=<span style="color: #7aa6da;">None</span>, lon_0=<span style="color: #7aa6da;">None</span>, lon_1=<span style="color: #7aa6da;">None</span>, lon_2=<span style="color: #7aa6da;">None</span>, o_lon_p=<span style="color: #7aa6da;">None</span>, 
-o_lat_p=<span style="color: #7aa6da;">None</span>, k_0=<span style="color: #7aa6da;">None</span>, no_rot=<span style="color: #7aa6da;">False</span>, suppress_ticks=<span style="color: #7aa6da;">True</span>, 
-satellite_height=35786000, boundinglat=<span style="color: #7aa6da;">None</span>, fix_aspect=<span style="color: #7aa6da;">True</span>, anchor=<span style="color: #70c0b1;">'C'</span>, 
-celestial=<span style="color: #7aa6da;">False</span>, <span style="color: #c397d8;">round</span>=<span style="color: #7aa6da;">False</span>, epsg=<span style="color: #7aa6da;">None</span>, ax=<span style="color: #7aa6da;">None</span><span style="color: #eaeaea;">)</span>
+<pre class="src src-python"><span style="color: #859900;">class</span> <span style="color: #b58900; font-style: italic;">mpl_toolkits</span>.basemap.Basemap<span style="color: #268bd2;">(</span>llcrnrlon=<span style="color: #6c71c4;">None</span>, llcrnrlat=<span style="color: #6c71c4;">None</span>, 
+urcrnrlon=<span style="color: #6c71c4;">None</span>, urcrnrlat=<span style="color: #6c71c4;">None</span>, llcrnrx=<span style="color: #6c71c4;">None</span>, llcrnry=<span style="color: #6c71c4;">None</span>, urcrnrx=<span style="color: #6c71c4;">None</span>,
+urcrnry=<span style="color: #6c71c4;">None</span>, width=<span style="color: #6c71c4;">None</span>, height=<span style="color: #6c71c4;">None</span>, projection=<span style="color: #2aa198;">'cyl'</span>, resolution=<span style="color: #2aa198;">'c'</span>, 
+area_thresh=<span style="color: #6c71c4;">None</span>, rsphere=6370997.0, ellps=<span style="color: #6c71c4;">None</span>, lat_ts=<span style="color: #6c71c4;">None</span>, lat_1=<span style="color: #6c71c4;">None</span>, 
+lat_2=<span style="color: #6c71c4;">None</span>, lat_0=<span style="color: #6c71c4;">None</span>, lon_0=<span style="color: #6c71c4;">None</span>, lon_1=<span style="color: #6c71c4;">None</span>, lon_2=<span style="color: #6c71c4;">None</span>, o_lon_p=<span style="color: #6c71c4;">None</span>, 
+o_lat_p=<span style="color: #6c71c4;">None</span>, k_0=<span style="color: #6c71c4;">None</span>, no_rot=<span style="color: #6c71c4;">False</span>, suppress_ticks=<span style="color: #6c71c4;">True</span>, 
+satellite_height=35786000, boundinglat=<span style="color: #6c71c4;">None</span>, fix_aspect=<span style="color: #6c71c4;">True</span>, anchor=<span style="color: #2aa198;">'C'</span>, 
+celestial=<span style="color: #6c71c4;">False</span>, <span style="color: #d33682; font-style: italic;">round</span>=<span style="color: #6c71c4;">False</span>, epsg=<span style="color: #6c71c4;">None</span>, ax=<span style="color: #6c71c4;">None</span><span style="color: #268bd2;">)</span>
 
 llcrnrlon: &#25152;&#38656;&#22320;&#22270;&#22495;&#24038;&#19979;&#35282;&#30340;&#32463;&#24230;
 llcrnrlat: &#25152;&#38656;&#22320;&#22270;&#22495;&#24038;&#19979;&#35282;&#30340;&#32500;&#24230;
@@ -633,8 +628,8 @@ urcrnrlat: &#25152;&#38656;&#22320;&#22270;&#22495;&#21491;&#19978;&#35282;&#303
 
 width: &#25237;&#24433;&#22352;&#26631;&#20013;&#22320;&#22270;&#22495;&#30340;&#23485;&#24230;
 height: &#25237;&#24433;&#22352;&#26631;&#20013;&#22320;&#22270;&#22495;&#30340;&#39640;&#24230;
-lon_0: &#25152;&#38656;&#22320;&#22270;&#22495;&#30340;&#20013;&#24515;&#22352;&#26631;&#32463;&#24230;<span style="color: #eaeaea;">&#65288;</span>&#24230;<span style="color: #eaeaea;">&#65289;</span>
-lat_0: &#25152;&#38656;&#22320;&#22270;&#22495;&#30340;&#20013;&#24515;&#22352;&#26631;&#32500;&#24230;<span style="color: #eaeaea;">&#65288;</span>&#24230;<span style="color: #eaeaea;">&#65289;</span>
+lon_0: &#25152;&#38656;&#22320;&#22270;&#22495;&#30340;&#20013;&#24515;&#22352;&#26631;&#32463;&#24230;<span style="color: #268bd2;">&#65288;</span>&#24230;<span style="color: #268bd2;">&#65289;</span>
+lat_0: &#25152;&#38656;&#22320;&#22270;&#22495;&#30340;&#20013;&#24515;&#22352;&#26631;&#32500;&#24230;<span style="color: #268bd2;">&#65288;</span>&#24230;<span style="color: #268bd2;">&#65289;</span>
 
 resolution: &#27169;&#31946;&#36824;&#26159;&#28165;&#26224;
 </pre>
@@ -643,7 +638,7 @@ resolution: &#27169;&#31946;&#36824;&#26159;&#28165;&#26224;
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-05-19 日 21:45. Created by hiro</p>
+<p class="postamble">Last Updated 2019-07-19 五 13:42. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-12 五 22:46 -->
+<!-- 2019-07-24 三 18:14 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>强化学习 &#x2013; David Silver Course</title>
@@ -272,7 +272,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgfb6d922">1.7. RL Agent的主要元素</a>
 <ul>
 <li><a href="#orgc5193af">1.7.1. Policy</a></li>
-<li><a href="#org7562237">1.7.2. Value Function</a></li>
+<li><a href="#org4b32d43">1.7.2. Value Function</a></li>
 </ul>
 </li>
 <li><a href="#orgc3e13a2">1.8. RL Agent的分类</a>
@@ -290,14 +290,14 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgc877db7">2.2.1. Return</a></li>
 <li><a href="#org676cdaf">2.2.2. Why discount</a></li>
-<li><a href="#org09f4c48">2.2.3. Value Function</a></li>
+<li><a href="#org78f5052">2.2.3. Value Function</a></li>
 <li><a href="#orgf3afae3">2.2.4. Bellman 等式</a></li>
 </ul>
 </li>
 <li><a href="#orgc0894bc">2.3. Markov Decision Process</a>
 <ul>
 <li><a href="#org7162c6c">2.3.1. Policies</a></li>
-<li><a href="#org4b32d43">2.3.2. Value Function</a></li>
+<li><a href="#orga27083e">2.3.2. Value Function</a></li>
 <li><a href="#org150d2c4">2.3.3. Bellman Expectation Equation</a>
 <ul>
 <li><a href="#orga4d702c">2.3.3.1. State 与 State ，Action 与 Action 之间的转换</a></li>
@@ -369,18 +369,20 @@ for the JavaScript code in this tag.
 <li><a href="#org1a9cfae">5.4.3. Sarsa Compare</a></li>
 </ul>
 </li>
+<li><a href="#orgb568a21">5.5. Q-Learning</a></li>
 </ul>
 </li>
-<li><a href="#org3239377">6. 心得</a>
+<li><a href="#org05f06d7">6. Lession 6</a></li>
+<li><a href="#org3239377">7. 心得</a>
 <ul>
 <li>
 <ul>
-<li><a href="#org00a74a6">6.0.1. 口头禅</a></li>
+<li><a href="#org00a74a6">7.0.1. 口头禅</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orgdc0492f">7. Ref</a></li>
+<li><a href="#orgdc0492f">8. Ref</a></li>
 </ul>
 </div>
 </div>
@@ -505,8 +507,8 @@ R: Reward(from environment)
 </ul>
 </div>
 </div>
-<div id="outline-container-org7562237" class="outline-4">
-<h4 id="org7562237"><span class="section-number-4">1.7.2</span> Value Function</h4>
+<div id="outline-container-org4b32d43" class="outline-4">
+<h4 id="org4b32d43"><span class="section-number-4">1.7.2</span> Value Function</h4>
 <div class="outline-text-4" id="text-1-7-2">
 <ul class="org-ul">
 <li>对未来return的预测函数</li>
@@ -603,8 +605,8 @@ Return（Environment 给 Agent）\(G_t\)是从 t 阶段之后的总的discounted
 </div>
 </div>
 </div>
-<div id="outline-container-org09f4c48" class="outline-4">
-<h4 id="org09f4c48"><span class="section-number-4">2.2.3</span> Value Function</h4>
+<div id="outline-container-org78f5052" class="outline-4">
+<h4 id="org78f5052"><span class="section-number-4">2.2.3</span> Value Function</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 Value Function 会给出当前状态以及到未来所有状态下的期望 return（\(G_t\)）
@@ -658,8 +660,8 @@ Agent的行为完全取决于Policy。
 </p>
 </div>
 </div>
-<div id="outline-container-org4b32d43" class="outline-4">
-<h4 id="org4b32d43"><span class="section-number-4">2.3.2</span> Value Function</h4>
+<div id="outline-container-orga27083e" class="outline-4">
+<h4 id="orga27083e"><span class="section-number-4">2.3.2</span> Value Function</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 \(\pi\) ：policy
@@ -1227,6 +1229,10 @@ Greedy in the Limit with Infinite Exploration.
 </div>
 </div>
 
+<p>
+资格迹很好理解。参考上诉 4.5.1
+</p>
+
 <div class="org-center">
 
 <div class="figure">
@@ -1262,22 +1268,66 @@ Sarsa(\(\lambda\)) 算法其实就是对 Sarsa(0) 算法的基础上增加了资
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgb568a21" class="outline-3">
+<h3 id="orgb568a21"><span class="section-number-3">5.5</span> Q-Learning</h3>
+<div class="outline-text-3" id="text-5-5">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/q-learning.png" alt="q-learning.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+Q-Learning 即 SarsaMax，在计算 TD-error 的时候使用最大的 Q 函数。
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/q-learning-algorithm.png" alt="q-learning-algorithm.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org05f06d7" class="outline-2">
+<h2 id="org05f06d7"><span class="section-number-2">6</span> Lession 6</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+目前学到的计算 Value Function 的方法是通过一个 lookup table，
+</p>
+<ul class="org-ul">
+<li>每个状态有一个 V(s)</li>
+<li>每个 state-action 对有一个 Q(s,a)</li>
+</ul>
+
+<p>
+上诉方法的缺点有：
+</p>
+<ul class="org-ul">
+<li>维护一个太大的表，占用太多内存</li>
+<li>就算可以维护，从大的表中计算 Value 比较困难</li>
+</ul>
+</div>
 </div>
 
 
-
-
 <div id="outline-container-org3239377" class="outline-2">
-<h2 id="org3239377"><span class="section-number-2">6</span> 心得</h2>
-<div class="outline-text-2" id="text-6">
+<h2 id="org3239377"><span class="section-number-2">7</span> 心得</h2>
+<div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li>不要被符号所局限，也不要完全脱离数学符号。</li>
 <li>听不懂的先跳过，因为你一直重复听也是听不懂的</li>
 </ul>
 </div>
 <div id="outline-container-org00a74a6" class="outline-4">
-<h4 id="org00a74a6"><span class="section-number-4">6.0.1</span> 口头禅</h4>
-<div class="outline-text-4" id="text-6-0-1">
+<h4 id="org00a74a6"><span class="section-number-4">7.0.1</span> 口头禅</h4>
+<div class="outline-text-4" id="text-7-0-1">
 <div class="org-src-container">
 <pre class="src src-quote">... becoming better better and better ...
 </pre>
@@ -1287,8 +1337,8 @@ Sarsa(\(\lambda\)) 算法其实就是对 Sarsa(0) 算法的基础上增加了资
 </div>
 
 <div id="outline-container-orgdc0492f" class="outline-2">
-<h2 id="orgdc0492f"><span class="section-number-2">7</span> Ref</h2>
-<div class="outline-text-2" id="text-7">
+<h2 id="orgdc0492f"><span class="section-number-2">8</span> Ref</h2>
+<div class="outline-text-2" id="text-8">
 <ul class="org-ul">
 <li><a href="https://zhuanlan.zhihu.com/c_135909947">强化学习基础David Silver笔记</a></li>
 </ul>
@@ -1296,7 +1346,7 @@ Sarsa(\(\lambda\)) 算法其实就是对 Sarsa(0) 算法的基础上增加了资
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-07-12 五 22:46. Created by hiro</p>
+<p class="postamble">Last Updated 2019-07-14 日 08:29. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"
