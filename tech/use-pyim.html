@@ -1,0 +1,429 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-07-25 四 10:59 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Emacs 使用 pyim ＋ rime ＋ double flypy 打字</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Emacs 使用 pyim ＋ rime ＋ double flypy 打字</h1>
+<p>
+之前一直没有使用 Fcitx 输入法作为系统和 Emacs 的输入法，这样造成的困扰有：
+</p>
+<ul class="org-ul">
+<li>Emacs 本身 Locale 一直无法和系统同步，导致外部输入法无法在 Emacs 中输入中文，每次启动的时候得在 Terminal 中设置 locale 才能在 Emacs 中输入中文</li>
+<li>打字模式和 Evil Mode 不融洽。一个好的打字环境是：Evil Mode（命令）下自动切换英文，退出 Evil 自动使用双拼</li>
+<li>词库。之前一直没有同步输入法词库的习惯（和方法）</li>
+</ul>
+
+<p>
+现在使用 pyim ＋ rime ＋ double flypy 可以解决上面提出的所有问题。
+</p>
+
+<div id="outline-container-org11b0d8d" class="outline-2">
+<h2 id="org11b0d8d"><span class="section-number-2">1</span> Install</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org838a4ac" class="outline-3">
+<h3 id="org838a4ac"><span class="section-number-3">1.1</span> liberime</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+参考 <a href="https://gitlab.com/liberime/liberime">liberime README</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"># linux &#31995;&#32534;&#35793;&#30456;&#23545;&#31616;&#21333;
+git clone https://gitlab.com/liberime/liberime.git
+cd liberime
+# &#25552;&#21069;&#23433;&#35013;&#24517;&#35201;&#30340;&#24320;&#21457;&#24037;&#20855; cmake librime
+make liberime
+# &#32534;&#35793;&#22909;&#30340;&#25991;&#20214;&#20250;&#20445;&#23384;&#21040; build/ &#25991;&#20214;&#22841;&#19979;
+</pre>
+</div>
+
+<p>
+将 <code>build/</code> 文件夹下生成的 <code>liberime.so</code> 文件复制到 <code>~/.emacs.d/pyim/rime/</code> 中，
+</p>
+
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq</span> load-path <span style="color: #97365B;">(</span>cons <span style="color: #4F894C;">(</span>file-truename <span style="color: #4F894C;">"~/.emacs.d/pyim/rime/"</span><span style="color: #4F894C;">)</span> load-path<span style="color: #97365B;">)</span><span style="color: #3B6EA8;">)</span>
+<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">require</span> <span style="color: #3B6EA8;">'</span><span style="color: #97365B;">liberime</span><span style="color: #3B6EA8;">)</span>
+# /usr/share/rime-data &#20026; librime &#20849;&#20139;&#25991;&#20214;&#22841;&#30340;&#30446;&#24405;&#20301;&#32622;
+# &#35814;&#24773;&#21487;&#20197;&#35265; https://github.com/rime/home/wiki/SharedData
+<span style="color: #3B6EA8;">(</span>liberime-start <span style="color: #4F894C;">"/usr/share/rime-data"</span> <span style="color: #97365B;">(</span>file-truename <span style="color: #4F894C;">"~/.emacs.d/pyim/rime/"</span><span style="color: #97365B;">)</span><span style="color: #3B6EA8;">)</span>
+
+# &#26816;&#26597;&#23433;&#35013;&#26159;&#21542;&#23433;&#35013;&#25104;&#21151;
+# &#27492;&#21629;&#20196;&#20250;&#36820;&#22238;&#24403;&#21069;&#37197;&#32622;&#30340; rime &#36755;&#20837;&#26041;&#26696;
+<span style="color: #3B6EA8;">(</span>liberime-get-schema-list<span style="color: #3B6EA8;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org6c06593" class="outline-3">
+<h3 id="org6c06593"><span class="section-number-3">1.2</span> pyim</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+参考 <a href="https://github.com/tumashu/pyim#org5ac927f">pyim 文档</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"># &#20174; melpa &#25110;&#32773;&#19979;&#36733; repo &#25163;&#21160;&#23433;&#35013;
+<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">require</span> <span style="color: #3B6EA8;">'</span><span style="color: #97365B;">pyim</span><span style="color: #3B6EA8;">)</span>
+<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq</span> default-input-method <span style="color: #4F894C;">"pyim"</span><span style="color: #3B6EA8;">)</span>
+# &#24314;&#35758;&#20351;&#29992; posframe &#20316;&#20026;&#36755;&#20837;&#27861;&#20505;&#36873;&#35789;&#24377;&#26694;
+<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq</span> pyim-page-tooltip <span style="color: #3B6EA8;">'</span><span style="color: #9A7500;">posframe</span><span style="color: #3B6EA8;">)</span>
+# &#35774;&#32622; rime &#37197;&#32622;&#26041;&#26696;
+<span style="color: #3B6EA8;">(</span>liberime-select-schema <span style="color: #4F894C;">"luna_pinyin_simp"</span><span style="color: #3B6EA8;">)</span>
+# &#20351;&#29992; rime &#20570;&#21518;&#31471;
+<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq</span> pyim-default-scheme <span style="color: #3B6EA8;">'</span><span style="color: #9A7500;">rime</span><span style="color: #3B6EA8;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org671b2d7" class="outline-2">
+<h2 id="org671b2d7"><span class="section-number-2">2</span> 个性化</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-orga1c0e76" class="outline-3">
+<h3 id="orga1c0e76"><span class="section-number-3">2.1</span> 使用双拼或者其他 rime 配置方案</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+liberime 自带 5 种配置方案，小鹤双拼需要另外添加。Arch 系安装 librime 的时候会将很多常见的配置方案添加到 SharedData 中：
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rime_data.png" alt="rime_data.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+其他系的 Linux 可能需要手动安装配置文件。
+</p>
+
+<p>
+创建 <code>~/.emacs.d/pyim/rime/default.custom.yaml</code> 文件，添加配置：
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #842879;">patch</span>:
+     <span style="color: #4F894C;">"menu/page_size"</span>: 100
+     <span style="color: #4F894C;">"speller/auto_select"</span>: <span style="color: #97365B;">false</span>
+     <span style="color: #4F894C;">"speller/auto_select_unique_candidate"</span>: <span style="color: #97365B;">false</span>
+     <span style="color: #842879;">schema_list</span>:
+       - <span style="color: #842879;">schema</span>: double_pinyin_flypy
+</pre>
+</div>
+
+<p>
+将 liberime 的配置设为 小鹤双拼：
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #3B6EA8;">(</span>liberime-select-schema <span style="color: #4F894C;">"double_pinyin_flypy"</span><span style="color: #3B6EA8;">)</span>
+</pre>
+</div>
+
+<p>
+修改 <code>default.custom.yaml</code> 之后需要重启 Emacs 来加载 liberime 的配置文件。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7c534ac" class="outline-3">
+<h3 id="org7c534ac"><span class="section-number-3">2.2</span> 繁体 -&gt; 简体</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+在 <code>~/.emacs.d/pyim/rime/build/</code> 文件夹中会又许多配置文件，找到 <code>double_pinyin_flypy.schema</code> ,添加：
+</p>
+<div class="org-src-container">
+<pre class="src src-yaml"><span style="color: #842879;">switches</span>:
+  - <span style="color: #842879;">name</span>: ascii_mode
+    <span style="color: #842879;">reset</span>: 0
+    <span style="color: #842879;">states</span>: [<span style="color: #4F894C;">"&#20013;&#25991;"</span>, <span style="color: #4F894C;">"&#35199;&#25991;"</span>]
+  - <span style="color: #842879;">name</span>: full_shape
+    <span style="color: #842879;">states</span>: [<span style="color: #4F894C;">"&#21322;&#35282;"</span>, <span style="color: #4F894C;">"&#20840;&#35282;"</span>]
+  - <span style="color: #842879;">name</span>: simplification
+    <span style="color: #842879;">reset</span>: 1
+    <span style="color: #842879;">states</span>: [<span style="color: #4F894C;">"&#28450;&#23383;"</span>, <span style="color: #4F894C;">"&#27721;&#23383;"</span>]
+  - <span style="color: #842879;">name</span>: ascii_punct
+    <span style="color: #842879;">states</span>: [<span style="color: #4F894C;">"&#12290;&#65292;"</span>, <span style="color: #4F894C;">"&#65294;&#65292;"</span>]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb9f2399" class="outline-3">
+<h3 id="orgb9f2399"><span class="section-number-3">2.3</span> 中英文无痛切换</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+参考 <a href="https://github.com/tumashu/pyim">pyim README</a>
+</p>
+<div class="org-src-container">
+<pre class="src src-elisp"><span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">require</span> <span style="color: #3B6EA8;">'</span><span style="color: #97365B;">pyim-basedict</span><span style="color: #3B6EA8;">)</span>
+<span style="color: #3B6EA8;">(</span>pyim-basedict-enable<span style="color: #3B6EA8;">)</span>
+<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">Auto switch input me;; &#35774;&#32622; pyim &#25506;&#38024;&#35774;&#32622;&#65292;&#36825;&#26159; pyim &#39640;&#32423;&#21151;&#33021;&#35774;&#32622;&#65292;&#21487;&#20197;&#23454;&#29616; *&#26080;&#30171;* &#20013;&#33521;&#25991;&#20999;&#25442; :-)</span>
+<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">&#25105;&#33258;&#24049;&#20351;&#29992;&#30340;&#20013;&#33521;&#25991;&#21160;&#24577;&#20999;&#25442;&#35268;&#21017;&#26159;&#65306;</span>
+<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">1. &#20809;&#26631;&#21482;&#26377;&#22312;&#27880;&#37322;&#37324;&#38754;&#26102;&#65292;&#25165;&#21487;&#20197;&#36755;&#20837;&#20013;&#25991;&#12290;</span>
+<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">2. &#20809;&#26631;&#21069;&#26159;&#27721;&#23383;&#23383;&#31526;&#26102;&#65292;&#25165;&#33021;&#36755;&#20837;&#20013;&#25991;&#12290;</span>
+<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">3. &#20351;&#29992; M-j &#24555;&#25463;&#38190;&#65292;&#24378;&#21046;&#23558;&#20809;&#26631;&#21069;&#30340;&#25340;&#38899;&#23383;&#31526;&#20018;&#36716;&#25442;&#20026;&#20013;&#25991;&#12290;</span>
+<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq-default</span> pyim-english-input-switch-functions
+              <span style="color: #3B6EA8;">'</span><span style="color: #97365B;">(</span>pyim-probe-dynamic-english
+                pyim-probe-isearch-mode
+                pyim-probe-program-mode
+                pyim-probe-org-structure-template<span style="color: #97365B;">)</span><span style="color: #3B6EA8;">)</span>
+<span style="color: #3B6EA8;">(</span>pyim-isearch-mode 1<span style="color: #3B6EA8;">)</span>
+<span style="color: #3B6EA8;">(</span>global-set-key <span style="color: #97365B;">(</span>kbd <span style="color: #4F894C;">"M-j"</span><span style="color: #97365B;">)</span> <span style="color: #3B6EA8;">'</span><span style="color: #9A7500;">pyim-convert-string-at-point</span><span style="color: #3B6EA8;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org2de96e9" class="outline-2">
+<h2 id="org2de96e9"><span class="section-number-2">3</span> 使用</h2>
+<div class="outline-text-2" id="text-3">
+
+<div class="figure">
+<p><img src="../img/emacs-pyim.gif" alt="emacs-pyim.gif" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="postamble">Last Updated 2019-07-25 四 10:59. Created by hiro</p>
+            <script src="https://utteranc.es/client.js"
+        repo="nicehiro/nicehiro.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+        </script>
+</div>
+</body>
+</html>
