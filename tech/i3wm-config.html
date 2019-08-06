@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-06 二 14:07 -->
+<!-- 2019-08-05 一 15:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Sitemap for project org-notes</title>
+<title>i3-wm 配置</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="hiro" />
 <style type="text/css">
@@ -180,6 +180,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -229,46 +230,83 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Sitemap for project org-notes</h1>
-<ul class="org-ul">
-<li><a href="index.html">Hiro's Blog</a></li>
-<li>life
-<ul class="org-ul">
-<li><a href="life/学校每日签到的自动化完成.html">学校每日签到的自动化完成</a></li>
-<li><a href="life/my-college.html">我的大学</a></li>
-</ul></li>
-<li>notes
-<ul class="org-ul">
-<li><a href="notes/gradient-decent.html">Gradient Decent 梯度下降</a></li>
-<li><a href="notes/linux-shell-知识点总结.html">Linux Shell 知识点总结</a></li>
-<li><a href="notes/learn-lisp.html">Lisp 学习笔记</a></li>
-<li><a href="notes/pandas-and-numpy.html">Pandas &amp; Numpy 上手</a></li>
-<li><a href="notes/Python-笔记.html">Python 学习笔记</a></li>
-<li><a href="notes/python-数据分析.html">Python 数据分析知识点总结</a></li>
-<li><a href="notes/Sed-Learn.html">Sed 学习笔记</a></li>
-<li><a href="notes/RL-David-Silver.html">强化学习 &#x2013; David Silver Course</a></li>
-<li><a href="notes/RL-Learn.html">强化学习 &#x2013; 基础</a></li>
-<li><a href="notes/OS.html">操作系统</a></li>
-<li><a href="notes/Data_Structure.html">数据结构</a></li>
-<li><a href="notes/Probability.html">概率论</a></li>
-<li><a href="notes/线性代数.html">线性代数</a></li>
-<li><a href="notes/Computer_Architecture.html">计算机组成原理</a></li>
-<li><a href="notes/Network.html">计算机网络总结</a></li>
-<li><a href="notes/Math.html">高数总结</a></li>
-</ul></li>
-<li>tech
-<ul class="org-ul">
-<li><a href="tech/use-pyim.html">Emacs 使用 pyim ＋ rime ＋ double flypy 打字</a></li>
-<li><a href="tech/GFW-原理简析.html">GFW 原理解析</a></li>
-<li><a href="tech/use-gym-for-rl.html">Gym Learning note</a></li>
-<li><a href="tech/Vim-进阶.html">Vim 进阶</a></li>
-<li><a href="tech/i3wm-config.html">i3-wm 配置</a></li>
-<li><a href="tech/all_kinds_tech.html">技术渣的杂技术集</a></li>
-</ul></li>
-</ul>
+<h1 class="title">i3-wm 配置</h1>
+
+<div id="outline-container-orgb417ba0" class="outline-2">
+<h2 id="orgb417ba0"><span class="section-number-2">1</span> WIFI</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Arch 系使用 <a href="https://wiki.archlinux.org/index.php/NetworkManager_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">NetworkManager</a> 管理 WIFI 的连接情况。 <code>nmcli</code> 是自带的命令行 WIFI 管理工具。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-config"># 查看当前 wifi 列表
+nmcli device wifi list
+
+# 查看当前连接
+nmcli connection
+
+# 断开当前连接
+nmcli connection down &lt;WIFI SSID&gt;
+
+# 连接新 wifi 并且询问密码
+nmcli connection up &lt;WIFI SSID&gt; --ask
+</pre>
+</div>
+
+<p>
+多试试 TAB 补全，可以不用去记忆繁杂的命令。
+</p>
+
+<p>
+使用 <code>nm-applet</code> 图形化管理 WIFI 。在 i3 的 config 文件下添加：
+</p>
+
+<div class="org-src-container">
+<pre class="src src-config">exec_always nm-applet --no-agent
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1682c0b" class="outline-2">
+<h2 id="org1682c0b"><span class="section-number-2">2</span> 亮度显示</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+安装 <code>xbacklight</code> 包，配置中添加：
+</p>
+<div class="org-src-container">
+<pre class="src src-config">bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2414639" class="outline-2">
+<h2 id="org2414639"><span class="section-number-2">3</span> 触控板 Tap to Click</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+参考 <a href="https://cravencode.com/post/essentials/enable-tap-to-click-in-i3wm/">Enable tap to click in i3 wm</a>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">sudo mkdir -p /etc/X11/xorg.conf.d &amp;&amp; sudo tee &lt;&lt;<span style="color: #2aa198;">'EOF'</span> /etc/X11/xorg.conf.d/90-touchpad.conf 1&gt; /dev/null
+<span style="color: #2aa198;">Section "InputClass"</span>
+<span style="color: #2aa198;">        Identifier "touchpad"</span>
+<span style="color: #2aa198;">        MatchIsTouchpad "on"</span>
+<span style="color: #2aa198;">        Driver "libinput"</span>
+<span style="color: #2aa198;">        Option "Tapping" "on"</span>
+<span style="color: #2aa198;">EndSection</span>
+
+<span style="color: #2aa198;">EOF</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-08-06 二 14:07. Created by hiro</p>
+<p class="postamble">Last Updated 2019-08-05 一 10:38. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"

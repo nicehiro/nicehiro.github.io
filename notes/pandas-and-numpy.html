@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-24 三 18:10 -->
+<!-- 2019-08-05 一 15:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Pandas &amp; Numpy 上手</title>
@@ -430,6 +430,23 @@ pd.isna<span style="color: #268bd2;">(</span>df2<span style="color: #268bd2;">)<
 </ul>
 </div>
 </div>
+
+<div id="outline-container-org9b10f4f" class="outline-4">
+<h4 id="org9b10f4f"><span class="section-number-4">2.3.3</span> 替换</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#23558;&#25152;&#26377;&#30340; 0 &#26367;&#25442;&#25104; 5</span>
+df.replace<span style="color: #268bd2;">(</span>0, 5<span style="color: #268bd2;">)</span>
+
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#23558; list &#20013;&#25152;&#26377;&#20803;&#32032;&#26367;&#25442;&#25104; 5</span>
+df.replace<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>1,2,3,4<span style="color: #d33682;">]</span>, 5<span style="color: #268bd2;">)</span>
+
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#23558; list &#20013;&#20803;&#32032;&#20998;&#21035;&#26367;&#25442;&#25104;&#21518;&#38754; list &#20013;&#30340;&#20540;</span>
+df.replace<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>1,2,3,4<span style="color: #d33682;">]</span>, <span style="color: #d33682;">[</span>4,3,2,1<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
+</pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -443,7 +460,7 @@ pd.isna<span style="color: #268bd2;">(</span>df2<span style="color: #268bd2;">)<
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-07-24 三 18:09. Created by hiro</p>
+<p class="postamble">Last Updated 2019-08-05 一 13:06. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"

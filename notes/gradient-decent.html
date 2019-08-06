@@ -1,0 +1,512 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-08-06 二 14:07 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Gradient Decent 梯度下降</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Gradient Decent 梯度下降</h1>
+<p>
+学习自台大李宏毅老师的机器学习课程，案例为其 <a href="https://github.com/ntumlta/2017fall-ml-hw1">Homework1</a>
+</p>
+
+<div id="outline-container-org7ee4d5b" class="outline-2">
+<h2 id="org7ee4d5b"><span class="section-number-2">1</span> Gradient Decent</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+首先，我们有一个可微分的函数。这个函数就代表着一座山。我们的目标就是找到这个函数的最小值，也就是山底。根据之前的场景假设，最快的下山的方式就是找到当前位置最陡峭的方向，然后沿着此方向向下走，对应到函数中，就是找到给定点的梯度 ，然后朝着梯度相反的方向，就能让函数值下降的最快！因为梯度的方向就是函数之变化最快的方向。
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/gradient-decent-1.png" alt="gradient-decent-1.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+\(\eta\) 即 Learning Rate , 控制每次下降的步长。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0a5bcc7" class="outline-2">
+<h2 id="org0a5bcc7"><span class="section-number-2">2</span> Learning Rate</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+控制 Learning Rate 的大小。
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/gradient-lr.png" alt="gradient-lr.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+要确保 Learning Rate 是稳定的下降，才能找到局部最小值。一个合理的 Learning Rate 需要实现以下两点：
+</p>
+<ul class="org-ul">
+<li>随着接近局部最小值，使 Learning Rate 也减小</li>
+<li>对于不同的参数，取不同的 Learning Rate</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgaf9663b" class="outline-2">
+<h2 id="orgaf9663b"><span class="section-number-2">3</span> Adagrid</h2>
+<div class="outline-text-2" id="text-3">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/adagrad.png" alt="adagrad.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+如果只有一个变量，那么其偏导越大，则 step size 越大；但是如果有多个变量，每个变量都符合之前的一个变量的说法，但多个变量之间的比较，就不适合前面的理论了。
+</p>
+
+<p>
+Adagrid 使用一阶偏导近似二阶偏导，这样做的好处是求值的数量大大减少了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd7c5e01" class="outline-2">
+<h2 id="orgd7c5e01"><span class="section-number-2">4</span> Stochastic Gradient Decent</h2>
+<div class="outline-text-2" id="text-4">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/stochastic-gradient-descent.png" alt="stochastic-gradient-descent.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+随机梯度下降，之前的梯度下降是求所有 sample 的总和，更新一次参数；而随机梯度下降是随机抽取一个 sample , 更新一次参数
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdc81442" class="outline-2">
+<h2 id="orgdc81442"><span class="section-number-2">5</span> Sample</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+案例答案参考 <a href="https://github.com/machineCYC/2017MLSpring_Hung-yi-Lee/tree/master/HW1">这里</a>
+</p>
+
+<p>
+分析数据：
+</p>
+<ul class="org-ul">
+<li>csv 文件打开乱码，查了一下台湾的官方编码，为 Big5，设置 encoding 为 Big5 即可。</li>
+<li>一共 12 个月的数据，每个月有前 20 天，每天有 24 小时的检测值</li>
+<li>NR 值类型的数据需要剔除，使用 0.0 代替</li>
+<li>前 9 个小时的检测值都可以算作是变量</li>
+<li>每个月有 24*20=480 个小时的检测值，除去前 9 个小时不能训练以外，共有 471 个训练数据</li>
+</ul>
+</div>
+
+<div id="outline-container-org6e2e2b4" class="outline-3">
+<h3 id="org6e2e2b4"><span class="section-number-3">5.1</span> 导入数据</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+具体导入可直接查看代码，这里说明一下导入之后的数据格式：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">arrayTrainX.shape   <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(5652, 163)</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">5652 = 471 * 12</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">163 = 18 * 9 + 1</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#21363;&#65306;&#27599;&#19968;&#34892;&#34920;&#31034;&#19968;&#32452;&#35757;&#32451;&#25968;&#25454;&#65292;&#27599;&#32452;&#35757;&#32451;&#25968;&#25454;&#26377;163&#20010;&#65292;&#21069;162&#20010;&#34920;&#31034;&#21069;9&#20010;&#23567;&#26102;&#30340;&#26816;&#27979;&#20540;&#65292;&#26368;&#21518;&#19968;&#20010;&#34920;&#31034; bias</span>
+arrayTrainY.shape   <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(5652, )</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#21363;&#65306;&#27599;&#20010;&#20803;&#32032;&#34920;&#31034;&#19968;&#32452;&#35757;&#32451;&#25968;&#25454;&#30340;&#26631;&#20934;&#20540;</span>
+arrayW.shape        <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(163, )</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#21442;&#25968;&#30340;&#26435;&#37325;</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge81376c" class="outline-3">
+<h3 id="orge81376c"><span class="section-number-3">5.2</span> 模型建立</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+线性回归模型：
+</p>
+
+<p>
+\[y = \sum_{i=0}^{n} w_ix_i + b\]
+</p>
+
+<p>
+前 9 个小时一个 9*18=162 个参数。\(x_i\) 表示前 9 个小时的参数，\(w_i\) 为其权重，b 为偏置，y 为预测结果
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbef74ac" class="outline-3">
+<h3 id="orgbef74ac"><span class="section-number-3">5.3</span> Loss Function</h3>
+<div class="outline-text-3" id="text-5-3">
+<p>
+\[ Loss_{label} = \frac{1}{2} * \frac{1}{n} \sum_{i=0}^{n-1} {(\hat{y}^n - y^n)}^2 \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc344710" class="outline-3">
+<h3 id="orgc344710"><span class="section-number-3">5.4</span> 梯度下降</h3>
+<div class="outline-text-3" id="text-5-4">
+<p>
+\[ w_{i} = w_{i} - \eta_{w} \frac{\partial Loss}{\partial w_{i}} = w_{i} - \eta_{w} \frac{1}{n} \sum_{i=0}^{n-1} ({\hat{y}^n - y^n}) (x_i) \]
+</p>
+
+<p>
+\[ b_{i} = b_{i} - \eta_{b} \frac{\partial Loss}{\partial b_{i}} = b_{i} - \eta_{b} \frac{1}{n} \sum_{i=0}^{n-1} ({\hat{y}^n - y^n}) (x_i) \]
+</p>
+</div>
+
+<div id="outline-container-orgb12be29" class="outline-4">
+<h4 id="orgb12be29"><span class="section-number-4">5.4.1</span> 代码分析</h4>
+<div class="outline-text-4" id="text-5-4-1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">GD</span><span style="color: #268bd2;">(</span>X, Y, W, eta, Iteration, lambdaL2<span style="color: #268bd2;">)</span>:
+    <span style="color: #35a69c; font-style: italic;">"""</span>
+<span style="color: #35a69c; font-style: italic;">    &#20351;&#29992;gradient decent learning rate &#35201;&#35519;&#24456;&#23567;&#65292;&#19981;&#28982;&#24456;&#23481;&#26131;&#29190;&#28856;</span>
+<span style="color: #35a69c; font-style: italic;">    X: (5652, 163)</span>
+<span style="color: #35a69c; font-style: italic;">    Y: (5652, )</span>
+<span style="color: #35a69c; font-style: italic;">    W: (163, )</span>
+<span style="color: #35a69c; font-style: italic;">    eta: Learning Rate</span>
+<span style="color: #35a69c; font-style: italic;">    """</span>
+    <span style="color: #268bd2;">listCost</span> = <span style="color: #268bd2;">[]</span>
+    <span style="color: #859900;">for</span> itera <span style="color: #859900;">in</span> <span style="color: #d33682; font-style: italic;">range</span><span style="color: #268bd2;">(</span>Iteration<span style="color: #268bd2;">)</span>:
+        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#27714;&#39044;&#27979;&#20540;</span>
+        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#30697;&#38453;&#20056;&#27861; (5652, 163) . (163, ) = (5652, )</span>
+        <span style="color: #268bd2;">arrayYHat</span> = X.dot<span style="color: #268bd2;">(</span>W<span style="color: #268bd2;">)</span>
+        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">Loss</span>
+        <span style="color: #268bd2;">arrayLoss</span> = arrayYHat - Y <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">(5652, )</span>
+        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#26041;&#24046;</span>
+        <span style="color: #268bd2;">arrayCost</span> = <span style="color: #268bd2;">(</span>np.<span style="color: #d33682; font-style: italic;">sum</span><span style="color: #d33682;">(</span>arrayLoss**2<span style="color: #d33682;">)</span> / X.shape<span style="color: #d33682;">[</span>0<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">(5652, )</span>
+        listCost.append<span style="color: #268bd2;">(</span>arrayCost<span style="color: #268bd2;">)</span>
+
+        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#24494;&#20998;</span>
+        <span style="color: #268bd2;">arrayGradient</span> = <span style="color: #268bd2;">(</span>X.T.dot<span style="color: #d33682;">(</span>arrayLoss<span style="color: #d33682;">)</span> / X.shape<span style="color: #d33682;">[</span>0<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span> + <span style="color: #268bd2;">(</span>lambdaL2 * W<span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">(163, )</span>
+        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#26356;&#26032; W</span>
+        <span style="color: #268bd2;">W</span> -= eta * arrayGradient
+        <span style="color: #859900;">if</span> itera % 1000 == 0:
+            <span style="color: #859900;">print</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">"iteration:{}, cost:{} "</span>.<span style="color: #d33682; font-style: italic;">format</span><span style="color: #d33682;">(</span>itera, arrayCost<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #859900;">return</span> W, listCost
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org40302e5" class="outline-3">
+<h3 id="org40302e5"><span class="section-number-3">5.5</span> Adagrid 更新 Learning Rate</h3>
+<div class="outline-text-3" id="text-5-5">
+<p>
+\[ \eta_{n} = \frac{\eta_{n-1}}{\sqrt{\sum_{i=1}^{n-1} grad_i^2}} \]
+</p>
+</div>
+
+<div id="outline-container-orgbb5f742" class="outline-4">
+<h4 id="orgbb5f742"><span class="section-number-4">5.5.1</span> 代码分析</h4>
+<div class="outline-text-4" id="text-5-5-1">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">Adagrad</span><span style="color: #268bd2;">(</span>X, Y, W, eta, Iteration, lambdaL2<span style="color: #268bd2;">)</span>:
+    <span style="color: #35a69c; font-style: italic;">"""</span>
+<span style="color: #35a69c; font-style: italic;">    X: (5652, 163)</span>
+<span style="color: #35a69c; font-style: italic;">    Y: (5652, )</span>
+<span style="color: #35a69c; font-style: italic;">    W: (163, )</span>
+<span style="color: #35a69c; font-style: italic;">    eta: Learning Rate</span>
+<span style="color: #35a69c; font-style: italic;">    """</span>
+    <span style="color: #268bd2;">listCost</span> = <span style="color: #268bd2;">[]</span>
+    <span style="color: #268bd2;">arrayGradientSum</span> = np.zeros<span style="color: #268bd2;">(</span>X.shape<span style="color: #d33682;">[</span>1<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
+    <span style="color: #859900;">for</span> itera <span style="color: #859900;">in</span> <span style="color: #d33682; font-style: italic;">range</span><span style="color: #268bd2;">(</span>Iteration<span style="color: #268bd2;">)</span>:
+        <span style="color: #268bd2;">arrayYHat</span> = np.dot<span style="color: #268bd2;">(</span>X, W<span style="color: #268bd2;">)</span>
+        <span style="color: #268bd2;">arrayLoss</span> = arrayYHat -Y
+        <span style="color: #268bd2;">arrayCost</span> = np.<span style="color: #d33682; font-style: italic;">sum</span><span style="color: #268bd2;">(</span>arrayLoss**2<span style="color: #268bd2;">)</span> / X.shape<span style="color: #268bd2;">[</span>0<span style="color: #268bd2;">]</span>
+
+        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">save cost function value in process</span>
+        listCost.append<span style="color: #268bd2;">(</span>arrayCost<span style="color: #268bd2;">)</span>
+
+        <span style="color: #268bd2;">arrayGradient</span> = <span style="color: #268bd2;">(</span>np.dot<span style="color: #d33682;">(</span>np.transpose<span style="color: #859900;">(</span>X<span style="color: #859900;">)</span>, arrayLoss<span style="color: #d33682;">)</span> / X.shape<span style="color: #d33682;">[</span>0<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span> + <span style="color: #268bd2;">(</span>lambdaL2 * W<span style="color: #268bd2;">)</span>
+        <span style="color: #268bd2;">arrayGradientSum</span> += arrayGradient**2
+        <span style="color: #268bd2;">arraySigma</span> = np.sqrt<span style="color: #268bd2;">(</span>arrayGradientSum<span style="color: #268bd2;">)</span>
+        <span style="color: #268bd2;">W</span> -= eta * arrayGradient / arraySigma
+
+        <span style="color: #859900;">if</span> itera % 1000 == 0:
+            <span style="color: #859900;">print</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">"iteration:{}, cost:{} "</span>.<span style="color: #d33682; font-style: italic;">format</span><span style="color: #d33682;">(</span>itera, arrayCost<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
+    <span style="color: #859900;">return</span> W, listCost
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="postamble">Last Updated 2019-08-06 二 14:06. Created by hiro</p>
+            <script src="https://utteranc.es/client.js"
+        repo="nicehiro/nicehiro.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+        </script>
+</div>
+</body>
+</html>
