@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-11 日 10:19 -->
+<!-- 2019-08-11 日 10:04 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hiro's Blog</title>
+<title>Logistic Regression</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="hiro" />
 <style type="text/css">
@@ -180,7 +180,7 @@
   .org-svg { width: 90%; }
   /*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/index.css"/>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -227,98 +227,234 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
-<h1 class="title">Hiro's Blog</h1>
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<h1 class="title">Logistic Regression</h1>
 
-
-<colgroup>
-<col  class="org-left" />
-</colgroup>
-<tbody>
-<tr>
-<td class="org-left">About me</td>
-</tr>
-</tbody>
-</table>
-
-<div id="outline-container-orgcade63e" class="outline-2">
-<h2 id="orgcade63e"><span class="section-number-2">1</span> Notes</h2>
+<div id="outline-container-orgec78fcd" class="outline-2">
+<h2 id="orgec78fcd"><span class="section-number-2">1</span> 后验概率</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-学习笔记
+\(P(C_1|X)\) 表示取出一个样本，其样本参数符合 X , 那么这个样本属于 Class1 的概率为 \(P(C_1|X)\)
 </p>
 
-<ul class="org-ul">
-<li><a href="notes/Math.html">高数</a></li>
+<div class="org-center">
 
-<li><a href="notes/Probability.html">概率论</a></li>
-
-<li><a href="notes/线性代数.html">线性代数</a></li>
-
-<li><a href="notes/Network.html">计算机网络</a></li>
-
-<li><a href="notes/OS.html">操作系统</a></li>
-
-<li><a href="notes/Computer_Architecture.html">计算机组成原理</a></li>
-
-<li><a href="notes/Data_Structure.html">数据结构</a></li>
-
-<li><a href="notes/Python-笔记.html">Python笔记</a></li>
-
-<li><a href="notes/learn-lisp.html">Lisp笔记</a></li>
-
-<li><a href="notes/linux-shell-知识点总结.html">Shell笔记</a></li>
-
-<li><a href="notes/RL-David-Silver.html">RL 学习笔记</a></li>
-
-<li><a href="notes/Sed-Learn.html">Sed 学习笔记</a></li>
-
-<li><a href="notes/pandas-and-numpy.html">Pandas &amp; Numpy</a></li>
-
-<li><a href="notes/gradient-decent.html">Gradient Decent</a></li>
-
-<li><a href="notes/logistic-regression.html">逻辑回归</a></li>
-</ul>
+<div class="figure">
+<p><img src="../img/sigmoid.png" alt="sigmoid.png" width="100%" />
+</p>
 </div>
 </div>
 
-<div id="outline-container-org24cf158" class="outline-2">
-<h2 id="org24cf158"><span class="section-number-2">2</span> Tech</h2>
-<div class="outline-text-2" id="text-2">
 <p>
-谈谈技术
+经过一系列的推导（查看李弘毅相关的视频，并不难），得出：
 </p>
 
-<ul class="org-ul">
-<li><a href="tech/GFW-原理简析.html">GFW原理解析</a></li>
+<div class="org-center">
 
-<li><a href="tech/Vim-进阶.html">Vim 进阶</a></li>
-
-<li><a href="tech/all_kinds_tech.html">技术杂集</a></li>
-
-<li><a href="tech/use-pyim.html">Emacs 使用 pyim ＋ rime ＋ double flypy 打字</a></li>
-</ul>
+<div class="figure">
+<p><img src="../img/tuidao.png" alt="tuidao.png" width="100%" />
+</p>
 </div>
 </div>
 
-<div id="outline-container-org46c693a" class="outline-2">
-<h2 id="org46c693a"><span class="section-number-2">3</span> Life</h2>
+<p>
+所以使用概率法得到的分类函数是线性的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org0b74ab8" class="outline-2">
+<h2 id="org0b74ab8"><span class="section-number-2">2</span> 逻辑回归</h2>
+<div class="outline-text-2" id="text-2">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/lr.png" alt="lr.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1182d58" class="outline-3">
+<h3 id="org1182d58"><span class="section-number-3">2.1</span> The Goodness of Function</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+上诉的 \(f\) 即 \(P(C_1|X)\) . 那么如何才能判断一个模型（\(f\)）的好坏呢？
+</p>
+
+<div class="org-center">
+<p width="100%">
+<img src="../img/cross.png" alt="cross.png" width="100%" />
+注：上诉有一错误： \(\hat{y}^2 = 1, \hat{y}^3 = 0\)
+</p>
+</div>
+
+<p>
+我们将原来的分类 C1, C2 分别用 \(\hat{y} = 1\) , \(\hat{y} = 0\) 表示，使用 \(L(w, b)\) 量化当前模型的好坏，那么对应的 w, b 应该是使得 L 函数值最大的两个量，即使得 \(-lnL\) 最小的量。
+</p>
+
+<p>
+最后，可以将 \(-lnL\) 化为：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/cross2.png" alt="cross2.png" width="80%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org828dcc8" class="outline-3">
+<h3 id="org828dcc8"><span class="section-number-3">2.2</span> Find the best Function</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+使用 Gradient Descent 来寻找最好的 Function
+</p>
+
+<p>
+求对 w 的偏微分：
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/lr-gradient-1.png" alt="lr-gradient-1.png" width="100%" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="../img/lr-gradient-2.png" alt="lr-gradient-2.png" width="100%" />
+</p>
+</div>
+
+<div class="figure">
+<p><img src="../img/lr-gradient-3.png" alt="lr-gradient-3.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb2a0373" class="outline-2">
+<h2 id="orgb2a0373"><span class="section-number-2">3</span> Sample 案例</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-分享生活
+从给定的数据分析某个人的收入是否大于 50K
 </p>
 
+<p>
+代码和作业资料来自于： <a href="https://github.com/machineCYC/2017MLSpring_Hung-yi-Lee/tree/master/HW2">Dafish</a>
+</p>
+</div>
+
+<div id="outline-container-orgccb8ffb" class="outline-3">
+<h3 id="orgccb8ffb"><span class="section-number-3">3.1</span> 数据处理</h3>
+<div class="outline-text-3" id="text-3-1">
 <ul class="org-ul">
-<li><a href="life/学校每日签到的自动化完成.html">学校每日签到的自动化完成</a></li>
+<li>大于 50K 的 \(\hat{y}\) 设为 1 , 小于的设为 0</li>
+<li>剔除无用的行（首行）</li>
+<li><code>X_train_my.csv</code> 中包含所有的数据（除了最后一列，最后一列属于结果），106个特征变量</li>
+<li><code>Y_train_my.csv</code> 中包含结果值</li>
 </ul>
+</div>
+</div>
+
+<div id="outline-container-org00233c5" class="outline-3">
+<h3 id="org00233c5"><span class="section-number-3">3.2</span> 建模</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+\[ y^n = \sigma \sum_{i=1}^{106} w_i x_i^n + b \]
+</p>
+
+<p>
+\[ \sigma(z) = \frac{1}{1 + e^{-z}} \]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3; font-weight: bold;">getLinear</span><span style="color: #DCDCCC;">(</span>arrayX, arrayW, arrayB<span style="color: #DCDCCC;">)</span>:
+    <span style="color: #DFAF8F; font-weight: bold;">X</span> = np.dot<span style="color: #DCDCCC;">(</span>arrayX, arrayW<span style="color: #DCDCCC;">)</span> + arrayB
+    <span style="color: #F0DFAF; font-weight: bold;">return</span> X
+
+
+<span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3; font-weight: bold;">getSigmoidValue</span><span style="color: #DCDCCC;">(</span>z<span style="color: #DCDCCC;">)</span>:
+    <span style="color: #DFAF8F; font-weight: bold;">s</span> = 1 / <span style="color: #DCDCCC;">(</span>1.0 + np.exp<span style="color: #BFEBBF;">(</span>-z<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+    <span style="color: #F0DFAF; font-weight: bold;">return</span> np.clip<span style="color: #DCDCCC;">(</span>s, 1e-8, 1 - <span style="color: #BFEBBF;">(</span>1e-8<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbec4d83" class="outline-3">
+<h3 id="orgbec4d83"><span class="section-number-3">3.3</span> 判断模型好坏的方法</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+\[ Loss = \frac{1}{n} \sum_n -[\hat{y}^nln{y(x^n)} + (1-\hat{y}^n)ln(1-y(x^n))] \]
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3; font-weight: bold;">getCrossEntropyValue</span><span style="color: #DCDCCC;">(</span>s, Y<span style="color: #DCDCCC;">)</span>:
+    <span style="color: #DFAF8F; font-weight: bold;">arrayCrossEntropy</span> = -1 * <span style="color: #DCDCCC;">(</span>np.dot<span style="color: #BFEBBF;">(</span>np.transpose<span style="color: #D0BF8F;">(</span>Y<span style="color: #D0BF8F;">)</span>, np.log<span style="color: #D0BF8F;">(</span>s<span style="color: #D0BF8F;">)</span><span style="color: #BFEBBF;">)</span> + np.dot<span style="color: #BFEBBF;">(</span><span style="color: #D0BF8F;">(</span>1-np.transpose<span style="color: #93E0E3;">(</span>Y<span style="color: #93E0E3;">)</span><span style="color: #D0BF8F;">)</span>, np.log<span style="color: #D0BF8F;">(</span>1-s<span style="color: #D0BF8F;">)</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span> / <span style="color: #DCDCCC; font-weight: bold;">len</span><span style="color: #DCDCCC;">(</span>Y<span style="color: #DCDCCC;">)</span>
+    <span style="color: #F0DFAF; font-weight: bold;">return</span> arrayCrossEntropy
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgabd638b" class="outline-3">
+<h3 id="orgabd638b"><span class="section-number-3">3.4</span> Gradient Descent 更新参数</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+\[ w_i \leftarrow w_i - \eta \sum_n - (\hat{y}^n - y^n) x_i^n \]
+</p>
+
+<p>
+\[ b_i \leftarrow b_i -\eta \frac{1}{n} \sum_n - (\hat{y}^n - y^n \]
+</p>
+
+<p>
+注：i 表示参数个数；n 表示样本个数
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #DFAF8F; font-weight: bold;">arrayGradientW</span> = -1 * np.dot<span style="color: #DCDCCC;">(</span>np.transpose<span style="color: #BFEBBF;">(</span>X<span style="color: #BFEBBF;">)</span>, <span style="color: #BFEBBF;">(</span>np.squeeze<span style="color: #D0BF8F;">(</span>Y<span style="color: #D0BF8F;">)</span> - s<span style="color: #BFEBBF;">)</span>.reshape<span style="color: #BFEBBF;">(</span><span style="color: #D0BF8F;">(</span>intBatchSize,1<span style="color: #D0BF8F;">)</span><span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #DFAF8F; font-weight: bold;">arrayGradientB</span> = np.mean<span style="color: #DCDCCC;">(</span>-1 * <span style="color: #BFEBBF;">(</span>np.squeeze<span style="color: #D0BF8F;">(</span>Y<span style="color: #D0BF8F;">)</span> - s<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+<span style="color: #DFAF8F; font-weight: bold;">arrayW</span> -= floatLearnRate * np.squeeze<span style="color: #DCDCCC;">(</span>arrayGradientW<span style="color: #DCDCCC;">)</span>
+<span style="color: #DFAF8F; font-weight: bold;">arrayB</span> -= floatLearnRate * arrayGradientB
+</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-08-11 日 10:19. Created by hiro</p>
+<p class="postamble">Last Updated 2019-08-11 日 10:04. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"

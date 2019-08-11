@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-06 二 14:07 -->
+<!-- 2019-08-08 四 17:08 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gradient Decent 梯度下降</title>
@@ -367,14 +367,14 @@ Adagrid 使用一阶偏导近似二阶偏导，这样做的好处是求值的数
 具体导入可直接查看代码，这里说明一下导入之后的数据格式：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">arrayTrainX.shape   <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(5652, 163)</span>
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">5652 = 471 * 12</span>
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">163 = 18 * 9 + 1</span>
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#21363;&#65306;&#27599;&#19968;&#34892;&#34920;&#31034;&#19968;&#32452;&#35757;&#32451;&#25968;&#25454;&#65292;&#27599;&#32452;&#35757;&#32451;&#25968;&#25454;&#26377;163&#20010;&#65292;&#21069;162&#20010;&#34920;&#31034;&#21069;9&#20010;&#23567;&#26102;&#30340;&#26816;&#27979;&#20540;&#65292;&#26368;&#21518;&#19968;&#20010;&#34920;&#31034; bias</span>
-arrayTrainY.shape   <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(5652, )</span>
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#21363;&#65306;&#27599;&#20010;&#20803;&#32032;&#34920;&#31034;&#19968;&#32452;&#35757;&#32451;&#25968;&#25454;&#30340;&#26631;&#20934;&#20540;</span>
-arrayW.shape        <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(163, )</span>
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#21442;&#25968;&#30340;&#26435;&#37325;</span>
+<pre class="src src-python">arrayTrainX.shape   <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">=&gt;(5652, 163)</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">5652 = 471 * 12</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">163 = 18 * 9 + 1</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21363;&#65306;&#27599;&#19968;&#34892;&#34920;&#31034;&#19968;&#32452;&#35757;&#32451;&#25968;&#25454;&#65292;&#27599;&#32452;&#35757;&#32451;&#25968;&#25454;&#26377;163&#20010;&#65292;&#21069;162&#20010;&#34920;&#31034;&#21069;9&#20010;&#23567;&#26102;&#30340;&#26816;&#27979;&#20540;&#65292;&#26368;&#21518;&#19968;&#20010;&#34920;&#31034; bias</span>
+arrayTrainY.shape   <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">=&gt;(5652, )</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21363;&#65306;&#27599;&#20010;&#20803;&#32032;&#34920;&#31034;&#19968;&#32452;&#35757;&#32451;&#25968;&#25454;&#30340;&#26631;&#20934;&#20540;</span>
+arrayW.shape        <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">=&gt;(163, )</span>
+<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21442;&#25968;&#30340;&#26435;&#37325;</span>
 </pre>
 </div>
 </div>
@@ -418,36 +418,36 @@ arrayW.shape        <span style="color: #96A7A9; font-style: italic;">#</span><s
 </p>
 </div>
 
-<div id="outline-container-orgb12be29" class="outline-4">
-<h4 id="orgb12be29"><span class="section-number-4">5.4.1</span> 代码分析</h4>
+<div id="outline-container-orgbb5f742" class="outline-4">
+<h4 id="orgbb5f742"><span class="section-number-4">5.4.1</span> 代码分析</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">GD</span><span style="color: #268bd2;">(</span>X, Y, W, eta, Iteration, lambdaL2<span style="color: #268bd2;">)</span>:
-    <span style="color: #35a69c; font-style: italic;">"""</span>
-<span style="color: #35a69c; font-style: italic;">    &#20351;&#29992;gradient decent learning rate &#35201;&#35519;&#24456;&#23567;&#65292;&#19981;&#28982;&#24456;&#23481;&#26131;&#29190;&#28856;</span>
-<span style="color: #35a69c; font-style: italic;">    X: (5652, 163)</span>
-<span style="color: #35a69c; font-style: italic;">    Y: (5652, )</span>
-<span style="color: #35a69c; font-style: italic;">    W: (163, )</span>
-<span style="color: #35a69c; font-style: italic;">    eta: Learning Rate</span>
-<span style="color: #35a69c; font-style: italic;">    """</span>
-    <span style="color: #268bd2;">listCost</span> = <span style="color: #268bd2;">[]</span>
-    <span style="color: #859900;">for</span> itera <span style="color: #859900;">in</span> <span style="color: #d33682; font-style: italic;">range</span><span style="color: #268bd2;">(</span>Iteration<span style="color: #268bd2;">)</span>:
-        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#27714;&#39044;&#27979;&#20540;</span>
-        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#30697;&#38453;&#20056;&#27861; (5652, 163) . (163, ) = (5652, )</span>
-        <span style="color: #268bd2;">arrayYHat</span> = X.dot<span style="color: #268bd2;">(</span>W<span style="color: #268bd2;">)</span>
-        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">Loss</span>
-        <span style="color: #268bd2;">arrayLoss</span> = arrayYHat - Y <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">(5652, )</span>
-        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#26041;&#24046;</span>
-        <span style="color: #268bd2;">arrayCost</span> = <span style="color: #268bd2;">(</span>np.<span style="color: #d33682; font-style: italic;">sum</span><span style="color: #d33682;">(</span>arrayLoss**2<span style="color: #d33682;">)</span> / X.shape<span style="color: #d33682;">[</span>0<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">(5652, )</span>
-        listCost.append<span style="color: #268bd2;">(</span>arrayCost<span style="color: #268bd2;">)</span>
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">GD</span><span style="color: #DCDCCC;">(</span>X, Y, W, eta, Iteration, lambdaL2<span style="color: #DCDCCC;">)</span>:
+    <span style="color: #9FC59F;">"""</span>
+<span style="color: #9FC59F;">    &#20351;&#29992;gradient decent learning rate &#35201;&#35519;&#24456;&#23567;&#65292;&#19981;&#28982;&#24456;&#23481;&#26131;&#29190;&#28856;</span>
+<span style="color: #9FC59F;">    X: (5652, 163)</span>
+<span style="color: #9FC59F;">    Y: (5652, )</span>
+<span style="color: #9FC59F;">    W: (163, )</span>
+<span style="color: #9FC59F;">    eta: Learning Rate</span>
+<span style="color: #9FC59F;">    """</span>
+    <span style="color: #DFAF8F;">listCost</span> = <span style="color: #DCDCCC;">[]</span>
+    <span style="color: #F0DFAF; font-weight: bold;">for</span> itera <span style="color: #F0DFAF; font-weight: bold;">in</span> <span style="color: #DCDCCC; font-weight: bold;">range</span><span style="color: #DCDCCC;">(</span>Iteration<span style="color: #DCDCCC;">)</span>:
+        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#27714;&#39044;&#27979;&#20540;</span>
+        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#30697;&#38453;&#20056;&#27861; (5652, 163) . (163, ) = (5652, )</span>
+        <span style="color: #DFAF8F;">arrayYHat</span> = X.dot<span style="color: #DCDCCC;">(</span>W<span style="color: #DCDCCC;">)</span>
+        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Loss</span>
+        <span style="color: #DFAF8F;">arrayLoss</span> = arrayYHat - Y <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">(5652, )</span>
+        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#26041;&#24046;</span>
+        <span style="color: #DFAF8F;">arrayCost</span> = <span style="color: #DCDCCC;">(</span>np.<span style="color: #DCDCCC; font-weight: bold;">sum</span><span style="color: #BFEBBF;">(</span>arrayLoss**2<span style="color: #BFEBBF;">)</span> / X.shape<span style="color: #BFEBBF;">[</span>0<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">(5652, )</span>
+        listCost.append<span style="color: #DCDCCC;">(</span>arrayCost<span style="color: #DCDCCC;">)</span>
 
-        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#24494;&#20998;</span>
-        <span style="color: #268bd2;">arrayGradient</span> = <span style="color: #268bd2;">(</span>X.T.dot<span style="color: #d33682;">(</span>arrayLoss<span style="color: #d33682;">)</span> / X.shape<span style="color: #d33682;">[</span>0<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span> + <span style="color: #268bd2;">(</span>lambdaL2 * W<span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">(163, )</span>
-        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#26356;&#26032; W</span>
-        <span style="color: #268bd2;">W</span> -= eta * arrayGradient
-        <span style="color: #859900;">if</span> itera % 1000 == 0:
-            <span style="color: #859900;">print</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">"iteration:{}, cost:{} "</span>.<span style="color: #d33682; font-style: italic;">format</span><span style="color: #d33682;">(</span>itera, arrayCost<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
-    <span style="color: #859900;">return</span> W, listCost
+        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#24494;&#20998;</span>
+        <span style="color: #DFAF8F;">arrayGradient</span> = <span style="color: #DCDCCC;">(</span>X.T.dot<span style="color: #BFEBBF;">(</span>arrayLoss<span style="color: #BFEBBF;">)</span> / X.shape<span style="color: #BFEBBF;">[</span>0<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span> + <span style="color: #DCDCCC;">(</span>lambdaL2 * W<span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">(163, )</span>
+        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#26356;&#26032; W</span>
+        <span style="color: #DFAF8F;">W</span> -= eta * arrayGradient
+        <span style="color: #F0DFAF; font-weight: bold;">if</span> itera % 1000 == 0:
+            <span style="color: #F0DFAF; font-weight: bold;">print</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"iteration:{}, cost:{} "</span>.<span style="color: #DCDCCC; font-weight: bold;">format</span><span style="color: #BFEBBF;">(</span>itera, arrayCost<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+    <span style="color: #F0DFAF; font-weight: bold;">return</span> W, listCost
 </pre>
 </div>
 </div>
@@ -462,35 +462,35 @@ arrayW.shape        <span style="color: #96A7A9; font-style: italic;">#</span><s
 </p>
 </div>
 
-<div id="outline-container-orgbb5f742" class="outline-4">
-<h4 id="orgbb5f742"><span class="section-number-4">5.5.1</span> 代码分析</h4>
+<div id="outline-container-org5ebbabc" class="outline-4">
+<h4 id="org5ebbabc"><span class="section-number-4">5.5.1</span> 代码分析</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">Adagrad</span><span style="color: #268bd2;">(</span>X, Y, W, eta, Iteration, lambdaL2<span style="color: #268bd2;">)</span>:
-    <span style="color: #35a69c; font-style: italic;">"""</span>
-<span style="color: #35a69c; font-style: italic;">    X: (5652, 163)</span>
-<span style="color: #35a69c; font-style: italic;">    Y: (5652, )</span>
-<span style="color: #35a69c; font-style: italic;">    W: (163, )</span>
-<span style="color: #35a69c; font-style: italic;">    eta: Learning Rate</span>
-<span style="color: #35a69c; font-style: italic;">    """</span>
-    <span style="color: #268bd2;">listCost</span> = <span style="color: #268bd2;">[]</span>
-    <span style="color: #268bd2;">arrayGradientSum</span> = np.zeros<span style="color: #268bd2;">(</span>X.shape<span style="color: #d33682;">[</span>1<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-    <span style="color: #859900;">for</span> itera <span style="color: #859900;">in</span> <span style="color: #d33682; font-style: italic;">range</span><span style="color: #268bd2;">(</span>Iteration<span style="color: #268bd2;">)</span>:
-        <span style="color: #268bd2;">arrayYHat</span> = np.dot<span style="color: #268bd2;">(</span>X, W<span style="color: #268bd2;">)</span>
-        <span style="color: #268bd2;">arrayLoss</span> = arrayYHat -Y
-        <span style="color: #268bd2;">arrayCost</span> = np.<span style="color: #d33682; font-style: italic;">sum</span><span style="color: #268bd2;">(</span>arrayLoss**2<span style="color: #268bd2;">)</span> / X.shape<span style="color: #268bd2;">[</span>0<span style="color: #268bd2;">]</span>
+<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">Adagrad</span><span style="color: #DCDCCC;">(</span>X, Y, W, eta, Iteration, lambdaL2<span style="color: #DCDCCC;">)</span>:
+    <span style="color: #9FC59F;">"""</span>
+<span style="color: #9FC59F;">    X: (5652, 163)</span>
+<span style="color: #9FC59F;">    Y: (5652, )</span>
+<span style="color: #9FC59F;">    W: (163, )</span>
+<span style="color: #9FC59F;">    eta: Learning Rate</span>
+<span style="color: #9FC59F;">    """</span>
+    <span style="color: #DFAF8F;">listCost</span> = <span style="color: #DCDCCC;">[]</span>
+    <span style="color: #DFAF8F;">arrayGradientSum</span> = np.zeros<span style="color: #DCDCCC;">(</span>X.shape<span style="color: #BFEBBF;">[</span>1<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span>
+    <span style="color: #F0DFAF; font-weight: bold;">for</span> itera <span style="color: #F0DFAF; font-weight: bold;">in</span> <span style="color: #DCDCCC; font-weight: bold;">range</span><span style="color: #DCDCCC;">(</span>Iteration<span style="color: #DCDCCC;">)</span>:
+        <span style="color: #DFAF8F;">arrayYHat</span> = np.dot<span style="color: #DCDCCC;">(</span>X, W<span style="color: #DCDCCC;">)</span>
+        <span style="color: #DFAF8F;">arrayLoss</span> = arrayYHat -Y
+        <span style="color: #DFAF8F;">arrayCost</span> = np.<span style="color: #DCDCCC; font-weight: bold;">sum</span><span style="color: #DCDCCC;">(</span>arrayLoss**2<span style="color: #DCDCCC;">)</span> / X.shape<span style="color: #DCDCCC;">[</span>0<span style="color: #DCDCCC;">]</span>
 
-        <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">save cost function value in process</span>
-        listCost.append<span style="color: #268bd2;">(</span>arrayCost<span style="color: #268bd2;">)</span>
+        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">save cost function value in process</span>
+        listCost.append<span style="color: #DCDCCC;">(</span>arrayCost<span style="color: #DCDCCC;">)</span>
 
-        <span style="color: #268bd2;">arrayGradient</span> = <span style="color: #268bd2;">(</span>np.dot<span style="color: #d33682;">(</span>np.transpose<span style="color: #859900;">(</span>X<span style="color: #859900;">)</span>, arrayLoss<span style="color: #d33682;">)</span> / X.shape<span style="color: #d33682;">[</span>0<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span> + <span style="color: #268bd2;">(</span>lambdaL2 * W<span style="color: #268bd2;">)</span>
-        <span style="color: #268bd2;">arrayGradientSum</span> += arrayGradient**2
-        <span style="color: #268bd2;">arraySigma</span> = np.sqrt<span style="color: #268bd2;">(</span>arrayGradientSum<span style="color: #268bd2;">)</span>
-        <span style="color: #268bd2;">W</span> -= eta * arrayGradient / arraySigma
+        <span style="color: #DFAF8F;">arrayGradient</span> = <span style="color: #DCDCCC;">(</span>np.dot<span style="color: #BFEBBF;">(</span>np.transpose<span style="color: #D0BF8F;">(</span>X<span style="color: #D0BF8F;">)</span>, arrayLoss<span style="color: #BFEBBF;">)</span> / X.shape<span style="color: #BFEBBF;">[</span>0<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span> + <span style="color: #DCDCCC;">(</span>lambdaL2 * W<span style="color: #DCDCCC;">)</span>
+        <span style="color: #DFAF8F;">arrayGradientSum</span> += arrayGradient**2
+        <span style="color: #DFAF8F;">arraySigma</span> = np.sqrt<span style="color: #DCDCCC;">(</span>arrayGradientSum<span style="color: #DCDCCC;">)</span>
+        <span style="color: #DFAF8F;">W</span> -= eta * arrayGradient / arraySigma
 
-        <span style="color: #859900;">if</span> itera % 1000 == 0:
-            <span style="color: #859900;">print</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">"iteration:{}, cost:{} "</span>.<span style="color: #d33682; font-style: italic;">format</span><span style="color: #d33682;">(</span>itera, arrayCost<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
-    <span style="color: #859900;">return</span> W, listCost
+        <span style="color: #F0DFAF; font-weight: bold;">if</span> itera % 1000 == 0:
+            <span style="color: #F0DFAF; font-weight: bold;">print</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"iteration:{}, cost:{} "</span>.<span style="color: #DCDCCC; font-weight: bold;">format</span><span style="color: #BFEBBF;">(</span>itera, arrayCost<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
+    <span style="color: #F0DFAF; font-weight: bold;">return</span> W, listCost
 </pre>
 </div>
 </div>
@@ -499,7 +499,7 @@ arrayW.shape        <span style="color: #96A7A9; font-style: italic;">#</span><s
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-08-06 二 14:06. Created by hiro</p>
+<p class="postamble">Last Updated 2019-08-07 三 12:36. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"
