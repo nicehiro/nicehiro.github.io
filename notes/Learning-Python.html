@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-10-03 Thu 09:14 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Learning Python 5th 笔记</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        displayAlign: "center",
+        displayIndent: "0em",
+
+        "HTML-CSS": { scale: 100,
+                        linebreaks: { automatic: "false" },
+                        webFont: "TeX"
+                       },
+        SVG: {scale: 100,
+              linebreaks: { automatic: "false" },
+              font: "TeX"},
+        NativeMML: {scale: 100},
+        TeX: { equationNumbers: {autoNumber: "AMS"},
+               MultLineWidth: "85%",
+               TagSide: "right",
+               TagIndent: ".8em"
+             }
+});
+</script>
+<script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Learning Python 5th 笔记</h1>
+
+<div id="outline-container-org4524e45" class="outline-2">
+<h2 id="org4524e45"><span class="section-number-2">1</span> Basics</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org9dfe934" class="outline-3">
+<h3 id="org9dfe934"><span class="section-number-3">1.1</span> Python 代码运行</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Python 代码会先编译成字节码，然后将字节码送到 PVM(Python Virtural Machine) 执行。
+</p>
+<ul class="org-ul">
+<li>字节码比原始代码运行要快的多</li>
+<li>如果机器上的 Python 进程有写（Write）的权限，会在源代码同级目录生成 <code>__pycache__</code> 目录，其中维护该项目的字节码（Python 2.x 版本不会生成此目录，而是生成相应文件的 <code>*.pyc</code> ）；如果 Python 没有写的权限，Python 进程会将字节码存在内存中，进程执行结束后清空内存</li>
+<li>Python 只会为导入的包生成字节码文件，最顶层的启动文件不会生成字节码</li>
+<li>切忌这里的字节码是供 Python 虚拟机识别的，而非直接是机器可以运行的机器码；这也是为什么 Python 是动态语言，Python 比 C 语言运行慢的原因</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4714cc1" class="outline-3">
+<h3 id="org4714cc1"><span class="section-number-3">1.2</span> Python build-in objects</h3>
+<div class="outline-text-3" id="text-1-2">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Object type</th>
+<th scope="col" class="org-left">Examples</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Numbers</td>
+<td class="org-left">1,2,Decimal(), Fraction()</td>
+</tr>
+
+<tr>
+<td class="org-left">Strings</td>
+<td class="org-left">'str', b'a\x01c'(byte)</td>
+</tr>
+
+<tr>
+<td class="org-left">Lists</td>
+<td class="org-left">[1,2,3]</td>
+</tr>
+
+<tr>
+<td class="org-left">Dictionaries</td>
+<td class="org-left">{1:2}</td>
+</tr>
+
+<tr>
+<td class="org-left">Tuples</td>
+<td class="org-left">(1, 2)</td>
+</tr>
+
+<tr>
+<td class="org-left">Files</td>
+<td class="org-left">open('test.txt')</td>
+</tr>
+
+<tr>
+<td class="org-left">Sets</td>
+<td class="org-left">{1,2,3}</td>
+</tr>
+
+<tr>
+<td class="org-left">Others</td>
+<td class="org-left">Booleans, Types, None</td>
+</tr>
+
+<tr>
+<td class="org-left">Program unit</td>
+<td class="org-left">Functions(def, class, import), modules, classes</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div id="outline-container-org4d6fbc9" class="outline-4">
+<h4 id="org4d6fbc9"><span class="section-number-4">1.2.1</span> Strings</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<ul class="org-ul">
+<li>有序序列。</li>
+<li>不变性，所有对 Strings 的操作都是新生成一个 Strings 对象进行操作；但可以换个方法来实现修改 Strings 某个位置的 char 使用 <code>list</code> 或者 <code>bytearray</code> , bytearray 有个限制，只能修改到 8 位编码的字符</li>
+<li>使用 <code>dir(s)</code> 查看 Strings 的方法</li>
+<li>使用单引号或者双引号表示一个 Strings, 在其中可以使用 <code>\x \u \U</code> 分别表示十六进制数，短 unicode 和长 unicode</li>
+<li>Python 3.x 中有三种 string, <code>str</code> 用于展示 unicode text, <code>bytes</code> 用于展示字节数据，文件可以有两种模式：文本文件和字节文件。</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #268bd2;">s</span> = <span style="color: #2aa198;">'spam'</span>
+s * 8 <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; 'spamspamspamspamspamspamspamspam'</span>
+s + <span style="color: #2aa198;">'1'</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; 'spam1'</span>
+
+<span style="color: #268bd2;">l</span> = <span style="color: #d33682; font-style: italic;">list</span><span style="color: #268bd2;">(</span>s<span style="color: #268bd2;">)</span>
+l <span style="color: #268bd2;">[</span>1<span style="color: #268bd2;">]</span> = n
+<span style="color: #35a69c; font-style: italic;">''</span>.join<span style="color: #268bd2;">(</span>l<span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; 'snam'</span>
+
+<span style="color: #268bd2;">b</span> = <span style="color: #d33682; font-style: italic;">bytearray</span><span style="color: #268bd2;">(</span>b<span style="color: #2aa198;">'spam'</span><span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">b</span><span style="color: #268bd2;">[</span>1<span style="color: #268bd2;">]</span> = 110 <span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">acsii code</span>
+b.decode<span style="color: #268bd2;">()</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; 'snam'</span>
+</pre>
+</div>
+</div>
+
+<div id="outline-container-org36fdadb" class="outline-5">
+<h5 id="org36fdadb"><span class="section-number-5">1.2.1.1</span> Escape Charactors 转义字符</h5>
+<div class="outline-text-5" id="text-1-2-1-1">
+<ul class="org-ul">
+<li><code>\' \"</code></li>
+<li><code>\a</code> Bell</li>
+<li><code>\b</code> Backspace</li>
+<li><code>\f</code> Formfeed</li>
+<li><code>\0</code> Null, 比特 0</li>
+<li><code>\ooo</code> 八进制数，最多 3 位</li>
+<li><code>\xhh</code> 十六进制数，最多 2 位</li>
+<li><code>uhhhh</code> &amp; <code>uhhhhhhhh</code> Unicode</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org1431abd" class="outline-5">
+<h5 id="org1431abd"><span class="section-number-5">1.2.1.2</span> Format</h5>
+<div class="outline-text-5" id="text-1-2-1-2">
+<ul class="org-ul">
+<li><code>'=%(qty) is %(thing) % {qty: 1, thing: 2}'</code></li>
+<li><code>'{0}, {1}, {2}'.format(1, 2, 3)</code> 按位置</li>
+<li><code>'{name} is {thing}.format(name=</code>"1", thing="2"<code>)'</code></li>
+<li><code>'{0:&gt;10} = {1:&lt;10}.format('spam', 123)'</code> &gt; 表示右对齐，10 表示占位 10</li>
+<li>可以将函数引入到 format 语句中</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org57ab7e1" class="outline-4">
+<h4 id="org57ab7e1"><span class="section-number-4">1.2.2</span> List</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<ul class="org-ul">
+<li>有序序列</li>
+<li>可变</li>
+<li>不唯一</li>
+<li>Slice assignment
+<ul class="org-ul">
+<li>Deletion 删除用 Slice 选中的元素</li>
+<li>Insertion 删除之后插入新元素</li>
+</ul></li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #268bd2;">l</span> = <span style="color: #268bd2;">[</span>1,2,3<span style="color: #268bd2;">]</span>
+<span style="color: #268bd2;">l</span><span style="color: #268bd2;">[</span>1:1<span style="color: #268bd2;">]</span> = <span style="color: #268bd2;">[</span>4,5<span style="color: #268bd2;">]</span>
+l <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; [1,4,5,2,3]</span>
+
+<span style="color: #268bd2;">l</span> = <span style="color: #268bd2;">[</span>1<span style="color: #268bd2;">]</span>
+<span style="color: #268bd2;">l</span><span style="color: #268bd2;">[</span>:0<span style="color: #268bd2;">]</span> = <span style="color: #268bd2;">[</span>2,3,4<span style="color: #268bd2;">]</span>
+l <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; [2,3,4,1]</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org15767db" class="outline-4">
+<h4 id="org15767db"><span class="section-number-4">1.2.3</span> Tuples</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<ul class="org-ul">
+<li>有序序列</li>
+<li>不可变</li>
+<li>不唯一</li>
+<li>可以隐性表示一个 turple 不加括号</li>
+<li>其加（+）和乘（*）和 List 表现一样</li>
+<li><code>namedtuple</code> 生成一个类，第一个参数传类名，第二个参数传类中属性 list 其实例可以使用索引取属性</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc7fe880" class="outline-4">
+<h4 id="orgc7fe880"><span class="section-number-4">1.2.4</span> Files</h4>
+<div class="outline-text-4" id="text-1-2-4">
+<ul class="org-ul">
+<li>默认打开方式是 <code>'r'</code></li>
+<li><code>'w'</code> 创建并且打开文件，可以写入</li>
+<li><code>'a'</code> 打开文件并在末尾添加</li>
+<li><code>'b'</code> 写入二进制数据</li>
+<li>文件是被读进或者写的时候保存在内存的，可以使用 <code>flash</code> 强制写入</li>
+<li>可以使用 <code>seek</code> 函数查看文件的某个</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org85e9b50" class="outline-4">
+<h4 id="org85e9b50"><span class="section-number-4">1.2.5</span> SETS</h4>
+<div class="outline-text-4" id="text-1-2-5">
+<ul class="org-ul">
+<li>无序序列</li>
+<li>不可变</li>
+<li>唯一</li>
+<li><code>x | y</code> 并集 <code>x &amp; y</code> 交集</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #d33682; font-style: italic;">list</span><span style="color: #268bd2;">(</span><span style="color: #d33682; font-style: italic;">set</span><span style="color: #d33682;">(</span><span style="color: #859900;">[</span>1,2,1,3<span style="color: #859900;">]</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; [1,2,3]</span>
+<span style="color: #d33682; font-style: italic;">set</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">'spam'</span><span style="color: #268bd2;">)</span> - <span style="color: #d33682; font-style: italic;">set</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">'ham'</span><span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; {'p', 's'}</span>
+<span style="color: #d33682; font-style: italic;">set</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">'spam'</span><span style="color: #268bd2;">)</span> == <span style="color: #d33682; font-style: italic;">set</span><span style="color: #268bd2;">(</span><span style="color: #2aa198;">'pasm'</span><span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; True</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9a675d5" class="outline-4">
+<h4 id="org9a675d5"><span class="section-number-4">1.2.6</span> Number</h4>
+<div class="outline-text-4" id="text-1-2-6">
+<ul class="org-ul">
+<li><code>0o</code> <code>0x</code> <code>0b</code> 八进制 十六进制 二进制</li>
+<li>位操作 把操作数转为二进制然后进行位操作</li>
+<li>正常使用的数都是浮点数，不精确，可以使用 Decimal 代替</li>
+<li>将无限小数转为分数时会发生精度缺失的问题</li>
+</ul>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#25353;&#20301;&#21462;&#21453;</span>
+~5 <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; -6</span>
+<span style="color: #268bd2;">x</span> = 1
+x &lt;&lt; 2 <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; 4</span>
+x | 2 <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; 3</span>
+x &amp; 1 <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; 1</span>
+
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">format</span>
+<span style="color: #2aa198;">'%o %x %b'</span> % <span style="color: #268bd2;">(</span>16,16,16<span style="color: #268bd2;">)</span>
+
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">float</span>
+0.1 + 0.1 + 0.1 - 0.3 <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; not 0.0</span>
+
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">decimal &#35774;&#23450; context</span>
+<span style="color: #859900;">with</span> decimal.localcontext<span style="color: #268bd2;">()</span> <span style="color: #859900;">as</span> ctx:
+    <span style="color: #268bd2;">ctx.prec</span> = 2
+    ...
+
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">float to fraction</span>
+Fraction<span style="color: #268bd2;">(</span>*f.as_integer_ratio<span style="color: #d33682;">()</span><span style="color: #268bd2;">)</span>
+Fraction.fram_float<span style="color: #268bd2;">(</span>f<span style="color: #268bd2;">)</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7859bf0" class="outline-2">
+<h2 id="org7859bf0"><span class="section-number-2">2</span> Dynamic Typing</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org36b54b2" class="outline-3">
+<h3 id="org36b54b2"><span class="section-number-3">2.1</span> <code>a = 3</code> 执行过程</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>创建一个对象表示 3</li>
+<li>如果不存在变量 a 创建变量 a</li>
+<li>将 a 指向对象 3</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgdbdd2da" class="outline-3">
+<h3 id="orgdbdd2da"><span class="section-number-3">2.2</span> <code>a = 3, b = a</code> 执行过程</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>创建一个对象表示 3</li>
+<li>如果不存在变量 a 创建变量 a</li>
+<li>将 a 指向对象 3</li>
+<li>如果不存在变量 b 创建变量 b</li>
+<li>将 b 指向 a 所指向的对象 3</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgc7dcb39" class="outline-3">
+<h3 id="orgc7dcb39"><span class="section-number-3">2.3</span> is &amp; ==</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li><code>is</code> 比较两个变量指向的对象是否是同一个</li>
+<li><code>==</code> 比较两个变量指向的对象的值是否相同</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0e3472e" class="outline-3">
+<h3 id="org0e3472e"><span class="section-number-3">2.4</span> 垃圾回收会立刻执行吗？</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>大部分对象在没有变量指向时会被立刻执行垃圾回收</li>
+<li>有些对象不会，比如数字，会不被回收而且被重用</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org69fe9eb" class="outline-2">
+<h2 id="org69fe9eb"><span class="section-number-2">3</span> Assignment</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+<div id="outline-container-org627f592" class="outline-3">
+<h3 id="org627f592"><span class="section-number-3">3.1</span> 赋值方法</h3>
+<div class="outline-text-3" id="text-3-1">
+<ul class="org-ul">
+<li>扩展序列赋值需要注意边界情况，一般最好不要在数目不确定的情况下使用这种赋值方法；不能单独出现；同一个表达式不能出现两次</li>
+<li>list 的 <code>+=</code> 后面可以跟任意类型的序列，但是 <code>+</code> 只能跟同类型的序列</li>
+</ul>
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">tuple assign</span>
+<span style="color: #268bd2;">a</span>, <span style="color: #268bd2;">b</span> = c, d
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">list assign</span>
+<span style="color: #268bd2;">[</span>a, b<span style="color: #268bd2;">]</span> = <span style="color: #268bd2;">[</span>c, d<span style="color: #268bd2;">]</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">sequence assign</span>
+<span style="color: #268bd2;">a</span>, <span style="color: #268bd2;">b</span>, <span style="color: #268bd2;">c</span>, <span style="color: #268bd2;">d</span> = <span style="color: #2aa198;">'spam'</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">extend sequence assign</span>
+a, *<span style="color: #268bd2;">b</span> = <span style="color: #2aa198;">'spam'</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt; b='pam'</span>
+<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">multiple target assign</span>
+<span style="color: #268bd2;">a</span> = <span style="color: #268bd2;">b</span> = c
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7f633f0" class="outline-2">
+<h2 id="org7f633f0"><span class="section-number-2">4</span> Iterable and Iterator</h2>
+<div class="outline-text-2" id="text-4">
+<ul class="org-ul">
+<li>iterable 表示一个对象是可遍历的，是一种 iteration 对象；有 <code>iter()</code> 或者 <code>__iter()__</code></li>
+<li>iterator 是一个 iterable 对象产生的，用来遍历那个 iterable 对象；有 <code>next()</code> 或者 <code>__next()__</code></li>
+<li>有些对象既是 iterable 又是 iterator 类似 <code>file</code></li>
+<li>大部分内置 iterable 对象都不是自身的 iterator</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org78b458e" class="outline-2">
+<h2 id="org78b458e"><span class="section-number-2">5</span> Functions</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>使用 <code>def</code> 定义一个对象，并为对象定义一个引用指向它（可以从这里看出所谓的函数式编程即把函数本身也看作一个对象）；</li>
+<li>使用 <code>lambda</code> 定义一个对象，但不为对象定义一个引用，这个表达式执行完返回的结果就是自身</li>
+<li><code>yield</code> 返回 result 给调用者，但会记录当前的位置</li>
+<li>LEGB rules (Local Enclosing-defs Global Built-in)</li>
+<li><code>global nonlocal</code> 关键字用来修饰函数内部使用到的外部变量</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-org0bf2dd2" class="outline-2">
+<h2 id="org0bf2dd2"><span class="section-number-2">6</span> Others</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-org085da32" class="outline-3">
+<h3 id="org085da32"><span class="section-number-3">6.1</span> 特殊函数</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li><code>ord()</code> 查看某个字符的 ascii code</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgb9f023e" class="outline-3">
+<h3 id="orgb9f023e"><span class="section-number-3">6.2</span> 技巧</h3>
+<div class="outline-text-3" id="text-6-2">
+<ul class="org-ul">
+<li>使用 <code>help(f)</code> 查看相关函数文档</li>
+<li>list 表达式性能和速度都要比 for loop 好</li>
+<li><code>type(object)</code> 返回这个 object 的 class</li>
+<li>相同字符的乱序 Set 集合是可以 <code>==</code></li>
+<li>如果直接赋值 list <code>l1 = l2</code> 那么 l2 如果改变，l1 也会一起改变；使用 <code>l1 = l2[:]</code> 创建一个新的对象可以避免这种情况</li>
+<li><code>*</code> 可以用来解turple <code>**</code> 可以用来解 dict</li>
+<li>Python 中空字符串、空列表、空字典、0.0 、None 都可以表示 0</li>
+<li><code>print</code> 默认输出在 <code>sys.stdout</code></li>
+<li>unzip a zip! <code>zip(*zip(X, Y))</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orge6a5f49" class="outline-3">
+<h3 id="orge6a5f49"><span class="section-number-3">6.3</span> 需要注意的地方</h3>
+<div class="outline-text-3" id="text-6-3">
+<ul class="org-ul">
+<li>3.x map 函数返回 iterable 对象而不是生成的 list</li>
+<li>3.x 计算时 floor 的结果会根据参数是否有 float 类型而呈现不同类型的结果</li>
+<li>3.x 计算整数相除的结果是小数</li>
+<li><code>repr</code> 和 <code>str</code> 是不一样的</li>
+<li><code>//</code> 向下取整的，并非真正的取整数部分，如果要取整数部分，使用 <code>int</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org92e4214" class="outline-3">
+<h3 id="org92e4214"><span class="section-number-3">6.4</span> Closure</h3>
+<div class="outline-text-3" id="text-6-4">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">makeActions</span><span style="color: #268bd2;">()</span>:
+    <span style="color: #268bd2;">acts</span> = <span style="color: #268bd2;">[]</span>
+    <span style="color: #859900;">for</span> i <span style="color: #859900;">in</span> <span style="color: #d33682; font-style: italic;">range</span><span style="color: #268bd2;">(</span>5<span style="color: #268bd2;">)</span>:
+        acts.append<span style="color: #268bd2;">(</span><span style="color: #859900;">lambda</span> x: i * x<span style="color: #268bd2;">)</span>
+    <span style="color: #859900;">return</span> acts
+</pre>
+</div>
+
+<p>
+上诉代码不会返回 <code>0^x, 1^x ...</code> , 而是统一都会返回 <code>4^x</code> ，因为在闭包中把 i 也当成变量来处理了，最后调用的时候，i 的值为 4 因此全部返回都是相同的。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #859900;">def</span> <span style="color: #b58900;">makeActions</span><span style="color: #268bd2;">()</span>:
+    <span style="color: #268bd2;">acts</span> = <span style="color: #268bd2;">[]</span>
+    <span style="color: #859900;">for</span> i <span style="color: #859900;">in</span> <span style="color: #d33682; font-style: italic;">range</span><span style="color: #268bd2;">(</span>5<span style="color: #268bd2;">)</span>:
+        acts.append<span style="color: #268bd2;">(</span><span style="color: #859900;">lambda</span> x, i=i: i * x<span style="color: #268bd2;">)</span>
+    <span style="color: #859900;">return</span> acts
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="postamble">Last Updated 2019-10-01 Tue 21:29. Created by hiro</p>
+            <script src="https://utteranc.es/client.js"
+        repo="nicehiro/nicehiro.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+        </script>
+</div>
+</body>
+</html>
