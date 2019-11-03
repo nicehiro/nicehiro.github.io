@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-10-03 Thu 09:14 -->
+<!-- 2019-11-03 Sun 21:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>TensorFlow 学习笔记</title>
@@ -235,42 +235,72 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8d92767">1. Event Files</a></li>
-<li><a href="#orgbef82e3">2. Variables</a></li>
+<li><a href="#org9ee8e03">1. Tensors</a></li>
+<li><a href="#orged6187d">2. 其他</a>
+<ul>
+<li><a href="#org8d92767">2.1. Event Files</a></li>
+<li><a href="#orgbef82e3">2.2. Variables</a></li>
+</ul>
+</li>
+<li><a href="#orgba84717">3. 2.0 新变化</a></li>
 </ul>
 </div>
 </div>
-<p>
-*
-</p>
 
-<div id="outline-container-org8d92767" class="outline-2">
-<h2 id="org8d92767"><span class="section-number-2">1</span> Event Files</h2>
+<div id="outline-container-org9ee8e03" class="outline-2">
+<h2 id="org9ee8e03"><span class="section-number-2">1</span> Tensors</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+Tensor 是一个多维的数组，像 Numpy 的 <code>ndarray</code> 一样，有 <code>dtype</code> 和 <code>shape</code> 属性。其和 Numpy 的数组最大的区别在：
+</p>
+<ul class="org-ul">
+<li>Tensor 可以使用 GPU 或 TPU 加速</li>
+<li>Tensor 是不可变对象</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orged6187d" class="outline-2">
+<h2 id="orged6187d"><span class="section-number-2">2</span> 其他</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+<div id="outline-container-org8d92767" class="outline-3">
+<h3 id="org8d92767"><span class="section-number-3">2.1</span> Event Files</h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 如果使用 Tensorboard 来分析 TensorFlow 产生的数据，就需要有个存放数据的位置。这些数据被存放在 <code>event files</code> 中，tensorflow 可以解析这些文件，默认存放在当前 python 文件的同级目录。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#23558; graph &#20445;&#23384;</span>
-<span style="color: #268bd2;">writer</span> = tf.compat.v1.summary.FileWriter<span style="color: #268bd2;">(</span>os.path.expanduser<span style="color: #d33682;">(</span>FLAGS.log_dir<span style="color: #d33682;">)</span>, sess.graph<span style="color: #268bd2;">)</span>
+<pre class="src src-python"><span style="color: #6f7787;"># </span><span style="color: #6f7787;">&#23558; graph &#20445;&#23384;</span>
+<span style="color: #dac6d6;">writer</span> = tf.compat.v1.summary.FileWriter<span style="color: #80A0C2;">(</span>os.path.expanduser<span style="color: #B58DAE;">(</span>FLAGS.log_dir<span style="color: #B58DAE;">)</span>, sess.graph<span style="color: #80A0C2;">)</span>
 </pre>
 </div>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#20351;&#29992; tensorboard &#26597;&#30475;</span>
-tensorboard --logdir=<span style="color: #2aa198;">"abs_path_to_log_dir"</span>
+<pre class="src src-sh"><span style="color: #6f7787;"># </span><span style="color: #6f7787;">&#20351;&#29992; tensorboard &#26597;&#30475;</span>
+tensorboard --logdir=<span style="color: #A2BF8A;">"abs_path_to_log_dir"</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgbef82e3" class="outline-2">
-<h2 id="orgbef82e3"><span class="section-number-2">2</span> Variables</h2>
+<div id="outline-container-orgbef82e3" class="outline-3">
+<h3 id="orgbef82e3"><span class="section-number-3">2.2</span> Variables</h3>
+</div>
+</div>
+
+<div id="outline-container-orgba84717" class="outline-2">
+<h2 id="orgba84717"><span class="section-number-2">3</span> 2.0 新变化</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>去掉 <code>placeholder</code> 可以调用更高级的 API</li>
+</ul>
+</div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-09-03 Tue 18:53. Created by hiro</p>
+<p class="postamble">Last Updated 2019-10-11 Fri 21:21. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-10-03 Thu 14:26 -->
+<!-- 2019-11-03 Sun 21:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>强化学习 &#x2013; David Silver Course</title>
@@ -272,7 +272,7 @@ for the JavaScript code in this tag.
 <li><a href="#orgfb6d922">1.7. RL Agent的主要元素</a>
 <ul>
 <li><a href="#orgc5193af">1.7.1. Policy</a></li>
-<li><a href="#org5dc647f">1.7.2. Value Function</a></li>
+<li><a href="#orgacff606">1.7.2. Value Function</a></li>
 </ul>
 </li>
 <li><a href="#orgc3e13a2">1.8. RL Agent的分类</a>
@@ -290,14 +290,14 @@ for the JavaScript code in this tag.
 <ul>
 <li><a href="#orgc877db7">2.2.1. Return</a></li>
 <li><a href="#org676cdaf">2.2.2. Why discount</a></li>
-<li><a href="#org1f78c53">2.2.3. Value Function</a></li>
+<li><a href="#org8b07778">2.2.3. Value Function</a></li>
 <li><a href="#orgf3afae3">2.2.4. Bellman 等式</a></li>
 </ul>
 </li>
 <li><a href="#orgc0894bc">2.3. Markov Decision Process</a>
 <ul>
 <li><a href="#org7162c6c">2.3.1. Policies</a></li>
-<li><a href="#orgf54545c">2.3.2. Value Function</a></li>
+<li><a href="#orga59d932">2.3.2. Value Function</a></li>
 <li><a href="#org150d2c4">2.3.3. Bellman Expectation Equation</a>
 <ul>
 <li><a href="#orga4d702c">2.3.3.1. State 与 State ，Action 与 Action 之间的转换</a></li>
@@ -408,22 +408,28 @@ for the JavaScript code in this tag.
 <li><a href="#org2147587">7.3.2. 化简 score function</a></li>
 </ul>
 </li>
-<li><a href="#orgafcd2d6">7.4. Policy Gradient策略梯度</a>
+<li><a href="#orgf2ff839">7.4. Gaussian Policy 的分值函数</a>
 <ul>
-<li><a href="#orge93b1ee">7.4.1. Monte-Carlo 策略梯度</a></li>
+<li><a href="#org4f1027d">7.4.1. Gaussian Policy</a></li>
+<li><a href="#org5851cf5">7.4.2. 化简分值函数</a></li>
 </ul>
 </li>
-<li><a href="#orga310968">7.5. Actor-Critic 策略梯度</a>
+<li><a href="#orgafcd2d6">7.5. Policy Gradient策略梯度</a>
 <ul>
-<li><a href="#org96629bd">7.5.1. Action-Value Actor-Critic</a></li>
-<li><a href="#org2badc11">7.5.2. Compatible Function Approximation</a>
-<ul>
-<li><a href="#org06d9b60">7.5.2.1. Proof</a></li>
+<li><a href="#orge93b1ee">7.5.1. Monte-Carlo 策略梯度</a></li>
 </ul>
 </li>
-<li><a href="#org5c55c87">7.5.3. 方差依然存在</a>
+<li><a href="#orga310968">7.6. Actor-Critic 策略梯度</a>
 <ul>
-<li><a href="#org400adb0">7.5.3.1. Baseline 函数</a></li>
+<li><a href="#org96629bd">7.6.1. Action-Value Actor-Critic</a></li>
+<li><a href="#org2badc11">7.6.2. Compatible Function Approximation</a>
+<ul>
+<li><a href="#org06d9b60">7.6.2.1. Proof</a></li>
+</ul>
+</li>
+<li><a href="#org5c55c87">7.6.3. 方差依然存在</a>
+<ul>
+<li><a href="#org400adb0">7.6.3.1. Baseline 函数</a></li>
 </ul>
 </li>
 </ul>
@@ -564,8 +570,8 @@ R: Reward(from environment)
 </ul>
 </div>
 </div>
-<div id="outline-container-org5dc647f" class="outline-4">
-<h4 id="org5dc647f"><span class="section-number-4">1.7.2</span> Value Function</h4>
+<div id="outline-container-orgacff606" class="outline-4">
+<h4 id="orgacff606"><span class="section-number-4">1.7.2</span> Value Function</h4>
 <div class="outline-text-4" id="text-1-7-2">
 <ul class="org-ul">
 <li>对未来return的预测函数</li>
@@ -668,8 +674,8 @@ Return（Environment 给 Agent）\(G_t\)是从 t 阶段之后的总的discounted
 </div>
 </div>
 
-<div id="outline-container-org1f78c53" class="outline-4">
-<h4 id="org1f78c53"><span class="section-number-4">2.2.3</span> Value Function</h4>
+<div id="outline-container-org8b07778" class="outline-4">
+<h4 id="org8b07778"><span class="section-number-4">2.2.3</span> Value Function</h4>
 <div class="outline-text-4" id="text-2-2-3">
 <p>
 Value Function 会给出当前状态以及到未来所有状态下的期望 return（\(G_t\)）
@@ -723,8 +729,8 @@ Agent的行为完全取决于Policy。
 </p>
 </div>
 </div>
-<div id="outline-container-orgf54545c" class="outline-4">
-<h4 id="orgf54545c"><span class="section-number-4">2.3.2</span> Value Function</h4>
+<div id="outline-container-orga59d932" class="outline-4">
+<h4 id="orga59d932"><span class="section-number-4">2.3.2</span> Value Function</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 \(\pi\) ：policy
@@ -1611,6 +1617,10 @@ TD-Target 是真实价值的有噪声，有偏采样：
 <p>
 之前学过的方法都是 value based, 即通过值函数的更新，对值函数 greedy 选取相应策略的方法。而第七章讲的是 policy based 的方法，即直接对策略进行学习，最后得到是一些概率（选择某个 action 的概率）
 </p>
+
+<p>
+例如，格子世界中逃跑者的训练，使用 value based 方法很难训练成功，因为对于逃跑者来说，其实只要不是朝着追逐者的方向走，那么其他三个方向都算是最优解，这会给求 Max Value 带来问题。因而只能使用策略梯度的方法。
+</p>
 </div>
 
 <div id="outline-container-orgd314bf7" class="outline-3">
@@ -1640,6 +1650,10 @@ TD-Target 是真实价值的有噪声，有偏采样：
 \[ J_{avR}(\theta) = \sum_s d^{\pi_{\theta}}(s) \sum_a\pi_{\theta}(s, a) R^a_s \]
 其中，d 指：在以 \(\theta\) 为参数确定的策略 \(\pi\) 下，稳态马尔科夫链中状态 s 出现的概率
 </p>
+
+<p>
+有了目标函数，我们需要做的就是寻找一组参数 \(\theta\) 使得目标函数最大。最常用的方法是梯度上升，使用梯度法就需要用到 \(\nabla_{\theta} J\)
+</p>
 </div>
 </div>
 </div>
@@ -1668,7 +1682,7 @@ TD-Target 是真实价值的有噪声，有偏采样：
 <h4 id="orge605890"><span class="section-number-4">7.3.1</span> softmax function</h4>
 <div class="outline-text-4" id="text-7-3-1">
 <p>
-对特征 \(\phi(s, a)\) 进行线性组合当作 softmax 的输入：
+对网络的输出 \(\phi(s,a)\) 进行线性组合当作 softmax 的输入：
 </p>
 
 <p>
@@ -1682,20 +1696,58 @@ TD-Target 是真实价值的有噪声，有偏采样：
 <div class="outline-text-4" id="text-7-3-2">
 \begin{equation}
 \begin{split}
-\nabla_{\theta}log\pi_{\theta}(s, a) &= \nabla_{theta} log e^{\phi(s, a)^T\theta} - \nabla_{theta} log \sum_a e^{\phi(s, a)^T\theta}\\
+\nabla_{\theta}log\pi_{\theta}(s, a) &= \nabla_{\theta} log e^{\phi(s, a)^T\theta} - \nabla_{\theta} log \sum_a e^{\phi(s, a)^T\theta}\\
 &= \phi(s, a) - \frac{\sum_a e^{\phi(s, a)^T\theta}\phi(s, a)}{\sum_a e^{\phi(s, a)^T\theta}}\\
 &= \phi(s, a) - \sum_a{\frac{e^{\phi(s, a)^T\theta}\phi(s, a)}{\sum_a{e^{\phi(s, a)^T\theta}}}}\\
 &= \phi(s, a) - \sum_a{\pi_{\theta}(s, a)\phi(s, a)}\\
-&= \phi(s, a) - E_{\phi_{theta}}[\phi(s, \cdot)]\\
+&= \phi(s, a) - E_{\pi_{\theta}}[\phi(s, \cdot)]\\
 \end{split}
 \end{equation}
+
+<p>
+\(\mathbf E_{\pi_{\theta}}[\phi(s, \cdot)]\) 表示在策略 \(\pi_{\theta}\) 下，输出的加权平均。所以分值函数就表示：采取的某个动作获得的“分数”比“平均分”要多多少。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf2ff839" class="outline-3">
+<h3 id="orgf2ff839"><span class="section-number-3">7.4</span> Gaussian Policy 的分值函数</h3>
+<div class="outline-text-3" id="text-7-4">
+</div>
+<div id="outline-container-org4f1027d" class="outline-4">
+<h4 id="org4f1027d"><span class="section-number-4">7.4.1</span> Gaussian Policy</h4>
+<div class="outline-text-4" id="text-7-4-1">
+<ul class="org-ul">
+<li>使用 state 的线性组合表示 \(\mu\)
+\[ \mu{(s)} = \phi{(s)^T \theta} \]</li>
+
+<li>\(a \sim N(\mu(s), \sigma ^2)\)</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org5851cf5" class="outline-4">
+<h4 id="org5851cf5"><span class="section-number-4">7.4.2</span> 化简分值函数</h4>
+<div class="outline-text-4" id="text-7-4-2">
+\begin{equation}
+\begin{split}
+\nabla_{\theta}log\pi_{\theta}(s, a) &= \nabla_{\theta}log{\frac{1}{\sigma\sqrt{2\pi}}e^{-\frac{(a-\mu)^2}{2\sigma^2}}}\\
+&= \nabla_{\theta}{-\frac{(a-\phi(s)\theta)^2}{2\sigma^2}}\\
+&= \frac{(a-\mu(s))\phi(s)}{\sigma^2}
+\end{split}
+\end{equation}
+
+<p>
+同样，这个分值函数也表示：采取某个动作获得的“分数”比“平均分”要多多少。
+</p>
 </div>
 </div>
 </div>
 
 <div id="outline-container-orgafcd2d6" class="outline-3">
-<h3 id="orgafcd2d6"><span class="section-number-3">7.4</span> Policy Gradient策略梯度</h3>
-<div class="outline-text-3" id="text-7-4">
+<h3 id="orgafcd2d6"><span class="section-number-3">7.5</span> Policy Gradient策略梯度</h3>
+<div class="outline-text-3" id="text-7-5">
 <p>
 奖励函数的导数等于分值函数乘以 long-term Reward Q 在策略下的期望。
 </p>
@@ -1707,11 +1759,15 @@ TD-Target 是真实价值的有噪声，有偏采样：
 </p>
 </div>
 </div>
+
+<p>
+它表示：如果某个动作获得的“分数”比平均分多，而且其带来的 Reward 也大，那么参数就朝着这个动作的方向移动。
+</p>
 </div>
 
 <div id="outline-container-orge93b1ee" class="outline-4">
-<h4 id="orge93b1ee"><span class="section-number-4">7.4.1</span> Monte-Carlo 策略梯度</h4>
-<div class="outline-text-4" id="text-7-4-1">
+<h4 id="orge93b1ee"><span class="section-number-4">7.5.1</span> Monte-Carlo 策略梯度</h4>
+<div class="outline-text-4" id="text-7-5-1">
 <p>
 将上诉策略梯度的方法结合 Monte-Carlo 方法，得到 Monte-Carlo 策略梯度
 </p>
@@ -1733,8 +1789,8 @@ TD-Target 是真实价值的有噪声，有偏采样：
 </div>
 
 <div id="outline-container-orga310968" class="outline-3">
-<h3 id="orga310968"><span class="section-number-3">7.5</span> Actor-Critic 策略梯度</h3>
-<div class="outline-text-3" id="text-7-5">
+<h3 id="orga310968"><span class="section-number-3">7.6</span> Actor-Critic 策略梯度</h3>
+<div class="outline-text-3" id="text-7-6">
 <p>
 直接使用采样的方法进行策略梯度分析会有很大波动，因此使用近似的 \(Q_w(s, a)\) 来代替 \(Q_{\pi_{\theta}}(s, a)\) , 会有很小的波动；这就引出了 Actor-Critic 算法。
 </p>
@@ -1761,8 +1817,8 @@ Actor 在更新策略函数的参数时，需要 Critic 告知哪个好（利用
 </div>
 
 <div id="outline-container-org96629bd" class="outline-4">
-<h4 id="org96629bd"><span class="section-number-4">7.5.1</span> Action-Value Actor-Critic</h4>
-<div class="outline-text-4" id="text-7-5-1">
+<h4 id="org96629bd"><span class="section-number-4">7.6.1</span> Action-Value Actor-Critic</h4>
+<div class="outline-text-4" id="text-7-6-1">
 <ul class="org-ul">
 <li>使用线性函数对 Q value 逼近 \( Q_w(s, a) = \phi(s, a)^T w \)</li>
 <li>使用 \(TD(0)\) 作为 Critic 的 Q value 计算方法，参数为 w</li>
@@ -1780,8 +1836,8 @@ Actor 在更新策略函数的参数时，需要 Critic 告知哪个好（利用
 </div>
 
 <div id="outline-container-org2badc11" class="outline-4">
-<h4 id="org2badc11"><span class="section-number-4">7.5.2</span> Compatible Function Approximation</h4>
-<div class="outline-text-4" id="text-7-5-2">
+<h4 id="org2badc11"><span class="section-number-4">7.6.2</span> Compatible Function Approximation</h4>
+<div class="outline-text-4" id="text-7-6-2">
 <p>
 如果使用上诉方法进行对 Q value 的估计，是带 bias 的有偏估计，因此不一定准确。
 </p>
@@ -1813,8 +1869,8 @@ Actor 在更新策略函数的参数时，需要 Critic 告知哪个好（利用
 </div>
 
 <div id="outline-container-org06d9b60" class="outline-5">
-<h5 id="org06d9b60"><span class="section-number-5">7.5.2.1</span> Proof</h5>
-<div class="outline-text-5" id="text-7-5-2-1">
+<h5 id="org06d9b60"><span class="section-number-5">7.6.2.1</span> Proof</h5>
+<div class="outline-text-5" id="text-7-6-2-1">
 <div class="org-center">
 
 <div class="figure">
@@ -1827,8 +1883,8 @@ Actor 在更新策略函数的参数时，需要 Critic 告知哪个好（利用
 </div>
 
 <div id="outline-container-org5c55c87" class="outline-4">
-<h4 id="org5c55c87"><span class="section-number-4">7.5.3</span> 方差依然存在</h4>
-<div class="outline-text-4" id="text-7-5-3">
+<h4 id="org5c55c87"><span class="section-number-4">7.6.3</span> 方差依然存在</h4>
+<div class="outline-text-4" id="text-7-6-3">
 <p>
 尽管使用预计的 Q value 估计 Q value 的真实值可以减小方差，但策略梯度本身还有个问题：
 </p>
@@ -1846,8 +1902,8 @@ Actor 在更新策略函数的参数时，需要 Critic 告知哪个好（利用
 </p>
 </div>
 <div id="outline-container-org400adb0" class="outline-5">
-<h5 id="org400adb0"><span class="section-number-5">7.5.3.1</span> Baseline 函数</h5>
-<div class="outline-text-5" id="text-7-5-3-1">
+<h5 id="org400adb0"><span class="section-number-5">7.6.3.1</span> Baseline 函数</h5>
+<div class="outline-text-5" id="text-7-6-3-1">
 <p>
 引入 Baseline 函数是为了：
 </p>
@@ -1920,7 +1976,7 @@ Actor 在更新策略函数的参数时，需要 Critic 告知哪个好（利用
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-10-03 Thu 13:48. Created by hiro</p>
+<p class="postamble">Last Updated 2019-10-30 Wed 12:42. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"
