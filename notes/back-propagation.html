@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-28 四 17:40 -->
+<!-- 2019-11-29 五 17:24 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>反向传播算法 Back-Propagation</title>
@@ -325,7 +325,6 @@ s = y + z + w \\
 </p>
 </div>
 </div>
-
 <p>
 可以看出，\(\nabla_w\)由两部分组成\(\frac{\partial{l}}{dz} \frac{\partial{z}}{dw}\)。
 </p>
@@ -403,6 +402,17 @@ s = y + z + w \\
 </p>
 </div>
 </div>
+
+<p>
+利用下一层的结果求本层的\(\frac{\sigma{l}}{z}\)：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/back-prop-8.png" alt="back-prop-8.png" width="80%" />
+</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -436,7 +446,7 @@ s = y + z + w \\
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-11-28 四 17:40. Created by hiro</p>
+<p class="postamble">Last Updated 2019-11-29 五 16:32. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"
