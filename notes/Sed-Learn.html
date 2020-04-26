@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-01 一 21:28 -->
+<!-- 2020-03-26 四 16:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sed 学习笔记</title>
@@ -227,28 +227,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -265,8 +243,8 @@ This is my goat
   my goat's name is adam
 </pre>
 
-<div id="outline-container-org052a70b" class="outline-2">
-<h2 id="org052a70b"><span class="section-number-2">1</span> s 命令替换</h2>
+<div id="outline-container-orge134c39" class="outline-2">
+<h2 id="orge134c39"><span class="section-number-2">1</span> s 命令替换</h2>
 <div class="outline-text-2" id="text-1">
 <div class="org-src-container">
 <pre class="src src-Sed"># 替换 3-5 行的 my 成 your
@@ -281,12 +259,12 @@ sed "s/my/your/g; 3,$s/This/That/g" txt
 </div>
 </div>
 
-<div id="outline-container-org4de107d" class="outline-3">
-<h3 id="org4de107d"><span class="section-number-3">1.1</span> 正则表达式</h3>
+<div id="outline-container-org677ba8d" class="outline-3">
+<h3 id="org677ba8d"><span class="section-number-3">1.1</span> 正则表达式</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>`^` 表示行头 `^#`</li>
-<li>`\(` 表示行尾 `}\)`</li>
+<li>`<img src="ltximg/Sed-Learn_279a8b8000dd66f4fc3593e2bd84dcffb0e7489a.png" alt="Sed-Learn_279a8b8000dd66f4fc3593e2bd84dcffb0e7489a.png" />`</li>
 <li>`\&lt;` 表示词头 `\&lt;abc`</li>
 <li>`\&gt;` 表示词尾 `abc\&gt;`</li>
 </ul>
@@ -294,8 +272,8 @@ sed "s/my/your/g; 3,$s/This/That/g" txt
 </div>
 </div>
 
-<div id="outline-container-orgb3ec217" class="outline-2">
-<h2 id="orgb3ec217"><span class="section-number-2">2</span> N 命令</h2>
+<div id="outline-container-org0a6f694" class="outline-2">
+<h2 id="org0a6f694"><span class="section-number-2">2</span> N 命令</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 将下一行的内容纳入当前缓存区匹配。将两行合并在一起。
@@ -315,8 +293,8 @@ goat:adam
 </div>
 </div>
 
-<div id="outline-container-org4d3a562" class="outline-2">
-<h2 id="org4d3a562"><span class="section-number-2">3</span> a &amp; i &amp; c &amp; d &amp; p</h2>
+<div id="outline-container-org76b920b" class="outline-2">
+<h2 id="org76b920b"><span class="section-number-2">3</span> a &amp; i &amp; c &amp; d &amp; p</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 `a` 就是 append，`i` 就是 insert，`c` 就是 change，`d` 就是 delete，`p` 就是 print
@@ -339,8 +317,8 @@ sed "2 c This is a new line, replace the old line" txt
 </div>
 </div>
 
-<div id="outline-container-orge509375" class="outline-2">
-<h2 id="orge509375"><span class="section-number-2">4</span> address</h2>
+<div id="outline-container-org408c0d7" class="outline-2">
+<h2 id="org408c0d7"><span class="section-number-2">4</span> address</h2>
 <div class="outline-text-2" id="text-4">
 <div class="org-src-container">
 <pre class="src src-Sed">[address[,address]][!]{cmd}
@@ -363,7 +341,7 @@ cmd 可以是多个命令，使用 {} 包起来作为嵌套命令。
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-07-01 一 21:28. Created by hiro</p>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"

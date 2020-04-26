@@ -1,0 +1,492 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-03-26 四 17:01 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Kullback-Leibler Divergence Explained</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2019 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Kullback-Leibler Divergence Explained</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org5192526">1. 分布交叉熵</a></li>
+<li><a href="#org8e66e76">2. 使用 KL 散度衡量信息损失程度</a></li>
+<li><a href="#org1b3fd22">3. 比较两次近似分布</a></li>
+<li><a href="#org8cc0245">4. 散度 非 距离</a></li>
+<li><a href="#orgbd8b7ec">5. 使用 KL 散度优化</a></li>
+<li><a href="#org69d00d4">6. 变分自动编码器和变分贝叶斯方法</a></li>
+</ul>
+</div>
+</div>
+<p>
+此篇文章翻译自<a href="https://www.countbayesie.com/blog/2017/5/9/kullback-leibler-divergence-explained">Kullback-Leibler Divergence Explained</a>。
+</p>
+
+<p>
+这篇文章将研究衡量两个概率分布相似程度的量，Kullback-Leibler Divergence（通常被称为 KL 散度）。这个量常用于概率统计中，我们用简单的、近似的分布来替代观测到的、复杂的分布，而 KL 散度可以来衡量我们在使用这种近似时，有多少信息缺失。
+</p>
+
+<p>
+我们先来看个例子。假设我们是太空科学家，我们在太空一个未知星球上发现了一个新生物——蠕虫，我们希望可以研究它们。我们发现这些蠕虫有10颗牙齿，但是由于种种原因，有些蠕虫牙齿掉落，在收集了很多样本之后，我们得出了每种蠕虫的牙齿数的概率分布：
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/empirical-distribution-of-data.png" alt="empirical-distribution-of-data.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+尽管这个数据非常棒，但我们遇到了一些问题。我们距离地球太远了，发送数据时非常昂贵的，因此发送原始数据是不可行的。如果可以构建一个简单的模型来模拟观测到的数据，我们只需要发送回几个参数就可以代表这次的统计结果了。一种简单的模型是均分布，即一共有 11 种牙齿数目，每个牙齿数目占   <img src="ltximg/kl-divergence_a9f12906d6ff7f2d12d08b669a8f3f9188a7cf40.png" alt="kl-divergence_a9f12906d6ff7f2d12d08b669a8f3f9188a7cf40.png" />。
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/uniform-approximation.png" alt="uniform-approximation.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+显然，我们的数据不是均分布，但我们也看不出它是什么分布。我们尝试再使用二项分布建模。假设之前数据的期望为 5.7，那么二项分布中概率<img src="ltximg/kl-divergence_bf8dd00f22176354a56fab24692f665f6c227a89.png" alt="kl-divergence_bf8dd00f22176354a56fab24692f665f6c227a89.png" />。
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/binomial-approximation.png" alt="binomial-approximation.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+比较两次近似分布和原数据分布，发现二者都不是很好的表征原数据，但是那个相对来说更好呢？
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/all-approximations.png" alt="all-approximations.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+有很多种差异度量标准，但我们主要关心的是发送最少的数据量。上诉两个模型都只需要两个变量，牙齿数量和概率，因此最好的比较二者的好坏的方法就是比较哪个分布可以提供原数据分布更多的信息。这就是 KL 散度的来源。
+</p>
+
+<div id="outline-container-org5192526" class="outline-2">
+<h2 id="org5192526"><span class="section-number-2">1</span> 分布交叉熵</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+KL 散度是从信息论中衍生出来的。信息论的主要研究目标是衡量数据种可以包含多少信息。信息论中一个最重要的衡量标准是交叉熵，记作<img src="ltximg/kl-divergence_7f6bb8f05851ec4900d3fec06e17ccfdf00f85c5.png" alt="kl-divergence_7f6bb8f05851ec4900d3fec06e17ccfdf00f85c5.png" />。概率分布的交叉熵定义为：
+</p>
+
+<div class="figure">
+<p><img src="ltximg/kl-divergence_d769cd7b49771c839b64e66efb62b2b76f9a1ed8.png" alt="kl-divergence_d769cd7b49771c839b64e66efb62b2b76f9a1ed8.png" /></p>
+</div>
+
+<p>
+如果使用<img src="ltximg/kl-divergence_2294db8105af050827e0e1c259d2ea393ad663ae.png" alt="kl-divergence_2294db8105af050827e0e1c259d2ea393ad663ae.png" />计算，我们可以将交叉熵理解为：加密一条信息最少需要几个比特位。在本次案例中，信息是牙齿数量的原始数据分布，计算可以得到原始数据概率分布的熵值为<img src="ltximg/kl-divergence_c91a6929bef3eda65eee07a9d9220ffd7b17df7b.png" alt="kl-divergence_c91a6929bef3eda65eee07a9d9220ffd7b17df7b.png" />。这个值告诉我们编码蠕虫牙齿数量概率的信息需要的二进制位数。
+</p>
+
+<p>
+但是熵值没有给出压缩到最小信息的方法，压缩信息是个非常有趣的话题，但不了解它并不影响我们理解 KL 散度。交叉熵的关键之处在于，从理论上给出了加密信息的最小位数。理解了熵，我们就知道了有多少信息存储在数据中。接下来我们要分析使用近似分布来替代原始数据分布之后，损失了多少信息？
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8e66e76" class="outline-2">
+<h2 id="org8e66e76"><span class="section-number-2">2</span> 使用 KL 散度衡量信息损失程度</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+KL 散度的公式就是在交叉熵的公式上做了一些小小的改动，公式中不仅有原数据概率<img src="ltximg/kl-divergence_9ceaf8a1db197c13a5076e6cd02047b6021e319a.png" alt="kl-divergence_9ceaf8a1db197c13a5076e6cd02047b6021e319a.png" />还有近似分布的概率<img src="ltximg/kl-divergence_bd1631e7af275e9acf792d58a001bef2ce3a456e.png" alt="kl-divergence_bd1631e7af275e9acf792d58a001bef2ce3a456e.png" />。
+</p>
+
+<div class="figure">
+<p><img src="ltximg/kl-divergence_c962a067eda4ce40e4e686ee475b7a19995dd456.png" alt="kl-divergence_c962a067eda4ce40e4e686ee475b7a19995dd456.png" /></p>
+</div>
+
+<p>
+KL 散度其实就是原始数据概率和近似分布概率的<img src="ltximg/kl-divergence_99d3933c295e296d5ea2c1f72fb45437ae5304ca.png" alt="kl-divergence_99d3933c295e296d5ea2c1f72fb45437ae5304ca.png" />之差的期望。如果我们使用<img src="ltximg/kl-divergence_2294db8105af050827e0e1c259d2ea393ad663ae.png" alt="kl-divergence_2294db8105af050827e0e1c259d2ea393ad663ae.png" />计算，我们可以将 KL 散度解释为：使用近似分布之后，损失的信息的期望值。可以将 KL 散度写成期望的形式：
+</p>
+
+<div class="figure">
+<p><img src="ltximg/kl-divergence_ad1769ceade58a611104da90e8a2c5e997828fbd.png" alt="kl-divergence_ad1769ceade58a611104da90e8a2c5e997828fbd.png" /></p>
+</div>
+
+<p>
+通常我们见到的是这种写法：
+</p>
+
+<div class="figure">
+<p><img src="ltximg/kl-divergence_3060779a1a0985405e5a84b23fc286a7b4a9512d.png" alt="kl-divergence_3060779a1a0985405e5a84b23fc286a7b4a9512d.png" /></p>
+</div>
+
+<p>
+有了 KL 散度，就可以计算在近似过程种有多少信息损失了。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1b3fd22" class="outline-2">
+<h2 id="org1b3fd22"><span class="section-number-2">3</span> 比较两次近似分布</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+我们分别计算两次近似分布的 KL 散度。
+</p>
+
+<p>
+均分布：
+</p>
+
+<div class="figure">
+<p><img src="ltximg/kl-divergence_66922b3f6c9ff8cbc2f35939be294054fa255fd9.png" alt="kl-divergence_66922b3f6c9ff8cbc2f35939be294054fa255fd9.png" /></p>
+</div>
+
+<p>
+二项分布：
+</p>
+
+<div class="figure">
+<p><img src="ltximg/kl-divergence_28a1acc8583c88cd3c147f3914a42e76873487e5.png" alt="kl-divergence_28a1acc8583c88cd3c147f3914a42e76873487e5.png" /></p>
+</div>
+
+<p>
+可以看到，二项分布的 KL 散度大于均分布的 KL 散度，说明二项分布损失的信息要比均分布多，因此如果要选一种分布代表观察到的具体信息，那么应该选择均分布。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8cc0245" class="outline-2">
+<h2 id="org8cc0245"><span class="section-number-2">4</span> 散度 非 距离</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+你可能会想要把 KL 散度理解为距离这个概念，但其实散度并非距离。这是由于 KL 散度是发散不对称的。假如我们使用观察到的原始数据分布来近似二项分布，其散度为：
+</p>
+
+<div class="figure">
+<p><img src="ltximg/kl-divergence_d7e5c4e902d891c21cad438d6fb8eae1dc4b5520.png" alt="kl-divergence_d7e5c4e902d891c21cad438d6fb8eae1dc4b5520.png" /></p>
+</div>
+
+<p>
+结果完全不同。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgbd8b7ec" class="outline-2">
+<h2 id="orgbd8b7ec"><span class="section-number-2">5</span> 使用 KL 散度优化</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+当我们使用二项分布近似原始观察数据时，我们使用期望作为二项分布的参数。现在我们希望优化参数，使得 KL 散度值最小。从<img src="ltximg/kl-divergence_11a3ca42a496b05d244e5a5f5f75a9e43da5d848.png" alt="kl-divergence_11a3ca42a496b05d244e5a5f5f75a9e43da5d848.png" />选取参数，计算 KL 散度值，做图如下：
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/finding-the-optimal-parameter.png" alt="finding-the-optimal-parameter.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+可以看出，使用期望作为参数，是使得二项分布近似的 KL 散度值最小的参数。
+</p>
+
+<p>
+现在，我们使用 ad hoc 分布近似原始数据，将数据分为两部分，<img src="ltximg/kl-divergence_e6412165e38f052a9faf945c4e1b877258389063.png" alt="kl-divergence_e6412165e38f052a9faf945c4e1b877258389063.png" />和<img src="ltximg/kl-divergence_66623407ee76264fdcf40e7846e38994990241e2.png" alt="kl-divergence_66623407ee76264fdcf40e7846e38994990241e2.png" />两部分，
+</p>
+
+<div class="figure">
+<p><img src="ltximg/kl-divergence_06949806ae1889109f9892098223b4e037f74e9a.png" alt="kl-divergence_06949806ae1889109f9892098223b4e037f74e9a.png" /></p>
+</div>
+
+<p>
+那么如何找到这个模型最佳的参数呢？同样的，使得 KL 散度值最小的参数就是这个模型近似原始数据分布的最佳参数。
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/optimizing-our-ad-hoc-function.png" alt="optimizing-our-ad-hoc-function.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+当<img src="ltximg/kl-divergence_2df4e554f35075c4c057b11a3d1eea48c96b8e77.png" alt="kl-divergence_2df4e554f35075c4c057b11a3d1eea48c96b8e77.png" />时，KL 散度值最小，为 0.338，这个值和均分布的 KL 散度相当接近，画出图之后我们可以看出这个分布和均分布差不多。
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/optimal-value-for-ad-hoc.png" alt="optimal-value-for-ad-hoc.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+从上面可以看出，我们可以通过 KL 散度优化模型，找到模型的最优解。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org69d00d4" class="outline-2">
+<h2 id="org69d00d4"><span class="section-number-2">6</span> 变分自动编码器和变分贝叶斯方法</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+如果你熟悉神经网络，你或许应该可以猜到上一节之后该去学什么。神经网络，在最一般的意义上，可以看作是函数逼近器，这意味着可以使用神经网络去逼近很多复杂的函数。神经网络优化的关键是使用目标函数，可以通过最小化目标函数的损失来训练神经网络。
+</p>
+
+<p>
+我们可以使用 KL 散度来最小化近似分布时的信息损失，将 KL 散度和神经网络结合起来，可以学习非常复杂的数据分布。一种常见而学习方法称为“可分自动编码器”。<a href="https://arxiv.org/abs/1606.05908">这里</a>提供一个学习变分自动编码器的教程。
+</p>
+
+<p>
+更一般的是变分贝叶斯方法领域。 在其他文章中，我们看到了<a href="https://www.countbayesie.com/blog/2015/3/3/6-amazing-trick-with-monte-carlo-simulations">蒙特卡罗方法</a>可以有效解决一系列概率问题。 尽管蒙特卡洛模拟可以帮助解决贝叶斯推理所需的许多难解积分，但这些方法在计算上也非常昂贵。包括变分自动编码器在内的变分贝叶斯方法使用 KL 发散来生成最佳近似分布，从而可以对非常困难的积分进行更有效的推断。要了解有关变分推理的更多信息，请查看适用于 python 的 Edward 库。
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="postamble">Last Updated 2020-03-26 四 17:01. Created by hiro</p>
+            <script src="https://utteranc.es/client.js"
+        repo="nicehiro/nicehiro.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+        </script>
+</div>
+</body>
+</html>

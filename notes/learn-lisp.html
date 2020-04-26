@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-23 四 23:52 -->
+<!-- 2020-03-26 四 16:53 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Lisp 学习笔记</title>
@@ -227,28 +227,6 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
-
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
-});
-</script>
-<script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -257,12 +235,12 @@ for the JavaScript code in this tag.
 啃Elisp手册，加油！
 </p>
 
-<div id="outline-container-org9e6fd3b" class="outline-2">
-<h2 id="org9e6fd3b"><span class="section-number-2">1</span> Basic Program</h2>
+<div id="outline-container-org1065284" class="outline-2">
+<h2 id="org1065284"><span class="section-number-2">1</span> Basic Program</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org22569b4" class="outline-3">
-<h3 id="org22569b4"><span class="section-number-3">1.1</span> defvar，给一个变量赋值。</h3>
+<div id="outline-container-org6df1548" class="outline-3">
+<h3 id="org6df1548"><span class="section-number-3">1.1</span> defvar，给一个变量赋值。</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>如果该变量有初值，新赋的值不会改变以前的值。</li>
@@ -271,8 +249,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org523b0f4" class="outline-3">
-<h3 id="org523b0f4"><span class="section-number-3">1.2</span> 进制表示。</h3>
+<div id="outline-container-org77a879b" class="outline-3">
+<h3 id="org77a879b"><span class="section-number-3">1.2</span> 进制表示。</h3>
 <div class="outline-text-3" id="text-1-2">
 <ul class="org-ul">
 <li>#b101100 =&gt; 44</li>
@@ -282,8 +260,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge68c13a" class="outline-3">
-<h3 id="orge68c13a"><span class="section-number-3">1.3</span> 测试变量是否相同：</h3>
+<div id="outline-container-orge4ad0b8" class="outline-3">
+<h3 id="orge4ad0b8"><span class="section-number-3">1.3</span> 测试变量是否相同：</h3>
 <div class="outline-text-3" id="text-1-3">
 <ul class="org-ul">
 <li>(= 1.0 1)   =&gt; t</li>
@@ -292,8 +270,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0424bcc" class="outline-3">
-<h3 id="org0424bcc"><span class="section-number-3">1.4</span> 数的转换：</h3>
+<div id="outline-container-orgfdb5199" class="outline-3">
+<h3 id="orgfdb5199"><span class="section-number-3">1.4</span> 数的转换：</h3>
 <div class="outline-text-3" id="text-1-4">
 <ul class="org-ul">
 <li>truncate，靠近0</li>
@@ -308,8 +286,8 @@ mod sin cos tan asin acos atan sqrt exp
 </div>
 </div>
 
-<div id="outline-container-org76aee4b" class="outline-3">
-<h3 id="org76aee4b"><span class="section-number-3">1.5</span> String，字符串。</h3>
+<div id="outline-container-org645812e" class="outline-3">
+<h3 id="org645812e"><span class="section-number-3">1.5</span> String，字符串。</h3>
 <div class="outline-text-3" id="text-1-5">
 <ul class="org-ul">
 <li>?x 表示一个字符</li>
@@ -324,8 +302,8 @@ mod sin cos tan asin acos atan sqrt exp
 </div>
 </div>
 
-<div id="outline-container-orgabeef5c" class="outline-3">
-<h3 id="orgabeef5c"><span class="section-number-3">1.6</span> 自求值表达式，求值前后值不变。</h3>
+<div id="outline-container-orge79f205" class="outline-3">
+<h3 id="orge79f205"><span class="section-number-3">1.6</span> 自求值表达式，求值前后值不变。</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 quote，`，只读入，不求值。
@@ -351,8 +329,8 @@ cons &amp; list:
 </div>
 </div>
 
-<div id="outline-container-org77f7a25" class="outline-3">
-<h3 id="org77f7a25"><span class="section-number-3">1.7</span> 关联表：</h3>
+<div id="outline-container-org9276fd3" class="outline-3">
+<h3 id="org9276fd3"><span class="section-number-3">1.7</span> 关联表：</h3>
 <div class="outline-text-3" id="text-1-7">
 <ul class="org-ul">
 <li>(assoc "a" '(("a" 97) ("b" 98))) =&gt; ("a" 97) =&gt; eq</li>
@@ -363,8 +341,8 @@ cons &amp; list:
 </div>
 </div>
 
-<div id="outline-container-org4b10a40" class="outline-3">
-<h3 id="org4b10a40"><span class="section-number-3">1.8</span> 遍历列表：</h3>
+<div id="outline-container-org7fbdde4" class="outline-3">
+<h3 id="org7fbdde4"><span class="section-number-3">1.8</span> 遍历列表：</h3>
 <div class="outline-text-3" id="text-1-8">
 <ul class="org-ul">
 <li>(mapc '1+ '(1 2 3)) =&gt; (1 2 3)</li>
@@ -374,8 +352,8 @@ cons &amp; list:
 </div>
 </div>
 
-<div id="outline-container-org685faaf" class="outline-3">
-<h3 id="org685faaf"><span class="section-number-3">1.9</span> 序列</h3>
+<div id="outline-container-orgca417a6" class="outline-3">
+<h3 id="orgca417a6"><span class="section-number-3">1.9</span> 序列</h3>
 <div class="outline-text-3" id="text-1-9">
 <ul class="org-ul">
 <li>包括列表（list）和数组（Array），数组中包括向量（vector）、字符串（string）、字符表（char-table）和布尔向量（bool-vector）。</li>
@@ -386,8 +364,8 @@ cons &amp; list:
 </div>
 </div>
 
-<div id="outline-container-orgaa969ce" class="outline-3">
-<h3 id="orgaa969ce"><span class="section-number-3">1.10</span> 符号机制。</h3>
+<div id="outline-container-orgde8e2e6" class="outline-3">
+<h3 id="orgde8e2e6"><span class="section-number-3">1.10</span> 符号机制。</h3>
 <div class="outline-text-3" id="text-1-10">
 <ul class="org-ul">
 <li>elisp 中有一个符号向量表 obarray（vector），维护惟一的符号；</li>
@@ -401,8 +379,8 @@ cons &amp; list:
 </div>
 </div>
 
-<div id="outline-container-orgced20ed" class="outline-3">
-<h3 id="orgced20ed"><span class="section-number-3">1.11</span> 变量。</h3>
+<div id="outline-container-orgf771fe5" class="outline-3">
+<h3 id="orgf771fe5"><span class="section-number-3">1.11</span> 变量。</h3>
 <div class="outline-text-3" id="text-1-11">
 <ul class="org-ul">
 <li>全局变量。只有当退出 emacs 或是使用 unintern 从 obarray 中除去才能消除。</li>
@@ -412,8 +390,8 @@ cons &amp; list:
 </div>
 </div>
 
-<div id="outline-container-org76e336b" class="outline-3">
-<h3 id="org76e336b"><span class="section-number-3">1.12</span> funcall &amp; apply:</h3>
+<div id="outline-container-orgcd69aa5" class="outline-3">
+<h3 id="orgcd69aa5"><span class="section-number-3">1.12</span> funcall &amp; apply:</h3>
 <div class="outline-text-3" id="text-1-12">
 <ul class="org-ul">
 <li>funcall 直接把所有参数参入调用函数</li>
@@ -422,8 +400,8 @@ cons &amp; list:
 </div>
 </div>
 
-<div id="outline-container-org0dc84d2" class="outline-3">
-<h3 id="org0dc84d2"><span class="section-number-3">1.13</span> 宏。</h3>
+<div id="outline-container-org890d2a4" class="outline-3">
+<h3 id="org890d2a4"><span class="section-number-3">1.13</span> 宏。</h3>
 <div class="outline-text-3" id="text-1-13">
 <ul class="org-ul">
 <li>` 反引号和 , 逗号配合使用。反引号包住的都只读入而不 eval，在反引号中再用逗号包住的需要 eval。</li>
@@ -431,8 +409,8 @@ cons &amp; list:
 </div>
 </div>
 
-<div id="outline-container-org4faf6cd" class="outline-3">
-<h3 id="org4faf6cd"><span class="section-number-3">1.14</span> 缓存区操作。</h3>
+<div id="outline-container-orgf13d6d1" class="outline-3">
+<h3 id="orgf13d6d1"><span class="section-number-3">1.14</span> 缓存区操作。</h3>
 <div class="outline-text-3" id="text-1-14">
 <ul class="org-ul">
 <li>buffer-name 获取 buffer name；rename-buffer 重命名 buffer</li>
@@ -463,8 +441,8 @@ current-word thing-at-point（得到当前的表达式、符号、数字等）</
 </div>
 </div>
 
-<div id="outline-container-orgc5f93f6" class="outline-3">
-<h3 id="orgc5f93f6"><span class="section-number-3">1.15</span> 窗口</h3>
+<div id="outline-container-org5cdcfdc" class="outline-3">
+<h3 id="org5cdcfdc"><span class="section-number-3">1.15</span> 窗口</h3>
 <div class="outline-text-3" id="text-1-15">
 <ul class="org-ul">
 <li>frame &amp; window 一个frame可以包含多个window</li>
@@ -479,8 +457,8 @@ switch-to-buffer：让某个窗口显示某个缓存区</li>
 </div>
 </div>
 
-<div id="outline-container-orgd1fadb4" class="outline-3">
-<h3 id="orgd1fadb4"><span class="section-number-3">1.16</span> 文件</h3>
+<div id="outline-container-org79fd23a" class="outline-3">
+<h3 id="org79fd23a"><span class="section-number-3">1.16</span> 文件</h3>
 <div class="outline-text-3" id="text-1-16">
 <p>
 需要理解，文件和缓存区（buffer）是两个不同的概念。buffer 是保存在内存中的对象，平时的修改只会对缓存区中的对象做改动，只有作了保存操作才会保存到磁盘。
@@ -506,20 +484,20 @@ file-relative-name 绝对转相对路径</li>
 </div>
 </div>
 
-<div id="outline-container-orgb7f7de4" class="outline-2">
-<h2 id="orgb7f7de4"><span class="section-number-2">2</span> Tricky</h2>
+<div id="outline-container-orgd95d67e" class="outline-2">
+<h2 id="orgd95d67e"><span class="section-number-2">2</span> Tricky</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orged3337a" class="outline-3">
-<h3 id="orged3337a"><span class="section-number-3">2.1</span> interactive</h3>
+<div id="outline-container-org865bed1" class="outline-3">
+<h3 id="org865bed1"><span class="section-number-3">2.1</span> interactive</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 几个从 pdf 里面抄到的例子，写一个自己的理解。
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">hello-world</span> <span style="color: #70c0b1;">(</span>name<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">interactive</span> <span style="color: #70c0b1;">"sWhat's your name? "</span><span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span>message <span style="color: #70c0b1;">"Hello, %s"</span> name<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<pre class="src src-elisp"><span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">hello-world</span> <span style="color: #d33682;">(</span>name<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span><span style="color: #859900; font-weight: bold;">interactive</span> <span style="color: #2aa198;">"sWhat's your name? "</span><span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span>message <span style="color: #2aa198;">"Hello, %s"</span> name<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 </pre>
 </div>
 <p>
@@ -528,13 +506,13 @@ interactive 顾名思义，就是一个搞交互的函数，可以通过 interac
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">read-hiden-file</span> <span style="color: #70c0b1;">(</span>file arg<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">interactive</span>
-   <span style="color: #e7c547;">(</span>list <span style="color: #b9ca4a;">(</span>read-file-name <span style="color: #70c0b1;">"Choose a hiden file: "</span> <span style="color: #70c0b1;">"~/"</span> nil nil nil
-                         <span style="color: #7aa6da;">(</span><span style="color: #b9ca4a;">lambda</span> <span style="color: #eaeaea;">(</span>name<span style="color: #eaeaea;">)</span>
-                           <span style="color: #eaeaea;">(</span>string-match <span style="color: #70c0b1;">"^</span><span style="color: #e7c547;">\</span><span style="color: #c397d8;">\</span><span style="color: #70c0b1;">."</span> <span style="color: #70c0b1;">(</span>file-name-nondirectory name<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
-         current-prefix-arg<span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span>message <span style="color: #70c0b1;">"%s, %s"</span> file arg<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<pre class="src src-elisp"><span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">read-hiden-file</span> <span style="color: #d33682;">(</span>file arg<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span><span style="color: #859900; font-weight: bold;">interactive</span>
+   <span style="color: #859900;">(</span>list <span style="color: #cb4b16;">(</span>read-file-name <span style="color: #2aa198;">"Choose a hiden file: "</span> <span style="color: #2aa198;">"~/"</span> nil nil nil
+                         <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">lambda</span> <span style="color: #b58900;">(</span>name<span style="color: #b58900;">)</span>
+                           <span style="color: #b58900;">(</span>string-match <span style="color: #2aa198;">"^</span><span style="color: #cb4b16; font-weight: bold;">\</span><span style="color: #cb4b16; font-weight: bold;">\</span><span style="color: #2aa198;">."</span> <span style="color: #35a69c;">(</span>file-name-nondirectory name<span style="color: #35a69c;">)</span><span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span>
+         current-prefix-arg<span style="color: #859900;">)</span><span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span>message <span style="color: #2aa198;">"%s, %s"</span> file arg<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 read-hiden-file
 </pre>
 </div>
@@ -544,20 +522,20 @@ interactive 对应的代码字符很多，一整张表，所以这里还提供�
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defvar</span> <span style="color: #e7c547;">switch-major-mode-history</span> nil<span style="color: #eaeaea;">)</span>
+<pre class="src src-elisp"><span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defvar</span> <span style="color: #6c71c4;">switch-major-mode-history</span> nil<span style="color: #268bd2;">)</span>
 switch-major-mode-history
-<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">switch-major-mode</span> <span style="color: #70c0b1;">(</span>mode<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">interactive</span>
-   <span style="color: #e7c547;">(</span>list
-    <span style="color: #b9ca4a;">(</span>intern
-     <span style="color: #7aa6da;">(</span>completing-read <span style="color: #70c0b1;">"Switch to mode: "</span>
-                      obarray <span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">lambda</span> <span style="color: #70c0b1;">(</span>s<span style="color: #70c0b1;">)</span>
-                                <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">and</span> <span style="color: #e7c547;">(</span>fboundp s<span style="color: #e7c547;">)</span>
-                                     <span style="color: #e7c547;">(</span>string-match <span style="color: #70c0b1;">"-mode$"</span> <span style="color: #b9ca4a;">(</span>symbol-name s<span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
-                      t nil <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">switch-major-mode-history</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">setq</span> switch-major-mode-history
-        <span style="color: #e7c547;">(</span>cons <span style="color: #b9ca4a;">(</span>symbol-name major-mode<span style="color: #b9ca4a;">)</span> switch-major-mode-history<span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span>funcall mode<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">switch-major-mode</span> <span style="color: #d33682;">(</span>mode<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span><span style="color: #859900; font-weight: bold;">interactive</span>
+   <span style="color: #859900;">(</span>list
+    <span style="color: #cb4b16;">(</span>intern
+     <span style="color: #6c71c4;">(</span>completing-read <span style="color: #2aa198;">"Switch to mode: "</span>
+                      obarray <span style="color: #b58900;">(</span><span style="color: #859900; font-weight: bold;">lambda</span> <span style="color: #35a69c;">(</span>s<span style="color: #35a69c;">)</span>
+                                <span style="color: #35a69c;">(</span><span style="color: #859900; font-weight: bold;">and</span> <span style="color: #a2b6da;">(</span>fboundp s<span style="color: #a2b6da;">)</span>
+                                     <span style="color: #a2b6da;">(</span>string-match <span style="color: #2aa198;">"-mode$"</span> <span style="color: #9cb6ad;">(</span>symbol-name s<span style="color: #9cb6ad;">)</span><span style="color: #a2b6da;">)</span><span style="color: #35a69c;">)</span><span style="color: #b58900;">)</span>
+                      t nil <span style="color: #cb4b16;">'</span><span style="color: #b58900;">switch-major-mode-history</span><span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span><span style="color: #859900;">)</span><span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span><span style="color: #859900; font-weight: bold;">setq</span> switch-major-mode-history
+        <span style="color: #859900;">(</span>cons <span style="color: #cb4b16;">(</span>symbol-name major-mode<span style="color: #cb4b16;">)</span> switch-major-mode-history<span style="color: #859900;">)</span><span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span>funcall mode<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 switch-major-mode
 </pre>
 </div>
@@ -567,12 +545,12 @@ switch-major-mode
 </div>
 </div>
 
-<div id="outline-container-orgcbf470f" class="outline-3">
-<h3 id="orgcbf470f"><span class="section-number-3">2.2</span> 正则表达式</h3>
+<div id="outline-container-org4bed038" class="outline-3">
+<h3 id="org4bed038"><span class="section-number-3">2.2</span> 正则表达式</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 Emacs 正则表达式太恶心人了，还好本书作者给了一个简单的方法。
-首先想想没有引号引起时的正则表达式是怎样。比如对于特殊字符 \$ 要用 \$，对于反斜线结构是 \(，\)，\{，\}，\|等。知道这个之后，再把所有的 \ 替换成 \\，这就是写到最后的双引号里面的形式。所以要匹配一个 \，应该用 \\，然后在引号里用 \\\\ 来匹配。
+首先想想没有引号引起时的正则表达式是怎样。比如对于特殊字符 \$ 要用 \$，对于反斜线结构是 <img src="ltximg/learn-lisp_0c3c2698fd19a5e6ba788f2f0ac4b525ea43f3cb.png" alt="learn-lisp_0c3c2698fd19a5e6ba788f2f0ac4b525ea43f3cb.png" />，\{，\}，\|等。知道这个之后，再把所有的 \ 替换成 \\，这就是写到最后的双引号里面的形式。所以要匹配一个 \，应该用 \\，然后在引号里用 \\\\ 来匹配。
 在使用 [] 表示一个字符集时，如果字符集里包括 ] 时，要把 ] 放在第一位；如果要包括 - ，只能放在最后一位；如果要包括 ^ ，不能放在第一位，如果只想匹配一个 ^，就使用 \^ 的形式。
 使用 M-x describe-syntax 查看语法表。
 使用 regexp-opt 产生一个更好的正则表达式；regexp-quote 可以让字符串中的特殊字符自动转义。
@@ -580,64 +558,64 @@ Emacs 正则表达式太恶心人了，还好本书作者给了一个简单的�
 </div>
 </div>
 
-<div id="outline-container-org1f102ba" class="outline-3">
-<h3 id="org1f102ba"><span class="section-number-3">2.3</span> 显示当前桌面信息</h3>
+<div id="outline-container-orgae5bf9e" class="outline-3">
+<h3 id="orgae5bf9e"><span class="section-number-3">2.3</span> 显示当前桌面信息</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 例子来自于书中。
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">&#26681;&#25454; dir &#26159;&#21542;&#26159; nil &#21028;&#26029;&#26159;&#27700;&#24179;&#36824;&#26159;&#31446;&#30452;&#20998;&#21106;</span>
-<span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">&#36820;&#22238;&#26684;&#24335;&#65306;(DIR heigth/width win ...)</span>
-<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-window-tree-to-list</span> <span style="color: #70c0b1;">(</span>tree<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">if</span> <span style="color: #e7c547;">(</span>windowp tree<span style="color: #e7c547;">)</span>
-      <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">win</span>
-    <span style="color: #e7c547;">(</span><span style="color: #b9ca4a;">let</span> <span style="color: #b9ca4a;">(</span><span style="color: #7aa6da;">(</span>dir <span style="color: #eaeaea;">(</span>car tree<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span>
-          <span style="color: #7aa6da;">(</span>children <span style="color: #eaeaea;">(</span>cddr tree<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
-      <span style="color: #b9ca4a;">(</span>list <span style="color: #7aa6da;">(</span><span style="color: #b9ca4a;">if</span> dir <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">vertical</span> <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">horizontal</span><span style="color: #7aa6da;">)</span>
-            <span style="color: #7aa6da;">(</span><span style="color: #b9ca4a;">if</span> dir
-                <span style="color: #eaeaea;">(</span>my-window-height <span style="color: #70c0b1;">(</span>car children<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
-              <span style="color: #eaeaea;">(</span>my-window-width <span style="color: #70c0b1;">(</span>car children<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span>
-            <span style="color: #7aa6da;">(</span>my-window-tree-to-list <span style="color: #eaeaea;">(</span>car children<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span>
-            <span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">&#22914;&#26524; &#23376;&#31383;&#21475; &#34920;&#36798;&#24335;&#30340;&#38271;&#24230;&#22823;&#20110; 2,&#20063;&#23601;&#26159;&#26377;&#34987;&#20998;&#21106;&#65292;&#21017;&#32487;&#32493;</span>
-            <span style="color: #7aa6da;">(</span><span style="color: #b9ca4a;">if</span> <span style="color: #eaeaea;">(</span>&gt; <span style="color: #70c0b1;">(</span>length children<span style="color: #70c0b1;">)</span> 2<span style="color: #eaeaea;">)</span>
-                <span style="color: #eaeaea;">(</span>my-window-tree-to-list <span style="color: #70c0b1;">(</span>cons dir <span style="color: #e7c547;">(</span>cons nil <span style="color: #b9ca4a;">(</span>cdr children<span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
-              <span style="color: #eaeaea;">(</span>my-window-tree-to-list <span style="color: #70c0b1;">(</span>cadr children<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<pre class="src src-elisp"><span style="color: #405A61;">;; </span><span style="color: #405A61;">&#26681;&#25454; dir &#26159;&#21542;&#26159; nil &#21028;&#26029;&#26159;&#27700;&#24179;&#36824;&#26159;&#31446;&#30452;&#20998;&#21106;</span>
+<span style="color: #405A61;">;; </span><span style="color: #405A61;">&#36820;&#22238;&#26684;&#24335;&#65306;(DIR heigth/width win ...)</span>
+<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">my-window-tree-to-list</span> <span style="color: #d33682;">(</span>tree<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #859900;">(</span>windowp tree<span style="color: #859900;">)</span>
+      <span style="color: #cb4b16;">'</span><span style="color: #b58900;">win</span>
+    <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #cb4b16;">(</span><span style="color: #6c71c4;">(</span>dir <span style="color: #b58900;">(</span>car tree<span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span>
+          <span style="color: #6c71c4;">(</span>children <span style="color: #b58900;">(</span>cddr tree<span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span>
+      <span style="color: #cb4b16;">(</span>list <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">if</span> dir <span style="color: #cb4b16;">'</span><span style="color: #b58900;">vertical</span> <span style="color: #cb4b16;">'</span><span style="color: #b58900;">horizontal</span><span style="color: #6c71c4;">)</span>
+            <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">if</span> dir
+                <span style="color: #b58900;">(</span>my-window-height <span style="color: #35a69c;">(</span>car children<span style="color: #35a69c;">)</span><span style="color: #b58900;">)</span>
+              <span style="color: #b58900;">(</span>my-window-width <span style="color: #35a69c;">(</span>car children<span style="color: #35a69c;">)</span><span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span>
+            <span style="color: #6c71c4;">(</span>my-window-tree-to-list <span style="color: #b58900;">(</span>car children<span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span>
+            <span style="color: #405A61;">;; </span><span style="color: #405A61;">&#22914;&#26524; &#23376;&#31383;&#21475; &#34920;&#36798;&#24335;&#30340;&#38271;&#24230;&#22823;&#20110; 2,&#20063;&#23601;&#26159;&#26377;&#34987;&#20998;&#21106;&#65292;&#21017;&#32487;&#32493;</span>
+            <span style="color: #6c71c4;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #b58900;">(</span>&gt; <span style="color: #35a69c;">(</span>length children<span style="color: #35a69c;">)</span> 2<span style="color: #b58900;">)</span>
+                <span style="color: #b58900;">(</span>my-window-tree-to-list <span style="color: #35a69c;">(</span>cons dir <span style="color: #a2b6da;">(</span>cons nil <span style="color: #9cb6ad;">(</span>cdr children<span style="color: #9cb6ad;">)</span><span style="color: #a2b6da;">)</span><span style="color: #35a69c;">)</span><span style="color: #b58900;">)</span>
+              <span style="color: #b58900;">(</span>my-window-tree-to-list <span style="color: #35a69c;">(</span>cadr children<span style="color: #35a69c;">)</span><span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span><span style="color: #859900;">)</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">window-tree &#36820;&#22238;&#26684;&#24335;&#20013;&#26377;&#20004;&#31181;&#19981;&#21516;&#30340;&#26684;&#24335;&#26469;&#34920;&#29616; edge &#36825;&#20010;&#21464;&#37327;</span>
-<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-window-width</span> <span style="color: #70c0b1;">(</span>win<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">if</span> <span style="color: #e7c547;">(</span>windowp win<span style="color: #e7c547;">)</span>
-      <span style="color: #e7c547;">(</span>window-width win<span style="color: #e7c547;">)</span>
-    <span style="color: #e7c547;">(</span><span style="color: #b9ca4a;">let</span> <span style="color: #b9ca4a;">(</span><span style="color: #7aa6da;">(</span>edge <span style="color: #eaeaea;">(</span>cadr win<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
-      <span style="color: #b9ca4a;">(</span>- <span style="color: #7aa6da;">(</span>nth 2 edge<span style="color: #7aa6da;">)</span> <span style="color: #7aa6da;">(</span>car edge<span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<span style="color: #405A61;">;; </span><span style="color: #405A61;">window-tree &#36820;&#22238;&#26684;&#24335;&#20013;&#26377;&#20004;&#31181;&#19981;&#21516;&#30340;&#26684;&#24335;&#26469;&#34920;&#29616; edge &#36825;&#20010;&#21464;&#37327;</span>
+<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">my-window-width</span> <span style="color: #d33682;">(</span>win<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #859900;">(</span>windowp win<span style="color: #859900;">)</span>
+      <span style="color: #859900;">(</span>window-width win<span style="color: #859900;">)</span>
+    <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #cb4b16;">(</span><span style="color: #6c71c4;">(</span>edge <span style="color: #b58900;">(</span>cadr win<span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span>
+      <span style="color: #cb4b16;">(</span>- <span style="color: #6c71c4;">(</span>nth 2 edge<span style="color: #6c71c4;">)</span> <span style="color: #6c71c4;">(</span>car edge<span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span><span style="color: #859900;">)</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-window-height</span> <span style="color: #70c0b1;">(</span>win<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">if</span> <span style="color: #e7c547;">(</span>windowp win<span style="color: #e7c547;">)</span>
-      <span style="color: #e7c547;">(</span>window-height win<span style="color: #e7c547;">)</span>
-    <span style="color: #e7c547;">(</span><span style="color: #b9ca4a;">let</span> <span style="color: #b9ca4a;">(</span><span style="color: #7aa6da;">(</span>edge <span style="color: #eaeaea;">(</span>cadr win<span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
-      <span style="color: #b9ca4a;">(</span>- <span style="color: #7aa6da;">(</span>nth 3 edge<span style="color: #7aa6da;">)</span> <span style="color: #7aa6da;">(</span>cadr edge<span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">my-window-height</span> <span style="color: #d33682;">(</span>win<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span><span style="color: #859900; font-weight: bold;">if</span> <span style="color: #859900;">(</span>windowp win<span style="color: #859900;">)</span>
+      <span style="color: #859900;">(</span>window-height win<span style="color: #859900;">)</span>
+    <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #cb4b16;">(</span><span style="color: #6c71c4;">(</span>edge <span style="color: #b58900;">(</span>cadr win<span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span>
+      <span style="color: #cb4b16;">(</span>- <span style="color: #6c71c4;">(</span>nth 3 edge<span style="color: #6c71c4;">)</span> <span style="color: #6c71c4;">(</span>cadr edge<span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span><span style="color: #859900;">)</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-list-to-window-tree</span> <span style="color: #70c0b1;">(</span>conf<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">when</span> <span style="color: #e7c547;">(</span>listp conf<span style="color: #e7c547;">)</span>
-    <span style="color: #e7c547;">(</span><span style="color: #b9ca4a;">let</span> <span style="color: #b9ca4a;">(</span>newwin<span style="color: #b9ca4a;">)</span>
-      <span style="color: #b9ca4a;">(</span><span style="color: #b9ca4a;">setq</span> newwin <span style="color: #7aa6da;">(</span>split-window nil <span style="color: #eaeaea;">(</span>cadr conf<span style="color: #eaeaea;">)</span>
-                                 <span style="color: #eaeaea;">(</span>eq <span style="color: #70c0b1;">(</span>car conf<span style="color: #70c0b1;">)</span> <span style="color: #b9ca4a;">'</span><span style="color: #7aa6da;">horizontal</span><span style="color: #eaeaea;">)</span><span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
-      <span style="color: #b9ca4a;">(</span>my-list-to-window-tree <span style="color: #7aa6da;">(</span>nth 2 conf<span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span>
-      <span style="color: #b9ca4a;">(</span>select-window newwin<span style="color: #b9ca4a;">)</span>
-      <span style="color: #b9ca4a;">(</span>my-list-to-window-tree <span style="color: #7aa6da;">(</span>nth 3 conf<span style="color: #7aa6da;">)</span><span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">my-list-to-window-tree</span> <span style="color: #d33682;">(</span>conf<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span><span style="color: #859900; font-weight: bold;">when</span> <span style="color: #859900;">(</span>listp conf<span style="color: #859900;">)</span>
+    <span style="color: #859900;">(</span><span style="color: #859900; font-weight: bold;">let</span> <span style="color: #cb4b16;">(</span>newwin<span style="color: #cb4b16;">)</span>
+      <span style="color: #cb4b16;">(</span><span style="color: #859900; font-weight: bold;">setq</span> newwin <span style="color: #6c71c4;">(</span>split-window nil <span style="color: #b58900;">(</span>cadr conf<span style="color: #b58900;">)</span>
+                                 <span style="color: #b58900;">(</span>eq <span style="color: #35a69c;">(</span>car conf<span style="color: #35a69c;">)</span> <span style="color: #cb4b16;">'</span><span style="color: #b58900;">horizontal</span><span style="color: #b58900;">)</span><span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span>
+      <span style="color: #cb4b16;">(</span>my-list-to-window-tree <span style="color: #6c71c4;">(</span>nth 2 conf<span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span>
+      <span style="color: #cb4b16;">(</span>select-window newwin<span style="color: #cb4b16;">)</span>
+      <span style="color: #cb4b16;">(</span>my-list-to-window-tree <span style="color: #6c71c4;">(</span>nth 3 conf<span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span><span style="color: #859900;">)</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-restore-window-configuration</span> <span style="color: #70c0b1;">(</span>winconf<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span>delete-other-windows<span style="color: #70c0b1;">)</span>
-  <span style="color: #70c0b1;">(</span>my-list-to-window-tree winconf<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">my-restore-window-configuration</span> <span style="color: #d33682;">(</span>winconf<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span>delete-other-windows<span style="color: #d33682;">)</span>
+  <span style="color: #d33682;">(</span>my-list-to-window-tree winconf<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">defun</span> <span style="color: #e78c45;">my-current-window-configuration</span> <span style="color: #70c0b1;">()</span>
-  <span style="color: #70c0b1;">(</span>my-window-tree-to-list <span style="color: #e7c547;">(</span>car <span style="color: #b9ca4a;">(</span>window-tree<span style="color: #b9ca4a;">)</span><span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">defun</span> <span style="color: #268bd2;">my-current-window-configuration</span> <span style="color: #d33682;">()</span>
+  <span style="color: #d33682;">(</span>my-window-tree-to-list <span style="color: #859900;">(</span>car <span style="color: #cb4b16;">(</span>window-tree<span style="color: #cb4b16;">)</span><span style="color: #859900;">)</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #eaeaea;">(</span><span style="color: #b9ca4a;">setq</span> foo <span style="color: #70c0b1;">(</span>my-current-window-configuration<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
-<span style="color: #eaeaea;">(</span>horizontal 76 win <span style="color: #70c0b1;">(</span>vertical 20 win win<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<span style="color: #268bd2;">(</span><span style="color: #859900; font-weight: bold;">setq</span> foo <span style="color: #d33682;">(</span>my-current-window-configuration<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">(</span>horizontal 76 win <span style="color: #d33682;">(</span>vertical 20 win win<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
 
-<span style="color: #969896; font-style: italic;">;; </span><span style="color: #969896; font-style: italic;">&#23384;&#20648;&#31383;&#21475;&#20449;&#24687;</span>
-<span style="color: #eaeaea;">(</span>my-restore-window-configuration foo<span style="color: #eaeaea;">)</span>
+<span style="color: #405A61;">;; </span><span style="color: #405A61;">&#23384;&#20648;&#31383;&#21475;&#20449;&#24687;</span>
+<span style="color: #268bd2;">(</span>my-restore-window-configuration foo<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 <p>
@@ -648,14 +626,14 @@ Emacs 正则表达式太恶心人了，还好本书作者给了一个简单的�
 如果 Frame 只有一个窗口，window-tree 返回只有一个窗口；如果 Frame 有被分割，那么返回的窗口中也会分割出几个不同的窗口：具体的格式是这样的，(DIR EDGE window &#x2026;)，DIR 为 <code>nil</code> 时表示水平分成两块——指竖着分，DIR 为 <code>t</code> 时表示竖直分成两块——指横着分，edge 表示这个窗口的范围，也是一个 list——(left top right bottom)，如果后面的窗口还有被分割，就继续按上面的方法分。
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #eaeaea;">(</span>window-tree<span style="color: #eaeaea;">)</span>
-<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">(</span>nil <span style="color: #e7c547;">(</span>0 0 160 40<span style="color: #e7c547;">)</span> #&lt;window 3 on *scratch*&gt; <span style="color: #e7c547;">(</span>t <span style="color: #b9ca4a;">(</span>80 0 160 40<span style="color: #b9ca4a;">)</span> #&lt;window 34 on learn-lisp.org&gt; #&lt;window 36 on *Messages*&gt;<span style="color: #e7c547;">)</span><span style="color: #70c0b1;">)</span> #&lt;window 4 on  *Minibuf-0*&gt;<span style="color: #eaeaea;">)</span>
+<pre class="src src-elisp"><span style="color: #268bd2;">(</span>window-tree<span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">(</span><span style="color: #d33682;">(</span>nil <span style="color: #859900;">(</span>0 0 160 40<span style="color: #859900;">)</span> #&lt;window 3 on *scratch*&gt; <span style="color: #859900;">(</span>t <span style="color: #cb4b16;">(</span>80 0 160 40<span style="color: #cb4b16;">)</span> #&lt;window 34 on learn-lisp.org&gt; #&lt;window 36 on *Messages*&gt;<span style="color: #859900;">)</span><span style="color: #d33682;">)</span> #&lt;window 4 on  *Minibuf-0*&gt;<span style="color: #268bd2;">)</span>
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org329de74" class="outline-3">
-<h3 id="org329de74"><span class="section-number-3">2.4</span> 符号链接文件</h3>
+<div id="outline-container-orgaaf37eb" class="outline-3">
+<h3 id="orgaaf37eb"><span class="section-number-3">2.4</span> 符号链接文件</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 文件是否存在可以使用 file-exists-p 来判断，对于符号链接只有当文件存在时才返回 t。
@@ -663,8 +641,8 @@ file-symlink-p 在文件是符号链接时返回目标文件名，而文件的�
 </p>
 </div>
 </div>
-<div id="outline-container-orgb3bded6" class="outline-3">
-<h3 id="orgb3bded6"><span class="section-number-3">2.5</span> 文件目录</h3>
+<div id="outline-container-org3527280" class="outline-3">
+<h3 id="org3527280"><span class="section-number-3">2.5</span> 文件目录</h3>
 <div class="outline-text-3" id="text-2-5">
 <p>
 目录名的写法要确保是以路径分隔符结束，可以用 file-name-as-directory 来转换。不用硬编码（concat dir "/"） 转换，遇到 win 系统怎么办？
@@ -672,8 +650,8 @@ file-symlink-p 在文件是符号链接时返回目标文件名，而文件的�
 </div>
 </div>
 </div>
-<div id="outline-container-org86c6a65" class="outline-2">
-<h2 id="org86c6a65"><span class="section-number-2">3</span> 看源码</h2>
+<div id="outline-container-orge2c3b02" class="outline-2">
+<h2 id="orge2c3b02"><span class="section-number-2">3</span> 看源码</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li>define-namespace
@@ -686,7 +664,7 @@ file-symlink-p 在文件是符号链接时返回目标文件名，而文件的�
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-05-19 日 21:45. Created by hiro</p>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"

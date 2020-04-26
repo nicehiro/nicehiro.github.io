@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-23 四 23:52 -->
+<!-- 2020-03-26 四 16:54 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Linux Shell 知识点总结</title>
@@ -236,8 +236,8 @@ for the JavaScript code in this tag.
 一下脚本使用 bash 执行，使用其他 sh 可能会有不同输出！
 </p>
 
-<div id="outline-container-org57ecca7" class="outline-2">
-<h2 id="org57ecca7"><span class="section-number-2">1</span> 基础知识</h2>
+<div id="outline-container-org47104e2" class="outline-2">
+<h2 id="org47104e2"><span class="section-number-2">1</span> 基础知识</h2>
 <div class="outline-text-2" id="text-1">
 <ul class="org-ul">
 <li><code>$</code> &amp; <code>#</code> 如果是默认未被修改过的 bash， <code>$</code> 表示普通用户； <code>#</code> 表示 root 用户</li>
@@ -249,16 +249,16 @@ echo 的用法： <code>'</code> 中包含字符都无特殊含义； <code>"</c
 echo 默认会添加换行符在字符串结尾
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #c397d8;">echo</span> hello      <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">right</span>
-<span style="color: #c397d8;">echo</span> <span style="color: #70c0b1;">'hello'</span>    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">right</span>
-<span style="color: #c397d8;">echo</span> <span style="color: #70c0b1;">"hello"</span>    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">right</span>
+<pre class="src src-sh"><span style="color: #268bd2;">echo</span> hello      <span style="color: #405A61;"># </span><span style="color: #405A61;">right</span>
+<span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">'hello'</span>    <span style="color: #405A61;"># </span><span style="color: #405A61;">right</span>
+<span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"hello"</span>    <span style="color: #405A61;"># </span><span style="color: #405A61;">right</span>
 
-<span style="color: #c397d8;">echo</span> <span style="color: #70c0b1;">"hello\!"</span>  <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#36716;&#20041;</span>
-<span style="color: #c397d8;">echo</span> hello!     <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#30452;&#25509;&#25171;"</span>
-<span style="color: #c397d8;">echo</span> <span style="color: #70c0b1;">'hello!'</span>   <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#20063;&#27491;&#30830;</span>
+<span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">"hello\!"</span>  <span style="color: #405A61;"># </span><span style="color: #405A61;">&#36716;&#20041;</span>
+<span style="color: #268bd2;">echo</span> hello!     <span style="color: #405A61;"># </span><span style="color: #405A61;">&#30452;&#25509;&#25171;"</span>
+<span style="color: #268bd2;">echo</span> <span style="color: #2aa198;">'hello!'</span>   <span style="color: #405A61;"># </span><span style="color: #405A61;">&#20063;&#27491;&#30830;</span>
 
-<span style="color: #c397d8;">echo</span> $<span style="color: #e7c547;">USER</span>
-<span style="color: #c397d8;">echo</span> $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">USER</span><span style="color: #eaeaea;">}</span>
+<span style="color: #268bd2;">echo</span> $<span style="color: #6c71c4;">USER</span>
+<span style="color: #268bd2;">echo</span> $<span style="color: #268bd2;">{</span><span style="color: #6c71c4;">USER</span><span style="color: #268bd2;">}</span>
 </pre>
 </div></li>
 
@@ -266,7 +266,7 @@ echo 默认会添加换行符在字符串结尾
 printf：类似 c 中的用法
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">printf <span style="color: #70c0b1;">"%s haha %-4.2f"</span> hiro 23.9898
+<pre class="src src-sh">printf <span style="color: #2aa198;">"%s haha %-4.2f"</span> hiro 23.9898
 =&gt; hiro haha 23.99
 </pre>
 </div></li>
@@ -275,8 +275,8 @@ printf：类似 c 中的用法
 赋值，不可添加空格！切记
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #e7c547;">GOD</span>=<span style="color: #70c0b1;">"hiro"</span>    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">right</span>
-<span style="color: #e7c547;">GOD</span> = <span style="color: #70c0b1;">"hiro"</span>  <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">wrong</span>
+<pre class="src src-sh"><span style="color: #6c71c4;">GOD</span>=<span style="color: #2aa198;">"hiro"</span>    <span style="color: #405A61;"># </span><span style="color: #405A61;">right</span>
+<span style="color: #6c71c4;">GOD</span> = <span style="color: #2aa198;">"hiro"</span>  <span style="color: #405A61;"># </span><span style="color: #405A61;">wrong</span>
 </pre>
 </div></li>
 
@@ -284,8 +284,8 @@ printf：类似 c 中的用法
 <code>let</code> , <code>[]</code> 可以执行基本的算术操作
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #c397d8;">let</span> <span style="color: #e7c547;">a</span>=1+2
-<span style="color: #e7c547;">result</span>=$<span style="color: #eaeaea;">[</span> 1+2 <span style="color: #eaeaea;">]</span>
+<pre class="src src-sh"><span style="color: #268bd2;">let</span> <span style="color: #6c71c4;">a</span>=1+2
+<span style="color: #6c71c4;">result</span>=$<span style="color: #268bd2;">[</span> 1+2 <span style="color: #268bd2;">]</span>
 </pre>
 </div></li>
 
@@ -296,7 +296,7 @@ printf：类似 c 中的用法
 alias：别名
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #c397d8;">alias</span> <span style="color: #e7c547;">install</span>=<span style="color: #70c0b1;">'sudo pacman -S'</span>
+<pre class="src src-sh"><span style="color: #268bd2;">alias</span> <span style="color: #6c71c4;">install</span>=<span style="color: #2aa198;">'sudo pacman -S'</span>
 </pre>
 </div></li>
 
@@ -305,7 +305,7 @@ alias：别名
 </p>
 <div class="org-src-container">
 <pre class="src src-sh">date
-date +%s     <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#32426;&#20803;&#26102;</span>
+date +%s     <span style="color: #405A61;"># </span><span style="color: #405A61;">&#32426;&#20803;&#26102;</span>
 </pre>
 </div></li>
 
@@ -313,11 +313,11 @@ date +%s     <span style="color: #969896; font-style: italic;"># </span><span st
 数组一般使用 <code>()</code> ，里面放入元素直接生成；也可以使用下标来调用元素（默认从 1 开始）
 </p>
 <div class="org-src-container">
-<pre class="src src-sh">&#8594; echo $<span style="color: #e7c547;">array</span>
+<pre class="src src-sh">&#8594; echo $<span style="color: #6c71c4;">array</span>
 1 2 3 4 test1
-&#8594; echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">array</span><span style="color: #70c0b1;">[</span>1<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+&#8594; echo $<span style="color: #268bd2;">{</span><span style="color: #6c71c4;">array</span><span style="color: #d33682;">[</span>1<span style="color: #d33682;">]</span><span style="color: #268bd2;">}</span>
 1
-&#8594; echo $<span style="color: #eaeaea;">{</span>#<span style="color: #e7c547;">array</span><span style="color: #70c0b1;">[</span>*<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+&#8594; echo $<span style="color: #268bd2;">{</span>#<span style="color: #6c71c4;">array</span><span style="color: #d33682;">[</span>*<span style="color: #d33682;">]</span><span style="color: #268bd2;">}</span>
 5
 </pre>
 </div></li>
@@ -326,18 +326,18 @@ date +%s     <span style="color: #969896; font-style: italic;"># </span><span st
 关联列表 使用 <code>{[]</code>'' []=''}= 这个形式。
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ declare -A temp
-<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ <span style="color: #e7c547;">temp</span>=<span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">[</span>apple<span style="color: #70c0b1;">]</span>=100 <span style="color: #70c0b1;">[</span>orange<span style="color: #70c0b1;">]</span>=50<span style="color: #eaeaea;">)</span>
-<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #e7c547;">temp</span>
+<pre class="src src-sh"><span style="color: #268bd2;">[</span>hiro@hiro-pc ~<span style="color: #268bd2;">]</span>$ declare -A temp
+<span style="color: #268bd2;">[</span>hiro@hiro-pc ~<span style="color: #268bd2;">]</span>$ <span style="color: #6c71c4;">temp</span>=<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>apple<span style="color: #d33682;">]</span>=100 <span style="color: #d33682;">[</span>orange<span style="color: #d33682;">]</span>=50<span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">[</span>hiro@hiro-pc ~<span style="color: #268bd2;">]</span>$ echo $<span style="color: #6c71c4;">temp</span>
 
-<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">temp</span><span style="color: #70c0b1;">[</span>apple<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+<span style="color: #268bd2;">[</span>hiro@hiro-pc ~<span style="color: #268bd2;">]</span>$ echo $<span style="color: #268bd2;">{</span><span style="color: #6c71c4;">temp</span><span style="color: #d33682;">[</span>apple<span style="color: #d33682;">]</span><span style="color: #268bd2;">}</span>
 100
-<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">temp</span><span style="color: #70c0b1;">[</span>orange<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+<span style="color: #268bd2;">[</span>hiro@hiro-pc ~<span style="color: #268bd2;">]</span>$ echo $<span style="color: #268bd2;">{</span><span style="color: #6c71c4;">temp</span><span style="color: #d33682;">[</span>orange<span style="color: #d33682;">]</span><span style="color: #268bd2;">}</span>
 50
-<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ <span style="color: #e7c547;">temp</span><span style="color: #eaeaea;">[</span>pear<span style="color: #eaeaea;">]</span>=80
-<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">temp</span><span style="color: #70c0b1;">[</span>pear<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>
+<span style="color: #268bd2;">[</span>hiro@hiro-pc ~<span style="color: #268bd2;">]</span>$ <span style="color: #6c71c4;">temp</span><span style="color: #268bd2;">[</span>pear<span style="color: #268bd2;">]</span>=80
+<span style="color: #268bd2;">[</span>hiro@hiro-pc ~<span style="color: #268bd2;">]</span>$ echo $<span style="color: #268bd2;">{</span><span style="color: #6c71c4;">temp</span><span style="color: #d33682;">[</span>pear<span style="color: #d33682;">]</span><span style="color: #268bd2;">}</span>
 80
-<span style="color: #eaeaea;">[</span>hiro@hiro-pc ~<span style="color: #eaeaea;">]</span>$ echo $<span style="color: #eaeaea;">{</span><span style="color: #e7c547;">!</span>temp<span style="color: #70c0b1;">[</span>*<span style="color: #70c0b1;">]</span><span style="color: #eaeaea;">}</span>    <span style="color: #969896; font-style: italic;"># </span><span style="color: #969896; font-style: italic;">&#25343;&#32034;&#24341;</span>
+<span style="color: #268bd2;">[</span>hiro@hiro-pc ~<span style="color: #268bd2;">]</span>$ echo $<span style="color: #268bd2;">{</span><span style="color: #6c71c4;">!</span>temp<span style="color: #d33682;">[</span>*<span style="color: #d33682;">]</span><span style="color: #268bd2;">}</span>    <span style="color: #405A61;"># </span><span style="color: #405A61;">&#25343;&#32034;&#24341;</span>
 apple orange pear
 </pre>
 </div></li>
@@ -347,8 +347,8 @@ apple orange pear
 函数可以这样定义（function 可去）：
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #b9ca4a;">function</span> <span style="color: #e78c45;">fname</span><span style="color: #eaeaea;">()</span>
-<span style="color: #eaeaea;">{}</span>
+<pre class="src src-sh"><span style="color: #859900; font-weight: bold;">function</span> <span style="color: #268bd2;">fname</span><span style="color: #268bd2;">()</span>
+<span style="color: #268bd2;">{}</span>
 </pre>
 </div>
 <p>
@@ -369,18 +369,18 @@ apple orange pear
 循环
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #b9ca4a;">for</span> item<span style="color: #b9ca4a;"> in</span> items:
-<span style="color: #b9ca4a;">do</span>
+<pre class="src src-sh"><span style="color: #859900; font-weight: bold;">for</span> item<span style="color: #859900; font-weight: bold;"> in</span> items:
+<span style="color: #859900; font-weight: bold;">do</span>
   ...
-<span style="color: #b9ca4a;">done</span>
+<span style="color: #859900; font-weight: bold;">done</span>
 
-<span style="color: #b9ca4a;">for</span> <span style="color: #eaeaea;">(</span><span style="color: #e7c547;">x</span>=0; x&lt;10; i++<span style="color: #eaeaea;">)</span>
-<span style="color: #eaeaea;">{}</span>
+<span style="color: #859900; font-weight: bold;">for</span> <span style="color: #268bd2;">(</span><span style="color: #6c71c4;">x</span>=0; x&lt;10; i++<span style="color: #268bd2;">)</span>
+<span style="color: #268bd2;">{}</span>
 
-<span style="color: #b9ca4a;">while </span><span style="color: #c397d8;">true</span>:
-<span style="color: #b9ca4a;">do</span>
+<span style="color: #859900; font-weight: bold;">while </span><span style="color: #268bd2;">true</span>:
+<span style="color: #859900; font-weight: bold;">do</span>
   ...
-<span style="color: #b9ca4a;">done</span>
+<span style="color: #859900; font-weight: bold;">done</span>
 </pre>
 </div></li>
 
@@ -388,23 +388,23 @@ apple orange pear
 比较： 只有 if 子句之后需要加 <code>;</code>
 </p>
 <div class="org-src-container">
-<pre class="src src-sh"><span style="color: #b9ca4a;">if</span> conditions;
-<span style="color: #b9ca4a;">then</span>
+<pre class="src src-sh"><span style="color: #859900; font-weight: bold;">if</span> conditions;
+<span style="color: #859900; font-weight: bold;">then</span>
   ...;
-<span style="color: #b9ca4a;">else if</span> conditions;
-<span style="color: #b9ca4a;">then</span>
+<span style="color: #859900; font-weight: bold;">else if</span> conditions;
+<span style="color: #859900; font-weight: bold;">then</span>
   ...;
-<span style="color: #b9ca4a;">else</span>
+<span style="color: #859900; font-weight: bold;">else</span>
   ...;
-<span style="color: #b9ca4a;">fi</span>
+<span style="color: #859900; font-weight: bold;">fi</span>
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orga6a9855" class="outline-2">
-<h2 id="orga6a9855"><span class="section-number-2">2</span> Tips</h2>
+<div id="outline-container-orgbd1a893" class="outline-2">
+<h2 id="orgbd1a893"><span class="section-number-2">2</span> Tips</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li>null 字符使用 <code>\0</code> 表示</li>
@@ -415,8 +415,8 @@ apple orange pear
 </ul>
 </div>
 
-<div id="outline-container-org41ea071" class="outline-3">
-<h3 id="org41ea071"><span class="section-number-3">2.1</span> 调试脚本</h3>
+<div id="outline-container-org9a9942f" class="outline-3">
+<h3 id="org9a9942f"><span class="section-number-3">2.1</span> 调试脚本</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 使用 <code>bash -x script.sh</code> 来调试脚本，会运行打印每一行命令以及当前状态；也可以使用 <code>set -x</code> 与 <code>set +x</code> 将需要调试的代码包起来；也可以直接修改 shebang <code>#!/bin/bash -xv</code> 来调试
@@ -424,8 +424,8 @@ apple orange pear
 </div>
 </div>
 
-<div id="outline-container-org13cd716" class="outline-3">
-<h3 id="org13cd716"><span class="section-number-3">2.2</span> 各文件夹的作用</h3>
+<div id="outline-container-org6011b84" class="outline-3">
+<h3 id="org6011b84"><span class="section-number-3">2.2</span> 各文件夹的作用</h3>
 <div class="outline-text-3" id="text-2-2">
 <ul class="org-ul">
 <li>/etc 存放系统配置文件</li>
@@ -443,7 +443,7 @@ apple orange pear
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-05-19 日 21:45. Created by hiro</p>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro</p>
             <script src="https://utteranc.es/client.js"
         repo="nicehiro/nicehiro.github.io"
         issue-term="pathname"
