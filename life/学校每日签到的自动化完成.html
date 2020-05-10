@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-23 四 23:52 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>学校每日签到的自动化完成</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -235,22 +248,22 @@ for the JavaScript code in this tag.
 我们学院比较奇葩，开学了规定我们使用一个叫“数据分析”的 APP 每天晚上都要归寝签到，每天上课都要在课前签到。
 </p>
 
-<div id="outline-container-org42edb4f" class="outline-2">
-<h2 id="org42edb4f"><span class="section-number-2">1</span> 登录</h2>
+<div id="outline-container-org84ded20" class="outline-2">
+<h2 id="org84ded20"><span class="section-number-2">1</span> 登录</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 竟然都不加密登录的……
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #e7c547;">host</span> = <span style="color: #70c0b1;">'http://stu.xinxi.zstu.edu.cn/WebReport/ReportServer'</span>
+<pre class="src src-python">host = 'http://stu.xinxi.zstu.edu.cn/WebReport/ReportServer'
 
-<span style="color: #e7c547;">login</span> = <span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">'__device__={}&amp;__mobileapp__=true&amp;cmd=login'</span> 
-         <span style="color: #70c0b1;">'&amp;devname={}&amp;fr_password={}&amp;'</span>
-         <span style="color: #70c0b1;">'fr_remember=true&amp;fr_username={}&amp;'</span>
-         <span style="color: #70c0b1;">'fspassword={}&amp;fsremember=true&amp;'</span>
-         <span style="color: #70c0b1;">'fsusername={}&amp;isMobile=yes&amp;'</span>
-         <span style="color: #70c0b1;">'macaddress={}&amp;op=fs_mobile_main'</span>.<span style="color: #c397d8;">format</span><span style="color: #70c0b1;">(</span>device, devname, pw, username, pw, username, macaddress<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+login = ('__device__={}&amp;__mobileapp__=true&amp;cmd=login'
+	 '&amp;devname={}&amp;fr_password={}&amp;'
+	 'fr_remember=true&amp;fr_username={}&amp;'
+	 'fspassword={}&amp;fsremember=true&amp;'
+	 'fsusername={}&amp;isMobile=yes&amp;'
+	 'macaddress={}&amp;op=fs_mobile_main'.format(device, devname, pw, username, pw, username, macaddress))
 </pre>
 </div>
 
@@ -283,16 +296,16 @@ cookies 中有一个 <code>jsessionid</code> 的变量将作为本次操作请�
 </div>
 </div>
 
-<div id="outline-container-orgf372eaf" class="outline-2">
-<h2 id="orgf372eaf"><span class="section-number-2">2</span> Session ID 获取</h2>
+<div id="outline-container-org088eb57" class="outline-2">
+<h2 id="org088eb57"><span class="section-number-2">2</span> Session ID 获取</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 之前获取的 cookies 中的 id 是本次所有请求的 id，而如果需要签到，还需要获取签到这个 session 的 id 。这个 id 是通过 post 请求直接返回的。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #e7c547;">param</span> = <span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">'__device__={}&amp;__mobileapp__=true&amp;cmd=entry_report&amp;'</span>
-         <span style="color: #70c0b1;">'id={}&amp;isMobile=yes&amp;op=fs_main'</span>.<span style="color: #c397d8;">format</span><span style="color: #70c0b1;">(</span>device, <span style="color: #c397d8;">id</span><span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<pre class="src src-python">param = ('__device__={}&amp;__mobileapp__=true&amp;cmd=entry_report&amp;'
+	 'id={}&amp;isMobile=yes&amp;op=fs_main'.format(device, id))
 </pre>
 </div>
 
@@ -310,15 +323,15 @@ cookies 中有一个 <code>jsessionid</code> 的变量将作为本次操作请�
 </div>
 </div>
 
-<div id="outline-container-org5545ad2" class="outline-2">
-<h2 id="org5545ad2"><span class="section-number-2">3</span> 签到</h2>
+<div id="outline-container-org9b2587a" class="outline-2">
+<h2 id="org9b2587a"><span class="section-number-2">3</span> 签到</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 每次签到之前和签到之后都需要通过下面这个方法打开签到会话。
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #e7c547;">param</span> = <span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">'__device__={}&amp;__mobileapp__=true&amp;isMobile=yes&amp;'</span>
-         <span style="color: #70c0b1;">'op=closesessionid&amp;sessionID={}'</span>.<span style="color: #c397d8;">format</span><span style="color: #70c0b1;">(</span>device, sessionid<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<pre class="src src-python">param = ('__device__={}&amp;__mobileapp__=true&amp;isMobile=yes&amp;'
+	 'op=closesessionid&amp;sessionID={}'.format(device, sessionid))
 </pre>
 </div>
 
@@ -326,11 +339,11 @@ cookies 中有一个 <code>jsessionid</code> 的变量将作为本次操作请�
 之后是签到需要发送的参数：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #e7c547;">param2</span> = <span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">'timetype=1&amp;title={}%25B0&amp;time={}&amp;'</span>
-          <span style="color: #70c0b1;">'jingdu={}&amp;weidu={}&amp;reportlet=2017%'</span>
-          <span style="color: #70c0b1;">'252Fbaodaocheck_enter.cpt&amp;op=write&amp;__replaceview__=true'</span>
-          <span style="color: #70c0b1;">'&amp;__device__={}&amp;__mobileapp__=true&amp;isMobile=yes'</span>
-          .<span style="color: #c397d8;">format</span><span style="color: #70c0b1;">(</span>title, time, lon, lat<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<pre class="src src-python">param2 = ('timetype=1&amp;title={}%25B0&amp;time={}&amp;'
+	  'jingdu={}&amp;weidu={}&amp;reportlet=2017%'
+	  '252Fbaodaocheck_enter.cpt&amp;op=write&amp;__replaceview__=true'
+	  '&amp;__device__={}&amp;__mobileapp__=true&amp;isMobile=yes'
+	  .format(title, time, lon, lat))
 </pre>
 </div>
 
@@ -347,21 +360,21 @@ cookies 中有一个 <code>jsessionid</code> 的变量将作为本次操作请�
 </div>
 </div>
 
-<div id="outline-container-org60591e1" class="outline-2">
-<h2 id="org60591e1"><span class="section-number-2">4</span> 提交</h2>
+<div id="outline-container-org4fd0a94" class="outline-2">
+<h2 id="org4fd0a94"><span class="section-number-2">4</span> 提交</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 最后一步是提交签到信息给服务器。
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #e7c547;">param</span> = <span style="color: #eaeaea;">(</span><span style="color: #70c0b1;">'__device__={}&amp;__mobileapp__=true&amp;cmd=write_verify&amp;'</span>
-         <span style="color: #70c0b1;">'isMobile=yes&amp;op=fr_write&amp;reportXML=%3C%3Fxml+version%3D'</span>
-         <span style="color: #70c0b1;">'%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CWorkBook%3E%3CVersion'</span>
-         <span style="color: #70c0b1;">'%3E6.5%3C%2FVersion%3E%3CReport+class%3D%22com.fr.report.'</span>
-         <span style="color: #70c0b1;">'WorkSheet%22+name%3D%220%22%3E%3CCellElementList%3E%3C%2FC'</span>
-         <span style="color: #70c0b1;">'ellElementList%3E%3C%2FReport%3E%3C%2FWorkBook%3E&amp;'</span>
-         <span style="color: #70c0b1;">'sessionID={}'</span>.<span style="color: #c397d8;">format</span><span style="color: #70c0b1;">(</span><span style="color: #b9ca4a;">self</span>.device, sign_sessionid<span style="color: #70c0b1;">)</span><span style="color: #eaeaea;">)</span>
+<pre class="src src-python">param = ('__device__={}&amp;__mobileapp__=true&amp;cmd=write_verify&amp;'
+	 'isMobile=yes&amp;op=fr_write&amp;reportXML=%3C%3Fxml+version%3D'
+	 '%221.0%22+encoding%3D%22UTF-8%22%3F%3E%3CWorkBook%3E%3CVersion'
+	 '%3E6.5%3C%2FVersion%3E%3CReport+class%3D%22com.fr.report.'
+	 'WorkSheet%22+name%3D%220%22%3E%3CCellElementList%3E%3C%2FC'
+	 'ellElementList%3E%3C%2FReport%3E%3C%2FWorkBook%3E&amp;'
+	 'sessionID={}'.format(self.device, sign_sessionid))
 </pre>
 </div>
 
@@ -373,8 +386,8 @@ sign<sub>sessionid</sub>: 签到的 session id
 </div>
 </div>
 
-<div id="outline-container-orge5cde6f" class="outline-2">
-<h2 id="orge5cde6f"><span class="section-number-2">5</span> 结束</h2>
+<div id="outline-container-org19d9935" class="outline-2">
+<h2 id="org19d9935"><span class="section-number-2">5</span> 结束</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 登录效果：（测试时间是 12:45 因此显示登录未成功）
@@ -394,8 +407,8 @@ sign<sub>sessionid</sub>: 签到的 session id
 </div>
 </div>
 
-<div id="outline-container-org2ce2ed8" class="outline-2">
-<h2 id="org2ce2ed8"><span class="section-number-2">6</span> 自动化</h2>
+<div id="outline-container-org67b9793" class="outline-2">
+<h2 id="org67b9793"><span class="section-number-2">6</span> 自动化</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 我的思路是，在 linux 服务器或者是你的 linux 电脑上部署 <a href="https://wiki.archlinux.org/index.php/Cron">crob</a> 定时自动执行脚本。
@@ -404,14 +417,14 @@ sign<sub>sessionid</sub>: 签到的 session id
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-05-22 三 23:22. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

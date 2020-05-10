@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-04-11 六 16:24 -->
+<!-- 2020-04-27 一 22:18 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>TensorFlow 参数初始化</title>
@@ -267,7 +267,7 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">TensorFlow 参数初始化</h1>
 <p>
-上世纪八九十年代，有关神经网络的研究由于训练结果不佳而停滞不前。著名的人工智能领域专家 Geoffrey Hinton 总结了一些原因，包括：计算能力低下，缺少训练数据，使用了错误的非线性激活函数以及神经网络权重初始化不忧。我之前的文章 <code>the vanishing gradient problem and ReLUs</code> 提出过非线性激活函使用错误会导致的问题。这篇文章将会寻找合适的权重初始化函数。我们将会在权重初始化时使用不同的初始化方法，分别有：正态分布， Xavier 分布和 He 分布。将会用到 TensorFlow 进行实验，并且利用 TensorBoard 可视化分析数据。
+上世纪八九十年代，有关神经网络的研究由于训练结果不佳而停滞不前。著名的人工智能领域专家 Geoffrey Hinton 总结了一些原因，包括：计算能力低下，缺少训练数据，使用了错误的非线性激活函数以及神经网络权重初始化不优。我之前的文章提出过非线性激活函使用错误会导致的问题。这篇文章将会寻找合适的权重初始化函数。我们将会在权重初始化时使用不同的初始化方法，分别有：正态分布， Xavier 分布和 He 分布。将会用到 TensorFlow 进行实验，并且利用 TensorBoard 可视化分析数据。
 </p>
 
 <div id="outline-container-org3cd9a9f" class="outline-2">
@@ -424,7 +424,7 @@ Var(W_i) = \frac{2}{n_{in}}
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-04-11 六 16:23. Created by hiro</p>
+<p class="postamble">Last Updated 2020-04-27 一 22:18. Created by hiro</p>
 	    <script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"

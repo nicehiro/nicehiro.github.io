@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-05 一 15:29 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>i3-wm 配置</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -232,8 +245,8 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">i3-wm 配置</h1>
 
-<div id="outline-container-orgb417ba0" class="outline-2">
-<h2 id="orgb417ba0"><span class="section-number-2">1</span> WIFI</h2>
+<div id="outline-container-org4c7ef69" class="outline-2">
+<h2 id="org4c7ef69"><span class="section-number-2">1</span> WIFI</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Arch 系使用 <a href="https://wiki.archlinux.org/index.php/NetworkManager_(%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87)">NetworkManager</a> 管理 WIFI 的连接情况。 <code>nmcli</code> 是自带的命令行 WIFI 管理工具。
@@ -269,8 +282,8 @@ nmcli connection up &lt;WIFI SSID&gt; --ask
 </div>
 </div>
 
-<div id="outline-container-org1682c0b" class="outline-2">
-<h2 id="org1682c0b"><span class="section-number-2">2</span> 亮度显示</h2>
+<div id="outline-container-org5eeb215" class="outline-2">
+<h2 id="org5eeb215"><span class="section-number-2">2</span> 亮度显示</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 安装 <code>xbacklight</code> 包，配置中添加：
@@ -283,37 +296,37 @@ bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightne
 </div>
 </div>
 
-<div id="outline-container-org2414639" class="outline-2">
-<h2 id="org2414639"><span class="section-number-2">3</span> 触控板 Tap to Click</h2>
+<div id="outline-container-orgbaa8c84" class="outline-2">
+<h2 id="orgbaa8c84"><span class="section-number-2">3</span> 触控板 Tap to Click</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 参考 <a href="https://cravencode.com/post/essentials/enable-tap-to-click-in-i3wm/">Enable tap to click in i3 wm</a>
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">sudo mkdir -p /etc/X11/xorg.conf.d &amp;&amp; sudo tee &lt;&lt;<span style="color: #2aa198;">'EOF'</span> /etc/X11/xorg.conf.d/90-touchpad.conf 1&gt; /dev/null
-<span style="color: #2aa198;">Section "InputClass"</span>
-<span style="color: #2aa198;">        Identifier "touchpad"</span>
-<span style="color: #2aa198;">        MatchIsTouchpad "on"</span>
-<span style="color: #2aa198;">        Driver "libinput"</span>
-<span style="color: #2aa198;">        Option "Tapping" "on"</span>
-<span style="color: #2aa198;">EndSection</span>
+<pre class="src src-shell">sudo mkdir -p /etc/X11/xorg.conf.d &amp;&amp; sudo tee &lt;&lt;'EOF' /etc/X11/xorg.conf.d/90-touchpad.conf 1&gt; /dev/null
+Section "InputClass"
+	Identifier "touchpad"
+	MatchIsTouchpad "on"
+	Driver "libinput"
+	Option "Tapping" "on"
+EndSection
 
-<span style="color: #2aa198;">EOF</span>
+EOF
 </pre>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-08-05 一 10:38. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

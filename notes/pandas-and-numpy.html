@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-05 一 15:29 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Pandas &amp; Numpy 上手</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -232,16 +245,16 @@ for the JavaScript code in this tag.
 <div id="content">
 <h1 class="title">Pandas &amp; Numpy 上手</h1>
 
-<div id="outline-container-org714fce6" class="outline-2">
-<h2 id="org714fce6"><span class="section-number-2">1</span> Numpy</h2>
+<div id="outline-container-orgcffa1ab" class="outline-2">
+<h2 id="orgcffa1ab"><span class="section-number-2">1</span> Numpy</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Learn from <a href="http://cs231n.github.io/python-numpy-tutorial/">Python Numpy Tutorial</a>
 </p>
 </div>
 
-<div id="outline-container-org9290174" class="outline-3">
-<h3 id="org9290174"><span class="section-number-3">1.1</span> Arrays</h3>
+<div id="outline-container-org1150d4a" class="outline-3">
+<h3 id="org1150d4a"><span class="section-number-3">1.1</span> Arrays</h3>
 <div class="outline-text-3" id="text-1-1">
 <ul class="org-ul">
 <li>传入 <code>list</code> 生成数组</li>
@@ -254,52 +267,52 @@ Learn from <a href="http://cs231n.github.io/python-numpy-tutorial/">Python Numpy
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #268bd2;">a</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #859900;">[</span>1,2,3<span style="color: #859900;">]</span>, <span style="color: #859900;">[</span>4,5,6<span style="color: #859900;">]</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-<span style="color: #859900;">print</span><span style="color: #268bd2;">(</span>a.shape<span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(2, 3)</span>
-<span style="color: #268bd2;">a</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>1, 2, 3<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-<span style="color: #859900;">print</span><span style="color: #268bd2;">(</span>a.shape<span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(3,)</span>
-<span style="color: #268bd2;">a</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #859900;">[</span>1, 2, 3<span style="color: #859900;">]</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-<span style="color: #859900;">print</span><span style="color: #268bd2;">(</span>a.shape<span style="color: #268bd2;">)</span> <span style="color: #96A7A9; font-style: italic;">#</span><span style="color: #96A7A9; font-style: italic;">=&gt;(1, 3)</span>
+<pre class="src src-python">a = np.array([[1,2,3], [4,5,6]])
+print(a.shape) #=&gt;(2, 3)
+a = np.array([1, 2, 3])
+print(a.shape) #=&gt;(3,)
+a = np.array([[1, 2, 3]])
+print(a.shape) #=&gt;(1, 3)
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#29983;&#25104;&#29305;&#23450;&#30340;&#25968;&#32452;</span>
-np.zeros<span style="color: #268bd2;">(</span><span style="color: #d33682;">(</span>2, 2<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
-np.ones<span style="color: #268bd2;">(</span><span style="color: #d33682;">(</span>2, 2<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
-np.full<span style="color: #268bd2;">(</span><span style="color: #d33682;">(</span>2, 2<span style="color: #d33682;">)</span>, 7<span style="color: #268bd2;">)</span>
+# 生成特定的数组
+np.zeros((2, 2))
+np.ones((2, 2))
+np.full((2, 2), 7)
 
-np.random.random<span style="color: #268bd2;">(</span><span style="color: #d33682;">(</span>2, 2<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
+np.random.random((2, 2))
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#20999;&#29255;</span>
-<span style="color: #268bd2;">a</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #859900;">[</span>1,2,3,4<span style="color: #859900;">]</span>, <span style="color: #859900;">[</span>5,6,7,8<span style="color: #859900;">]</span>, <span style="color: #859900;">[</span>9,10,11,12<span style="color: #859900;">]</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#25277;&#21462;&#27599;&#34892;&#20013;&#38388;&#20004;&#20010;&#20803;&#32032;</span>
-<span style="color: #268bd2;">b</span> = a<span style="color: #268bd2;">[</span>:2, 1:3<span style="color: #268bd2;">]</span>
+# 切片
+a = np.array([[1,2,3,4], [5,6,7,8], [9,10,11,12]])
+## 抽取每行中间两个元素
+b = a[:2, 1:3]
 
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">row_1 &#20135;&#29983;&#19968;&#32500;&#25968;&#32452;&#65292;row_2 &#20135;&#29983;&#20108;&#32500;&#25968;&#32452;</span>
-<span style="color: #268bd2;">row_1</span> = a<span style="color: #268bd2;">[</span>1, :<span style="color: #268bd2;">]</span>
-<span style="color: #268bd2;">row_2</span> = a<span style="color: #268bd2;">[</span>1:2, :<span style="color: #268bd2;">]</span>
+## row_1 产生一维数组，row_2 产生二维数组
+row_1 = a[1, :]
+row_2 = a[1:2, :]
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#24067;&#23572;&#31579;&#36873;</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#26681;&#25454;&#36820;&#22238;&#30340;&#24067;&#23572;&#25968;&#32452;&#65292;&#21487;&#20197;&#31579;&#36873;&#20986;&#24067;&#23572;&#20540;&#20026; True &#30340;&#25968;&#25454;</span>
-<span style="color: #268bd2;">bool_idx</span> = <span style="color: #268bd2;">(</span>a &gt; 2<span style="color: #268bd2;">)</span>
-a<span style="color: #268bd2;">[</span>bool_idx<span style="color: #268bd2;">]</span>
+# 布尔筛选
+## 根据返回的布尔数组，可以筛选出布尔值为 True 的数据
+bool_idx = (a &gt; 2)
+a[bool_idx]
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">Math</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#30697;&#38453;&#30456;&#21152;</span>
-<span style="color: #268bd2;">a</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #859900;">[</span>1,2<span style="color: #859900;">]</span>, <span style="color: #859900;">[</span>3,4<span style="color: #859900;">]</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-<span style="color: #268bd2;">b</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #859900;">[</span>5,6<span style="color: #859900;">]</span>, <span style="color: #859900;">[</span>7,8<span style="color: #859900;">]</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
+# Math
+## 矩阵相加
+a = np.array([[1,2], [3,4]])
+b = np.array([[5,6], [7,8]])
 a + b
-np.add<span style="color: #268bd2;">(</span>a, b<span style="color: #268bd2;">)</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#30697;&#38453;&#30456;&#20943;</span>
+np.add(a, b)
+## 矩阵相减
 a - b
-np.substract<span style="color: #268bd2;">(</span>a, b<span style="color: #268bd2;">)</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#21516;&#29702;&#65292;&#30456;&#20056; &#30456;&#38500;</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#24179;&#26041;</span>
-np.sqrt<span style="color: #268bd2;">(</span>a<span style="color: #268bd2;">)</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#20869;&#31215;</span>
-<span style="color: #268bd2;">x</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #859900;">[</span>1,2<span style="color: #859900;">]</span>, <span style="color: #859900;">[</span>3,4<span style="color: #859900;">]</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-<span style="color: #268bd2;">y</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #859900;">[</span>5,6<span style="color: #859900;">]</span>,<span style="color: #859900;">[</span>7,8<span style="color: #859900;">]</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-x.dot<span style="color: #268bd2;">(</span>y<span style="color: #268bd2;">)</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#25193;&#23637;</span>
-<span style="color: #268bd2;">y</span> = np.array<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>5, 6<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
+np.substract(a, b)
+## 同理，相乘 相除
+## 平方
+np.sqrt(a)
+## 内积
+x = np.array([[1,2], [3,4]])
+y = np.array([[5,6],[7,8]])
+x.dot(y)
+## 扩展
+y = np.array([5, 6])
 x + y
 </pre>
 </div>
@@ -307,16 +320,16 @@ x + y
 </div>
 </div>
 
-<div id="outline-container-org03f7781" class="outline-2">
-<h2 id="org03f7781"><span class="section-number-2">2</span> Pandas</h2>
+<div id="outline-container-org1448dbd" class="outline-2">
+<h2 id="org1448dbd"><span class="section-number-2">2</span> Pandas</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Learn from <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started/10min.html">10 minutes to pandas</a>
 </p>
 </div>
 
-<div id="outline-container-orgf73bd82" class="outline-3">
-<h3 id="orgf73bd82"><span class="section-number-3">2.1</span> 创建</h3>
+<div id="outline-container-org46c83c6" class="outline-3">
+<h3 id="org46c83c6"><span class="section-number-3">2.1</span> 创建</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>Series 一维 ndarray，pandas 自动创建整型 index，每个 DataFrame 一列就是一个 Series对象</li>
@@ -324,96 +337,96 @@ Learn from <a href="https://pandas.pydata.org/pandas-docs/stable/getting_started
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900;">import</span> pandas <span style="color: #859900;">as</span> pd
-<span style="color: #268bd2;">s</span> = pd.Series<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>1, 3, 5, np.NaN, 6, 8<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
+<pre class="src src-python">import pandas as pd
+s = pd.Series([1, 3, 5, np.NaN, 6, 8])
 
-<span style="color: #268bd2;">df2</span> = pd.DataFrame<span style="color: #268bd2;">(</span><span style="color: #d33682;">{</span><span style="color: #2aa198;">'A'</span>: 1.,
-                    <span style="color: #2aa198;">'B'</span>: pd.Timestamp<span style="color: #859900;">(</span><span style="color: #2aa198;">'20130102'</span><span style="color: #859900;">)</span>,
-                    <span style="color: #2aa198;">'C'</span>: pd.Series<span style="color: #859900;">(</span>1, index=<span style="color: #d33682; font-style: italic;">list</span><span style="color: #cb4b16;">(</span><span style="color: #d33682; font-style: italic;">range</span><span style="color: #6c71c4;">(</span>4<span style="color: #6c71c4;">)</span><span style="color: #cb4b16;">)</span>, dtype=<span style="color: #2aa198;">'float32'</span><span style="color: #859900;">)</span>,
-                    <span style="color: #2aa198;">'D'</span>: np.array<span style="color: #859900;">(</span><span style="color: #cb4b16;">[</span>3<span style="color: #cb4b16;">]</span> * 4, dtype=<span style="color: #2aa198;">'int32'</span><span style="color: #859900;">)</span>,
-                    <span style="color: #2aa198;">'E'</span>: pd.Categorical<span style="color: #859900;">(</span><span style="color: #cb4b16;">[</span><span style="color: #2aa198;">"test"</span>, <span style="color: #2aa198;">"train"</span>, <span style="color: #2aa198;">"test"</span>, <span style="color: #2aa198;">"train"</span><span style="color: #cb4b16;">]</span><span style="color: #859900;">)</span>,
-                    <span style="color: #2aa198;">'F'</span>: <span style="color: #2aa198;">'foo'</span><span style="color: #d33682;">}</span><span style="color: #268bd2;">)</span>
+df2 = pd.DataFrame({'A': 1.,
+		    'B': pd.Timestamp('20130102'),
+		    'C': pd.Series(1, index=list(range(4)), dtype='float32'),
+		    'D': np.array([3] * 4, dtype='int32'),
+		    'E': pd.Categorical(["test", "train", "test", "train"]),
+		    'F': 'foo'})
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge990595" class="outline-3">
-<h3 id="orge990595"><span class="section-number-3">2.2</span> 查看数据</h3>
+<div id="outline-container-org68ffea0" class="outline-3">
+<h3 id="org68ffea0"><span class="section-number-3">2.2</span> 查看数据</h3>
 <div class="outline-text-3" id="text-2-2">
 <ul class="org-ul">
 <li>使用 <code>[]</code> 选取的时候，单个字符串表示选取某列；使用 slice 表达式表示选取某些行</li>
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#36716;&#25104; numpy &#25968;&#32452;</span>
-df.to_numpy<span style="color: #268bd2;">()</span>
+<pre class="src src-python"># 转成 numpy 数组
+df.to_numpy()
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#36716;&#36136;</span>
+# 转质
 df.T
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#25490;&#24207;</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">axis &#26377;&#20004;&#20010;&#20540;&#65292;0 &#34920;&#31034;&#25353;&#34892;&#26631;&#65292;1 &#34920;&#31034;&#25353;&#21015;&#26631;</span>
-df.sort_index<span style="color: #268bd2;">(</span>axis=1, ascending=<span style="color: #6c71c4;">False</span><span style="color: #268bd2;">)</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#25353;&#20540;&#25490;&#24207;</span>
-df.sort_value<span style="color: #268bd2;">(</span>by=<span style="color: #2aa198;">'B'</span><span style="color: #268bd2;">)</span>
+# 排序
+## axis 有两个值，0 表示按行标，1 表示按列标
+df.sort_index(axis=1, ascending=False)
+## 按值排序
+df.sort_value(by='B')
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#36873;&#21462;</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#36873;&#21462;&#21015;</span>
-df2<span style="color: #268bd2;">[</span><span style="color: #2aa198;">'A'</span><span style="color: #268bd2;">]</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#36873;&#21462;&#26576;&#34892;</span>
-df2<span style="color: #268bd2;">[</span>1:3<span style="color: #268bd2;">]</span>
-df2<span style="color: #268bd2;">[</span><span style="color: #2aa198;">'row_l1'</span>:<span style="color: #2aa198;">'row_l2'</span><span style="color: #268bd2;">]</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#36873;&#21462;&#26576;&#20010;&#21306;&#22495;</span>
-df2.loc<span style="color: #268bd2;">[</span>:, <span style="color: #d33682;">[</span><span style="color: #2aa198;">'col_1'</span>, <span style="color: #2aa198;">'cow_2'</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">]</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#25353;&#20301;&#32622;&#31579;&#36873;</span>
-<span style="color: #96A7A9; font-style: italic;">### </span><span style="color: #96A7A9; font-style: italic;">&#31579;&#36873;&#31532;&#19977;&#34892;&#30340;&#20803;&#32032;</span>
-df2.iloc<span style="color: #268bd2;">[</span>3<span style="color: #268bd2;">]</span>
-<span style="color: #96A7A9; font-style: italic;">### </span><span style="color: #96A7A9; font-style: italic;">&#31579;&#36873; [3, 5) &amp; [0, 2)</span>
-df2.iloc<span style="color: #268bd2;">[</span>3:5, 0:2<span style="color: #268bd2;">]</span>
-<span style="color: #96A7A9; font-style: italic;">### </span><span style="color: #96A7A9; font-style: italic;">&#31579;&#36873; row: 1,2,4 &amp; col: 3, 5</span>
-df2.iloc<span style="color: #268bd2;">[</span><span style="color: #d33682;">[</span>1,2,4<span style="color: #d33682;">]</span>, <span style="color: #d33682;">[</span>3,5<span style="color: #d33682;">]</span><span style="color: #268bd2;">]</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#24067;&#23572;&#31579;&#36873;</span>
-<span style="color: #96A7A9; font-style: italic;">### </span><span style="color: #96A7A9; font-style: italic;">&#20256;&#20837;&#19968;&#20010;&#24067;&#23572;&#25968;&#32452;&#65292;&#36755;&#20986;&#23545;&#24212;&#20026; True &#30340;&#25968;&#32452;</span>
-df2<span style="color: #268bd2;">[</span>df2<span style="color: #d33682;">[</span><span style="color: #2aa198;">'E'</span><span style="color: #d33682;">]</span> == <span style="color: #2aa198;">'test'</span><span style="color: #268bd2;">]</span>
-df2<span style="color: #268bd2;">[</span>df2<span style="color: #d33682;">[</span><span style="color: #2aa198;">'E'</span><span style="color: #d33682;">]</span>.isin<span style="color: #d33682;">(</span><span style="color: #859900;">[</span><span style="color: #2aa198;">'test1'</span>, <span style="color: #2aa198;">'test2'</span><span style="color: #859900;">]</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">]</span>
+# 选取
+## 选取列
+df2['A']
+## 选取某行
+df2[1:3]
+df2['row_l1':'row_l2']
+## 选取某个区域
+df2.loc[:, ['col_1', 'cow_2']]
+## 按位置筛选
+### 筛选第三行的元素
+df2.iloc[3]
+### 筛选 [3, 5) &amp; [0, 2)
+df2.iloc[3:5, 0:2]
+### 筛选 row: 1,2,4 &amp; col: 3, 5
+df2.iloc[[1,2,4], [3,5]]
+## 布尔筛选
+### 传入一个布尔数组，输出对应为 True 的数组
+df2[df2['E'] == 'test']
+df2[df2['E'].isin(['test1', 'test2'])]
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#20462;&#25913;</span>
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#35774;&#32622; row=0, col='A'</span>
-<span style="color: #268bd2;">df2.at</span><span style="color: #268bd2;">[</span>0, <span style="color: #2aa198;">'A'</span><span style="color: #268bd2;">]</span> = 0
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#26032;&#21152;&#19968;&#21015;</span>
-<span style="color: #268bd2;">s</span> = pd.Series<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>...<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
-<span style="color: #268bd2;">df2</span><span style="color: #268bd2;">[</span><span style="color: #2aa198;">'G'</span><span style="color: #268bd2;">]</span> = s
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#25353;&#20301;&#32622;&#20462;&#25913;</span>
-df2.iat<span style="color: #268bd2;">(</span>0, 1<span style="color: #268bd2;">)</span> = 0
-<span style="color: #96A7A9; font-style: italic;">## </span><span style="color: #96A7A9; font-style: italic;">&#21033;&#29992; &#24067;&#23572;&#25968;&#32452;&#20462;&#25913;</span>
-<span style="color: #268bd2;">df2</span><span style="color: #268bd2;">[</span>df2 &gt; 0<span style="color: #268bd2;">]</span> = -df2
+# 修改
+## 设置 row=0, col='A'
+df2.at[0, 'A'] = 0
+## 新加一列
+s = pd.Series([...])
+df2['G'] = s
+## 按位置修改
+df2.iat(0, 1) = 0
+## 利用 布尔数组修改
+df2[df2 &gt; 0] = -df2
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgc1aa386" class="outline-3">
-<h3 id="orgc1aa386"><span class="section-number-3">2.3</span> 数据处理</h3>
+<div id="outline-container-org5285fdb" class="outline-3">
+<h3 id="org5285fdb"><span class="section-number-3">2.3</span> 数据处理</h3>
 <div class="outline-text-3" id="text-2-3">
 </div>
-<div id="outline-container-orgc9f5b92" class="outline-4">
-<h4 id="orgc9f5b92"><span class="section-number-4">2.3.1</span> NaN 数据</h4>
+<div id="outline-container-orga556269" class="outline-4">
+<h4 id="orga556269"><span class="section-number-4">2.3.1</span> NaN 数据</h4>
 <div class="outline-text-4" id="text-2-3-1">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#21024;&#38500;&#21547;&#26377; NaN &#20540;&#30340;&#34892; row</span>
-df2.dropna<span style="color: #268bd2;">(</span>how=<span style="color: #2aa198;">'any'</span><span style="color: #268bd2;">)</span>
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#22635;&#20805; NaN</span>
-df2.fillna<span style="color: #268bd2;">(</span>value=5<span style="color: #268bd2;">)</span>
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#33719;&#21462;&#26159;&#21542;&#20026; NaN</span>
-pd.isna<span style="color: #268bd2;">(</span>df2<span style="color: #268bd2;">)</span>
+<pre class="src src-python"># 删除含有 NaN 值的行 row
+df2.dropna(how='any')
+# 填充 NaN
+df2.fillna(value=5)
+# 获取是否为 NaN
+pd.isna(df2)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge839a0b" class="outline-4">
-<h4 id="orge839a0b"><span class="section-number-4">2.3.2</span> Operation</h4>
+<div id="outline-container-org9389df3" class="outline-4">
+<h4 id="org9389df3"><span class="section-number-4">2.3.2</span> Operation</h4>
 <div class="outline-text-4" id="text-2-3-2">
 <p>
 对数据进行处理的时候，一般要先处理掉空值数据。
@@ -431,18 +444,18 @@ pd.isna<span style="color: #268bd2;">(</span>df2<span style="color: #268bd2;">)<
 </div>
 </div>
 
-<div id="outline-container-org9b10f4f" class="outline-4">
-<h4 id="org9b10f4f"><span class="section-number-4">2.3.3</span> 替换</h4>
+<div id="outline-container-orgaf9ff22" class="outline-4">
+<h4 id="orgaf9ff22"><span class="section-number-4">2.3.3</span> 替换</h4>
 <div class="outline-text-4" id="text-2-3-3">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#23558;&#25152;&#26377;&#30340; 0 &#26367;&#25442;&#25104; 5</span>
-df.replace<span style="color: #268bd2;">(</span>0, 5<span style="color: #268bd2;">)</span>
+<pre class="src src-python"># 将所有的 0 替换成 5
+df.replace(0, 5)
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#23558; list &#20013;&#25152;&#26377;&#20803;&#32032;&#26367;&#25442;&#25104; 5</span>
-df.replace<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>1,2,3,4<span style="color: #d33682;">]</span>, 5<span style="color: #268bd2;">)</span>
+# 将 list 中所有元素替换成 5
+df.replace([1,2,3,4], 5)
 
-<span style="color: #96A7A9; font-style: italic;"># </span><span style="color: #96A7A9; font-style: italic;">&#23558; list &#20013;&#20803;&#32032;&#20998;&#21035;&#26367;&#25442;&#25104;&#21518;&#38754; list &#20013;&#30340;&#20540;</span>
-df.replace<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>1,2,3,4<span style="color: #d33682;">]</span>, <span style="color: #d33682;">[</span>4,3,2,1<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
+# 将 list 中元素分别替换成后面 list 中的值
+df.replace([1,2,3,4], [4,3,2,1])
 </pre>
 </div>
 </div>
@@ -450,8 +463,8 @@ df.replace<span style="color: #268bd2;">(</span><span style="color: #d33682;">[<
 </div>
 </div>
 
-<div id="outline-container-org06c2311" class="outline-2">
-<h2 id="org06c2311"><span class="section-number-2">3</span> Tricky</h2>
+<div id="outline-container-org41ada70" class="outline-2">
+<h2 id="org41ada70"><span class="section-number-2">3</span> Tricky</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
 <li>几乎所有的语言关于括号的使用都是 <b>前闭后开</b></li>
@@ -460,14 +473,14 @@ df.replace<span style="color: #268bd2;">(</span><span style="color: #d33682;">[<
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-08-05 一 13:06. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

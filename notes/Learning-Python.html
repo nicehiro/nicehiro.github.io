@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-03 Sun 21:09 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Learning Python 5th 笔记</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -229,37 +242,37 @@ for the JavaScript code in this tag.
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
+	displayAlign: "center",
+	displayIndent: "0em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
 });
 </script>
 <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">Learning Python 5th 笔记</h1>
 
-<div id="outline-container-org4524e45" class="outline-2">
-<h2 id="org4524e45"><span class="section-number-2">1</span> Basics</h2>
+<div id="outline-container-org251b21a" class="outline-2">
+<h2 id="org251b21a"><span class="section-number-2">1</span> Basics</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org9dfe934" class="outline-3">
-<h3 id="org9dfe934"><span class="section-number-3">1.1</span> Python 代码运行</h3>
+<div id="outline-container-org2d5e6ee" class="outline-3">
+<h3 id="org2d5e6ee"><span class="section-number-3">1.1</span> Python 代码运行</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Python 代码会先编译成字节码，然后将字节码送到 PVM(Python Virtural Machine) 执行。
@@ -273,8 +286,8 @@ Python 代码会先编译成字节码，然后将字节码送到 PVM(Python Virt
 </div>
 </div>
 
-<div id="outline-container-org4714cc1" class="outline-3">
-<h3 id="org4714cc1"><span class="section-number-3">1.2</span> Python build-in objects</h3>
+<div id="outline-container-orgd9f3d6f" class="outline-3">
+<h3 id="orgd9f3d6f"><span class="section-number-3">1.2</span> Python build-in objects</h3>
 <div class="outline-text-3" id="text-1-2">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -339,8 +352,8 @@ Python 代码会先编译成字节码，然后将字节码送到 PVM(Python Virt
 </table>
 </div>
 
-<div id="outline-container-org4d6fbc9" class="outline-4">
-<h4 id="org4d6fbc9"><span class="section-number-4">1.2.1</span> Strings</h4>
+<div id="outline-container-orge491609" class="outline-4">
+<h4 id="orge491609"><span class="section-number-4">1.2.1</span> Strings</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <ul class="org-ul">
 <li>有序序列。</li>
@@ -350,23 +363,23 @@ Python 代码会先编译成字节码，然后将字节码送到 PVM(Python Virt
 <li>Python 3.x 中有三种 string, <code>str</code> 用于展示 unicode text, <code>bytes</code> 用于展示字节数据，文件可以有两种模式：文本文件和字节文件。</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #dac6d6;">s</span> = <span style="color: #A2BF8A;">'spam'</span>
-s * 8 <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; 'spamspamspamspamspamspamspamspam'</span>
-s + <span style="color: #A2BF8A;">'1'</span> <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; 'spam1'</span>
+<pre class="src src-python">s = 'spam'
+s * 8 #=&gt; 'spamspamspamspamspamspamspamspam'
+s + '1' #=&gt; 'spam1'
 
-<span style="color: #dac6d6;">l</span> = <span style="color: #8EBCBB;">list</span><span style="color: #80A0C2;">(</span>s<span style="color: #80A0C2;">)</span>
-l <span style="color: #80A0C2;">[</span>1<span style="color: #80A0C2;">]</span> = n
-<span style="color: #78808f;">''</span>.join<span style="color: #80A0C2;">(</span>l<span style="color: #80A0C2;">)</span> <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; 'snam'</span>
+l = list(s)
+l [1] = n
+''.join(l) #=&gt; 'snam'
 
-<span style="color: #dac6d6;">b</span> = <span style="color: #8EBCBB;">bytearray</span><span style="color: #80A0C2;">(</span>b<span style="color: #A2BF8A;">'spam'</span><span style="color: #80A0C2;">)</span>
-<span style="color: #dac6d6;">b</span><span style="color: #80A0C2;">[</span>1<span style="color: #80A0C2;">]</span> = 110 <span style="color: #6f7787;"># </span><span style="color: #6f7787;">acsii code</span>
-b.decode<span style="color: #80A0C2;">()</span> <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; 'snam'</span>
+b = bytearray(b'spam')
+b[1] = 110 # acsii code
+b.decode() #=&gt; 'snam'
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org36fdadb" class="outline-5">
-<h5 id="org36fdadb"><span class="section-number-5">1.2.1.1</span> Escape Charactors 转义字符</h5>
+<div id="outline-container-org5534493" class="outline-5">
+<h5 id="org5534493"><span class="section-number-5">1.2.1.1</span> Escape Charactors 转义字符</h5>
 <div class="outline-text-5" id="text-1-2-1-1">
 <ul class="org-ul">
 <li><code>\' \"</code></li>
@@ -381,8 +394,8 @@ b.decode<span style="color: #80A0C2;">()</span> <span style="color: #6f7787;">#<
 </div>
 </div>
 
-<div id="outline-container-org1431abd" class="outline-5">
-<h5 id="org1431abd"><span class="section-number-5">1.2.1.2</span> Format</h5>
+<div id="outline-container-org5b62000" class="outline-5">
+<h5 id="org5b62000"><span class="section-number-5">1.2.1.2</span> Format</h5>
 <div class="outline-text-5" id="text-1-2-1-2">
 <ul class="org-ul">
 <li><code>'=%(qty) is %(thing) % {qty: 1, thing: 2}'</code></li>
@@ -395,8 +408,8 @@ b.decode<span style="color: #80A0C2;">()</span> <span style="color: #6f7787;">#<
 </div>
 </div>
 
-<div id="outline-container-org57ab7e1" class="outline-4">
-<h4 id="org57ab7e1"><span class="section-number-4">1.2.2</span> List</h4>
+<div id="outline-container-org35d0e2e" class="outline-4">
+<h4 id="org35d0e2e"><span class="section-number-4">1.2.2</span> List</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <ul class="org-ul">
 <li>有序序列</li>
@@ -410,20 +423,20 @@ b.decode<span style="color: #80A0C2;">()</span> <span style="color: #6f7787;">#<
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #dac6d6;">l</span> = <span style="color: #80A0C2;">[</span>1,2,3<span style="color: #80A0C2;">]</span>
-<span style="color: #dac6d6;">l</span><span style="color: #80A0C2;">[</span>1:1<span style="color: #80A0C2;">]</span> = <span style="color: #80A0C2;">[</span>4,5<span style="color: #80A0C2;">]</span>
-l <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; [1,4,5,2,3]</span>
+<pre class="src src-python">l = [1,2,3]
+l[1:1] = [4,5]
+l #=&gt; [1,4,5,2,3]
 
-<span style="color: #dac6d6;">l</span> = <span style="color: #80A0C2;">[</span>1<span style="color: #80A0C2;">]</span>
-<span style="color: #dac6d6;">l</span><span style="color: #80A0C2;">[</span>:0<span style="color: #80A0C2;">]</span> = <span style="color: #80A0C2;">[</span>2,3,4<span style="color: #80A0C2;">]</span>
-l <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; [2,3,4,1]</span>
+l = [1]
+l[:0] = [2,3,4]
+l #=&gt; [2,3,4,1]
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org15767db" class="outline-4">
-<h4 id="org15767db"><span class="section-number-4">1.2.3</span> Tuples</h4>
+<div id="outline-container-orga7ebd54" class="outline-4">
+<h4 id="orga7ebd54"><span class="section-number-4">1.2.3</span> Tuples</h4>
 <div class="outline-text-4" id="text-1-2-3">
 <ul class="org-ul">
 <li>有序序列</li>
@@ -436,8 +449,8 @@ l <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; [2,3
 </div>
 </div>
 
-<div id="outline-container-orgc7fe880" class="outline-4">
-<h4 id="orgc7fe880"><span class="section-number-4">1.2.4</span> Files</h4>
+<div id="outline-container-org48cfe66" class="outline-4">
+<h4 id="org48cfe66"><span class="section-number-4">1.2.4</span> Files</h4>
 <div class="outline-text-4" id="text-1-2-4">
 <ul class="org-ul">
 <li>默认打开方式是 <code>'r'</code></li>
@@ -450,8 +463,8 @@ l <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; [2,3
 </div>
 </div>
 
-<div id="outline-container-org85e9b50" class="outline-4">
-<h4 id="org85e9b50"><span class="section-number-4">1.2.5</span> SETS</h4>
+<div id="outline-container-org15ec8a8" class="outline-4">
+<h4 id="org15ec8a8"><span class="section-number-4">1.2.5</span> SETS</h4>
 <div class="outline-text-4" id="text-1-2-5">
 <ul class="org-ul">
 <li>无序序列</li>
@@ -461,16 +474,16 @@ l <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; [2,3
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #8EBCBB;">list</span><span style="color: #80A0C2;">(</span><span style="color: #8EBCBB;">set</span><span style="color: #B58DAE;">(</span><span style="color: #A2BF8A;">[</span>1,2,1,3<span style="color: #A2BF8A;">]</span><span style="color: #B58DAE;">)</span><span style="color: #80A0C2;">)</span> <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; [1,2,3]</span>
-<span style="color: #8EBCBB;">set</span><span style="color: #80A0C2;">(</span><span style="color: #A2BF8A;">'spam'</span><span style="color: #80A0C2;">)</span> - <span style="color: #8EBCBB;">set</span><span style="color: #80A0C2;">(</span><span style="color: #A2BF8A;">'ham'</span><span style="color: #80A0C2;">)</span> <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; {'p', 's'}</span>
-<span style="color: #8EBCBB;">set</span><span style="color: #80A0C2;">(</span><span style="color: #A2BF8A;">'spam'</span><span style="color: #80A0C2;">)</span> == <span style="color: #8EBCBB;">set</span><span style="color: #80A0C2;">(</span><span style="color: #A2BF8A;">'pasm'</span><span style="color: #80A0C2;">)</span> <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; True</span>
+<pre class="src src-python">list(set([1,2,1,3])) #=&gt; [1,2,3]
+set('spam') - set('ham') #=&gt; {'p', 's'}
+set('spam') == set('pasm') #=&gt; True
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9a675d5" class="outline-4">
-<h4 id="org9a675d5"><span class="section-number-4">1.2.6</span> Number</h4>
+<div id="outline-container-orgece3e31" class="outline-4">
+<h4 id="orgece3e31"><span class="section-number-4">1.2.6</span> Number</h4>
 <div class="outline-text-4" id="text-1-2-6">
 <ul class="org-ul">
 <li><code>0o</code> <code>0x</code> <code>0b</code> 八进制 十六进制 二进制</li>
@@ -480,27 +493,27 @@ l <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; [2,3
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #6f7787;"># </span><span style="color: #6f7787;">&#25353;&#20301;&#21462;&#21453;</span>
-~5 <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; -6</span>
-<span style="color: #dac6d6;">x</span> = 1
-x &lt;&lt; 2 <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; 4</span>
-x | 2 <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; 3</span>
-x &amp; 1 <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; 1</span>
+<pre class="src src-python"># 按位取反
+~5 #=&gt; -6
+x = 1
+x &lt;&lt; 2 #=&gt; 4
+x | 2 #=&gt; 3
+x &amp; 1 #=&gt; 1
 
-<span style="color: #6f7787;"># </span><span style="color: #6f7787;">format</span>
-<span style="color: #A2BF8A;">'%o %x %b'</span> % <span style="color: #80A0C2;">(</span>16,16,16<span style="color: #80A0C2;">)</span>
+# format
+'%o %x %b' % (16,16,16)
 
-<span style="color: #6f7787;"># </span><span style="color: #6f7787;">float</span>
-0.1 + 0.1 + 0.1 - 0.3 <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; not 0.0</span>
+# float
+0.1 + 0.1 + 0.1 - 0.3 #=&gt; not 0.0
 
-<span style="color: #6f7787;"># </span><span style="color: #6f7787;">decimal &#35774;&#23450; context</span>
-<span style="color: #80A0C2;">with</span> decimal.localcontext<span style="color: #80A0C2;">()</span> <span style="color: #80A0C2;">as</span> ctx:
-    <span style="color: #dac6d6;">ctx.prec</span> = 2
+# decimal 设定 context
+with decimal.localcontext() as ctx:
+    ctx.prec = 2
     ...
 
-<span style="color: #6f7787;"># </span><span style="color: #6f7787;">float to fraction</span>
-Fraction<span style="color: #80A0C2;">(</span>*f.as_integer_ratio<span style="color: #B58DAE;">()</span><span style="color: #80A0C2;">)</span>
-Fraction.fram_float<span style="color: #80A0C2;">(</span>f<span style="color: #80A0C2;">)</span>
+# float to fraction
+Fraction(*f.as_integer_ratio())
+Fraction.fram_float(f)
 </pre>
 </div>
 </div>
@@ -508,12 +521,12 @@ Fraction.fram_float<span style="color: #80A0C2;">(</span>f<span style="color: #8
 </div>
 </div>
 
-<div id="outline-container-org7859bf0" class="outline-2">
-<h2 id="org7859bf0"><span class="section-number-2">2</span> Dynamic Typing</h2>
+<div id="outline-container-org50b3d84" class="outline-2">
+<h2 id="org50b3d84"><span class="section-number-2">2</span> Dynamic Typing</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-org36b54b2" class="outline-3">
-<h3 id="org36b54b2"><span class="section-number-3">2.1</span> <code>a = 3</code> 执行过程</h3>
+<div id="outline-container-org827a742" class="outline-3">
+<h3 id="org827a742"><span class="section-number-3">2.1</span> <code>a = 3</code> 执行过程</h3>
 <div class="outline-text-3" id="text-2-1">
 <ul class="org-ul">
 <li>创建一个对象表示 3</li>
@@ -523,8 +536,8 @@ Fraction.fram_float<span style="color: #80A0C2;">(</span>f<span style="color: #8
 </div>
 </div>
 
-<div id="outline-container-orgdbdd2da" class="outline-3">
-<h3 id="orgdbdd2da"><span class="section-number-3">2.2</span> <code>a = 3, b = a</code> 执行过程</h3>
+<div id="outline-container-orgfbd8532" class="outline-3">
+<h3 id="orgfbd8532"><span class="section-number-3">2.2</span> <code>a = 3, b = a</code> 执行过程</h3>
 <div class="outline-text-3" id="text-2-2">
 <ul class="org-ul">
 <li>创建一个对象表示 3</li>
@@ -536,8 +549,8 @@ Fraction.fram_float<span style="color: #80A0C2;">(</span>f<span style="color: #8
 </div>
 </div>
 
-<div id="outline-container-orgc7dcb39" class="outline-3">
-<h3 id="orgc7dcb39"><span class="section-number-3">2.3</span> is &amp; ==</h3>
+<div id="outline-container-orgae49424" class="outline-3">
+<h3 id="orgae49424"><span class="section-number-3">2.3</span> is &amp; ==</h3>
 <div class="outline-text-3" id="text-2-3">
 <ul class="org-ul">
 <li><code>is</code> 比较两个变量指向的对象是否是同一个</li>
@@ -546,8 +559,8 @@ Fraction.fram_float<span style="color: #80A0C2;">(</span>f<span style="color: #8
 </div>
 </div>
 
-<div id="outline-container-org0e3472e" class="outline-3">
-<h3 id="org0e3472e"><span class="section-number-3">2.4</span> 垃圾回收会立刻执行吗？</h3>
+<div id="outline-container-orge1147f6" class="outline-3">
+<h3 id="orge1147f6"><span class="section-number-3">2.4</span> 垃圾回收会立刻执行吗？</h3>
 <div class="outline-text-3" id="text-2-4">
 <ul class="org-ul">
 <li>大部分对象在没有变量指向时会被立刻执行垃圾回收</li>
@@ -557,36 +570,36 @@ Fraction.fram_float<span style="color: #80A0C2;">(</span>f<span style="color: #8
 </div>
 </div>
 
-<div id="outline-container-org69fe9eb" class="outline-2">
-<h2 id="org69fe9eb"><span class="section-number-2">3</span> Assignment</h2>
+<div id="outline-container-orgda0fd5d" class="outline-2">
+<h2 id="orgda0fd5d"><span class="section-number-2">3</span> Assignment</h2>
 <div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-org627f592" class="outline-3">
-<h3 id="org627f592"><span class="section-number-3">3.1</span> 赋值方法</h3>
+<div id="outline-container-org1a65c8f" class="outline-3">
+<h3 id="org1a65c8f"><span class="section-number-3">3.1</span> 赋值方法</h3>
 <div class="outline-text-3" id="text-3-1">
 <ul class="org-ul">
 <li>扩展序列赋值需要注意边界情况，一般最好不要在数目不确定的情况下使用这种赋值方法；不能单独出现；同一个表达式不能出现两次</li>
 <li>list 的 <code>+=</code> 后面可以跟任意类型的序列，但是 <code>+</code> 只能跟同类型的序列</li>
 </ul>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #6f7787;"># </span><span style="color: #6f7787;">tuple assign</span>
-<span style="color: #dac6d6;">a</span>, <span style="color: #dac6d6;">b</span> = c, d
-<span style="color: #6f7787;"># </span><span style="color: #6f7787;">list assign</span>
-<span style="color: #80A0C2;">[</span>a, b<span style="color: #80A0C2;">]</span> = <span style="color: #80A0C2;">[</span>c, d<span style="color: #80A0C2;">]</span>
-<span style="color: #6f7787;"># </span><span style="color: #6f7787;">sequence assign</span>
-<span style="color: #dac6d6;">a</span>, <span style="color: #dac6d6;">b</span>, <span style="color: #dac6d6;">c</span>, <span style="color: #dac6d6;">d</span> = <span style="color: #A2BF8A;">'spam'</span>
-<span style="color: #6f7787;"># </span><span style="color: #6f7787;">extend sequence assign</span>
-a, *<span style="color: #dac6d6;">b</span> = <span style="color: #A2BF8A;">'spam'</span> <span style="color: #6f7787;">#</span><span style="color: #6f7787;">=&gt; b='pam'</span>
-<span style="color: #6f7787;"># </span><span style="color: #6f7787;">multiple target assign</span>
-<span style="color: #dac6d6;">a</span> = <span style="color: #dac6d6;">b</span> = c
+<pre class="src src-python"># tuple assign
+a, b = c, d
+# list assign
+[a, b] = [c, d]
+# sequence assign
+a, b, c, d = 'spam'
+# extend sequence assign
+a, *b = 'spam' #=&gt; b='pam'
+# multiple target assign
+a = b = c
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org7f633f0" class="outline-2">
-<h2 id="org7f633f0"><span class="section-number-2">4</span> Iterable and Iterator</h2>
+<div id="outline-container-org1af3c7d" class="outline-2">
+<h2 id="org1af3c7d"><span class="section-number-2">4</span> Iterable and Iterator</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li>iterable 表示一个对象是可遍历的，是一种 iteration 对象；有 <code>iter()</code> 或者 <code>__iter()__</code></li>
@@ -597,8 +610,8 @@ a, *<span style="color: #dac6d6;">b</span> = <span style="color: #A2BF8A;">'spam
 </div>
 </div>
 
-<div id="outline-container-org78b458e" class="outline-2">
-<h2 id="org78b458e"><span class="section-number-2">5</span> Functions</h2>
+<div id="outline-container-org7761ad8" class="outline-2">
+<h2 id="org7761ad8"><span class="section-number-2">5</span> Functions</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li>使用 <code>def</code> 定义一个对象，并为对象定义一个引用指向它（可以从这里看出所谓的函数式编程即把函数本身也看作一个对象）；</li>
@@ -610,21 +623,21 @@ a, *<span style="color: #dac6d6;">b</span> = <span style="color: #A2BF8A;">'spam
 </ul>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #80A0C2;">def</span> <span style="color: #8EBCBB;">makeActions</span><span style="color: #80A0C2;">()</span>:
-    <span style="color: #dac6d6;">acts</span> = <span style="color: #80A0C2;">[]</span>
-    <span style="color: #80A0C2;">for</span> i <span style="color: #80A0C2;">in</span> <span style="color: #8EBCBB;">range</span><span style="color: #80A0C2;">(</span>5<span style="color: #80A0C2;">)</span>:
-        acts.append<span style="color: #80A0C2;">(</span><span style="color: #80A0C2;">lambda</span> x, i=i: i * x<span style="color: #80A0C2;">)</span>
-    <span style="color: #80A0C2;">return</span> acts
+<pre class="src src-python">def makeActions():
+    acts = []
+    for i in range(5):
+	acts.append(lambda x, i=i: i * x)
+    return acts
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org357bdf3" class="outline-3">
-<h3 id="org357bdf3"><span class="section-number-3">5.1</span> Arguments</h3>
+<div id="outline-container-org72693b9" class="outline-3">
+<h3 id="org72693b9"><span class="section-number-3">5.1</span> Arguments</h3>
 <div class="outline-text-3" id="text-5-1">
 </div>
-<div id="outline-container-orge6f38e9" class="outline-4">
-<h4 id="orge6f38e9"><span class="section-number-4">5.1.1</span> 传参</h4>
+<div id="outline-container-org4d0fca7" class="outline-4">
+<h4 id="org4d0fca7"><span class="section-number-4">5.1.1</span> 传参</h4>
 <div class="outline-text-4" id="text-5-1-1">
 <ul class="org-ul">
 <li>传参的过程只是把传过来的对象赋值给一个 local variable</li>
@@ -637,8 +650,8 @@ Python 传参，不可变对象是值传递，例如，整数、字符串等，�
 </div>
 </div>
 
-<div id="outline-container-org9ddaff2" class="outline-4">
-<h4 id="org9ddaff2"><span class="section-number-4">5.1.2</span> 参数匹配</h4>
+<div id="outline-container-orgfe45e94" class="outline-4">
+<h4 id="orgfe45e94"><span class="section-number-4">5.1.2</span> 参数匹配</h4>
 <div class="outline-text-4" id="text-5-1-2">
 <ul class="org-ul">
 <li>基本原则：从左向右匹配</li>
@@ -652,9 +665,33 @@ Python 传参，不可变对象是值传递，例如，整数、字符串等，�
 </div>
 </div>
 
-<div id="outline-container-org05b7933" class="outline-2">
-<h2 id="org05b7933"><span class="section-number-2">6</span> Words</h2>
+<div id="outline-container-org1ace99c" class="outline-2">
+<h2 id="org1ace99c"><span class="section-number-2">6</span> Features</h2>
 <div class="outline-text-2" id="text-6">
+</div>
+<div id="outline-container-orgc2add26" class="outline-3">
+<h3 id="orgc2add26"><span class="section-number-3">6.1</span> 广播</h3>
+<div class="outline-text-3" id="text-6-1">
+<ul class="org-ul">
+<li>所有参与计算的数组按最长的 shape(<code>len(shape)</code>) 看齐，长度不够的需要在前面补 1</li>
+<li>输出数组的维度都是参与计算数组各个维度的最大值</li>
+<li>从后向前，如果两个数组的某个维度相等，或者其中一个是 1，可以参与计算；否则不能计算</li>
+<li>当参与计算的数组某个维度为 1 时，复制这个而维度的值并扩展</li>
+</ul>
+
+<p>
+总的来说，广播的计算方法为：
+</p>
+<ul class="org-ul">
+<li>将维度短的数组增加维度，补 1</li>
+<li>从最低位开始，如果两数组维度相等，直接计算；如果其中某个维度为 1，复制扩展这个维度计算</li>
+</ul>
+</div>
+</div>
+</div>
+<div id="outline-container-orgb2e1e53" class="outline-2">
+<h2 id="orgb2e1e53"><span class="section-number-2">7</span> Words</h2>
+<div class="outline-text-2" id="text-7">
 <ul class="org-ul">
 <li>Sequence 序列</li>
 <li>arbitrary 任意的</li>
@@ -673,14 +710,14 @@ Python 传参，不可变对象是值传递，例如，整数、字符串等，�
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-10-08 Tue 21:39. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

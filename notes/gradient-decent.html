@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-08-08 四 17:08 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Gradient Decent 梯度下降</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -229,26 +242,26 @@ for the JavaScript code in this tag.
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
+	displayAlign: "center",
+	displayIndent: "0em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
 });
 </script>
 <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -257,8 +270,8 @@ for the JavaScript code in this tag.
 学习自台大李宏毅老师的机器学习课程，案例为其 <a href="https://github.com/ntumlta/2017fall-ml-hw1">Homework1</a>
 </p>
 
-<div id="outline-container-org7ee4d5b" class="outline-2">
-<h2 id="org7ee4d5b"><span class="section-number-2">1</span> Gradient Decent</h2>
+<div id="outline-container-org1377803" class="outline-2">
+<h2 id="org1377803"><span class="section-number-2">1</span> Gradient Decent</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 首先，我们有一个可微分的函数。这个函数就代表着一座山。我们的目标就是找到这个函数的最小值，也就是山底。根据之前的场景假设，最快的下山的方式就是找到当前位置最陡峭的方向，然后沿着此方向向下走，对应到函数中，就是找到给定点的梯度 ，然后朝着梯度相反的方向，就能让函数值下降的最快！因为梯度的方向就是函数之变化最快的方向。
@@ -278,8 +291,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0a5bcc7" class="outline-2">
-<h2 id="org0a5bcc7"><span class="section-number-2">2</span> Learning Rate</h2>
+<div id="outline-container-org4fe2abe" class="outline-2">
+<h2 id="org4fe2abe"><span class="section-number-2">2</span> Learning Rate</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 控制 Learning Rate 的大小。
@@ -303,8 +316,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgaf9663b" class="outline-2">
-<h2 id="orgaf9663b"><span class="section-number-2">3</span> Adagrid</h2>
+<div id="outline-container-org8fa4913" class="outline-2">
+<h2 id="org8fa4913"><span class="section-number-2">3</span> Adagrid</h2>
 <div class="outline-text-2" id="text-3">
 <div class="org-center">
 
@@ -324,8 +337,8 @@ Adagrid 使用一阶偏导近似二阶偏导，这样做的好处是求值的数
 </div>
 </div>
 
-<div id="outline-container-orgd7c5e01" class="outline-2">
-<h2 id="orgd7c5e01"><span class="section-number-2">4</span> Stochastic Gradient Decent</h2>
+<div id="outline-container-org0c6b225" class="outline-2">
+<h2 id="org0c6b225"><span class="section-number-2">4</span> Stochastic Gradient Decent</h2>
 <div class="outline-text-2" id="text-4">
 <div class="org-center">
 
@@ -341,8 +354,8 @@ Adagrid 使用一阶偏导近似二阶偏导，这样做的好处是求值的数
 </div>
 </div>
 
-<div id="outline-container-orgdc81442" class="outline-2">
-<h2 id="orgdc81442"><span class="section-number-2">5</span> Sample</h2>
+<div id="outline-container-org46a1a4a" class="outline-2">
+<h2 id="org46a1a4a"><span class="section-number-2">5</span> Sample</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 案例答案参考 <a href="https://github.com/machineCYC/2017MLSpring_Hung-yi-Lee/tree/master/HW1">这里</a>
@@ -360,28 +373,28 @@ Adagrid 使用一阶偏导近似二阶偏导，这样做的好处是求值的数
 </ul>
 </div>
 
-<div id="outline-container-org6e2e2b4" class="outline-3">
-<h3 id="org6e2e2b4"><span class="section-number-3">5.1</span> 导入数据</h3>
+<div id="outline-container-orgfbf77f0" class="outline-3">
+<h3 id="orgfbf77f0"><span class="section-number-3">5.1</span> 导入数据</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
 具体导入可直接查看代码，这里说明一下导入之后的数据格式：
 </p>
 <div class="org-src-container">
-<pre class="src src-python">arrayTrainX.shape   <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">=&gt;(5652, 163)</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">5652 = 471 * 12</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">163 = 18 * 9 + 1</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21363;&#65306;&#27599;&#19968;&#34892;&#34920;&#31034;&#19968;&#32452;&#35757;&#32451;&#25968;&#25454;&#65292;&#27599;&#32452;&#35757;&#32451;&#25968;&#25454;&#26377;163&#20010;&#65292;&#21069;162&#20010;&#34920;&#31034;&#21069;9&#20010;&#23567;&#26102;&#30340;&#26816;&#27979;&#20540;&#65292;&#26368;&#21518;&#19968;&#20010;&#34920;&#31034; bias</span>
-arrayTrainY.shape   <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">=&gt;(5652, )</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21363;&#65306;&#27599;&#20010;&#20803;&#32032;&#34920;&#31034;&#19968;&#32452;&#35757;&#32451;&#25968;&#25454;&#30340;&#26631;&#20934;&#20540;</span>
-arrayW.shape        <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">=&gt;(163, )</span>
-<span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#21442;&#25968;&#30340;&#26435;&#37325;</span>
+<pre class="src src-python">arrayTrainX.shape   #=&gt;(5652, 163)
+# 5652 = 471 * 12
+# 163 = 18 * 9 + 1
+# 即：每一行表示一组训练数据，每组训练数据有163个，前162个表示前9个小时的检测值，最后一个表示 bias
+arrayTrainY.shape   #=&gt;(5652, )
+# 即：每个元素表示一组训练数据的标准值
+arrayW.shape        #=&gt;(163, )
+# 参数的权重
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge81376c" class="outline-3">
-<h3 id="orge81376c"><span class="section-number-3">5.2</span> 模型建立</h3>
+<div id="outline-container-orgd0f8581" class="outline-3">
+<h3 id="orgd0f8581"><span class="section-number-3">5.2</span> 模型建立</h3>
 <div class="outline-text-3" id="text-5-2">
 <p>
 线性回归模型：
@@ -397,8 +410,8 @@ arrayW.shape        <span style="color: #5F7F5F;">#</span><span style="color: #7
 </div>
 </div>
 
-<div id="outline-container-orgbef74ac" class="outline-3">
-<h3 id="orgbef74ac"><span class="section-number-3">5.3</span> Loss Function</h3>
+<div id="outline-container-org18e1d33" class="outline-3">
+<h3 id="org18e1d33"><span class="section-number-3">5.3</span> Loss Function</h3>
 <div class="outline-text-3" id="text-5-3">
 <p>
 \[ Loss_{label} = \frac{1}{2} * \frac{1}{n} \sum_{i=0}^{n-1} {(\hat{y}^n - y^n)}^2 \]
@@ -406,8 +419,8 @@ arrayW.shape        <span style="color: #5F7F5F;">#</span><span style="color: #7
 </div>
 </div>
 
-<div id="outline-container-orgc344710" class="outline-3">
-<h3 id="orgc344710"><span class="section-number-3">5.4</span> 梯度下降</h3>
+<div id="outline-container-org7387ba5" class="outline-3">
+<h3 id="org7387ba5"><span class="section-number-3">5.4</span> 梯度下降</h3>
 <div class="outline-text-3" id="text-5-4">
 <p>
 \[ w_{i} = w_{i} - \eta_{w} \frac{\partial Loss}{\partial w_{i}} = w_{i} - \eta_{w} \frac{1}{n} \sum_{i=0}^{n-1} ({\hat{y}^n - y^n}) (x_i) \]
@@ -418,79 +431,79 @@ arrayW.shape        <span style="color: #5F7F5F;">#</span><span style="color: #7
 </p>
 </div>
 
-<div id="outline-container-orgbb5f742" class="outline-4">
-<h4 id="orgbb5f742"><span class="section-number-4">5.4.1</span> 代码分析</h4>
+<div id="outline-container-org31f27ab" class="outline-4">
+<h4 id="org31f27ab"><span class="section-number-4">5.4.1</span> 代码分析</h4>
 <div class="outline-text-4" id="text-5-4-1">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">GD</span><span style="color: #DCDCCC;">(</span>X, Y, W, eta, Iteration, lambdaL2<span style="color: #DCDCCC;">)</span>:
-    <span style="color: #9FC59F;">"""</span>
-<span style="color: #9FC59F;">    &#20351;&#29992;gradient decent learning rate &#35201;&#35519;&#24456;&#23567;&#65292;&#19981;&#28982;&#24456;&#23481;&#26131;&#29190;&#28856;</span>
-<span style="color: #9FC59F;">    X: (5652, 163)</span>
-<span style="color: #9FC59F;">    Y: (5652, )</span>
-<span style="color: #9FC59F;">    W: (163, )</span>
-<span style="color: #9FC59F;">    eta: Learning Rate</span>
-<span style="color: #9FC59F;">    """</span>
-    <span style="color: #DFAF8F;">listCost</span> = <span style="color: #DCDCCC;">[]</span>
-    <span style="color: #F0DFAF; font-weight: bold;">for</span> itera <span style="color: #F0DFAF; font-weight: bold;">in</span> <span style="color: #DCDCCC; font-weight: bold;">range</span><span style="color: #DCDCCC;">(</span>Iteration<span style="color: #DCDCCC;">)</span>:
-        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#27714;&#39044;&#27979;&#20540;</span>
-        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#30697;&#38453;&#20056;&#27861; (5652, 163) . (163, ) = (5652, )</span>
-        <span style="color: #DFAF8F;">arrayYHat</span> = X.dot<span style="color: #DCDCCC;">(</span>W<span style="color: #DCDCCC;">)</span>
-        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">Loss</span>
-        <span style="color: #DFAF8F;">arrayLoss</span> = arrayYHat - Y <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">(5652, )</span>
-        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#26041;&#24046;</span>
-        <span style="color: #DFAF8F;">arrayCost</span> = <span style="color: #DCDCCC;">(</span>np.<span style="color: #DCDCCC; font-weight: bold;">sum</span><span style="color: #BFEBBF;">(</span>arrayLoss**2<span style="color: #BFEBBF;">)</span> / X.shape<span style="color: #BFEBBF;">[</span>0<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">(5652, )</span>
-        listCost.append<span style="color: #DCDCCC;">(</span>arrayCost<span style="color: #DCDCCC;">)</span>
+<pre class="src src-python">def GD(X, Y, W, eta, Iteration, lambdaL2):
+    """
+    使用gradient decent learning rate 要調很小，不然很容易爆炸
+    X: (5652, 163)
+    Y: (5652, )
+    W: (163, )
+    eta: Learning Rate
+    """
+    listCost = []
+    for itera in range(Iteration):
+	# 求预测值
+	# 矩阵乘法 (5652, 163) . (163, ) = (5652, )
+	arrayYHat = X.dot(W)
+	# Loss
+	arrayLoss = arrayYHat - Y #(5652, )
+	# 方差
+	arrayCost = (np.sum(arrayLoss**2) / X.shape[0]) #(5652, )
+	listCost.append(arrayCost)
 
-        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#24494;&#20998;</span>
-        <span style="color: #DFAF8F;">arrayGradient</span> = <span style="color: #DCDCCC;">(</span>X.T.dot<span style="color: #BFEBBF;">(</span>arrayLoss<span style="color: #BFEBBF;">)</span> / X.shape<span style="color: #BFEBBF;">[</span>0<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span> + <span style="color: #DCDCCC;">(</span>lambdaL2 * W<span style="color: #DCDCCC;">)</span> <span style="color: #5F7F5F;">#</span><span style="color: #7F9F7F;">(163, )</span>
-        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">&#26356;&#26032; W</span>
-        <span style="color: #DFAF8F;">W</span> -= eta * arrayGradient
-        <span style="color: #F0DFAF; font-weight: bold;">if</span> itera % 1000 == 0:
-            <span style="color: #F0DFAF; font-weight: bold;">print</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"iteration:{}, cost:{} "</span>.<span style="color: #DCDCCC; font-weight: bold;">format</span><span style="color: #BFEBBF;">(</span>itera, arrayCost<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
-    <span style="color: #F0DFAF; font-weight: bold;">return</span> W, listCost
+	# 微分
+	arrayGradient = (X.T.dot(arrayLoss) / X.shape[0]) + (lambdaL2 * W) #(163, )
+	# 更新 W
+	W -= eta * arrayGradient
+	if itera % 1000 == 0:
+	    print("iteration:{}, cost:{} ".format(itera, arrayCost))
+    return W, listCost
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org40302e5" class="outline-3">
-<h3 id="org40302e5"><span class="section-number-3">5.5</span> Adagrid 更新 Learning Rate</h3>
+<div id="outline-container-org1914c5e" class="outline-3">
+<h3 id="org1914c5e"><span class="section-number-3">5.5</span> Adagrid 更新 Learning Rate</h3>
 <div class="outline-text-3" id="text-5-5">
 <p>
 \[ \eta_{n} = \frac{\eta_{n-1}}{\sqrt{\sum_{i=1}^{n-1} grad_i^2}} \]
 </p>
 </div>
 
-<div id="outline-container-org5ebbabc" class="outline-4">
-<h4 id="org5ebbabc"><span class="section-number-4">5.5.1</span> 代码分析</h4>
+<div id="outline-container-org3e2fe93" class="outline-4">
+<h4 id="org3e2fe93"><span class="section-number-4">5.5.1</span> 代码分析</h4>
 <div class="outline-text-4" id="text-5-5-1">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #F0DFAF; font-weight: bold;">def</span> <span style="color: #93E0E3;">Adagrad</span><span style="color: #DCDCCC;">(</span>X, Y, W, eta, Iteration, lambdaL2<span style="color: #DCDCCC;">)</span>:
-    <span style="color: #9FC59F;">"""</span>
-<span style="color: #9FC59F;">    X: (5652, 163)</span>
-<span style="color: #9FC59F;">    Y: (5652, )</span>
-<span style="color: #9FC59F;">    W: (163, )</span>
-<span style="color: #9FC59F;">    eta: Learning Rate</span>
-<span style="color: #9FC59F;">    """</span>
-    <span style="color: #DFAF8F;">listCost</span> = <span style="color: #DCDCCC;">[]</span>
-    <span style="color: #DFAF8F;">arrayGradientSum</span> = np.zeros<span style="color: #DCDCCC;">(</span>X.shape<span style="color: #BFEBBF;">[</span>1<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span>
-    <span style="color: #F0DFAF; font-weight: bold;">for</span> itera <span style="color: #F0DFAF; font-weight: bold;">in</span> <span style="color: #DCDCCC; font-weight: bold;">range</span><span style="color: #DCDCCC;">(</span>Iteration<span style="color: #DCDCCC;">)</span>:
-        <span style="color: #DFAF8F;">arrayYHat</span> = np.dot<span style="color: #DCDCCC;">(</span>X, W<span style="color: #DCDCCC;">)</span>
-        <span style="color: #DFAF8F;">arrayLoss</span> = arrayYHat -Y
-        <span style="color: #DFAF8F;">arrayCost</span> = np.<span style="color: #DCDCCC; font-weight: bold;">sum</span><span style="color: #DCDCCC;">(</span>arrayLoss**2<span style="color: #DCDCCC;">)</span> / X.shape<span style="color: #DCDCCC;">[</span>0<span style="color: #DCDCCC;">]</span>
+<pre class="src src-python">def Adagrad(X, Y, W, eta, Iteration, lambdaL2):
+    """
+    X: (5652, 163)
+    Y: (5652, )
+    W: (163, )
+    eta: Learning Rate
+    """
+    listCost = []
+    arrayGradientSum = np.zeros(X.shape[1])
+    for itera in range(Iteration):
+	arrayYHat = np.dot(X, W)
+	arrayLoss = arrayYHat -Y
+	arrayCost = np.sum(arrayLoss**2) / X.shape[0]
 
-        <span style="color: #5F7F5F;"># </span><span style="color: #7F9F7F;">save cost function value in process</span>
-        listCost.append<span style="color: #DCDCCC;">(</span>arrayCost<span style="color: #DCDCCC;">)</span>
+	# save cost function value in process
+	listCost.append(arrayCost)
 
-        <span style="color: #DFAF8F;">arrayGradient</span> = <span style="color: #DCDCCC;">(</span>np.dot<span style="color: #BFEBBF;">(</span>np.transpose<span style="color: #D0BF8F;">(</span>X<span style="color: #D0BF8F;">)</span>, arrayLoss<span style="color: #BFEBBF;">)</span> / X.shape<span style="color: #BFEBBF;">[</span>0<span style="color: #BFEBBF;">]</span><span style="color: #DCDCCC;">)</span> + <span style="color: #DCDCCC;">(</span>lambdaL2 * W<span style="color: #DCDCCC;">)</span>
-        <span style="color: #DFAF8F;">arrayGradientSum</span> += arrayGradient**2
-        <span style="color: #DFAF8F;">arraySigma</span> = np.sqrt<span style="color: #DCDCCC;">(</span>arrayGradientSum<span style="color: #DCDCCC;">)</span>
-        <span style="color: #DFAF8F;">W</span> -= eta * arrayGradient / arraySigma
+	arrayGradient = (np.dot(np.transpose(X), arrayLoss) / X.shape[0]) + (lambdaL2 * W)
+	arrayGradientSum += arrayGradient**2
+	arraySigma = np.sqrt(arrayGradientSum)
+	W -= eta * arrayGradient / arraySigma
 
-        <span style="color: #F0DFAF; font-weight: bold;">if</span> itera % 1000 == 0:
-            <span style="color: #F0DFAF; font-weight: bold;">print</span><span style="color: #DCDCCC;">(</span><span style="color: #CC9393;">"iteration:{}, cost:{} "</span>.<span style="color: #DCDCCC; font-weight: bold;">format</span><span style="color: #BFEBBF;">(</span>itera, arrayCost<span style="color: #BFEBBF;">)</span><span style="color: #DCDCCC;">)</span>
-    <span style="color: #F0DFAF; font-weight: bold;">return</span> W, listCost
+	if itera % 1000 == 0:
+	    print("iteration:{}, cost:{} ".format(itera, arrayCost))
+    return W, listCost
 </pre>
 </div>
 </div>
@@ -499,14 +512,14 @@ arrayW.shape        <span style="color: #5F7F5F;">#</span><span style="color: #7
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-08-07 三 12:36. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

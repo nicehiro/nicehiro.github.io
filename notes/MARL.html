@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-26 四 16:54 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>多智能体深度强化学习</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -227,6 +240,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	displayAlign: "center",
+	displayIndent: "0em",
+
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
+});
+</script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -277,20 +312,20 @@ for the JavaScript code in this tag.
 <h3 id="org3998f00"><span class="section-number-3">1.1</span> 矩阵博弈</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-一个矩阵博弈可以表示为<img src="ltximg/MARL_f367c9328a17925c98b0416707e55841254967b4.png" alt="MARL_f367c9328a17925c98b0416707e55841254967b4.png" />，其中：
+一个矩阵博弈可以表示为\((n, A_1, A_2, \cdots, A_n, R_1, R_2, \cdots, R_n)\)，其中：
 </p>
 <ul class="org-ul">
-<li><img src="ltximg/MARL_714ce112f283066f14595905f6719869c8ad5e41.png" alt="MARL_714ce112f283066f14595905f6719869c8ad5e41.png" />表示智能体的个数</li>
-<li><img src="ltximg/MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" alt="MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" />表示智能体 i 的动作集</li>
-<li><img src="ltximg/MARL_3156dcfbca368a84d1f776fb625499ed80d3f1ca.png" alt="MARL_3156dcfbca368a84d1f776fb625499ed80d3f1ca.png" />表示智能体 i 的奖励函数</li>
-<li>联结动作空间 <img src="ltximg/MARL_856d4aeb993f675ed02bb0c0c6cb308c3843ebd4.png" alt="MARL_856d4aeb993f675ed02bb0c0c6cb308c3843ebd4.png" /></li>
-<li>每个智能体的策略<img src="ltximg/MARL_e699c62bfa5841688272494921579681d84068a6.png" alt="MARL_e699c62bfa5841688272494921579681d84068a6.png" />是一个关于其动作空间<img src="ltximg/MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" alt="MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" />的概率分布</li>
+<li>\(n\)表示智能体的个数</li>
+<li>\(A_i\)表示智能体 i 的动作集</li>
+<li>\(R_i\)表示智能体 i 的奖励函数</li>
+<li>联结动作空间 \(A_1 \times \cdots \times A_n\)</li>
+<li>每个智能体的策略\(\pi_i\)是一个关于其动作空间\(A_i\)的概率分布</li>
 <li>每个智能体的目标是最大化其奖励</li>
 <li>不包含状态，只包含动作和奖励</li>
 </ul>
 
 <p>
-令<img src="ltximg/MARL_03ac8c1483a802c2e561cb833ccbc16ab7b7e819.png" alt="MARL_03ac8c1483a802c2e561cb833ccbc16ab7b7e819.png" />表示智能体 i 在联结策略<img src="ltximg/MARL_d6d8cb952588e8027afe650312423e3a2acdb749.png" alt="MARL_d6d8cb952588e8027afe650312423e3a2acdb749.png" />下的期望奖励，即值函数。
+令\(V_i(\pi_1, \pi_2, \cdots, \pi_n)\)表示智能体 i 在联结策略\((\pi_1, \pi_2, \cdots, \pi_n)\)下的期望奖励，即值函数。
 </p>
 </div>
 
@@ -307,12 +342,14 @@ for the JavaScript code in this tag.
 <h4 id="orgc4f9ee5"><span class="section-number-4">1.1.2</span> 矩阵博弈纳什均衡</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
-在矩阵博弈中，如果联结策略<img src="ltximg/MARL_5c1f19b646aa5f19386f34af145e4f7e23a3bc56.png" alt="MARL_5c1f19b646aa5f19386f34af145e4f7e23a3bc56.png" />满足：
-<img src="ltximg/MARL_6b2a292cdc548221e7c0624533cbd1e23f236e90.png" alt="MARL_6b2a292cdc548221e7c0624533cbd1e23f236e90.png" />
+在矩阵博弈中，如果联结策略\(\pi_1^*, \pi_2^*, \cdots, \pi_n^*\)满足：
+\[
+V_i(\pi_1^*, \cdots, \pi_i^*, \cdots, \pi_n^*) \geq V_i(\pi_1^*, \cdots, \pi_i, \cdots, \pi_n^*)
+\]
 </p>
 
 <p>
-即，在其他智能体策略一定的条件下，智能体 i 的其他策略都不能使 i 获得比策略<img src="ltximg/MARL_880172aeb338baf01be21b1d3e78745a61f9754f.png" alt="MARL_880172aeb338baf01be21b1d3e78745a61f9754f.png" />更好的奖励，称策略<img src="ltximg/MARL_880172aeb338baf01be21b1d3e78745a61f9754f.png" alt="MARL_880172aeb338baf01be21b1d3e78745a61f9754f.png" />为智能体 i 的纳什均衡策略。
+即，在其他智能体策略一定的条件下，智能体 i 的其他策略都不能使 i 获得比策略\(\pi_i^*\)更好的奖励，称策略\(\pi_i^*\)为智能体 i 的纳什均衡策略。
 若所有智能体均找到了各自的纳什均衡策略，当前策略组合为矩阵博弈的纳什均衡策略。
 </p>
 </div>
@@ -322,7 +359,7 @@ for the JavaScript code in this tag.
 <h4 id="org1ed3320"><span class="section-number-4">1.1.3</span> 完全混合策略</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <p>
-若智能体 i 对动作集<img src="ltximg/MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" alt="MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" />的所有动作的概率都大于 0，那么这个策略被称为完全混合策略。
+若智能体 i 对动作集\(A_i\)的所有动作的概率都大于 0，那么这个策略被称为完全混合策略。
 </p>
 </div>
 </div>
@@ -331,7 +368,7 @@ for the JavaScript code in this tag.
 <h4 id="orgdaee3cd"><span class="section-number-4">1.1.4</span> 纯策略</h4>
 <div class="outline-text-4" id="text-1-1-4">
 <p>
-若智能体 i 对动作集<img src="ltximg/MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" alt="MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" />中一个动作概率为 1，其余为 0，那么这个策略被称为纯策略。
+若智能体 i 对动作集\(A_i\)中一个动作概率为 1，其余为 0，那么这个策略被称为纯策略。
 </p>
 </div>
 </div>
@@ -344,8 +381,8 @@ for the JavaScript code in this tag.
 对于两个智能体的矩阵博弈，我们设计：
 </p>
 <ul class="org-ul">
-<li>坐标<img src="ltximg/MARL_6701545d09ba12a2e767f41c81b4a32a0b89b5fe.png" alt="MARL_6701545d09ba12a2e767f41c81b4a32a0b89b5fe.png" />表示一个联结动作</li>
-<li>智能体 i 的奖励矩阵<img src="ltximg/MARL_3156dcfbca368a84d1f776fb625499ed80d3f1ca.png" alt="MARL_3156dcfbca368a84d1f776fb625499ed80d3f1ca.png" />，其中每个元素<img src="ltximg/MARL_18141432321d7ea851a83ae585dc14edc511e398.png" alt="MARL_18141432321d7ea851a83ae585dc14edc511e398.png" />表示：第一个智能体执行<img src="ltximg/MARL_885ea33ff528c3844911ff35d4497d8eb7c681a6.png" alt="MARL_885ea33ff528c3844911ff35d4497d8eb7c681a6.png" />动作，第二个智能体执行<img src="ltximg/MARL_e73fbab51693a8d73a793816002e53abb21f17e6.png" alt="MARL_e73fbab51693a8d73a793816002e53abb21f17e6.png" />动作，智能体 i 得到的奖励</li>
+<li>坐标\((a_1 \in A_1, a_2 \in A_2)\)表示一个联结动作</li>
+<li>智能体 i 的奖励矩阵\(R_i\)，其中每个元素\(r_{xy}\)表示：第一个智能体执行\(x\)动作，第二个智能体执行\(y\)动作，智能体 i 得到的奖励</li>
 </ul>
 </div>
 
@@ -401,15 +438,15 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-3">
 <p>
 多智能体强化学习就是一个随机博弈，将每一个状态的阶段博弈的纳什均衡策略组合起来称为一个智能体在动态环境中的策略，并不断于环境交互来更新每一个状态的阶段博弈的策略。
-一个随机博弈可以写为<img src="ltximg/MARL_98467930a81a0e80b42972c373e3df8dc4231042.png" alt="MARL_98467930a81a0e80b42972c373e3df8dc4231042.png" />，其中：
+一个随机博弈可以写为\((n, S, A_1, \cdots, A_n, T_r, \gamma, R_1, \cdots, R_n)\)，其中：
 </p>
 <ul class="org-ul">
-<li><img src="ltximg/MARL_714ce112f283066f14595905f6719869c8ad5e41.png" alt="MARL_714ce112f283066f14595905f6719869c8ad5e41.png" />：智能体的个数</li>
-<li><img src="ltximg/MARL_1e0f934d32b7d0709f5a93bf7e36795c644e704b.png" alt="MARL_1e0f934d32b7d0709f5a93bf7e36795c644e704b.png" />：环境状态集合</li>
-<li><img src="ltximg/MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" alt="MARL_5993c624405e5269b9f2775fb19c4ef21bb23775.png" />：智能体 i 的动作集</li>
-<li><img src="ltximg/MARL_0d9a53d1b3c8e6171b6adab91dd3c0d66780add4.png" alt="MARL_0d9a53d1b3c8e6171b6adab91dd3c0d66780add4.png" />：衰减因子</li>
-<li><img src="ltximg/MARL_3156dcfbca368a84d1f776fb625499ed80d3f1ca.png" alt="MARL_3156dcfbca368a84d1f776fb625499ed80d3f1ca.png" />：智能体 i 的奖励函数</li>
-<li><img src="ltximg/MARL_76a1100aec9d444728d8725cc16efe5da8eeb405.png" alt="MARL_76a1100aec9d444728d8725cc16efe5da8eeb405.png" />：状态转移概率，<img src="ltximg/MARL_d060ab226ac7d101ba30bda27fa00c7a971e674c.png" alt="MARL_d060ab226ac7d101ba30bda27fa00c7a971e674c.png" /></li>
+<li>\(n\)：智能体的个数</li>
+<li>\(S\)：环境状态集合</li>
+<li>\(A_i\)：智能体 i 的动作集</li>
+<li>\(\gamma\)：衰减因子</li>
+<li>\(R_i\)：智能体 i 的奖励函数</li>
+<li>\(T_r\)：状态转移概率，\(S \times A_1 \times \cdots \times A_n \times S\)</li>
 </ul>
 
 <p>
@@ -417,21 +454,27 @@ for the JavaScript code in this tag.
 </p>
 
 <p>
-对于多智能体强化学习，就是找到每一个状态的阶段博弈的纳什均衡，然后将这些策略联合起来。记多智能体强化学习的最优策略为<img src="ltximg/MARL_f01a41e1a67b4f6d9e647bf0564d56c57de0bef6.png" alt="MARL_f01a41e1a67b4f6d9e647bf0564d56c57de0bef6.png" />，其满足：
-<img src="ltximg/MARL_ca28a0ea216490cbe1acbb9f8c30da747293c3df.png" alt="MARL_ca28a0ea216490cbe1acbb9f8c30da747293c3df.png" />
+对于多智能体强化学习，就是找到每一个状态的阶段博弈的纳什均衡，然后将这些策略联合起来。记多智能体强化学习的最优策略为\((\pi_1^*, \cdots, \pi_i^*)\)，其满足：
+\[
+V_i(s, \pi_1^*, \cdots, \pi_i^*, \cdots, \pi_n^*) \geq V_i(s, \pi_1^*, \cdots, \pi_i, \cdots, \pi_n^*)
+\]
 即，某个智能体在最优策略下的值函数一定大于等于其在其他策略下的值函数。
 </p>
 
 <p>
-记<img src="ltximg/MARL_cf2762e0a48382612f724e35e426ef656bb3f8cf.png" alt="MARL_cf2762e0a48382612f724e35e426ef656bb3f8cf.png" />表示智能体 i 在状态 s，动作为<img src="ltximg/MARL_60ac8ee98eb6cbc1a74f5ec41a5ff04a53d319ee.png" alt="MARL_60ac8ee98eb6cbc1a74f5ec41a5ff04a53d319ee.png" />下的动作值函数，由 Bellman 方程得：
+记\(Q_i^*(s, a_1, a_2, \cdots, a_n)\)表示智能体 i 在状态 s，动作为\((a_1, a_2, \cdots, a_n) \in (A_1, A_2, \cdots, A_n)\)下的动作值函数，由 Bellman 方程得：
 </p>
 
 <p>
-<img src="ltximg/MARL_e5b2b06ce550cd5b6145ee0bc5c805aa3ba86ee5.png" alt="MARL_e5b2b06ce550cd5b6145ee0bc5c805aa3ba86ee5.png" />
+\[
+V_i^*(s) = \sum_{a_1, \cdots, a_n \in A_1 \times \cdots \times A_n} Q_i^*(s, a_1, \cdots, a_n)\pi_1^*(s, a_1)\pi_2^*(s, a2)\cdots\pi_n^*(s, a_n)
+\]
 </p>
 
 <p>
-<img src="ltximg/MARL_7dafdd3b2455033bbf9e51ce8352dae6d0cabfd2.png" alt="MARL_7dafdd3b2455033bbf9e51ce8352dae6d0cabfd2.png" />
+\[
+Q_i^*(s, a_1, \cdots, a_n) = \sum_{s\prime \in S}T_r(s, a_1, \cdots, a_n, s\prime)[R_i(s, a_1, \cdots, a_n, s\prime) + \gamma V_i^*(s\prime)]
+\]
 </p>
 </div>
 
@@ -444,7 +487,9 @@ for the JavaScript code in this tag.
 
 <p>
 在两个玩家的零和博弈中，给定状态 s，定义智能体 i 的最优状态值函数：
-<img src="ltximg/MARL_0dcab805b2b572547372c10e0c1e132b7645b6d7.png" alt="MARL_0dcab805b2b572547372c10e0c1e132b7645b6d7.png" />
+\[
+V_i^*(s) = \max \limits_{\pi_i(s, \cdot)} \min \limits_{a_{-i} \in A_{-i}} \sum_{a_i \in A_i} Q_i^*(s, a_i, a_{-i})\pi_i(s, a_i), i = 1, 2
+\]
 </p>
 
 <p>
@@ -477,14 +522,14 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-02-05 三 17:50. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-02-05 三 17:50. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

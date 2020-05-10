@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-11-29 五 17:24 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>反向传播算法 Back-Propagation</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -229,26 +242,26 @@ for the JavaScript code in this tag.
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
+	displayAlign: "center",
+	displayIndent: "0em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
 });
 </script>
 <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -257,27 +270,27 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org199cf8b">1. 背景</a></li>
-<li><a href="#org048caeb">2. 链式求导法则</a></li>
-<li><a href="#orga743e99">3. 反向传播</a>
+<li><a href="#org3269dff">1. 背景</a></li>
+<li><a href="#org19c25c5">2. 链式求导法则</a></li>
+<li><a href="#org9220159">3. 反向传播</a>
 <ul>
-<li><a href="#org5595c67">3.1. Forward Pass 前向传播</a></li>
-<li><a href="#org603274a">3.2. Backward Pass 反向传播</a>
+<li><a href="#org2be317a">3.1. Forward Pass 前向传播</a></li>
+<li><a href="#org4f9b7e6">3.2. Backward Pass 反向传播</a>
 <ul>
-<li><a href="#orgf2ab8a0">3.2.1. 输出层</a></li>
-<li><a href="#org9129dc0">3.2.2. 中间层</a></li>
+<li><a href="#orgcaac1f9">3.2.1. 输出层</a></li>
+<li><a href="#org2bb448d">3.2.2. 中间层</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#org3c30cb7">4. 总结</a></li>
-<li><a href="#orgd2c5a59">5. Ref</a></li>
+<li><a href="#org8750d65">4. 总结</a></li>
+<li><a href="#org9a1960c">5. Ref</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org199cf8b" class="outline-2">
-<h2 id="org199cf8b"><span class="section-number-2">1</span> 背景</h2>
+<div id="outline-container-org3269dff" class="outline-2">
+<h2 id="org3269dff"><span class="section-number-2">1</span> 背景</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 在神经网络中更新参数时，经常需要使用梯度的方法来更新参数。反向传播就是用来有效的求输出值和每个参数导数的有效方法。
@@ -285,8 +298,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org048caeb" class="outline-2">
-<h2 id="org048caeb"><span class="section-number-2">2</span> 链式求导法则</h2>
+<div id="outline-container-org19c25c5" class="outline-2">
+<h2 id="org19c25c5"><span class="section-number-2">2</span> 链式求导法则</h2>
 <div class="outline-text-2" id="text-2">
 \begin{equation}
 y = f(x) \\
@@ -299,8 +312,8 @@ s = y + z + w \\
 </div>
 </div>
 
-<div id="outline-container-orga743e99" class="outline-2">
-<h2 id="orga743e99"><span class="section-number-2">3</span> 反向传播</h2>
+<div id="outline-container-org9220159" class="outline-2">
+<h2 id="org9220159"><span class="section-number-2">3</span> 反向传播</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 在神经网络中截取一小段，不妨将我们的问题转化为求此段网络中输入\(x_1,x_2\)的梯度。
@@ -330,8 +343,8 @@ s = y + z + w \\
 </p>
 </div>
 
-<div id="outline-container-org5595c67" class="outline-3">
-<h3 id="org5595c67"><span class="section-number-3">3.1</span> Forward Pass 前向传播</h3>
+<div id="outline-container-org2be317a" class="outline-3">
+<h3 id="org2be317a"><span class="section-number-3">3.1</span> Forward Pass 前向传播</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 先来求求\(\frac{\partial{z}}{dw}\)。
@@ -351,8 +364,8 @@ s = y + z + w \\
 </div>
 </div>
 
-<div id="outline-container-org603274a" class="outline-3">
-<h3 id="org603274a"><span class="section-number-3">3.2</span> Backward Pass 反向传播</h3>
+<div id="outline-container-org4f9b7e6" class="outline-3">
+<h3 id="org4f9b7e6"><span class="section-number-3">3.2</span> Backward Pass 反向传播</h3>
 <div class="outline-text-3" id="text-3-2">
 <div class="org-center">
 
@@ -379,8 +392,8 @@ s = y + z + w \\
 </p>
 </div>
 
-<div id="outline-container-orgf2ab8a0" class="outline-4">
-<h4 id="orgf2ab8a0"><span class="section-number-4">3.2.1</span> 输出层</h4>
+<div id="outline-container-orgcaac1f9" class="outline-4">
+<h4 id="orgcaac1f9"><span class="section-number-4">3.2.1</span> 输出层</h4>
 <div class="outline-text-4" id="text-3-2-1">
 <div class="org-center">
 
@@ -392,8 +405,8 @@ s = y + z + w \\
 </div>
 </div>
 
-<div id="outline-container-org9129dc0" class="outline-4">
-<h4 id="org9129dc0"><span class="section-number-4">3.2.2</span> 中间层</h4>
+<div id="outline-container-org2bb448d" class="outline-4">
+<h4 id="org2bb448d"><span class="section-number-4">3.2.2</span> 中间层</h4>
 <div class="outline-text-4" id="text-3-2-2">
 <div class="org-center">
 
@@ -418,8 +431,8 @@ s = y + z + w \\
 </div>
 </div>
 
-<div id="outline-container-org3c30cb7" class="outline-2">
-<h2 id="org3c30cb7"><span class="section-number-2">4</span> 总结</h2>
+<div id="outline-container-org8750d65" class="outline-2">
+<h2 id="org8750d65"><span class="section-number-2">4</span> 总结</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 使用 Forward Pass 计算\(\frac{\partial{z}}{dx}\)，使用 Backward Pass 计算\(\frac{\partial{l}}{dz}\)，最后将两个值相乘，即是对应参数的梯度。
@@ -435,8 +448,8 @@ s = y + z + w \\
 </div>
 </div>
 
-<div id="outline-container-orgd2c5a59" class="outline-2">
-<h2 id="orgd2c5a59"><span class="section-number-2">5</span> Ref</h2>
+<div id="outline-container-org9a1960c" class="outline-2">
+<h2 id="org9a1960c"><span class="section-number-2">5</span> Ref</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
 <li><a href="https://www.youtube.com/channel/UC2ggjtuuWvxrHHHiaDH1dlQ">李宏毅——机器学习</a></li>
@@ -446,14 +459,14 @@ s = y + z + w \\
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-11-29 五 16:32. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-23 四 23:52 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>计算机网络总结</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -229,33 +242,33 @@ for the JavaScript code in this tag.
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
+	displayAlign: "center",
+	displayIndent: "0em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
 });
 </script>
 <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">计算机网络总结</h1>
 
-<div id="outline-container-orgb9dbda9" class="outline-2">
-<h2 id="orgb9dbda9"><span class="section-number-2">1</span> 计算机网络体系结构</h2>
+<div id="outline-container-org2e416da" class="outline-2">
+<h2 id="org2e416da"><span class="section-number-2">1</span> 计算机网络体系结构</h2>
 <div class="outline-text-2" id="text-1">
 <ol class="org-ol">
 <li>计算机网络最重要的功能：连通性、共享</li>
@@ -277,8 +290,8 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-org48a18ee" class="outline-2">
-<h2 id="org48a18ee"><span class="section-number-2">2</span> 物理层</h2>
+<div id="outline-container-org6531f34" class="outline-2">
+<h2 id="org6531f34"><span class="section-number-2">2</span> 物理层</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>模拟信号（数据） 连续变化的数据；数字信号（数据） 离散值</li>
@@ -404,8 +417,8 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-orga2e2609" class="outline-2">
-<h2 id="orga2e2609"><span class="section-number-2">3</span> 数据链路层</h2>
+<div id="outline-container-orgc219392" class="outline-2">
+<h2 id="orgc219392"><span class="section-number-2">3</span> 数据链路层</h2>
 <div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>有连接一定有确认。无确认的无连接服务适用于 <b>实时通信或误码率较低</b> 的通信（比如以太网）；有确认无连接的通信适用于误码率较高的通信；有确认有连接的通信适用于可靠性要求高的通信</li>
@@ -509,8 +522,8 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-orge1f871f" class="outline-2">
-<h2 id="orge1f871f"><span class="section-number-2">4</span> 网络层</h2>
+<div id="outline-container-org4a49935" class="outline-2">
+<h2 id="org4a49935"><span class="section-number-2">4</span> 网络层</h2>
 <div class="outline-text-2" id="text-4">
 <ul class="org-ul">
 <li>网络层采用标准化协议，但互联的网络可以是异构的</li>
@@ -571,8 +584,8 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org988204b" class="outline-2">
-<h2 id="org988204b"><span class="section-number-2">5</span> 传输层</h2>
+<div id="outline-container-org4ea2078" class="outline-2">
+<h2 id="org4ea2078"><span class="section-number-2">5</span> 传输层</h2>
 <div class="outline-text-2" id="text-5">
 <ol class="org-ol">
 <li>提供应用进程之间的通信，网络层提供主机之间的通信</li>
@@ -619,8 +632,8 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-org069263c" class="outline-2">
-<h2 id="org069263c"><span class="section-number-2">6</span> 应用层</h2>
+<div id="outline-container-org32e70ff" class="outline-2">
+<h2 id="org32e70ff"><span class="section-number-2">6</span> 应用层</h2>
 <div class="outline-text-2" id="text-6">
 <ol class="org-ol">
 <li>C/S连接之后，服务器也能主动发送数据给客户端，例如一些错误信息的通知</li>
@@ -650,14 +663,14 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-05-23 四 23:41. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

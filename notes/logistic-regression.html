@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-26 四 16:53 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Logistic Regression</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -227,6 +240,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	displayAlign: "center",
+	displayIndent: "0em",
+
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
+});
+</script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -236,7 +271,7 @@ for the JavaScript code in this tag.
 <h2 id="org891d2d3"><span class="section-number-2">1</span> 后验概率</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-<img src="ltximg/logistic-regression_c3e4a8531006e1c8a7f933f3f8e431d54f9ff688.png" alt="logistic-regression_c3e4a8531006e1c8a7f933f3f8e431d54f9ff688.png" /> 表示取出一个样本，其样本参数符合 X , 那么这个样本属于 Class1 的概率为 <img src="ltximg/logistic-regression_c3e4a8531006e1c8a7f933f3f8e431d54f9ff688.png" alt="logistic-regression_c3e4a8531006e1c8a7f933f3f8e431d54f9ff688.png" />
+\(P(C_1|X)\) 表示取出一个样本，其样本参数符合 X , 那么这个样本属于 Class1 的概率为 \(P(C_1|X)\)
 </p>
 
 <div class="org-center">
@@ -281,22 +316,22 @@ for the JavaScript code in this tag.
 <h3 id="org62c6004"><span class="section-number-3">2.1</span> The Goodness of Function</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
-上诉的 <img src="ltximg/logistic-regression_5b8554c5dbc54ea3327269071683793dfdf5e8f0.png" alt="logistic-regression_5b8554c5dbc54ea3327269071683793dfdf5e8f0.png" /> 即 <img src="ltximg/logistic-regression_c3e4a8531006e1c8a7f933f3f8e431d54f9ff688.png" alt="logistic-regression_c3e4a8531006e1c8a7f933f3f8e431d54f9ff688.png" /> . 那么如何才能判断一个模型（<img src="ltximg/logistic-regression_5b8554c5dbc54ea3327269071683793dfdf5e8f0.png" alt="logistic-regression_5b8554c5dbc54ea3327269071683793dfdf5e8f0.png" />）的好坏呢？
+上诉的 \(f\) 即 \(P(C_1|X)\) . 那么如何才能判断一个模型（\(f\)）的好坏呢？
 </p>
 
 <div class="org-center">
 <p width="100%">
 <img src="../img/cross.png" alt="cross.png" width="100%" />
-注：上诉有一错误： <img src="ltximg/logistic-regression_18fe0bfae1de45dce6668a3d5b733d5125018e38.png" alt="logistic-regression_18fe0bfae1de45dce6668a3d5b733d5125018e38.png" />
+注：上诉有一错误： \(\hat{y}^2 = 1, \hat{y}^3 = 0\)
 </p>
 </div>
 
 <p>
-我们将原来的分类 C1, C2 分别用 <img src="ltximg/logistic-regression_e35d472a1bb008b43ac94a1d7d47d51120d244a2.png" alt="logistic-regression_e35d472a1bb008b43ac94a1d7d47d51120d244a2.png" /> , <img src="ltximg/logistic-regression_f932064cfd3ed34134a901541026c6737c9d55ee.png" alt="logistic-regression_f932064cfd3ed34134a901541026c6737c9d55ee.png" /> 表示，使用 <img src="ltximg/logistic-regression_01ba33e1329c622b737768dc82e2753b47738c22.png" alt="logistic-regression_01ba33e1329c622b737768dc82e2753b47738c22.png" /> 量化当前模型的好坏，那么对应的 w, b 应该是使得 L 函数值最大的两个量，即使得 <img src="ltximg/logistic-regression_29ada8c962fece450cf24f21ae29ac7ea442c9ec.png" alt="logistic-regression_29ada8c962fece450cf24f21ae29ac7ea442c9ec.png" /> 最小的量。
+我们将原来的分类 C1, C2 分别用 \(\hat{y} = 1\) , \(\hat{y} = 0\) 表示，使用 \(L(w, b)\) 量化当前模型的好坏，那么对应的 w, b 应该是使得 L 函数值最大的两个量，即使得 \(-lnL\) 最小的量。
 </p>
 
 <p>
-最后，可以将 <img src="ltximg/logistic-regression_29ada8c962fece450cf24f21ae29ac7ea442c9ec.png" alt="logistic-regression_29ada8c962fece450cf24f21ae29ac7ea442c9ec.png" /> 化为：
+最后，可以将 \(-lnL\) 化为：
 </p>
 <div class="org-center">
 
@@ -356,7 +391,7 @@ for the JavaScript code in this tag.
 <h3 id="org222c3d8"><span class="section-number-3">3.1</span> 数据处理</h3>
 <div class="outline-text-3" id="text-3-1">
 <ul class="org-ul">
-<li>大于 50K 的 <img src="ltximg/logistic-regression_9710039e0cddf1c9881fa0332c5dd78c741689b2.png" alt="logistic-regression_9710039e0cddf1c9881fa0332c5dd78c741689b2.png" /> 设为 1 , 小于的设为 0</li>
+<li>大于 50K 的 \(\hat{y}\) 设为 1 , 小于的设为 0</li>
 <li>剔除无用的行（首行）</li>
 <li><code>X_train_my.csv</code> 中包含所有的数据（除了最后一列，最后一列属于结果），106个特征变量</li>
 <li><code>Y_train_my.csv</code> 中包含结果值</li>
@@ -368,22 +403,22 @@ for the JavaScript code in this tag.
 <h3 id="org0c0cdb9"><span class="section-number-3">3.2</span> 建模</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
-<img src="ltximg/logistic-regression_8dc9f6d901c856a7fbfbb8b1c04233ab23de32f2.png" alt="logistic-regression_8dc9f6d901c856a7fbfbb8b1c04233ab23de32f2.png" />
+\[ y^n = \sigma \sum_{i=1}^{106} w_i x_i^n + b \]
 </p>
 
 <p>
-<img src="ltximg/logistic-regression_06efd8cfd76516f06ac13fe7339396c435dd7608.png" alt="logistic-regression_06efd8cfd76516f06ac13fe7339396c435dd7608.png" />
+\[ \sigma(z) = \frac{1}{1 + e^{-z}} \]
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">getLinear</span><span style="color: #268bd2;">(</span>arrayX, arrayW, arrayB<span style="color: #268bd2;">)</span>:
-    <span style="color: #6c71c4;">X</span> = np.dot<span style="color: #268bd2;">(</span>arrayX, arrayW<span style="color: #268bd2;">)</span> + arrayB
-    <span style="color: #859900; font-weight: bold;">return</span> X
+<pre class="src src-python">def getLinear(arrayX, arrayW, arrayB):
+    X = np.dot(arrayX, arrayW) + arrayB
+    return X
 
 
-<span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">getSigmoidValue</span><span style="color: #268bd2;">(</span>z<span style="color: #268bd2;">)</span>:
-    <span style="color: #6c71c4;">s</span> = 1 / <span style="color: #268bd2;">(</span>1.0 + np.exp<span style="color: #d33682;">(</span>-z<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
-    <span style="color: #859900; font-weight: bold;">return</span> np.clip<span style="color: #268bd2;">(</span>s, 1e-8, 1 - <span style="color: #d33682;">(</span>1e-8<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
+def getSigmoidValue(z):
+    s = 1 / (1.0 + np.exp(-z))
+    return np.clip(s, 1e-8, 1 - (1e-8))
 </pre>
 </div>
 </div>
@@ -393,13 +428,13 @@ for the JavaScript code in this tag.
 <h3 id="orgf0ccd26"><span class="section-number-3">3.3</span> 判断模型好坏的方法</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
-<img src="ltximg/logistic-regression_3aaca0d6713d2b05f0fad72a09a3c66ccbcf2fb3.png" alt="logistic-regression_3aaca0d6713d2b05f0fad72a09a3c66ccbcf2fb3.png" />
+\[ Loss = \frac{1}{n} \sum_n -[\hat{y}^nln{y(x^n)} + (1-\hat{y}^n)ln(1-y(x^n))] \]
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900; font-weight: bold;">def</span> <span style="color: #268bd2;">getCrossEntropyValue</span><span style="color: #268bd2;">(</span>s, Y<span style="color: #268bd2;">)</span>:
-    <span style="color: #6c71c4;">arrayCrossEntropy</span> = -1 * <span style="color: #268bd2;">(</span>np.dot<span style="color: #d33682;">(</span>np.transpose<span style="color: #859900;">(</span>Y<span style="color: #859900;">)</span>, np.log<span style="color: #859900;">(</span>s<span style="color: #859900;">)</span><span style="color: #d33682;">)</span> + np.dot<span style="color: #d33682;">(</span><span style="color: #859900;">(</span>1-np.transpose<span style="color: #cb4b16;">(</span>Y<span style="color: #cb4b16;">)</span><span style="color: #859900;">)</span>, np.log<span style="color: #859900;">(</span>1-s<span style="color: #859900;">)</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span> / <span style="color: #268bd2;">len</span><span style="color: #268bd2;">(</span>Y<span style="color: #268bd2;">)</span>
-    <span style="color: #859900; font-weight: bold;">return</span> arrayCrossEntropy
+<pre class="src src-python">def getCrossEntropyValue(s, Y):
+    arrayCrossEntropy = -1 * (np.dot(np.transpose(Y), np.log(s)) + np.dot((1-np.transpose(Y)), np.log(1-s))) / len(Y)
+    return arrayCrossEntropy
 </pre>
 </div>
 </div>
@@ -409,11 +444,11 @@ for the JavaScript code in this tag.
 <h3 id="org8793280"><span class="section-number-3">3.4</span> Gradient Descent 更新参数</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
-<img src="ltximg/logistic-regression_90c11b8036f1cfb6f38b90a74e3b44ba1696c823.png" alt="logistic-regression_90c11b8036f1cfb6f38b90a74e3b44ba1696c823.png" />
+\[ w_i \leftarrow w_i - \eta \sum_n - (\hat{y}^n - y^n) x_i^n \]
 </p>
 
 <p>
-<img src="ltximg/logistic-regression_0050f2da1ad7be4e504d17f0e71f0c805769d47e.png" alt="logistic-regression_0050f2da1ad7be4e504d17f0e71f0c805769d47e.png" />
+\[ b_i \leftarrow b_i -\eta \frac{1}{n} \sum_n - (\hat{y}^n - y^n \]
 </p>
 
 <p>
@@ -421,10 +456,10 @@ for the JavaScript code in this tag.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #6c71c4;">arrayGradientW</span> = -1 * np.dot<span style="color: #268bd2;">(</span>np.transpose<span style="color: #d33682;">(</span>X<span style="color: #d33682;">)</span>, <span style="color: #d33682;">(</span>np.squeeze<span style="color: #859900;">(</span>Y<span style="color: #859900;">)</span> - s<span style="color: #d33682;">)</span>.reshape<span style="color: #d33682;">(</span><span style="color: #859900;">(</span>intBatchSize,1<span style="color: #859900;">)</span><span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
-<span style="color: #6c71c4;">arrayGradientB</span> = np.mean<span style="color: #268bd2;">(</span>-1 * <span style="color: #d33682;">(</span>np.squeeze<span style="color: #859900;">(</span>Y<span style="color: #859900;">)</span> - s<span style="color: #d33682;">)</span><span style="color: #268bd2;">)</span>
-<span style="color: #6c71c4;">arrayW</span> -= floatLearnRate * np.squeeze<span style="color: #268bd2;">(</span>arrayGradientW<span style="color: #268bd2;">)</span>
-<span style="color: #6c71c4;">arrayB</span> -= floatLearnRate * arrayGradientB
+<pre class="src src-python">arrayGradientW = -1 * np.dot(np.transpose(X), (np.squeeze(Y) - s).reshape((intBatchSize,1)))
+arrayGradientB = np.mean(-1 * (np.squeeze(Y) - s))
+arrayW -= floatLearnRate * np.squeeze(arrayGradientW)
+arrayB -= floatLearnRate * arrayGradientB
 </pre>
 </div>
 </div>
@@ -432,14 +467,14 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

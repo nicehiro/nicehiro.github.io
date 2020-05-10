@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-26 四 16:53 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python 数据分析知识点总结</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -290,30 +303,30 @@ records 是一个 list，里面每个元素是一个字典 dict，pandas 的 Dat
 </p>
 
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #6c71c4;">frame</span> = DataFrame<span style="color: #268bd2;">(</span>records<span style="color: #268bd2;">)</span>
-<span style="color: #6c71c4;">tz_counts</span> = frame<span style="color: #268bd2;">[</span><span style="color: #2aa198;">'tz'</span><span style="color: #268bd2;">]</span>.valun_counts<span style="color: #268bd2;">()</span>
+<pre class="src src-python">frame = DataFrame(records)
+tz_counts = frame['tz'].valun_counts()
 
-<span style="color: #405A61;"># </span><span style="color: #405A61;">&#21487;&#20197;&#20351;&#29992; =fillna()= &#20989;&#25968;&#26367;&#25442;&#32570;&#22833;&#20540;&#12290;</span>
-<span style="color: #6c71c4;">clean_tz</span> = frame<span style="color: #268bd2;">[</span><span style="color: #2aa198;">'tz'</span><span style="color: #268bd2;">]</span>.fillna<span style="color: #268bd2;">(</span><span style="color: #2aa198;">'Missing'</span><span style="color: #268bd2;">)</span>
-<span style="color: #6c71c4;">clean_tz</span> = <span style="color: #6c71c4;">frame</span><span style="color: #268bd2;">[</span>clean_tz == <span style="color: #2aa198;">''</span><span style="color: #268bd2;">]</span> = <span style="color: #2aa198;">'Unknown'</span>
+# 可以使用 =fillna()= 函数替换缺失值。
+clean_tz = frame['tz'].fillna('Missing')
+clean_tz = frame[clean_tz == ''] = 'Unknown'
 
-<span style="color: #405A61;"># </span><span style="color: #405A61;">plot &#20989;&#25968;&#20570;&#22270;&#65292;&#20855;&#20307; api &#29992;&#21040;&#30340;&#26102;&#20505;&#20877;&#30475;&#25991;&#26723;&#65292;&#36825;&#37324; =barh= &#25351;&#22402;&#30452;&#22359;&#22270;&#65307; =rot= &#25351;&#26059;&#36716;&#12290;</span>
-tz_counts<span style="color: #268bd2;">[</span>:10<span style="color: #268bd2;">]</span>.plot<span style="color: #268bd2;">(</span>kind=<span style="color: #2aa198;">'barh'</span>, rot=0<span style="color: #268bd2;">)</span>
+# plot 函数做图，具体 api 用到的时候再看文档，这里 =barh= 指垂直块图； =rot= 指旋转。
+tz_counts[:10].plot(kind='barh', rot=0)
 
-<span style="color: #405A61;"># </span><span style="color: #405A61;">frame.a &#36820;&#22238;&#30340;&#23545;&#35937;&#26159;&#19968;&#20010; Series &#23545;&#35937;&#65292;dropna() &#36820;&#22238;&#21435;&#25481;&#20102;&#31354;&#20540;</span>
-<span style="color: #6c71c4;">results</span> = Series<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span>x.split<span style="color: #859900;">()[</span>0<span style="color: #859900;">]</span> <span style="color: #859900; font-weight: bold;">for</span> x <span style="color: #859900; font-weight: bold;">in</span> frame.a.dropna<span style="color: #859900;">()</span><span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
+# frame.a 返回的对象是一个 Series 对象，dropna() 返回去掉了空值
+results = Series([x.split()[0] for x in frame.a.dropna()])
 
-<span style="color: #405A61;"># </span><span style="color: #405A61;">return a frame &#20854;&#20013; a &#20803;&#32032;&#27809;&#26377;&#31354;&#20540;</span>
-<span style="color: #6c71c4;">cframe</span> = frame<span style="color: #268bd2;">[</span>frame.a.notnull<span style="color: #d33682;">()</span><span style="color: #268bd2;">]</span>
+# return a frame 其中 a 元素没有空值
+cframe = frame[frame.a.notnull()]
 
-<span style="color: #405A61;"># </span><span style="color: #405A61;">numpy &#30340; where &#20989;&#25968;&#65292;where(condition, true, false)&#65307;&#22914;&#26524; condition &#20026;true &#20869;&#23481;&#23601;&#21464;&#20026; true &#35774;&#32622;&#30340;&#20869;&#23481;&#65292;false &#21516;&#26679;</span>
-<span style="color: #6c71c4;">operating_system</span> = np.where<span style="color: #268bd2;">(</span>cframe<span style="color: #d33682;">[</span><span style="color: #2aa198;">'a'</span><span style="color: #d33682;">]</span>.<span style="color: #268bd2;">str</span>.contains<span style="color: #d33682;">(</span><span style="color: #2aa198;">'Windows'</span><span style="color: #d33682;">)</span>, <span style="color: #2aa198;">'Windows'</span>, <span style="color: #2aa198;">'Not Windows'</span><span style="color: #268bd2;">)</span>
+# numpy 的 where 函数，where(condition, true, false)；如果 condition 为true 内容就变为 true 设置的内容，false 同样
+operating_system = np.where(cframe['a'].str.contains('Windows'), 'Windows', 'Not Windows')
 
-<span style="color: #405A61;"># </span><span style="color: #405A61;">&#36890;&#36807; tz &#21644; operating_system &#26469;&#20998;&#32452;&#65292;&#36820;&#22238;&#32467;&#26524;&#20381;&#28982;&#26159; series&#65292;&#22810;&#20010;&#20998;&#32452;&#23545;&#35937;&#30340;&#35805;&#20250;&#24471;&#21040;&#23618;&#27425;&#21270;&#30340;&#32467;&#26524;</span>
-<span style="color: #6c71c4;">by_tz_os</span> = cframe.groupby<span style="color: #268bd2;">(</span><span style="color: #d33682;">[</span><span style="color: #2aa198;">'tz'</span>, operating_system<span style="color: #d33682;">]</span><span style="color: #268bd2;">)</span>
+# 通过 tz 和 operating_system 来分组，返回结果依然是 series，多个分组对象的话会得到层次化的结果
+by_tz_os = cframe.groupby(['tz', operating_system])
 
-<span style="color: #405A61;"># </span><span style="color: #405A61;">&#36825;&#37324;&#30340; size() &#21487;&#20197;&#26597;&#30475;&#20998;&#32452;&#21518;&#30340;&#21508;&#32452;&#22823;&#23567;</span>
-<span style="color: #6c71c4;">agg_counts</span> = by_tz_os.size<span style="color: #268bd2;">()</span>.unstack<span style="color: #268bd2;">()</span>.fillna<span style="color: #268bd2;">(</span>0<span style="color: #268bd2;">)</span>
+# 这里的 size() 可以查看分组后的各组大小
+agg_counts = by_tz_os.size().unstack().fillna(0)
 </pre>
 </div>
 </div>
@@ -591,9 +604,9 @@ applymap，类似 map，是某个函数应用到整个 Frame 中；apply 只会�
 与数据库交互：
 </p>
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900; font-weight: bold;">import</span> pandas.io.sql <span style="color: #859900; font-weight: bold;">as</span> sql
+<pre class="src src-python">import pandas.io.sql as sql
 
-sql.read_frame<span style="color: #268bd2;">(</span><span style="color: #2aa198;">'sql_query'</span>, conn<span style="color: #268bd2;">)</span>
+sql.read_frame('sql_query', conn)
 </pre>
 </div>
 
@@ -612,40 +625,40 @@ DataFrame 取多个列是，将列对象组成一个list传入
 <h2 id="org0bffe7c"><span class="section-number-2">7</span> Basemap API 解析</h2>
 <div class="outline-text-2" id="text-7">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #859900; font-weight: bold;">class</span> <span style="color: #b58900;">mpl_toolkits</span>.basemap.Basemap<span style="color: #268bd2;">(</span>llcrnrlon=<span style="color: #d33682; font-weight: bold;">None</span>, llcrnrlat=<span style="color: #d33682; font-weight: bold;">None</span>, 
-urcrnrlon=<span style="color: #d33682; font-weight: bold;">None</span>, urcrnrlat=<span style="color: #d33682; font-weight: bold;">None</span>, llcrnrx=<span style="color: #d33682; font-weight: bold;">None</span>, llcrnry=<span style="color: #d33682; font-weight: bold;">None</span>, urcrnrx=<span style="color: #d33682; font-weight: bold;">None</span>,
-urcrnry=<span style="color: #d33682; font-weight: bold;">None</span>, width=<span style="color: #d33682; font-weight: bold;">None</span>, height=<span style="color: #d33682; font-weight: bold;">None</span>, projection=<span style="color: #2aa198;">'cyl'</span>, resolution=<span style="color: #2aa198;">'c'</span>, 
-area_thresh=<span style="color: #d33682; font-weight: bold;">None</span>, rsphere=6370997.0, ellps=<span style="color: #d33682; font-weight: bold;">None</span>, lat_ts=<span style="color: #d33682; font-weight: bold;">None</span>, lat_1=<span style="color: #d33682; font-weight: bold;">None</span>, 
-lat_2=<span style="color: #d33682; font-weight: bold;">None</span>, lat_0=<span style="color: #d33682; font-weight: bold;">None</span>, lon_0=<span style="color: #d33682; font-weight: bold;">None</span>, lon_1=<span style="color: #d33682; font-weight: bold;">None</span>, lon_2=<span style="color: #d33682; font-weight: bold;">None</span>, o_lon_p=<span style="color: #d33682; font-weight: bold;">None</span>, 
-o_lat_p=<span style="color: #d33682; font-weight: bold;">None</span>, k_0=<span style="color: #d33682; font-weight: bold;">None</span>, no_rot=<span style="color: #d33682; font-weight: bold;">False</span>, suppress_ticks=<span style="color: #d33682; font-weight: bold;">True</span>, 
-satellite_height=35786000, boundinglat=<span style="color: #d33682; font-weight: bold;">None</span>, fix_aspect=<span style="color: #d33682; font-weight: bold;">True</span>, anchor=<span style="color: #2aa198;">'C'</span>, 
-celestial=<span style="color: #d33682; font-weight: bold;">False</span>, <span style="color: #268bd2;">round</span>=<span style="color: #d33682; font-weight: bold;">False</span>, epsg=<span style="color: #d33682; font-weight: bold;">None</span>, ax=<span style="color: #d33682; font-weight: bold;">None</span><span style="color: #268bd2;">)</span>
+<pre class="src src-python">class mpl_toolkits.basemap.Basemap(llcrnrlon=None, llcrnrlat=None,
+urcrnrlon=None, urcrnrlat=None, llcrnrx=None, llcrnry=None, urcrnrx=None,
+urcrnry=None, width=None, height=None, projection='cyl', resolution='c',
+area_thresh=None, rsphere=6370997.0, ellps=None, lat_ts=None, lat_1=None,
+lat_2=None, lat_0=None, lon_0=None, lon_1=None, lon_2=None, o_lon_p=None,
+o_lat_p=None, k_0=None, no_rot=False, suppress_ticks=True,
+satellite_height=35786000, boundinglat=None, fix_aspect=True, anchor='C',
+celestial=False, round=False, epsg=None, ax=None)
 
-llcrnrlon: &#25152;&#38656;&#22320;&#22270;&#22495;&#24038;&#19979;&#35282;&#30340;&#32463;&#24230;
-llcrnrlat: &#25152;&#38656;&#22320;&#22270;&#22495;&#24038;&#19979;&#35282;&#30340;&#32500;&#24230;
-urcrnrlon: &#25152;&#38656;&#22320;&#22270;&#22495;&#21491;&#19978;&#35282;&#30340;&#32463;&#24230;
-urcrnrlat: &#25152;&#38656;&#22320;&#22270;&#22495;&#21491;&#19978;&#35282;&#30340;&#32500;&#24230;
+llcrnrlon: 所需地图域左下角的经度
+llcrnrlat: 所需地图域左下角的维度
+urcrnrlon: 所需地图域右上角的经度
+urcrnrlat: 所需地图域右上角的维度
 
-width: &#25237;&#24433;&#22352;&#26631;&#20013;&#22320;&#22270;&#22495;&#30340;&#23485;&#24230;
-height: &#25237;&#24433;&#22352;&#26631;&#20013;&#22320;&#22270;&#22495;&#30340;&#39640;&#24230;
-lon_0: &#25152;&#38656;&#22320;&#22270;&#22495;&#30340;&#20013;&#24515;&#22352;&#26631;&#32463;&#24230;<span style="color: #268bd2;">&#65288;</span>&#24230;<span style="color: #268bd2;">&#65289;</span>
-lat_0: &#25152;&#38656;&#22320;&#22270;&#22495;&#30340;&#20013;&#24515;&#22352;&#26631;&#32500;&#24230;<span style="color: #268bd2;">&#65288;</span>&#24230;<span style="color: #268bd2;">&#65289;</span>
+width: 投影坐标中地图域的宽度
+height: 投影坐标中地图域的高度
+lon_0: 所需地图域的中心坐标经度（度）
+lat_0: 所需地图域的中心坐标维度（度）
 
-resolution: &#27169;&#31946;&#36824;&#26159;&#28165;&#26224;
+resolution: 模糊还是清晰
 </pre>
 </div>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

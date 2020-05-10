@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-26 四 16:53 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>高数总结</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -227,6 +240,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	displayAlign: "center",
+	displayIndent: "0em",
+
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
+});
+</script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -238,12 +273,12 @@ for the JavaScript code in this tag.
 <ol class="org-ol">
 <li>反函数可以是多值函数</li>
 <li>任意定义域对称的函数，都可以用一个奇函数和一个偶函数表示</li>
-<li><img src="ltximg/Math_3dc1e384b80e2dade199d36bdf4023329764c7a2.png" alt="Math_3dc1e384b80e2dade199d36bdf4023329764c7a2.png" /></li>
-<li><img src="ltximg/Math_f27df09feec4ad5ed163a6ea39da4fea58b6483a.png" alt="Math_f27df09feec4ad5ed163a6ea39da4fea58b6483a.png" /></li>
-<li><img src="ltximg/Math_c2d30bfeda8984a9a28b641ca1771b3cee9c033d.png" alt="Math_c2d30bfeda8984a9a28b641ca1771b3cee9c033d.png" /></li>
-<li><img src="ltximg/Math_2eac052d13bcc2cd6ea5f26e38b6e628bbc9363f.png" alt="Math_2eac052d13bcc2cd6ea5f26e38b6e628bbc9363f.png" /></li>
-<li>万能公式 <img src="ltximg/Math_bddb3a71f94c74f4f017cc88c26860d4e85f09be.png" alt="Math_bddb3a71f94c74f4f017cc88c26860d4e85f09be.png" /></li>
-<li><img src="ltximg/Math_1e091f8725bca7cc1c1a8b1c5d15b6691295f7e1.png" alt="Math_1e091f8725bca7cc1c1a8b1c5d15b6691295f7e1.png" /></li>
+<li>\(\sum_{k=1}^{n}k^2 = 1^2 + 2^2 + ... + k^2 = \frac{n(n+1)(2n+1)}{6}\)</li>
+<li>\(\sum_{k=1}^{n}k^3 = 1^3 + 2^3 + ... + k^3 = (\frac{n(n+1)}{2})^2\)</li>
+<li>\(tan(\alpha \pm \beta) = \frac{tan\alpha \pm tan\beta}{1 \mp tan\alpha tan\beta}\)</li>
+<li>\(cot(\alpha \pm \beta) = \frac{cot\alpha cot\beta \mp 1}{cot\beta \pm cot\alpha}\)</li>
+<li>万能公式 \(u = tan\frac{x}{2}\)</li>
+<li>\(a^n - b^n = (a-b)(a^{n-1} + a^{n-2}b + ... + ab^{n-2} + b^{n-1})\)</li>
 </ol>
 </div>
 </div>
@@ -251,30 +286,34 @@ for the JavaScript code in this tag.
 <h2 id="org9071383"><span class="section-number-2">2</span> 极限与连续</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
-<li>k 阶无穷小： <img src="ltximg/Math_e29fe3fa126ea6abebe2eb03e6870ca0d1aebd6e.png" alt="Math_e29fe3fa126ea6abebe2eb03e6870ca0d1aebd6e.png" /></li>
+<li>k 阶无穷小： \(\lim{\frac{\alpha(x)}{[\beta(x)]^k}} = c \neq 0\)</li>
 <li>并不是所有无穷小都可以比阶的</li>
 <li>常用等价无穷小：
-<img src="ltximg/Math_e6930fe1befef2dd835ec3f26b1df784cce1ebc6.png" alt="Math_e6930fe1befef2dd835ec3f26b1df784cce1ebc6.png" />
-<img src="ltximg/Math_5e27c9e05a99016d0be15a83d68667af7e62bd72.png" alt="Math_5e27c9e05a99016d0be15a83d68667af7e62bd72.png" /></li>
+\[
+   \alpha^x -1 \sim xln\alpha
+   \]
+\[
+   (1+x)^\alpha - 1 \sim \alpha x
+   \]</li>
 <li>洛必达法则使用条件：
 <ul class="org-ul">
-<li>原函数极限为“<img src="ltximg/Math_ba1262d62045b67ce69dd46223d22ce26db7dd4b.png" alt="Math_ba1262d62045b67ce69dd46223d22ce26db7dd4b.png" />”或“<img src="ltximg/Math_2db7c59e702d676095e62ddfb769d192c23e857c.png" alt="Math_2db7c59e702d676095e62ddfb769d192c23e857c.png" />”时，可以使用洛必达法则</li>
+<li>原函数极限为“\(\frac{0}{0}\)”或“\(\frac{\infty}{\infty}\)”时，可以使用洛必达法则</li>
 <li>如果右边（原函数的导数）存在或者无穷大</li>
 <li>右存在则左存在，而右不存在无法推出左也不存在，需要换方法解决</li>
 </ul></li>
-<li>由导数<img src="ltximg/Math_fa18114cec61257465e259a601c0136606dea608.png" alt="Math_fa18114cec61257465e259a601c0136606dea608.png" />的值的情况，不能推断出<img src="ltximg/Math_cd7e292aa73420be905c5606e69e81bccd77e801.png" alt="Math_cd7e292aa73420be905c5606e69e81bccd77e801.png" />在<img src="ltximg/Math_5d17b10d50aa90d1f5876a24512f50010a4042ae.png" alt="Math_5d17b10d50aa90d1f5876a24512f50010a4042ae.png" />处的变化形态（未告知<img src="ltximg/Math_fa18114cec61257465e259a601c0136606dea608.png" alt="Math_fa18114cec61257465e259a601c0136606dea608.png" />）是否连续，但可以由导数的定义进行分析</li>
+<li>由导数\(f'(x_0)\)的值的情况，不能推断出\(f(x_0)\)在\(x_0\)处的变化形态（未告知\(f'(x_0)\)）是否连续，但可以由导数的定义进行分析</li>
 <li>对和式进行缩放，如果有n项，那么n未主要因素，如果由有限项，那么观察最大值和最小值</li>
 <li>等价无穷小替换，乘积可以，但是加减不可以</li>
 <li>泰勒公式：
-<img src="ltximg/Math_2ff8c7769ad69aeb41b40380ffb82fdc1a15acb7.png" alt="Math_2ff8c7769ad69aeb41b40380ffb82fdc1a15acb7.png" />
-<img src="ltximg/Math_e569d25079e2085b98f8a3329a044b9d2fd6679a.png" alt="Math_e569d25079e2085b98f8a3329a044b9d2fd6679a.png" />
-<img src="ltximg/Math_0f9915bcbda86055850a190e43587b22c31d0242.png" alt="Math_0f9915bcbda86055850a190e43587b22c31d0242.png" />
-<img src="ltximg/Math_774b9e31249efde7fe8f58655f14d67cef4a7e45.png" alt="Math_774b9e31249efde7fe8f58655f14d67cef4a7e45.png" />
-<img src="ltximg/Math_86bbc1d1db7f82dc85bbfba41b4524ef049f870d.png" alt="Math_86bbc1d1db7f82dc85bbfba41b4524ef049f870d.png" />
-<img src="ltximg/Math_8536d1622fc243fdbcfa2ed48455d251e20ae44d.png" alt="Math_8536d1622fc243fdbcfa2ed48455d251e20ae44d.png" />
-<img src="ltximg/Math_9b4e4d348fb9f4a4bb1bf883dd74d0429ecacdf8.png" alt="Math_9b4e4d348fb9f4a4bb1bf883dd74d0429ecacdf8.png" />
-<img src="ltximg/Math_11bd9745a984f95c6af8f28b7971d7ea9ef33854.png" alt="Math_11bd9745a984f95c6af8f28b7971d7ea9ef33854.png" /></li>
-<li>只有 limA，limB 存在，才有： <img src="ltximg/Math_dd96733e1bf8b6454665e8d78a7405509f1eca4f.png" alt="Math_dd96733e1bf8b6454665e8d78a7405509f1eca4f.png" />.否则，要么做整体运算，要么极限不存在</li>
+\[sinx = x - \frac{x^3}{3!} + o(x^3)\]
+\[cosx = 1 - \frac{x^2}{2!} + \frac{x^4}{4!} + o(x^4)\]
+\[arcsinx = x + \frac{x^3}{3!} + o(x^3)\]
+\[tanx = x + \frac{x^3}{3} + o(x^3)\]
+\[arctanx = x - \frac{x^3}{3} + o(x^3)\]
+\[ln(1+x) = x - \frac{x^2}{2} + \frac{x^3}{3} + o(x^3)\]
+\[e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + o(x^3)\]
+\[(1+x)^a = 1 + ax + \frac{a(a-1)}{2!}x^2 + o(x^3)\]</li>
+<li>只有 limA，limB 存在，才有： \(lim(A . B) = limA . limB\).否则，要么做整体运算，要么极限不存在</li>
 </ol>
 </div>
 </div>
@@ -285,15 +324,15 @@ for the JavaScript code in this tag.
 <li>对于一元函数，可微与可导等价</li>
 <li>可导的函数不一定光滑（连续）</li>
 <li>幂指函数求导，化为指数函数</li>
-<li>符合函数求导法则中，<img src="ltximg/Math_de2c9810d98e42632f3498b395147ca7006a41d4.png" alt="Math_de2c9810d98e42632f3498b395147ca7006a41d4.png" />在点<img src="ltximg/Math_5d17b10d50aa90d1f5876a24512f50010a4042ae.png" alt="Math_5d17b10d50aa90d1f5876a24512f50010a4042ae.png" />处可导，函数<img src="ltximg/Math_df7f485dab40f72333ccd3216841386c3810ede5.png" alt="Math_df7f485dab40f72333ccd3216841386c3810ede5.png" />在点<img src="ltximg/Math_e8fccc34675cb6129209273c78d5e5e674742446.png" alt="Math_e8fccc34675cb6129209273c78d5e5e674742446.png" />处可导，是符合函数可导的充分条件，而非必要条件，前面推后面</li>
+<li>符合函数求导法则中，\(u=\varphi(x)\)在点\(x_0\)处可导，函数\(y=f(u)\)在点\(u_0=u(x_0)\)处可导，是符合函数可导的充分条件，而非必要条件，前面推后面</li>
 <li>求高阶导数，利用已有泰勒公式展开；或者先导后积或先积后导，在利用已有公式</li>
-<li>极值的充分条件：首先<img src="ltximg/Math_61b1fa74dca797c60ec7d76824e47db1eec976c3.png" alt="Math_61b1fa74dca797c60ec7d76824e47db1eec976c3.png" />
+<li>极值的充分条件：首先\(f'(x_0)=0\)
 <ul class="org-ul">
-<li><img src="ltximg/Math_0cb96bb066b6f7b2c459cdfc419ad560608deeac.png" alt="Math_0cb96bb066b6f7b2c459cdfc419ad560608deeac.png" />在<img src="ltximg/Math_eeed0e472050938e30048112d4212ef03c4eea2f.png" alt="Math_eeed0e472050938e30048112d4212ef03c4eea2f.png" />处左右异号</li>
-<li><img src="ltximg/Math_b83ef7795740084173d7fceb7c712448f569b1c5.png" alt="Math_b83ef7795740084173d7fceb7c712448f569b1c5.png" /></li>
+<li>\(f'(x)\)在\(x=x_0\)处左右异号</li>
+<li>\(f''(x_0) \neq 0\)</li>
 <li>偶数次高阶导数为0</li>
 </ul></li>
-<li>凹凸性的其他定义： 满足<img src="ltximg/Math_fb9527d523f9798f1dcfc216fdaf660a133bfcf9.png" alt="Math_fb9527d523f9798f1dcfc216fdaf660a133bfcf9.png" />的函数为凸函数</li>
+<li>凹凸性的其他定义： 满足\(f[\lambda x_1+(1-\lambda)x_2] \geq \lambda f(x_1) + (1+\lambda)f(x_2)\)的函数为凸函数</li>
 </ol>
 </div>
 </div>
@@ -307,14 +346,14 @@ for the JavaScript code in this tag.
 <li>拉格朗日中值定理 闭区间连续，开区间可导，导数与边界值有关</li>
 <li>柯西中值定理 两个函数的拉格朗日中值定理</li>
 <li>技巧 题目中出现几级导数，就使用几级的介值定理</li>
-<li>技巧 <img src="ltximg/Math_a89f9ffdc1cf4fe9aa3f2143673029f1245fabfd.png" alt="Math_a89f9ffdc1cf4fe9aa3f2143673029f1245fabfd.png" /> 构造辅助函数<img src="ltximg/Math_aca35a842352ad8ef373d0aefc74f90582c41031.png" alt="Math_aca35a842352ad8ef373d0aefc74f90582c41031.png" /></li>
+<li>技巧 \(f'(\xi) + g(\xi)f(\xi) = 0\) 构造辅助函数\(F(x) = f(x)e^{\int g(x)dt}\)</li>
 <li>技巧 涉及高阶导数，考虑使用泰勒公式</li>
 <li>技巧 没有思路时，考虑使用泰勒公式</li>
 <li>技巧 同阶导数相减，考虑导数定义</li>
-<li><img src="ltximg/Math_e7ea2dc3174e3d1a169a6950c244f63ac1c84f18.png" alt="Math_e7ea2dc3174e3d1a169a6950c244f63ac1c84f18.png" />最多只有一个实零点，那么<img src="ltximg/Math_2c8b0b8893d9014f1e2d536dad8e9b419afa2375.png" alt="Math_2c8b0b8893d9014f1e2d536dad8e9b419afa2375.png" />最多只有n个不同的零点</li>
+<li>\(f^{(n-1)}(x)\)最多只有一个实零点，那么\(f(x)\)最多只有n个不同的零点</li>
 <li>实系数奇次多项式至少有一个实零点</li>
 <li>多项式有r重根的必要条件是：前r阶导数都为0</li>
-<li><img src="ltximg/Math_d3094af36d8a5763bd525e5355d9d81d3ca680db.png" alt="Math_d3094af36d8a5763bd525e5355d9d81d3ca680db.png" /></li>
+<li>\[\sqrt{ab} \leq \frac{a+b}{2} \leq \sqrt{\frac{a^2+b^2}{2}}\]</li>
 </ol>
 </div>
 </div>
@@ -325,34 +364,34 @@ for the JavaScript code in this tag.
 <li>原函数（不定积分）存在定理：连续函数必有原函数；含有第一类间断点、无穷间断点的函数必无原函数；含有震荡间断点的可能有原函数</li>
 <li>定积分存在的必要条件：积分区间有限；被积函数有界</li>
 <li>积分收敛并不能推出无穷大的极限为0</li>
-<li>把<img src="ltximg/Math_a5fa9185fa30b6ef8c4092697e9419eef557de4f.png" alt="Math_a5fa9185fa30b6ef8c4092697e9419eef557de4f.png" />和使得函数无意义的点（瑕点）统称为积点</li>
+<li>把\(\infty\)和使得函数无意义的点（瑕点）统称为积点</li>
 <li>分部积分方法的推广方法（不容易出错）：
 <a href="file:///home/hiro/Pictures/DSC_0052.JPG">斯托柯克公式</a></li>
 <li>有理函数的积分：
-<img src="ltximg/Math_f66cfbbb6bef0b775994da1b23422749e6e50a06.png" alt="Math_f66cfbbb6bef0b775994da1b23422749e6e50a06.png" /></li>
+\[\frac{1}{(ax+b)^k} = \frac{A_1}{ax+b} + \frac{A_2}{(ax+b)^2} + \frac{A_3}{(ax+b)^3} + ... + \frac{A_k}{(ax+b)^k}\]</li>
 <li>常见积分：
-<img src="ltximg/Math_f6c6b13edd5b0992a6d95566fa28b587ebc2ade5.png" alt="Math_f6c6b13edd5b0992a6d95566fa28b587ebc2ade5.png" />
-<img src="ltximg/Math_d7dd555d16db15192f694d825ef5de39eb5410c0.png" alt="Math_d7dd555d16db15192f694d825ef5de39eb5410c0.png" />
-<img src="ltximg/Math_b0ceb071876d0f310fca5ff6b23edfd795ebe0cb.png" alt="Math_b0ceb071876d0f310fca5ff6b23edfd795ebe0cb.png" />
-<img src="ltximg/Math_86cd9761da7564aadd6355b9668ac0656a5ab55a.png" alt="Math_86cd9761da7564aadd6355b9668ac0656a5ab55a.png" />
-<img src="ltximg/Math_066e5bae706d79bc113ee0135094c2ace547558d.png" alt="Math_066e5bae706d79bc113ee0135094c2ace547558d.png" />
-<img src="ltximg/Math_98feb1dc0b37de214c866c24257abd0fa6f0f851.png" alt="Math_98feb1dc0b37de214c866c24257abd0fa6f0f851.png" /></li>
-<li>定积分表达函数的平均值：<img src="ltximg/Math_64f73e1867b912d4462f57c8ed62c199a3365ac9.png" alt="Math_64f73e1867b912d4462f57c8ed62c199a3365ac9.png" /></li>
+\[\int \frac{1}{1+x^2} dx = arctanx + c\]
+\[\int \frac{1}{\sqrt{(x^2-b^2)}} dx = ln(x+\sqrt{(x^2-b^2)} + c)\]
+\[\int \frac{1}{\sqrt{1+x^2}} = ln(x+\sqrt{1+x^2}) + c\]
+\[\int \frac{1}{1-x^2} = 1/2\int {\frac{1}{1+x} + \frac{1}{1-x}} dx\]
+\[\int \frac{1}{sinx} dx = \int cscx dx = ln|cscx - cotx| + c\]
+\[\int \frac{1}{cosx} dx = \int secx dx = ln|secx + tanx| + c\]</li>
+<li>定积分表达函数的平均值：\(\frac{1}{b-a} \int_a^b y(x) dx\)</li>
 <li>技巧：利用导数为0，确定函数的值为定值</li>
-<li>定积分计算平面图形的面积：<img src="ltximg/Math_54eb67ee88db56a03e9d1277ba786b20f767eb6c.png" alt="Math_54eb67ee88db56a03e9d1277ba786b20f767eb6c.png" /></li>
+<li>定积分计算平面图形的面积：\[S = \frac{1}{2} \int_\alpha^\beta |r_1^2(\theta)-r_2^2(\theta)| d\theta\]</li>
 <li>曲率公式：
-<img src="ltximg/Math_3dbea809064f5efd84c9a1a48f255b20b6563c8d.png" alt="Math_3dbea809064f5efd84c9a1a48f255b20b6563c8d.png" />
-<img src="ltximg/Math_3fd3bdf351129a4e0f89c38de73631ad239b3d74.png" alt="Math_3fd3bdf351129a4e0f89c38de73631ad239b3d74.png" />，其中：
-<img src="ltximg/Math_42854ef0b3fbb91f951f9e5933828e5100f19f7b.png" alt="Math_42854ef0b3fbb91f951f9e5933828e5100f19f7b.png" />
-<img src="ltximg/Math_bdaff619ba93670c39fd772b8d279727476fe02e.png" alt="Math_bdaff619ba93670c39fd772b8d279727476fe02e.png" /></li>
-<li>抽水做功：<img src="ltximg/Math_5f50605b49ac409fe9082e9132d7c03e1da4f326.png" alt="Math_5f50605b49ac409fe9082e9132d7c03e1da4f326.png" /></li>
-<li>旋转曲面的面积：<img src="ltximg/Math_29ff1e80481843ff5f159b9bdd1f4b6e9849afe1.png" alt="Math_29ff1e80481843ff5f159b9bdd1f4b6e9849afe1.png" /></li>
+\[k = \frac{|y''|}{(1+y'^2)^{\frac{3}{2}}}\]
+\[(X-a)^2 + (Y-b)^2 = R^2\]，其中：
+\[a = x - \frac{y'(1+y'^2)}{y''}\]
+\[b = y + \frac{1+y'^2}{y''}\]</li>
+<li>抽水做功：\(W = \int_a^b dw = \int_a^b \rho A(x) dx g x = \rho g \int_a^b xA(x) dx\)</li>
+<li>旋转曲面的面积：\(S = 2\pi \int_a^b|y(x)| \sqrt{1+(y'(x))^2} dx\)</li>
 <li>傅里叶级数
 <ul class="org-ul">
 <li>周期函数可以由一个序列的正弦型函数叠加得到</li>
-<li>函数的区间在<img src="ltximg/Math_8b735e8e68f50c985e481bf3cbd8901bdde211df.png" alt="Math_8b735e8e68f50c985e481bf3cbd8901bdde211df.png" />，<img src="ltximg/Math_c956ead65aedb8d48200d08734f5b4902525b45b.png" alt="Math_c956ead65aedb8d48200d08734f5b4902525b45b.png" />，其中，<img src="ltximg/Math_96ce2c93caad9729d4f9d97c7208cd0cbc80cbf3.png" alt="Math_96ce2c93caad9729d4f9d97c7208cd0cbc80cbf3.png" />，<img src="ltximg/Math_b17af541dcf847193b1669bad7de6abbc9085e18.png" alt="Math_b17af541dcf847193b1669bad7de6abbc9085e18.png" />，<img src="ltximg/Math_6e760977c17c8678e3ef9851587e2ea120347d77.png" alt="Math_6e760977c17c8678e3ef9851587e2ea120347d77.png" /></li>
-<li>x 为连续点，<img src="ltximg/Math_5feb8a77e2218a1d53becf281a054a48f3199e70.png" alt="Math_5feb8a77e2218a1d53becf281a054a48f3199e70.png" />；x 为间断点，<img src="ltximg/Math_9b4404165a4c32c3faeac7b39921c28de01ffa81.png" alt="Math_9b4404165a4c32c3faeac7b39921c28de01ffa81.png" />；<img src="ltximg/Math_837db82c5916daa70e800086c04ffdbf24e1328f.png" alt="Math_837db82c5916daa70e800086c04ffdbf24e1328f.png" />，<img src="ltximg/Math_7c2e3375b27bc906620f90e5bbbb76331e87c15c.png" alt="Math_7c2e3375b27bc906620f90e5bbbb76331e87c15c.png" /></li>
-<li>推广到任意区间<img src="ltximg/Math_d49403c90eb61eff8441d9932149cdcc3318b914.png" alt="Math_d49403c90eb61eff8441d9932149cdcc3318b914.png" />，使用变换<img src="ltximg/Math_ad71f9c44b0c776d834a283074f6786c230e0c9a.png" alt="Math_ad71f9c44b0c776d834a283074f6786c230e0c9a.png" />，分别计算系数</li>
+<li>函数的区间在\([-\pi, \pi]\)，\(f(x) = \frac{a_0}{2} + \sum_{n=1}^{\infty} (a_ncosnx + b_nsinnx)\)，其中，\(a_0 = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x) dx\)，\(a_n = \frac{1}{\pi} \int_{-\pi}^{\pi} f(x)cosnx dx\)，\(b_n = \frac{1}{\pi}\int_{-\pi}^{pi} f(x)sinnx dx\)</li>
+<li>x 为连续点，\(S(x) = f(x)\)；x 为间断点，\(\frac{f(x-0)+f(x+0)}{2}\)；\(x = \pm \pi\)，\(S(x) = \frac{f(-\pi + 0) + f(\pi - 0)}{2}\)</li>
+<li>推广到任意区间\([-l, l]\)，使用变换\(x=\frac{l}{\pi}t\)，分别计算系数</li>
 </ul></li>
 </ol>
 </div>
@@ -361,11 +400,11 @@ for the JavaScript code in this tag.
 <h2 id="org37d58b7"><span class="section-number-2">6</span> 多元函数微分</h2>
 <div class="outline-text-2" id="text-6">
 <ol class="org-ol">
-<li>连续性 <img src="ltximg/Math_ecb9ef4bb56cf6aedb43e5abdbba5141abb74d20.png" alt="Math_ecb9ef4bb56cf6aedb43e5abdbba5141abb74d20.png" /></li>
+<li>连续性 \(\lim\limits_{x \rightarrow x_0, y \rightarrow x_0} = f(x_0, y_0)\)</li>
 <li>偏导是否存在 使用定义证明</li>
 <li>偏导是否连续 使用定义求的偏导是否和公式求的偏导值相同</li>
-<li>是否可微 <img src="ltximg/Math_f71cf4f61352a8403319ce6ed974247b0635ff8b.png" alt="Math_f71cf4f61352a8403319ce6ed974247b0635ff8b.png" /></li>
-<li>隐函数存在定理： <img src="ltximg/Math_f43fec549e4392577da9080d26484a6ff356c418.png" alt="Math_f43fec549e4392577da9080d26484a6ff356c418.png" />, <img src="ltximg/Math_214b1bb8cc21903d0bbf955a2d56da2d3fc62d98.png" alt="Math_214b1bb8cc21903d0bbf955a2d56da2d3fc62d98.png" /> 不为0</li>
+<li>是否可微 \(\lim\limits_{\Delta x \rightarrow 0, \Delta y \rightarrow 0} \frac{\Delta z - (A\Delta x - B\Delta y)}{\sqrt{(\Delta x)^2 + (\Delta y)^2}}\)</li>
+<li>隐函数存在定理： \(\frac{dy}{dx} = - \frac{F'_x}{F'_y}\), \(F'_y\) 不为0</li>
 </ol>
 </div>
 </div>
@@ -376,7 +415,7 @@ for the JavaScript code in this tag.
 <li>数量积为0，垂直</li>
 <li>向量积为0，平行</li>
 <li>三向量共面，组成的行列式秩为0</li>
-<li>平面束方程：<img src="ltximg/Math_958fed23a0be98d6a6c159a2a80693d1a553440e.png" alt="Math_958fed23a0be98d6a6c159a2a80693d1a553440e.png" />，使用时需要验证第二个平面是否满足条件</li>
+<li>平面束方程：\(A_1x + B_1y + C_1z + D_1 + \lambda(A_2x + B_2y + C_2z + D_2) = 0\)，使用时需要验证第二个平面是否满足条件</li>
 </ol>
 </div>
 </div>
@@ -390,64 +429,64 @@ for the JavaScript code in this tag.
 <li>三重积分的计算方法：
 <ul class="org-ul">
 <li>直角坐标系下对体积积分</li>
-<li>柱面坐标系下积分 <img src="ltximg/Math_047f43796fe6d5d7fe051feb57b8360603ca4044.png" alt="Math_047f43796fe6d5d7fe051feb57b8360603ca4044.png" /></li>
-<li>球面坐标系下积分 <img src="ltximg/Math_09503bffa5b5cb41d8b2aa231b4bbf8e12515c37.png" alt="Math_09503bffa5b5cb41d8b2aa231b4bbf8e12515c37.png" /></li>
+<li>柱面坐标系下积分 \(r^2 = x^2 + y^2\)</li>
+<li>球面坐标系下积分 \(r^2 = x^2 + y^2 + z^2\)</li>
 </ul></li>
-<li>技巧 对称性，<img src="ltximg/Math_d847dc3bc9f3c89256b3b330f813933f3538da9f.png" alt="Math_d847dc3bc9f3c89256b3b330f813933f3538da9f.png" />对称，<img src="ltximg/Math_5b8554c5dbc54ea3327269071683793dfdf5e8f0.png" alt="Math_5b8554c5dbc54ea3327269071683793dfdf5e8f0.png" />奇函数，为0</li>
+<li>技巧 对称性，\(\Omega\)对称，\(f\)奇函数，为0</li>
 <li>第一型曲线积分的几何背景是空间曲线的质量
 <ul class="org-ul">
 <li>计算时候可以将曲线带入</li>
 <li>第一型曲线积分计算时候都是化为一元定积分</li>
 <li>基本计算方法：化为参数式计算</li>
-<li>二维第一型曲线积分的其他计算方法：<img src="ltximg/Math_cdf012caa18bb20ae1ba0567a168e23124024a9e.png" alt="Math_cdf012caa18bb20ae1ba0567a168e23124024a9e.png" /></li>
+<li>二维第一型曲线积分的其他计算方法：\(\int_L f(x,y) ds = \int_a^b f[x, y(x)]\sqrt{1+(y'(x))^2} dx\)</li>
 </ul></li>
 <li>第一型曲面积分的几何背景是空间曲面的质量
 <ul class="org-ul">
 <li>计算时可以将曲面方程代入</li>
 <li>第一型曲面积分计算时候都是化作二元定积分</li>
-<li>基本计算方法：<img src="ltximg/Math_9778f28642ab951bb3577294c130cfab5d5c915c.png" alt="Math_9778f28642ab951bb3577294c130cfab5d5c915c.png" /></li>
+<li>基本计算方法：\(\iint_\Omega f(x,y,z) dS = \iint_{D_xy} f(x,y,z(x,y)) \sqrt{1+(z'(x))^2+(z'(y))^2} dxdy\)</li>
 <li>投影不能重合</li>
 </ul></li>
 <li>几何意义计算：
 <ul class="org-ul">
-<li>重心 <img src="ltximg/Math_af71e8223c7ed07c667b657d0365236672221861.png" alt="Math_af71e8223c7ed07c667b657d0365236672221861.png" /></li>
-<li>转动惯量 <img src="ltximg/Math_bc4f2b713ab316fd3f021b231a8a2bd156813617.png" alt="Math_bc4f2b713ab316fd3f021b231a8a2bd156813617.png" /></li>
-<li>引力 <img src="ltximg/Math_33be1be94d279f3b2f1aa160782cc5aed747b760.png" alt="Math_33be1be94d279f3b2f1aa160782cc5aed747b760.png" /></li>
+<li>重心 \(\overline{x} = \frac{\oint_D x\rho ds}{\oint \rho ds} ds\)</li>
+<li>转动惯量 \(I_x = \oint_{\Omega} (y^2+x^2) \rho dv\)</li>
+<li>引力 \(F_x = Gm \oint_D \frac{\rho (x-x_0)}{[(x-x_0)^2+(y-y_0)^2+(z-z_0)^2]^{\frac{3}{2}}} ds\)</li>
 </ul></li>
 <li>第二型曲线积分的几何背景是变力沿曲线做功等于变力在不同方向上的分力分别做功
 <ul class="org-ul">
 <li>参数方程法，化为一元定积分</li>
-<li>格林公式法 <img src="ltximg/Math_2e86fca0c20f0c0fccf73546555e9f6d6ac3c17d.png" alt="Math_2e86fca0c20f0c0fccf73546555e9f6d6ac3c17d.png" />
+<li>格林公式法 \(\oint_L P(x,y)dx + Q(x,y)dy = \iint_D(\frac{\partial Q}{\partial x} - \frac{\partial P}{\partial y} ds)\)
 <ul class="org-ul">
 <li>化为二重积分</li>
 <li>闭合曲线，曲线上无没有定义的点；左手在L围成的D内为正</li>
 </ul></li>
 <li>平面上曲线积分与积分区域无关
 <ul class="org-ul">
-<li>普通区域内（非单连通区域），<img src="ltximg/Math_67616e21f37dac680de36b3f68dcd5d1b14541b8.png" alt="Math_67616e21f37dac680de36b3f68dcd5d1b14541b8.png" /> 与积分区域无关</li>
-<li>单连通区域，<img src="ltximg/Math_c6c5fd446247de26fe179bddf71bae83f93f53ce.png" alt="Math_c6c5fd446247de26fe179bddf71bae83f93f53ce.png" /> 与积分区域无关</li>
+<li>普通区域内（非单连通区域），\(\oint_L Pdx + Qdy = 0 \leftrightarrow\) 与积分区域无关</li>
+<li>单连通区域，\(\oint_L Pdx + Qdy = 0 \leftrightarrow \frac{\partial Q}{\partial x} = \frac{\partial P}{\partial y} \) 与积分区域无关</li>
 <li>闭合区域与曲线积分要区分</li>
 </ul></li>
 </ul></li>
 <li>第二型曲面积分的几何背景是穿过曲面的向量场的通量
 <ul class="org-ul">
 <li>特殊的对称性 曲面积分内的函数为偶函数时，通量为0（联系向量场通量的物理意义）</li>
-<li>基础性计算方法 投影法 <img src="ltximg/Math_9031a3d0540ac117511792b8de0be741896491a9.png" alt="Math_9031a3d0540ac117511792b8de0be741896491a9.png" />
+<li>基础性计算方法 投影法 \(\iint_{\Sigma} P(x,y,z) dxdy = \iint_{D_{xy}} P(x,y,z(x,y)) dxdy\)
 <ul class="org-ul">
-<li>物理意义 向量场穿过<img src="ltximg/Math_7a6ade4b274e341e2caa7878d8c2408e642f3bd7.png" alt="Math_7a6ade4b274e341e2caa7878d8c2408e642f3bd7.png" />平面的通量 = 向量场在 xy 平面上的分量穿过的通量</li>
+<li>物理意义 向量场穿过\(D_{xy}\)平面的通量 = 向量场在 xy 平面上的分量穿过的通量</li>
 <li>可以将曲面方程代入计算</li>
-<li><img src="ltximg/Math_95355685b3b631ea98285c2e5701673aaa1ab702.png" alt="Math_95355685b3b631ea98285c2e5701673aaa1ab702.png" />方向为上侧取正</li>
+<li>\(\Sigma\)方向为上侧取正</li>
 <li>投影不能重合</li>
 </ul></li>
-<li>高斯公式 <img src="ltximg/Math_9e0c2788ea21e88f9ede7e08d505b86d99e11485.png" alt="Math_9e0c2788ea21e88f9ede7e08d505b86d99e11485.png" />
+<li>高斯公式 \(\iint_{\Sigma} Pdydz + Qdxdz + Rdxdy = \iiint_{\Omega} (\frac{\partial P}{\partial x} + \frac{\partial Q}{\partial y} + \frac{\partial R}{\partial z}) dv = \iint_{\Omega} (Pcos\alpha + Qcos\beta + Rcos\gamma) dS\)
 <ul class="org-ul">
 <li>第一型曲面积分和第二型曲面积分之间的关系</li>
 </ul></li>
 </ul></li>
 <li>空间第二型曲线积分计算 斯托克斯公式 &#x2013;图片&#x2013;</li>
-<li>梯度 <img src="ltximg/Math_0afeeea5cf78609fb3ab78f08508482f654a492f.png" alt="Math_0afeeea5cf78609fb3ab78f08508482f654a492f.png" /></li>
-<li>散度 <img src="ltximg/Math_5939d5b9ad121eb3fb64792cb8f771a4b1d36c6f.png" alt="Math_5939d5b9ad121eb3fb64792cb8f771a4b1d36c6f.png" /></li>
-<li>旋度 <img src="ltximg/Math_0e1aac3c83b99683e3df5541efd0760db7d5ded8.png" alt="Math_0e1aac3c83b99683e3df5541efd0760db7d5ded8.png" /></li>
+<li>梯度 \(grad u = (\frac{\partial u}{x}, \frac{\partial u}{y}, \frac{\partial u}{z})\)</li>
+<li>散度 \(div A = \frac{\partial P}{x}+\frac{\partial Q}{y}+\frac{\partial R}{z}\)</li>
+<li>旋度 \(rot A = 叉乘\)</li>
 </ol>
 </div>
 </div>
@@ -459,8 +498,8 @@ for the JavaScript code in this tag.
 <li>正向级数判别方法：
 <ul class="org-ul">
 <li>比较判别 两个正向级数，大的收敛则小的也收敛；小的发散则大的也发散</li>
-<li>比值判别 <img src="ltximg/Math_78d816cd13df7ef4176309c685f07ca035c4beec.png" alt="Math_78d816cd13df7ef4176309c685f07ca035c4beec.png" />，<img src="ltximg/Math_61a42454e9278fb1f3b1ed021dfddd9d0f3581eb.png" alt="Math_61a42454e9278fb1f3b1ed021dfddd9d0f3581eb.png" />小于1时收敛</li>
-<li>根植判别 <img src="ltximg/Math_93dfea46830af59a53cb73667408b7bf6b1a8aee.png" alt="Math_93dfea46830af59a53cb73667408b7bf6b1a8aee.png" />，<img src="ltximg/Math_61a42454e9278fb1f3b1ed021dfddd9d0f3581eb.png" alt="Math_61a42454e9278fb1f3b1ed021dfddd9d0f3581eb.png" />小于1时收敛</li>
+<li>比值判别 \(\lim\limits_{u \rightarrow \infty} \frac{u_{n+1}}{u_n} = \rho\)，\(\rho\)小于1时收敛</li>
+<li>根植判别 \(\lim\limits_{u \rightarrow \infty} \sqrt[n]{u_n} = \rho\)，\(\rho\)小于1时收敛</li>
 </ul></li>
 <li>交错级数判别 单调不增 无穷大处趋于0</li>
 <li>阿贝尔定理（幂级数收敛半径）</li>
@@ -468,17 +507,17 @@ for the JavaScript code in this tag.
 <li>求导或者积分后，收敛半径不变，收敛域可能减小或变大</li>
 <li>常见幂级数展开式：
 <ul class="org-ul">
-<li><img src="ltximg/Math_ecd2f5cbe61612d3c3c2668140c503784465308a.png" alt="Math_ecd2f5cbe61612d3c3c2668140c503784465308a.png" /></li>
-<li><img src="ltximg/Math_34a9708faf4fc38c8d43ced355412861a90040cf.png" alt="Math_34a9708faf4fc38c8d43ced355412861a90040cf.png" /></li>
-<li><img src="ltximg/Math_2206831327eb503d2090adec11e912a11601f5a6.png" alt="Math_2206831327eb503d2090adec11e912a11601f5a6.png" /></li>
-<li><img src="ltximg/Math_c9175f3d2f27cb9c3d85a82e338000744ba30d70.png" alt="Math_c9175f3d2f27cb9c3d85a82e338000744ba30d70.png" /></li>
-<li><img src="ltximg/Math_96b99d99a993f3e1fb05db98c746049415d941ef.png" alt="Math_96b99d99a993f3e1fb05db98c746049415d941ef.png" /></li>
-<li><img src="ltximg/Math_235bd403de3b092389570c76aa980e1fd44d700b.png" alt="Math_235bd403de3b092389570c76aa980e1fd44d700b.png" /></li>
-<li><img src="ltximg/Math_5d4defcf5823df20cacc3f49c9cf57d4d53c8d3c.png" alt="Math_5d4defcf5823df20cacc3f49c9cf57d4d53c8d3c.png" />
+<li>\(e^x = 1 + x + \frac{x^2}{2!} + ... = \sum\limits_{n=0}^{\infty} \frac{x^n}{n!}\)</li>
+<li>\(\frac{1}{x+1} = 1-x+x^2-... = \sum\limits_{n=0}^{\infty} (-1)^nx^n\)</li>
+<li>\(\frac{1}{1-x} = 1+x+x^2+... = \sum\limits_{n=0}^{\infty} x^n\)</li>
+<li>\(ln(1+x) = x - \frac{x^2}{2}+\frac{x^3}{3}-... = \sum\limits_{n=1}{\infty} \frac{x^n}{N}\)</li>
+<li>\(sinx = x - \frac{x^3}{3!} + ... = \sum\limits_{n=0}^{\infty} (-1)^n \frac{x^{2n+1}}{(2n+1)!}\)</li>
+<li>\(cosx = \sum\limits_{n=0}^{\infty} (-1)^n \frac{x^{2n}}{(2n)!}\)</li>
+<li>\((1+x)^{\alpha} = 1 + \alpha x + \frac{\alpha(\alpha-1)}{2!}x^2 + ... + \frac{\alpha(\alpha-1)...(\alpha-n+1)}{n!}x^n\)
 <ul class="org-ul">
-<li><img src="ltximg/Math_851eb53bc74c2ffc38baa2dcbe8b58869fd31944.png" alt="Math_851eb53bc74c2ffc38baa2dcbe8b58869fd31944.png" /></li>
-<li><img src="ltximg/Math_45adfc411f5cce69feb0a0f0cfb3aa7afb9190c8.png" alt="Math_45adfc411f5cce69feb0a0f0cfb3aa7afb9190c8.png" /></li>
-<li><img src="ltximg/Math_8bd75dc0f63dce4f4c315bdda432d0467c4c7f4d.png" alt="Math_8bd75dc0f63dce4f4c315bdda432d0467c4c7f4d.png" /></li>
+<li>\(\alpha \leq -1, x \in (-1,1)\)</li>
+<li>\(-1 < \alpha < 0, x \in (-1,1]\)</li>
+<li>\(\alpha > 0, x \in [-1, 1]\)</li>
 </ul></li>
 </ul></li>
 <li>正向级数只谈收敛与发散，没有绝对收敛与条件收敛之分</li>
@@ -489,9 +528,9 @@ for the JavaScript code in this tag.
 <h2 id="orgf3cd5c0"><span class="section-number-2">10</span> 常微分方程</h2>
 <div class="outline-text-2" id="text-10">
 <ol class="org-ol">
-<li>一阶线性微分方程求解 形如<img src="ltximg/Math_f6684bdc0fd548bdc660ddeab5668fe8e3699597.png" alt="Math_f6684bdc0fd548bdc660ddeab5668fe8e3699597.png" />的方程，<img src="ltximg/Math_9a252adb8d23bc519f18bb98c58dc66d1cc3a074.png" alt="Math_9a252adb8d23bc519f18bb98c58dc66d1cc3a074.png" /></li>
-<li>伯努利方程 形如<img src="ltximg/Math_5e99558c9e2471868872b8f9c9c9aaa01c84a914.png" alt="Math_5e99558c9e2471868872b8f9c9c9aaa01c84a914.png" />的方程，化为上个方程的形式</li>
-<li>二阶常系数齐次线性微分方程，形如<img src="ltximg/Math_9cecaa583c7dd8e4641f657c5bbe80b6af9fdbac.png" alt="Math_9cecaa583c7dd8e4641f657c5bbe80b6af9fdbac.png" /></li>
+<li>一阶线性微分方程求解 形如\(y' + p(x)y = q(x)\)的方程，\(y=e^{-\int p(x)dx}[\int e^{\int p(x)dx}q(x)dx + C]\)</li>
+<li>伯努利方程 形如\(y' + p(x)y = q(x)y^{n}\)的方程，化为上个方程的形式</li>
+<li>二阶常系数齐次线性微分方程，形如\(y'' + p(x)y' + q(x)y = 0\)</li>
 <li>二阶常系数非齐次线性微分方程特解 &#x2013;图片&#x2013;</li>
 </ol>
 </div>
@@ -507,14 +546,14 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

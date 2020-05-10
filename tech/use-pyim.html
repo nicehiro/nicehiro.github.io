@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-07-25 四 10:59 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Emacs 使用 pyim ＋ rime ＋ double flypy 打字</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -244,23 +257,23 @@ for the JavaScript code in this tag.
 现在使用 pyim ＋ rime ＋ double flypy 可以解决上面提出的所有问题。
 </p>
 
-<div id="outline-container-org11b0d8d" class="outline-2">
-<h2 id="org11b0d8d"><span class="section-number-2">1</span> Install</h2>
+<div id="outline-container-org49d40bd" class="outline-2">
+<h2 id="org49d40bd"><span class="section-number-2">1</span> Install</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org838a4ac" class="outline-3">
-<h3 id="org838a4ac"><span class="section-number-3">1.1</span> liberime</h3>
+<div id="outline-container-orgb4751b5" class="outline-3">
+<h3 id="orgb4751b5"><span class="section-number-3">1.1</span> liberime</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 参考 <a href="https://gitlab.com/liberime/liberime">liberime README</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"># linux &#31995;&#32534;&#35793;&#30456;&#23545;&#31616;&#21333;
+<pre class="src src-elisp"># linux 系编译相对简单
 git clone https://gitlab.com/liberime/liberime.git
 cd liberime
-# &#25552;&#21069;&#23433;&#35013;&#24517;&#35201;&#30340;&#24320;&#21457;&#24037;&#20855; cmake librime
+# 提前安装必要的开发工具 cmake librime
 make liberime
-# &#32534;&#35793;&#22909;&#30340;&#25991;&#20214;&#20250;&#20445;&#23384;&#21040; build/ &#25991;&#20214;&#22841;&#19979;
+# 编译好的文件会保存到 build/ 文件夹下
 </pre>
 </div>
 
@@ -269,48 +282,48 @@ make liberime
 </p>
 
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq</span> load-path <span style="color: #97365B;">(</span>cons <span style="color: #4F894C;">(</span>file-truename <span style="color: #4F894C;">"~/.emacs.d/pyim/rime/"</span><span style="color: #4F894C;">)</span> load-path<span style="color: #97365B;">)</span><span style="color: #3B6EA8;">)</span>
-<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">require</span> <span style="color: #3B6EA8;">'</span><span style="color: #97365B;">liberime</span><span style="color: #3B6EA8;">)</span>
-# /usr/share/rime-data &#20026; librime &#20849;&#20139;&#25991;&#20214;&#22841;&#30340;&#30446;&#24405;&#20301;&#32622;
-# &#35814;&#24773;&#21487;&#20197;&#35265; https://github.com/rime/home/wiki/SharedData
-<span style="color: #3B6EA8;">(</span>liberime-start <span style="color: #4F894C;">"/usr/share/rime-data"</span> <span style="color: #97365B;">(</span>file-truename <span style="color: #4F894C;">"~/.emacs.d/pyim/rime/"</span><span style="color: #97365B;">)</span><span style="color: #3B6EA8;">)</span>
+<pre class="src src-elisp">(setq load-path (cons (file-truename "~/.emacs.d/pyim/rime/") load-path))
+(require 'liberime)
+# /usr/share/rime-data 为 librime 共享文件夹的目录位置
+# 详情可以见 https://github.com/rime/home/wiki/SharedData
+(liberime-start "/usr/share/rime-data" (file-truename "~/.emacs.d/pyim/rime/"))
 
-# &#26816;&#26597;&#23433;&#35013;&#26159;&#21542;&#23433;&#35013;&#25104;&#21151;
-# &#27492;&#21629;&#20196;&#20250;&#36820;&#22238;&#24403;&#21069;&#37197;&#32622;&#30340; rime &#36755;&#20837;&#26041;&#26696;
-<span style="color: #3B6EA8;">(</span>liberime-get-schema-list<span style="color: #3B6EA8;">)</span>
+# 检查安装是否安装成功
+# 此命令会返回当前配置的 rime 输入方案
+(liberime-get-schema-list)
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org6c06593" class="outline-3">
-<h3 id="org6c06593"><span class="section-number-3">1.2</span> pyim</h3>
+<div id="outline-container-orga8f1ac2" class="outline-3">
+<h3 id="orga8f1ac2"><span class="section-number-3">1.2</span> pyim</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 参考 <a href="https://github.com/tumashu/pyim#org5ac927f">pyim 文档</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"># &#20174; melpa &#25110;&#32773;&#19979;&#36733; repo &#25163;&#21160;&#23433;&#35013;
-<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">require</span> <span style="color: #3B6EA8;">'</span><span style="color: #97365B;">pyim</span><span style="color: #3B6EA8;">)</span>
-<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq</span> default-input-method <span style="color: #4F894C;">"pyim"</span><span style="color: #3B6EA8;">)</span>
-# &#24314;&#35758;&#20351;&#29992; posframe &#20316;&#20026;&#36755;&#20837;&#27861;&#20505;&#36873;&#35789;&#24377;&#26694;
-<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq</span> pyim-page-tooltip <span style="color: #3B6EA8;">'</span><span style="color: #9A7500;">posframe</span><span style="color: #3B6EA8;">)</span>
-# &#35774;&#32622; rime &#37197;&#32622;&#26041;&#26696;
-<span style="color: #3B6EA8;">(</span>liberime-select-schema <span style="color: #4F894C;">"luna_pinyin_simp"</span><span style="color: #3B6EA8;">)</span>
-# &#20351;&#29992; rime &#20570;&#21518;&#31471;
-<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq</span> pyim-default-scheme <span style="color: #3B6EA8;">'</span><span style="color: #9A7500;">rime</span><span style="color: #3B6EA8;">)</span>
+<pre class="src src-elisp"># 从 melpa 或者下载 repo 手动安装
+(require 'pyim)
+(setq default-input-method "pyim")
+# 建议使用 posframe 作为输入法候选词弹框
+(setq pyim-page-tooltip 'posframe)
+# 设置 rime 配置方案
+(liberime-select-schema "luna_pinyin_simp")
+# 使用 rime 做后端
+(setq pyim-default-scheme 'rime)
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org671b2d7" class="outline-2">
-<h2 id="org671b2d7"><span class="section-number-2">2</span> 个性化</h2>
+<div id="outline-container-org23cd488" class="outline-2">
+<h2 id="org23cd488"><span class="section-number-2">2</span> 个性化</h2>
 <div class="outline-text-2" id="text-2">
 </div>
-<div id="outline-container-orga1c0e76" class="outline-3">
-<h3 id="orga1c0e76"><span class="section-number-3">2.1</span> 使用双拼或者其他 rime 配置方案</h3>
+<div id="outline-container-orgd2e01a4" class="outline-3">
+<h3 id="orgd2e01a4"><span class="section-number-3">2.1</span> 使用双拼或者其他 rime 配置方案</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 liberime 自带 5 种配置方案，小鹤双拼需要另外添加。Arch 系安装 librime 的时候会将很多常见的配置方案添加到 SharedData 中：
@@ -332,12 +345,12 @@ liberime 自带 5 种配置方案，小鹤双拼需要另外添加。Arch 系安
 创建 <code>~/.emacs.d/pyim/rime/default.custom.yaml</code> 文件，添加配置：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #842879;">patch</span>:
-     <span style="color: #4F894C;">"menu/page_size"</span>: 100
-     <span style="color: #4F894C;">"speller/auto_select"</span>: <span style="color: #97365B;">false</span>
-     <span style="color: #4F894C;">"speller/auto_select_unique_candidate"</span>: <span style="color: #97365B;">false</span>
-     <span style="color: #842879;">schema_list</span>:
-       - <span style="color: #842879;">schema</span>: double_pinyin_flypy
+<pre class="src src-yaml">patch:
+     "menu/page_size": 100
+     "speller/auto_select": false
+     "speller/auto_select_unique_candidate": false
+     schema_list:
+       - schema: double_pinyin_flypy
 </pre>
 </div>
 
@@ -345,7 +358,7 @@ liberime 自带 5 种配置方案，小鹤双拼需要另外添加。Arch 系安
 将 liberime 的配置设为 小鹤双拼：
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #3B6EA8;">(</span>liberime-select-schema <span style="color: #4F894C;">"double_pinyin_flypy"</span><span style="color: #3B6EA8;">)</span>
+<pre class="src src-elisp">(liberime-select-schema "double_pinyin_flypy")
 </pre>
 </div>
 
@@ -355,57 +368,57 @@ liberime 自带 5 种配置方案，小鹤双拼需要另外添加。Arch 系安
 </div>
 </div>
 
-<div id="outline-container-org7c534ac" class="outline-3">
-<h3 id="org7c534ac"><span class="section-number-3">2.2</span> 繁体 -&gt; 简体</h3>
+<div id="outline-container-org122c8e9" class="outline-3">
+<h3 id="org122c8e9"><span class="section-number-3">2.2</span> 繁体 -&gt; 简体</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 在 <code>~/.emacs.d/pyim/rime/build/</code> 文件夹中会又许多配置文件，找到 <code>double_pinyin_flypy.schema</code> ,添加：
 </p>
 <div class="org-src-container">
-<pre class="src src-yaml"><span style="color: #842879;">switches</span>:
-  - <span style="color: #842879;">name</span>: ascii_mode
-    <span style="color: #842879;">reset</span>: 0
-    <span style="color: #842879;">states</span>: [<span style="color: #4F894C;">"&#20013;&#25991;"</span>, <span style="color: #4F894C;">"&#35199;&#25991;"</span>]
-  - <span style="color: #842879;">name</span>: full_shape
-    <span style="color: #842879;">states</span>: [<span style="color: #4F894C;">"&#21322;&#35282;"</span>, <span style="color: #4F894C;">"&#20840;&#35282;"</span>]
-  - <span style="color: #842879;">name</span>: simplification
-    <span style="color: #842879;">reset</span>: 1
-    <span style="color: #842879;">states</span>: [<span style="color: #4F894C;">"&#28450;&#23383;"</span>, <span style="color: #4F894C;">"&#27721;&#23383;"</span>]
-  - <span style="color: #842879;">name</span>: ascii_punct
-    <span style="color: #842879;">states</span>: [<span style="color: #4F894C;">"&#12290;&#65292;"</span>, <span style="color: #4F894C;">"&#65294;&#65292;"</span>]
+<pre class="src src-yaml">switches:
+  - name: ascii_mode
+    reset: 0
+    states: ["中文", "西文"]
+  - name: full_shape
+    states: ["半角", "全角"]
+  - name: simplification
+    reset: 1
+    states: ["漢字", "汉字"]
+  - name: ascii_punct
+    states: ["。，", "．，"]
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb9f2399" class="outline-3">
-<h3 id="orgb9f2399"><span class="section-number-3">2.3</span> 中英文无痛切换</h3>
+<div id="outline-container-orgbe3f47e" class="outline-3">
+<h3 id="orgbe3f47e"><span class="section-number-3">2.3</span> 中英文无痛切换</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 参考 <a href="https://github.com/tumashu/pyim">pyim README</a>
 </p>
 <div class="org-src-container">
-<pre class="src src-elisp"><span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">require</span> <span style="color: #3B6EA8;">'</span><span style="color: #97365B;">pyim-basedict</span><span style="color: #3B6EA8;">)</span>
-<span style="color: #3B6EA8;">(</span>pyim-basedict-enable<span style="color: #3B6EA8;">)</span>
-<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">Auto switch input me;; &#35774;&#32622; pyim &#25506;&#38024;&#35774;&#32622;&#65292;&#36825;&#26159; pyim &#39640;&#32423;&#21151;&#33021;&#35774;&#32622;&#65292;&#21487;&#20197;&#23454;&#29616; *&#26080;&#30171;* &#20013;&#33521;&#25991;&#20999;&#25442; :-)</span>
-<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">&#25105;&#33258;&#24049;&#20351;&#29992;&#30340;&#20013;&#33521;&#25991;&#21160;&#24577;&#20999;&#25442;&#35268;&#21017;&#26159;&#65306;</span>
-<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">1. &#20809;&#26631;&#21482;&#26377;&#22312;&#27880;&#37322;&#37324;&#38754;&#26102;&#65292;&#25165;&#21487;&#20197;&#36755;&#20837;&#20013;&#25991;&#12290;</span>
-<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">2. &#20809;&#26631;&#21069;&#26159;&#27721;&#23383;&#23383;&#31526;&#26102;&#65292;&#25165;&#33021;&#36755;&#20837;&#20013;&#25991;&#12290;</span>
-<span style="color: #8b94a5;">;; </span><span style="color: #8b94a5;">3. &#20351;&#29992; M-j &#24555;&#25463;&#38190;&#65292;&#24378;&#21046;&#23558;&#20809;&#26631;&#21069;&#30340;&#25340;&#38899;&#23383;&#31526;&#20018;&#36716;&#25442;&#20026;&#20013;&#25991;&#12290;</span>
-<span style="color: #3B6EA8;">(</span><span style="color: #3B6EA8;">setq-default</span> pyim-english-input-switch-functions
-              <span style="color: #3B6EA8;">'</span><span style="color: #97365B;">(</span>pyim-probe-dynamic-english
-                pyim-probe-isearch-mode
-                pyim-probe-program-mode
-                pyim-probe-org-structure-template<span style="color: #97365B;">)</span><span style="color: #3B6EA8;">)</span>
-<span style="color: #3B6EA8;">(</span>pyim-isearch-mode 1<span style="color: #3B6EA8;">)</span>
-<span style="color: #3B6EA8;">(</span>global-set-key <span style="color: #97365B;">(</span>kbd <span style="color: #4F894C;">"M-j"</span><span style="color: #97365B;">)</span> <span style="color: #3B6EA8;">'</span><span style="color: #9A7500;">pyim-convert-string-at-point</span><span style="color: #3B6EA8;">)</span>
+<pre class="src src-elisp">(require 'pyim-basedict)
+(pyim-basedict-enable)
+;; Auto switch input me;; 设置 pyim 探针设置，这是 pyim 高级功能设置，可以实现 *无痛* 中英文切换 :-)
+;; 我自己使用的中英文动态切换规则是：
+;; 1. 光标只有在注释里面时，才可以输入中文。
+;; 2. 光标前是汉字字符时，才能输入中文。
+;; 3. 使用 M-j 快捷键，强制将光标前的拼音字符串转换为中文。
+(setq-default pyim-english-input-switch-functions
+	      '(pyim-probe-dynamic-english
+		pyim-probe-isearch-mode
+		pyim-probe-program-mode
+		pyim-probe-org-structure-template))
+(pyim-isearch-mode 1)
+(global-set-key (kbd "M-j") 'pyim-convert-string-at-point)
 </pre>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org2de96e9" class="outline-2">
-<h2 id="org2de96e9"><span class="section-number-2">3</span> 使用</h2>
+<div id="outline-container-org17fb153" class="outline-2">
+<h2 id="org17fb153"><span class="section-number-2">3</span> 使用</h2>
 <div class="outline-text-2" id="text-3">
 
 <div class="figure">
@@ -416,14 +429,14 @@ liberime 自带 5 种配置方案，小鹤双拼需要另外添加。Arch 系安
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-07-25 四 10:59. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

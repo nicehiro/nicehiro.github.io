@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-05-10 日 10:19 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>理解 LSTM 网络</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+	     margin-bottom: .2em; }
+  .subtitle { text-align: center;
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+	    padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	displayAlign: "center",
+	displayIndent: "0em",
+
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
+});
+</script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">理解 LSTM 网络</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org1d69247">1. 递归神经网络</a></li>
+<li><a href="#org1aa3bef">2. 长期依赖带来的问题</a></li>
+<li><a href="#orgd2fcf52">3. LSTM 网络</a></li>
+<li><a href="#org3c679e2">4. LSTMs 终极奥义</a></li>
+<li><a href="#org5d219db">5. 手把手教你理解 LSTM</a></li>
+<li><a href="#org887c294">6. LSTM 的变体</a></li>
+</ul>
+</div>
+</div>
+<p>
+本文翻译自 <a href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">Understanding LSTM Networks</a>
+</p>
+
+<div id="outline-container-org1d69247" class="outline-2">
+<h2 id="org1d69247"><span class="section-number-2">1</span> 递归神经网络</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+人类不会每次都从零来开始思考一个问题。正如你现在在阅读这篇文章时，你所理解的每个单词都将基于你已有的知识，你不需要从零基础来学习这篇文章。也就是说，人类的想法是有永久性的。
+</p>
+
+<p>
+但传统的神经网络是无法做到这点的，这一直以来就是个大问题。比如说，如何根据一部电影某个时刻的影片，来判断这个时刻发生了什么事。使用传统的神经网络是无法解决这个问题的。
+</p>
+
+<p>
+递归神经网络可以解决这类问题。它的网络结构是无限循环的，允许永久的保存之前的信息。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/RNN-rolled.png" alt="RNN-rolled.png" width="20%" />
+</p>
+<p><span class="figure-number">Figure 1: </span>Recurrent Neural Networks have loops</p>
+</div>
+</div>
+
+<p>
+上图中展示了一个循环的神经网络。 \(A\) 是神经网络的内层，输入 \(x_t\) 输出 \(h_t\) 。其输出还通过循环作为下一时刻的输入。
+</p>
+
+<p>
+上诉的循环可能会让你觉得递归神经网络有点神秘，但其实它一点也不。它无非就是多个相同的网络连接在了一起，每个神经网络把自己处理的信息传递到下一个神经网络。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/RNN-unrolled.png" alt="RNN-unrolled.png" width="80%" />
+</p>
+<p><span class="figure-number">Figure 2: </span>递归神经网络展开</p>
+</div>
+</div>
+
+<p>
+这种链式的神经网络揭示了递归神经网络的原理。过去这些年里，RNN 应用在各种各样的问题中，并且取得了不错的效果，例如：语音识别，语言建模，翻译，图像标注等。尤其是使用 LSTM 神经元的 RNN，其效果要比标准版的 RNN 好的多。几乎所有现在的递归神经网络结构都是基于 LSTM 的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org1aa3bef" class="outline-2">
+<h2 id="org1aa3bef"><span class="section-number-2">2</span> 长期依赖带来的问题</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+RNN 的一大亮点就是，它可以将之前的信息联系到当前的任务中，比如，利用前几帧的画面来分析当前的画面。
+</p>
+
+<p>
+有时，我们只需要当前时刻的信息表征当前时刻的任务。例如，一个语言模型试图基于当前输入的词汇预测下一个要输入的词汇。如果我们试图要去预测“the clouds are in the sky.”，则不需要任何进一步的上下文——很明显，下一个词将是“sky”。在这种情况下，相关信息和所需的信息之间的距离很小， RNN 可以学习使用过去的信息。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/RNN-shorttermdepdencies.png" alt="RNN-shorttermdepdencies.png" width="80%" />
+</p>
+</div>
+</div>
+
+<p>
+但在很多情况下，我们还是需要更多的上下文信息。例如，我们试图去预测“I grew up in France&#x2026; I speak fluent French.”。当前的信息表明下一个单词可能是一种语言的名称，但我们仅仅依据当前句子，无法知道这种语言的名称，我们需要“France”这个上下文信息。相关信息和所需要的信息之间的距离变得很大了。
+</p>
+
+<p>
+不幸的是，随着二者之间距离的变大，RNNs 不再适合学习这种信息。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/RNN-longtermdependencies.png" alt="RNN-longtermdependencies.png" width="80%" />
+</p>
+</div>
+</div>
+
+<p>
+从理论上讲，RNN 绝对有能力处理这种“长期依赖关系”。人们可以为简单的问题仔细挑选合适的参数来解决这个问题。但是在实践中，RNN 几乎无法学习下去。<a href="http://people.idsia.ch/~juergen/SeppHochreiter1991ThesisAdvisorSchmidhuber.pdf">这篇文章</a>解释了为什么普通的 RNN 无法学习长期依赖关系的问题。
+</p>
+
+<p>
+幸运的是，LSTM 没有这个问题。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd2fcf52" class="outline-2">
+<h2 id="orgd2fcf52"><span class="section-number-2">3</span> LSTM 网络</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Long Short Term Memory networks —— 通常被称为“LSTMs” —— 是一种特殊的 RNN 网络，擅长学习“长期依赖关系”的问题。
+</p>
+
+<p>
+LSTMs 设计的初衷就是为了解决“长期依赖关系”造成普通 RNN 无法有效训练这一问题的。所以，长时间记住信息正是 LSTM 擅长的功能，而非是 LSTM 很难去实现的。
+</p>
+
+<p>
+每种 RNN 都有一个相同形式的链式网络结构。在标准 RNNs 中，其重复的网络结构非常简单：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-SimpleRNN.png" alt="LSTM3-SimpleRNN.png" width="80%" />
+</p>
+<p><span class="figure-number">Figure 5: </span>标准 RNN 中重复的网络结构</p>
+</div>
+</div>
+
+<p>
+LSTMs 也有一个相同形式的链式网络结构，但是它的网络结构要相对复杂。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-chain.png" alt="LSTM3-chain.png" width="80%" />
+</p>
+<p><span class="figure-number">Figure 6: </span>LSTM 中重复的网络结构</p>
+</div>
+</div>
+
+<p>
+别急，接下来我们会一步一步解释 LSTM 网络的结构。现在，先来了解一下图片中符号的意思吧：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM2-notation.png" alt="LSTM2-notation.png" width="80%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3c679e2" class="outline-2">
+<h2 id="org3c679e2"><span class="section-number-2">4</span> LSTMs 终极奥义</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+我们可以将 LSTM 看作是一个特殊的神经元。LSTM 最重要的是它的神经元状态（其实就是 LSTM 存储的记忆信息），那条贯穿图的顶部的线。
+</p>
+
+<p>
+此神经元的状态有点像传送带，它沿着链条一直直线延伸，只有一些较小的线性相互作用。信息不加改变的流动非常容易。
+</p>
+
+<p>
+LSTM 确实有向神经元添加或者删除信息的能力，这些功能由称为“门”的结构来管控。
+</p>
+
+<p>
+门是一种选择性让信息通过的方式。它们由 Sigmod 函数和矩阵乘法组成。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-gate.png" alt="LSTM3-gate.png" width="20%" />
+</p>
+</div>
+</div>
+
+<p>
+Sigmoid 层输出范围为 0 到 1，用来表示某个输入有多少可以通过这个门。0 表示任何信息都不能通过，1 表示所有信息都可以通过。
+</p>
+
+<p>
+一个 LSTM 神经元有三个门结构，用来控制神经元中的状态。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org5d219db" class="outline-2">
+<h2 id="org5d219db"><span class="section-number-2">5</span> 手把手教你理解 LSTM</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+第一步，我们需要理解在 LSTM 中那些信息需要被“遗忘”。这一决定在 LSTM 中由“forget gate （遗忘门）”来决定。此门以 \(h_{t-1}\) 和 \(x_t\) 作为输入，输出介于 0 和 1 之间。1 表示之前的信息完全采用（完全记忆），0 表示之前的信息完全不被采用。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-focus-f.png" alt="LSTM3-focus-f.png" width="80%" />
+</p>
+</div>
+</div>
+
+<p>
+下一步我们将要决定我们应该往神经元中存什么信息。首先，决定存入信息的多少是由“input gate （输入门）”决定的，之后输入的信息 \(\tilde{C_t}\) 通过一个 tanh 层输出得到。我们要存入的信息就是由上诉二者相乘的结果。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-focus-i.png" alt="LSTM3-focus-i.png" width="80%" />
+</p>
+</div>
+</div>
+
+<p>
+是时候去更新一下神经元状态（记忆）了。将上一时刻的状态 \(C_{t-1}\) 和 \(f_t\) 相乘，这就决定了我们要遗忘多少记忆。然后将 \(i_t\) 和 \(\tilde{C_t}\) 相乘，这决定了我们要记住多少新信息。将新旧信息相加，就是当前时刻的神经元状态了 \(C_t\) 。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-focus-C.png" alt="LSTM3-focus-C.png" width="80%" />
+</p>
+</div>
+</div>
+
+<p>
+最后，我们需要决定应该输出什么。这个输入将会在神经元状态的基础上，加以约束之后的结果。首先，决定应该输出多少信息是由“output gate （输出门）”决定的。然后，将神经元状态通过 tanh 层过滤，与输出门相乘，得到应该输出的结果。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-focus-o.png" alt="LSTM3-focus-o.png" width="80%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org887c294" class="outline-2">
+<h2 id="org887c294"><span class="section-number-2">6</span> LSTM 的变体</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+之前描述的是最普通的 LSTM。但不是所有 LSTMs 都是一样的。几乎每篇文章都有用到一个略有改动的 LSTM。
+</p>
+
+<p>
+一个比较有名的变体是将神经元状态也当作 LSTM 的输入，称为“peephole connections”。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-var-peepholes.png" alt="LSTM3-var-peepholes.png" width="80%" />
+</p>
+</div>
+</div>
+
+<p>
+另一个变体是使用耦合的 forget gate 和 input gate。计算 \(C_t\) 时是同时作的决定（遗忘多少旧信息，记住多少新信息）。只会在需要记忆某些新信息时才忘记一些旧信息，只在需要忘记一些旧信息时才去记忆相应数量的新信息。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-var-tied.png" alt="LSTM3-var-tied.png" width="80%" />
+</p>
+</div>
+</div>
+
+<p>
+由 Cho 等人介绍的门控循环单元 GRU 是另一种 LSTM 变体。它将 forget gate 和 input gate 合并作为一个 update gate，合并了神经元状态和输出结果，生成的模型要比标准 LSTM 更简单，并且也变得越来越流行。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/understanding-lstm/LSTM3-var-GRU.png" alt="LSTM3-var-GRU.png" width="80%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="postamble">Last Updated 2020-05-10 日 10:17. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
+</div>
+</body>
+</html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2019-05-23 四 23:52 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>操作系统</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -229,33 +242,33 @@ for the JavaScript code in this tag.
 </script>
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
-        displayAlign: "center",
-        displayIndent: "0em",
+	displayAlign: "center",
+	displayIndent: "0em",
 
-        "HTML-CSS": { scale: 100,
-                        linebreaks: { automatic: "false" },
-                        webFont: "TeX"
-                       },
-        SVG: {scale: 100,
-              linebreaks: { automatic: "false" },
-              font: "TeX"},
-        NativeMML: {scale: 100},
-        TeX: { equationNumbers: {autoNumber: "AMS"},
-               MultLineWidth: "85%",
-               TagSide: "right",
-               TagIndent: ".8em"
-             }
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
 });
 </script>
 <script type="text/javascript"
-        src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">操作系统</h1>
 
-<div id="outline-container-org17225d3" class="outline-2">
-<h2 id="org17225d3"><span class="section-number-2">1</span> 操作系统综述</h2>
+<div id="outline-container-org7e93223" class="outline-2">
+<h2 id="org7e93223"><span class="section-number-2">1</span> 操作系统综述</h2>
 <div class="outline-text-2" id="text-1">
 <ol class="org-ol">
 <li>操作系统 控制计算机系统软硬件集合的系统，是计算机中最基本的系统软件</li>
@@ -280,8 +293,8 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-org89c8389" class="outline-2">
-<h2 id="org89c8389"><span class="section-number-2">2</span> 进程管理</h2>
+<div id="outline-container-orgdd1f220" class="outline-2">
+<h2 id="orgdd1f220"><span class="section-number-2">2</span> 进程管理</h2>
 <div class="outline-text-2" id="text-2">
 <ol class="org-ol">
 <li>进程 描述和控制进程的并发执行；进程控制块（PCB） 配置一个进程的专门的数据结构；进程映像 由PCB，程序段，相关数据段构成的</li>
@@ -361,8 +374,8 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-org7c41977" class="outline-2">
-<h2 id="org7c41977"><span class="section-number-2">3</span> 内存管理</h2>
+<div id="outline-container-orgad1c4cd" class="outline-2">
+<h2 id="orgad1c4cd"><span class="section-number-2">3</span> 内存管理</h2>
 <div class="outline-text-2" id="text-3">
 <ol class="org-ol">
 <li>创建进程需要将程序和数据装入内存，将源程序变成可在内存中执行的程序，需要通过编译、连接、装入（内存）
@@ -431,8 +444,8 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-org33aadc9" class="outline-2">
-<h2 id="org33aadc9"><span class="section-number-2">4</span> 文件管理</h2>
+<div id="outline-container-orga509c9e" class="outline-2">
+<h2 id="orga509c9e"><span class="section-number-2">4</span> 文件管理</h2>
 <div class="outline-text-2" id="text-4">
 <ol class="org-ol">
 <li>文件的基本操作 创建、查找、删除、写、读、截断（将文件长度直接设为0）</li>
@@ -499,8 +512,8 @@ for the JavaScript code in this tag.
 </ol>
 </div>
 </div>
-<div id="outline-container-orga3bc709" class="outline-2">
-<h2 id="orga3bc709"><span class="section-number-2">5</span> 输入输出</h2>
+<div id="outline-container-org70cd19e" class="outline-2">
+<h2 id="org70cd19e"><span class="section-number-2">5</span> 输入输出</h2>
 <div class="outline-text-2" id="text-5">
 <ol class="org-ol">
 <li>I/O设备分类
@@ -553,14 +566,14 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2019-05-23 四 23:02. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-29 日 16:01 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>置信空间策略优化</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -227,6 +240,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	displayAlign: "center",
+	displayIndent: "0em",
+
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
+});
+</script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -241,8 +276,9 @@ for the JavaScript code in this tag.
 <li><a href="#org27414dd">4. Optimization of Parameterized Policies</a></li>
 <li><a href="#org6d5f61f">5. Sample-Based Estimation of the Objective and Constraint</a>
 <ul>
-<li><a href="#org396344d">5.1. Single Path</a></li>
-<li><a href="#orgcd0582e">5.2. Vine</a></li>
+<li><a href="#org50cc560">5.1. Importance Sampling</a></li>
+<li><a href="#org396344d">5.2. Single Path</a></li>
+<li><a href="#orgcd0582e">5.3. Vine</a></li>
 </ul>
 </li>
 <li><a href="#org65273eb">6. Practical Algorithm</a></li>
@@ -273,106 +309,115 @@ for the JavaScript code in this tag.
 <h2 id="org874c685"><span class="section-number-2">2</span> Preliminaries</h2>
 <div class="outline-text-2" id="text-2">
 <ul class="org-ul">
-<li>MDP, <img src="ltximg/TRPO_434841b7310f804efbc12540e74bbabf161b5914.png" alt="TRPO_434841b7310f804efbc12540e74bbabf161b5914.png" /></li>
-<li><img src="ltximg/TRPO_9b5f170f5cf1a3edbe521911abe3ca7195066d0f.png" alt="TRPO_9b5f170f5cf1a3edbe521911abe3ca7195066d0f.png" />：随机策略</li>
-<li><img src="ltximg/TRPO_a4c97006454980f0175ebd5e5657c685004bf06a.png" alt="TRPO_a4c97006454980f0175ebd5e5657c685004bf06a.png" /></li>
-<li><img src="ltximg/TRPO_41e061d93739a2d281fa6a28e0c1730e45d6f06a.png" alt="TRPO_41e061d93739a2d281fa6a28e0c1730e45d6f06a.png" /></li>
-<li><img src="ltximg/TRPO_6cc1f1a739c2ccccdfd3135657fbd78a4db5f85e.png" alt="TRPO_6cc1f1a739c2ccccdfd3135657fbd78a4db5f85e.png" /></li>
-<li><img src="ltximg/TRPO_c54ea9361b6448a5e78ea032bb2fc88a5b59bf2a.png" alt="TRPO_c54ea9361b6448a5e78ea032bb2fc88a5b59bf2a.png" /></li>
+<li>MDP, \((\mathcal{S}, \mathcal{A}, \mathcal{P}, r, \rho_0, \gamma)\)</li>
+<li>\(\pi\)：随机策略</li>
+<li>\(\eta(\pi) = \mathbb{E}_{s_0, a_0, \cdots}[\sum_{t=0}^{\infty}\gamma^tr(s_t)]\)</li>
+<li>\(Q_{\pi}(s_t, a_t) = \mathbb{E}_{s_{t+1}, a_{t+1}, \cdots} [\sum_{l=0}^{\infty}\gamma^{l} r(s_{t+1}]\)</li>
+<li>\(V_{\pi}(s_t) = \mathbb{E}_{a_t, s_{t+1}, \cdots}[\sum_{l=0}^{\infty}\gamma^lr(s_{t+1})]\)</li>
+<li>\(A_{\pi}(s_t) = Q_{\pi}(s,a) - V_{\pi}(s)\)</li>
 </ul>
 
 <p>
 优势函数的定义为：
 </p>
 
-<p>
-<img src="ltximg/TRPO_8ed407f8e2e93e0265c8fd9fb21b9f91ebb1979f.png" alt="TRPO_8ed407f8e2e93e0265c8fd9fb21b9f91ebb1979f.png" />
-</p>
+\begin{equation*}
+A_{\pi}(s, a) = \mathbb{E}_{s^{\prime} \sim P(s^{\prime} | s,a)}[r(s) + \gamma V_{\pi}(s^{\prime}) - V_{\pi}(s)]
+\end{equation*}
 
 <p>
 下一个策略的期望回报与当前策略的期望回报之间的关系为：
 </p>
 
 <p>
-<img src="ltximg/TRPO_d6d3e86f44cd59e0274b0283196e0a8485a9da18.png" alt="TRPO_d6d3e86f44cd59e0274b0283196e0a8485a9da18.png" />
+\[\eta(\tilde{\pi}) = \eta(\pi) + \mathbb{E}_{s_0, a_0, \cdots \sim \tilde{\pi}} [\sum_{t=0}^{\infty}\gamma^t A_{\pi}(s_t, a_t)]\]
 </p>
 
 <p>
-式<img src="ltximg/TRPO_03e2809b5235187d3ba7b29bf321b4e2d14f026c.png" alt="TRPO_03e2809b5235187d3ba7b29bf321b4e2d14f026c.png" />中<img src="ltximg/TRPO_245f82596ce3295463bae300fda4c0ddd1ba6310.png" alt="TRPO_245f82596ce3295463bae300fda4c0ddd1ba6310.png" />
+式\(\mathbb{E}_{s_0, a_0, \cdots \sim \tilde{\pi}}\)中\(a_t \sim \tilde{\pi}(\cdot \mid s_t)\)
 </p>
 
 <p>
 依据下式更新策略：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_f77dcfa53a08e4f44d31db9860bce05061814750.png" alt="TRPO_f77dcfa53a08e4f44d31db9860bce05061814750.png" /></p>
-</div>
+\begin{equation*}
+\tilde{\pi}(s) = \arg \max A_{\pi}(s, a)
+\end{equation*}
 <p>
-当所有<img src="ltximg/TRPO_daae6e51f68a7e98a05d05870da61f10121314ae.png" alt="TRPO_daae6e51f68a7e98a05d05870da61f10121314ae.png" />下可能到达的状态<img src="ltximg/TRPO_b9c9828b17f3e99387f93e520cfdf055cf2f4d51.png" alt="TRPO_b9c9828b17f3e99387f93e520cfdf055cf2f4d51.png" />，以及它所可能采取的动作<img src="ltximg/TRPO_e0a25d921ec1a7af4c5cebe7a10edc1ebe430ec3.png" alt="TRPO_e0a25d921ec1a7af4c5cebe7a10edc1ebe430ec3.png" />都不再使得<img src="ltximg/TRPO_56d581cc6ca5922b4c1f6855e98a99f80e49a0a2.png" alt="TRPO_56d581cc6ca5922b4c1f6855e98a99f80e49a0a2.png" />，说明收敛到了最有策略。
+当所有\(\tilde{\pi}\)下可能到达的状态\(s\)，以及它所可能采取的动作\(a\)都不再使得\(A_{\pi} \geq 0\)，说明收敛到了最优策略。
 </p>
 
 <p>
 证明：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_7bc527f0005592c48d0cefacc2acd24ead6a55d8.png" alt="TRPO_7bc527f0005592c48d0cefacc2acd24ead6a55d8.png" /></p>
-</div>
+\begin{equation*}
+\begin{split}
+&\mathbb{E}_{\tau \sim \tilde{\pi}}[\sum_{t=0}^{\infty}\gamma^t A_{\pi}(s_t, a_t)]\\
+&= \mathbb{E}_{\tau \sim \tilde{\pi}}[\sum_{t=0}^{\infty}\gamma^t (r(s_t) + \gamma V_{\pi}(s_{t+1}) - V_{\pi}(s_t))]\\
+&= \mathbb{E}_{\tau \sim \tilde{\pi}}[- V_{\pi}(s_0) +  \sum_{t=0}^{\infty}\gamma^t r(s_t)]\\
+&= - \mathbb{E}_{s_0}[V_{\pi}(s_0)] + \mathbb{E}_{r \mid \tilde{\pi}}[\sum_{t=0}^{\infty}\gamma^t r(s_t)]\\
+&= -\eta(\pi) + \eta(\tilde{\eta})
+\end{split}
+\end{equation*}
 
 <p>
-令<img src="ltximg/TRPO_e04d41126fecd20f0694ccc5ddb75f29416004f8.png" alt="TRPO_e04d41126fecd20f0694ccc5ddb75f29416004f8.png" />，表示在策略<img src="ltximg/TRPO_9b5f170f5cf1a3edbe521911abe3ca7195066d0f.png" alt="TRPO_9b5f170f5cf1a3edbe521911abe3ca7195066d0f.png" />下带有折扣因子的访问到状态<img src="ltximg/TRPO_b9c9828b17f3e99387f93e520cfdf055cf2f4d51.png" alt="TRPO_b9c9828b17f3e99387f93e520cfdf055cf2f4d51.png" />的概率。我们可以将上述等式写为：
+令\(\rho_{\pi}(s) = P(s_0=s) + \gamma P(s_1 = s) + \gamma^2 P(s_2 = s) + ...\)，表示在策略\(\pi\)下带有折扣因子的访问到状态\(s\)的概率。我们可以将上述等式写为：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_8dca2868aa22ef0f44979219504effe6b4f5e62d.png" alt="TRPO_8dca2868aa22ef0f44979219504effe6b4f5e62d.png" /></p>
-</div>
+\begin{equation*}
+\begin{split}
+\eta(\tilde{\pi}) &= \eta(\pi) + \sum_{t=0}^{\infty}\sum_{s} P(s_t = s \mid \tilde{\pi}) \sum_{a}\tilde{\pi}(a \mid s) \gamma^t A_{\pi}(s, a)\\
+&= \eta(\pi) + \sum_{s}\sum_{t=0}^{\infty} \gamma^t P(s_t=s\mid \tilde{\pi})\sum_a \tilde{\pi}(a\mid s)A_{\pi}(s, a)\\
+&= \eta(\pi) + \sum_s\rho_{\tilde{\pi}}(s) \sum_a \tilde{\pi}(a\mid s)A_{\pi}(s,a)
+\end{split}
+\end{equation*}
 
 <p>
-对于一个改进的策略<img src="ltximg/TRPO_daae6e51f68a7e98a05d05870da61f10121314ae.png" alt="TRPO_daae6e51f68a7e98a05d05870da61f10121314ae.png" />，如果满足<img src="ltximg/TRPO_edc38a2c400219eee7c9bc735a03e8e86cb1c9ca.png" alt="TRPO_edc38a2c400219eee7c9bc735a03e8e86cb1c9ca.png" />，就可以确保改进的策略表现不会比之前的策略差。但是在训练过程中，我们很难确保每个状态期望回报的优势函数都是正的，即出现<img src="ltximg/TRPO_65c1e76fbb7fd2e7185e3223c284d9bc37cd62e9.png" alt="TRPO_65c1e76fbb7fd2e7185e3223c284d9bc37cd62e9.png" />是不可避免的。
+对于一个改进的策略\(\tilde{\pi}\)，如果满足\(\sum_a \tilde{\pi}(a \mid s)A_{\pi}(s,a) \geq 0\)，就可以确保改进的策略表现不会比之前的策略差。但是在训练过程中，我们很难确保每个状态期望回报的优势函数都是正的，即出现\(\sum_a \tilde{\pi}(a \mid s)A_{\pi}(s, a) < 0\)是不可避免的。
 设：
 </p>
 
-
-<div class="figure">
-<p><img src="ltximg/TRPO_6f7acd4f5aaba18cafa6d36d0d689f8e5e6ea5c9.png" alt="TRPO_6f7acd4f5aaba18cafa6d36d0d689f8e5e6ea5c9.png" /></p>
-</div>
+\begin{equation*}
+L_{\pi}(\tilde{\pi}) = \eta(\pi) + \sum_{s}\rho_{\pi}(s) \sum_a \tilde{\pi}(a \mid s)A_{\pi}(s, a)
+\end{equation*}
 
 <p>
-其中，使用了<img src="ltximg/TRPO_73f5ba09a1f6acee62ad5ce3f06367d7131f68a8.png" alt="TRPO_73f5ba09a1f6acee62ad5ce3f06367d7131f68a8.png" />而不是<img src="ltximg/TRPO_a89f2dc68038e45c283e5f6810c64aa594188447.png" alt="TRPO_a89f2dc68038e45c283e5f6810c64aa594188447.png" />，忽略策略改变引起的状态概率改变，使得<img src="ltximg/TRPO_72df8963318aa4473e4d86f1f2cf6c1ba28bc066.png" alt="TRPO_72df8963318aa4473e4d86f1f2cf6c1ba28bc066.png" />近似逼近<img src="ltximg/TRPO_3fd30b5c06cc68148cdfa7ab72e2e569e2bfc330.png" alt="TRPO_3fd30b5c06cc68148cdfa7ab72e2e569e2bfc330.png" />。
+其中，使用了\(\rho_{\pi}(s)\)而不是\(\rho_{\tilde{\pi}}\)，忽略策略改变引起的状态概率改变，使得\(L_{\pi}\)近似逼近\(\eta_{\tilde{\pi}}\)。
 </p>
 
 <p>
 那么可不可以这样近似呢？
 </p>
 
-
-<div class="figure">
-<p><img src="ltximg/TRPO_5a12205d0f192466970833e75d92349a7e51e39f.png" alt="TRPO_5a12205d0f192466970833e75d92349a7e51e39f.png" /></p>
-</div>
+\begin{equation*}
+\begin{split}
+L_{\pi_{\theta}_{old}}(\pi_{\theta}_{old}) &= \eta(\pi_{\theta_{old}})\\
+\nabla_{\theta} L_{\pi_{\theta}_{old}}(\pi_{\theta}) \mid_{\theta = \theta_{old}} &= \nabla_{\theta} \eta(\pi_{\theta}) \mid_{\theta = \theta_{old}}\\
+\end{split}
+\end{equation*}
 
 <p>
-有上式可知，对于函数<img src="ltximg/TRPO_1b1bd96cb03bfa8cfbef3872ca00eb6618515c01.png" alt="TRPO_1b1bd96cb03bfa8cfbef3872ca00eb6618515c01.png" />和<img src="ltximg/TRPO_ef52f30a8c89ce51e0a1e97176e9c85450a07aee.png" alt="TRPO_ef52f30a8c89ce51e0a1e97176e9c85450a07aee.png" />，在<img src="ltximg/TRPO_6b0b426485abb0584479c124c8223aa79a8b815c.png" alt="TRPO_6b0b426485abb0584479c124c8223aa79a8b815c.png" />处，进行很小的更新，那么对于前者的提高相当于对后者的提高。
+有上式可知，对于函数\(L_{\pi_{\theta_{old}}}(\pi_{\theta})\)和\(\eta_{\pi_{\theta}}\)，在\(\theta_{old}\)处，进行很小的更新，那么对于前者的提高相当于对后者的提高。
 </p>
 
 <p>
 当对于策略的改进使用以下方式时：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_de414ac2bb5ae826ccc55611cd71ee5d8c9afcc9.png" alt="TRPO_de414ac2bb5ae826ccc55611cd71ee5d8c9afcc9.png" /></p>
-</div>
+\begin{equation*}
+\pi_{new}(a \mid s) = (1 - \alpha)\pi_{old}(a \mid s) + \alpha \pi^{\prime}(a \mid s)
+\end{equation*}
 <p>
-其中：<img src="ltximg/TRPO_4f30f729ee5af50ad17b8a379560ae48f766bf29.png" alt="TRPO_4f30f729ee5af50ad17b8a379560ae48f766bf29.png" />，
+其中：\(\pi^{\prime} = \arg \max_{\pi^{\prime}} L_{\pi_{old}}(\pi^{\prime})\)，
 </p>
 
 <p>
 这样，会有：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_4bebd91e9caea1ff0ae9f9f3e9781d6b732260b3.png" alt="TRPO_4bebd91e9caea1ff0ae9f9f3e9781d6b732260b3.png" /></p>
-</div>
+\begin{equation*}
+\begin{split}
+\eta(\pi_{new}) \geq L_{\pi_{old}}(\pi_{new}) - \frac{2\epsilon\gamma}{(1-\gamma)^2} \alpha^2 \\
+\qquad where \quad \epsilon = \max\mid \mathbb{E}_{a \sim \pi^{\prime}(a\mid s)}[A_{\pi}(s,a)]\mid
+\end{split}
+\end{equation*}
 </div>
 </div>
 
@@ -380,27 +425,25 @@ for the JavaScript code in this tag.
 <h2 id="orgf84416b"><span class="section-number-2">3</span> Monotonic Improvement Guarantee for General Stochastic Policies</h2>
 <div class="outline-text-2" id="text-3">
 <p>
-上面推理已经确保了如何单调递增的更新策略，那么如何衡量<img src="ltximg/TRPO_6b0b426485abb0584479c124c8223aa79a8b815c.png" alt="TRPO_6b0b426485abb0584479c124c8223aa79a8b815c.png" />和<img src="ltximg/TRPO_add845c5c0d070357c47a78cb43fd1af64d89a37.png" alt="TRPO_add845c5c0d070357c47a78cb43fd1af64d89a37.png" />之间的距离呢？
+上面推理已经确保了如何单调递增的更新策略，那么如何衡量\(\theta_{old}\)和\(\theta_{new}\)之间的距离呢？
 </p>
 
 <p>
 本文提出衡量更新参数距离的方法为：Total variation divergence。其定义为：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_b4714203a3271f0aef39244f187626170301245f.png" alt="TRPO_b4714203a3271f0aef39244f187626170301245f.png" /></p>
-</div>
+\begin{equation*}
+D_{TV}(p \mid\mid q) = \frac{1}{2}\sum_i\mid p_i - q_i \mid
+\end{equation*}
 <p>
-其中<img src="ltximg/TRPO_fdd03880a71cedfbb680ab03ff371b3468537972.png" alt="TRPO_fdd03880a71cedfbb680ab03ff371b3468537972.png" />为离散随机变量概率函数，如果是连续型随机变量，<img src="ltximg/TRPO_fdd03880a71cedfbb680ab03ff371b3468537972.png" alt="TRPO_fdd03880a71cedfbb680ab03ff371b3468537972.png" />为其概率密度函数，将求和改为积分。
+其中\(p, q\)为离散随机变量概率函数，如果是连续型随机变量，\(p, q\)为其概率密度函数，将求和改为积分。
 </p>
 
 <p>
 定义：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_4026e479b1a435f9b256d257b1835ca5a52525bf.png" alt="TRPO_4026e479b1a435f9b256d257b1835ca5a52525bf.png" /></p>
-</div>
+\begin{equation*}
+D_{TV}^{\max}(\pi, \tilde{\pi}) = \max\limits_s D_{TV}(\pi(\cdot\mid s) \mid\mid \tilde{\pi}(\cdot \mid s))
+\end{equation*}
 <p>
 其含义为：所有状态的 Total variation divergence 中的最大值。
 </p>
@@ -408,39 +451,47 @@ for the JavaScript code in this tag.
 <p>
 定理一：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_eb8adcba7dee2ac5c6f58252b480f70456b73412.png" alt="TRPO_eb8adcba7dee2ac5c6f58252b480f70456b73412.png" /></p>
-</div>
+\begin{equation*}
+\begin{split}
+\alpha = D_{TV}^{\max}(\pi_{old}, \pi_{new}), then\\
+\eta(\pi_{new}) \geq L_{\pi_{old}}(\pi_{new}) - \frac{4\epsilon\gamma}{(1-\gamma)^2} {\alpha}^2,\\
+where \quad \epsilon = \max\limits_{s,a}\mid A_{\pi}(s,a)\mid
+\end{split}
+\end{equation*}
 
 <p>
 Total variation divergence 和 KL divergence 之间的关系为：
 </p>
 
+\begin{equation*}
+D_{TV}(p\mid\mid q)^2 \leq D_{KL}(p \mid\mid q)
+\end{equation*}
+
 <p>
-<img src="ltximg/TRPO_0c8172d2fd381d03f559f66082e06a52528f4869.png" alt="TRPO_0c8172d2fd381d03f559f66082e06a52528f4869.png" />
+令\(D_{KL}^{\max}(\pi, \tilde{\pi}) = \max\limits_s D_{KL}(\pi(\cdot\mid s) \mid\mid \tilde{\pi}(\cdot\mid s))\)，将定理一可以写为：
 </p>
 
+\begin{equation*}
+\begin{split}
+\eta(\tilde{\pi}) \geq L_{\pi}(\tilde{\pi}) - CD_{KL}^{\max}(\pi, \tilde{\pi}),\\
+where \quad C = \frac{4\epsilon\gamma}{(1-\gamma)^2}
+\end{split}
+\end{equation*}
+
 <p>
-令<img src="ltximg/TRPO_34d1a16f378780992306538d9e2a293e3321d58c.png" alt="TRPO_34d1a16f378780992306538d9e2a293e3321d58c.png" />，将定理一可以写为：
+用\(M_i(\pi)\)来表示\(\eta(\pi)\)的下限，\(M_i{\pi} = L_{\pi_i}(\pi) - CD_{KL}^{\max}(\pi_i, \pi)\)，则：
 </p>
 
-
-<div class="figure">
-<p><img src="ltximg/TRPO_17e63c449c09ed8ee6a7029facaf57ef7171fd64.png" alt="TRPO_17e63c449c09ed8ee6a7029facaf57ef7171fd64.png" /></p>
-</div>
-
-<p>
-用<img src="ltximg/TRPO_f3fbf7d90d0ffd97ae4c6dc6ccda6dbca07d8c2d.png" alt="TRPO_f3fbf7d90d0ffd97ae4c6dc6ccda6dbca07d8c2d.png" />来表示<img src="ltximg/TRPO_8cdbefab748e8db83f0cd3d0dac600ed3db54e84.png" alt="TRPO_8cdbefab748e8db83f0cd3d0dac600ed3db54e84.png" />的下限，<img src="ltximg/TRPO_fa3435dfc18c1886e98762a4b67973b5dbab354e.png" alt="TRPO_fa3435dfc18c1886e98762a4b67973b5dbab354e.png" />，则：
-</p>
-
-
-<div class="figure">
-<p><img src="ltximg/TRPO_a52daadca6629e79f1028640e2fb99b561e1f98c.png" alt="TRPO_a52daadca6629e79f1028640e2fb99b561e1f98c.png" /></p>
-</div>
+\begin{equation*}
+\begin{split}
+\eta(\pi_{i+1}) &\geq M_i(\pi_{i+1})\\
+\eta(\pi_{i}) &= M_i(\pi_i)\\
+\eta(\pi_{i+1}) - \eta(\pi_i) &\geq M_i(\pi_{i+1}) - M(\pi_i)
+\end{split}
+\end{equation*}
 
 <p>
-因此，每个回合优化<img src="ltximg/TRPO_b6933ae2d5db472b54b33f2f1b30e9a2d4fa47e7.png" alt="TRPO_b6933ae2d5db472b54b33f2f1b30e9a2d4fa47e7.png" />，可以确保回报<img src="ltximg/TRPO_46a470ac0f43954c431ed2a10f671ac3c64e06ea.png" alt="TRPO_46a470ac0f43954c431ed2a10f671ac3c64e06ea.png" />是非递减的。
+因此，每个回合优化\(M_i\)，可以确保回报\(\eta\)是非递减的。
 </p>
 </div>
 </div>
@@ -449,49 +500,51 @@ Total variation divergence 和 KL divergence 之间的关系为：
 <h2 id="org27414dd"><span class="section-number-2">4</span> Optimization of Parameterized Policies</h2>
 <div class="outline-text-2" id="text-4">
 <p>
-以下讨论的策略<img src="ltximg/TRPO_9b5f170f5cf1a3edbe521911abe3ca7195066d0f.png" alt="TRPO_9b5f170f5cf1a3edbe521911abe3ca7195066d0f.png" />都是以向量<img src="ltximg/TRPO_855f2b00ac429dab341dcfdb857d0505232fa5a1.png" alt="TRPO_855f2b00ac429dab341dcfdb857d0505232fa5a1.png" />为参数的策略<img src="ltximg/TRPO_83b3a43bc8476a237d9bbc22e6ce9ba4b5096829.png" alt="TRPO_83b3a43bc8476a237d9bbc22e6ce9ba4b5096829.png" />。集中规约以下变量：
+以下讨论的策略\(\pi\)都是以向量\(\theta\)为参数的策略\(\pi_{\theta}\)。集中规约以下变量：
 </p>
 <ul class="org-ul">
-<li><img src="ltximg/TRPO_f58eb68f4c856b4f44cb927bc932f57fc15acba7.png" alt="TRPO_f58eb68f4c856b4f44cb927bc932f57fc15acba7.png" /></li>
-<li><img src="ltximg/TRPO_486101a5e9a8d46e98ea5601231284d125ffc37a.png" alt="TRPO_486101a5e9a8d46e98ea5601231284d125ffc37a.png" /></li>
-<li><img src="ltximg/TRPO_c075929dd7c8848fd5b1f9f7dafb032ac0ecd30a.png" alt="TRPO_c075929dd7c8848fd5b1f9f7dafb032ac0ecd30a.png" /></li>
+<li>\(\eta(\theta) := \eta(\pi_{\theta}))\)</li>
+<li>\(L_{\theta}(\tilde{\theta}) := L_{\pi_{\theta}}(\pi_{\tilde{\theta}})\)</li>
+<li>\(D_{KL}(\theta \mid\mid \tilde{\theta}) := D_{KL}(\pi_{\theta} \mid\mid \pi_{\tilde{\theta}})\)</li>
 </ul>
 
 <p>
-上一节说明了<img src="ltximg/TRPO_320889c70d824ab106e9b2e437431157afae8a01.png" alt="TRPO_320889c70d824ab106e9b2e437431157afae8a01.png" />。更新<img src="ltximg/TRPO_855f2b00ac429dab341dcfdb857d0505232fa5a1.png" alt="TRPO_855f2b00ac429dab341dcfdb857d0505232fa5a1.png" />的过程为，找一个使得右边式子最大的<img src="ltximg/TRPO_855f2b00ac429dab341dcfdb857d0505232fa5a1.png" alt="TRPO_855f2b00ac429dab341dcfdb857d0505232fa5a1.png" />，令<img src="ltximg/TRPO_93e8b6db1d43974d8f34157f80465aa7838c8b0c.png" alt="TRPO_93e8b6db1d43974d8f34157f80465aa7838c8b0c.png" />。
+上一节说明了两次策略之间回报的差值要大于\(\max L_{\theta_{old}}(\theta) - CD_{KL}^{\max}(\theta_{old}, \theta)\)。也就是说，找到使得上式最大的 $&theta;$，即可保证最大限度的增加回报 $&eta;$。 更新\(\theta\)的过程为，找一个使得右边式子最大的\(\theta\)，然后令\(\theta_{old} = \theta\)。
 </p>
 
 <p>
 我们的任务其实就是最大化：
 </p>
 
+\begin{equation*}
+maximize\limits_{\theta}[L_{\theta_{old}}(\theta) - CD_{KL}^{\max}(\theta_{old}, \theta)]
+\end{equation*}
+
 <p>
-<img src="ltximg/TRPO_22a25967b038339e282ae984a9b311ddb440d257.png" alt="TRPO_22a25967b038339e282ae984a9b311ddb440d257.png" />
+如果直接使用上诉推导出的\(C\)进行优化，步长非常小，更新很慢，因此我们着手于处理\(D_{KL}^{\max}\)这一项。通过对这一项进行约束，可以获得较大的更新步长，这种在新旧策略之间差距的约束被称为：Trust region constraint。
+</p>
+\begin{maxi*}
+{\theta} {L_{\theta_{old}}(\theta)}
+{}{}
+\addConstraint{D_{KL}^{\max}(\theta_{old}, \theta)}
+\end{maxi*}
+
+<p>
+由于\(D_{KL}^{\max} = \max\limits_{s} D_{KL}(\pi_{\theta_{old}}(\cdot \mid s)\mid\mid \pi_{\theta}(\cdot \mid s))\)，与所有状态都有关系，因此可以使用平均值进行第二次逼近：
 </p>
 
 <p>
-如果直接使用上诉推导出的<img src="ltximg/TRPO_0297188d50c75e5752bbd60d0aeda6f53526f9b4.png" alt="TRPO_0297188d50c75e5752bbd60d0aeda6f53526f9b4.png" />进行优化，步长非常小，更新很慢，因此我们着手于处理<img src="ltximg/TRPO_9383ac8ca7a5779f204242e0a3e4daf70a285968.png" alt="TRPO_9383ac8ca7a5779f204242e0a3e4daf70a285968.png" />这一项。通过对这一项进行约束，可以获得较大的更新步长，这种在新旧策略之间差距的约束被称为：Trust region constraint。
-</p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_714400c290c0a5daf72fe7ece209b0e5a90e16d3.png" alt="TRPO_714400c290c0a5daf72fe7ece209b0e5a90e16d3.png" /></p>
-</div>
-
-<p>
-由于<img src="ltximg/TRPO_1b3f0f131280445eb2eac82bd9290ec74389dd38.png" alt="TRPO_1b3f0f131280445eb2eac82bd9290ec74389dd38.png" />，与所有状态都有关系，因此可以使用平均值进行第二次逼近：
-</p>
-
-<p>
-<img src="ltximg/TRPO_5d4d6ee9b22399ed64cf725746eba0d24c0f2979.png" alt="TRPO_5d4d6ee9b22399ed64cf725746eba0d24c0f2979.png" />
+\(\bar{D}_{KL}^{\rho}(\theta_1, \theta_2) := \mathbb{E}_{s \sim \rho}[D_{KL}(\pi_{\theta_1}(\cdot \mid s) \mid\mid \pi_{\theta_2}(\cdot \mid s))]\)
 </p>
 
 <p>
 因此，之前的约束优化问题可以转换为：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_6bd67b210d31282d9ac4072340d8aba33cb9a325.png" alt="TRPO_6bd67b210d31282d9ac4072340d8aba33cb9a325.png" /></p>
-</div>
+\begin{maxi*}
+{\theta} {L_{\theta_{old}}(\theta)}
+{}{}
+\addConstraint{\bar{D}_{KL}^{\rho}(\theta_{old}, \theta) \leq \delta}
+\end{maxi*}
 
 <p>
 实验结果表明，这种逼近是可行的。
@@ -509,47 +562,78 @@ Total variation divergence 和 KL divergence 之间的关系为：
 <p>
 将之前的优化问题展开：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_46ec99f7b03cec8faa020d2626e2706cdc0d7253.png" alt="TRPO_46ec99f7b03cec8faa020d2626e2706cdc0d7253.png" /></p>
-</div>
+\begin{maxi*}
+{\theta} {\sum_s \rho_{\theta_{old}}(s) \sum_a \pi_{\theta}(a \mid s) A_{\theta_{old}}(s,a)}
+{}{}
+\addConstraint{\bar{D}_{KL}^{\rho}(\theta_{old}, \theta) \leq \delta}
+\end{maxi*}
 
 <p>
 此处近似三个地方：
 </p>
 <ul class="org-ul">
-<li><img src="ltximg/TRPO_ecc8dbe633f287ae18d68cf4634fa184d1c83d17.png" alt="TRPO_ecc8dbe633f287ae18d68cf4634fa184d1c83d17.png" />使用期望近似<img src="ltximg/TRPO_691c644a62ec2813e3e6e1fabfe37e38073a0a32.png" alt="TRPO_691c644a62ec2813e3e6e1fabfe37e38073a0a32.png" /></li>
-<li><img src="ltximg/TRPO_cfd43b760dca66d90cca21c3abc9dd96540b9f96.png" alt="TRPO_cfd43b760dca66d90cca21c3abc9dd96540b9f96.png" />使用Q值近似<img src="ltximg/TRPO_b63d8d094d2f0803539d67f6137b707253fdd3bd.png" alt="TRPO_b63d8d094d2f0803539d67f6137b707253fdd3bd.png" /></li>
-<li>使用重要性采样近似之后的动作概率求和<img src="ltximg/TRPO_9602ccd056560f1b73b0048f87b956d13e87da92.png" alt="TRPO_9602ccd056560f1b73b0048f87b956d13e87da92.png" /></li>
+<li>\(\sum_s \rho_{\theta_{old}}(s)[\cdots]\)使用期望近似\(\frac{1}{1-\gamma}\mathbb{E}_{s \sim \rho_{\theta_{old}}}[\cdots]\)</li>
+<li>\(A_{\theta_{old}}\)使用Q值近似\(Q_{\theta_{old}}\)</li>
+<li>使用重要性采样近似之后的动作概率求和\(\sum_a \pi_{\theta}(a\mid s_n)A_{\theta_{old}}(s_n, a) = \mathbb{E}_{a \sim q}[\frac{\pi_{\theta}(a \mid s_n)}{q(a \mid s_n)}A_{\theta_{old}}(s_n, a)]\)</li>
 </ul>
 
 <p>
 近似之后的优化问题为：
 </p>
-
-<div class="figure">
-<p><img src="ltximg/TRPO_b03ba4104f9203488421632173ecc26fad5618a6.png" alt="TRPO_b03ba4104f9203488421632173ecc26fad5618a6.png" /></p>
-</div>
+\begin{maxi*}
+{\theta} {\mathbb{E}_{s \sim \rho_{\theta_{old}}, a \sim q} [\frac{\pi_{\theta}(a \mid s)}{q(a \mid s)} Q_{\theta_{old}}(s, a)]}
+{}{}
+\addConstraint{\mathbb{E}_{s \sim \rho_{\theta_{old}}}[D_{KL}(\pi_{\theta_{old}}(\cdot \mid s))] \leq \delta}
+\end{maxi*}
 
 <p>
 其中的重要性采样方法有两种，一种称为“Single Path”，另一种称为“Vine”。
 </p>
 </div>
 
-<div id="outline-container-org396344d" class="outline-3">
-<h3 id="org396344d"><span class="section-number-3">5.1</span> Single Path</h3>
+<div id="outline-container-org50cc560" class="outline-3">
+<h3 id="org50cc560"><span class="section-number-3">5.1</span> Importance Sampling</h3>
 <div class="outline-text-3" id="text-5-1">
 <p>
-使用策略<img src="ltximg/TRPO_f5c34f86e97f0ecedb5747da97031d6207da0bbb.png" alt="TRPO_f5c34f86e97f0ecedb5747da97031d6207da0bbb.png" />生成一些轨迹<img src="ltximg/TRPO_7df27d886b16a7eb854a7ac9394c3e781de0989f.png" alt="TRPO_7df27d886b16a7eb854a7ac9394c3e781de0989f.png" />。可以看出，<img src="ltximg/TRPO_83148b9c29cbace90552371af50982390bbbaa0e.png" alt="TRPO_83148b9c29cbace90552371af50982390bbbaa0e.png" />。<img src="ltximg/TRPO_5b2c1b278c6bc8e60fcfd0517d7b6dc8d999f232.png" alt="TRPO_5b2c1b278c6bc8e60fcfd0517d7b6dc8d999f232.png" />可以使用每个状态的衰减奖励值表示。策略梯度算法中的<img src="ltximg/TRPO_6e8c5a7758ff511b96804c4f8ffd57ee7091513e.png" alt="TRPO_6e8c5a7758ff511b96804c4f8ffd57ee7091513e.png" />。
+重要性采样的思想是：从与原分布不同的另一个分布中取样，而对原先分布的性质进行估计。
+</p>
+
+<p>
+函数 \(f(x)\) 在概率分布 \(p(x)\) 下的期望为：\(\mathbb{E}[f] = \int_x p(x)f(x)dx\) ，当我们在 \(q(x)\) 的概率分布上采样 \({x_1, x_2, \dots, x_n}\) ，那么函数 \(f(x)\) 的期望为 \(\mathbb{E}_{x \sim q} = \frac{1}{N}\sum_{i=1}^{N}f(x_i)\) 。
+</p>
+
+<p>
+那么：
+</p>
+\begin{equation*}
+\begin{split}
+\mathbb{E}_{x \sim p}[f(x)] &\approx \frac{1}{N} \sum_{i=1}^{N} f(x_i)\\
+&= \int f(x)p(x)dx\\
+&= \int f(x)\frac{p(x)}{q(x)}q(x)dx\\
+&= \mathbb{E}_{x \sim q}[f(x)\frac{p(x)}{q(x)}]\\
+\end{split}
+\end{equation*}
+
+<p>
+可见，我们可以从一个分布取样，然后计算函数 \(f(x)\) 在其他分布下的期望。但重要性采样有个问题，虽然两个分布下的期望相同了，但其方差还是不同的，因此选取合适的分布 \(q(x)\) 也是很重要的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org396344d" class="outline-3">
+<h3 id="org396344d"><span class="section-number-3">5.2</span> Single Path</h3>
+<div class="outline-text-3" id="text-5-2">
+<p>
+使用策略\(\pi_{\theta_{old}}\)生成一些轨迹\(Trajectory: s_0, a_0, s_1, a_1, \cdots, s_{t-1}, a_{t-1}, s_{t}\)。可以看出，\(q(a \mid s) = \pi_{\theta_{old}}\)。\(Q_{\theta_{old}}(s, a)\)可以使用每个状态的衰减奖励值表示。策略梯度算法中的\(\mathbf{REINFORCE}\)。
 </p>
 </div>
 </div>
 
 <div id="outline-container-orgcd0582e" class="outline-3">
-<h3 id="orgcd0582e"><span class="section-number-3">5.2</span> Vine</h3>
-<div class="outline-text-3" id="text-5-2">
+<h3 id="orgcd0582e"><span class="section-number-3">5.3</span> Vine</h3>
+<div class="outline-text-3" id="text-5-3">
 <p>
-在这种采样方法中，首先取样<img src="ltximg/TRPO_ecdedfe987bd62c4b1803af13573c49a7ca30e2b.png" alt="TRPO_ecdedfe987bd62c4b1803af13573c49a7ca30e2b.png" />，利用策略函数<img src="ltximg/TRPO_45ff84446a39966d6bbf8220304baca57fdd5c89.png" alt="TRPO_45ff84446a39966d6bbf8220304baca57fdd5c89.png" />生成一些轨迹，然后从这些轨迹中取样<img src="ltximg/TRPO_053ae70b84faa9cf531a8a99de7d96d084e4906d.png" alt="TRPO_053ae70b84faa9cf531a8a99de7d96d084e4906d.png" />，将这个取样集合称为“Rollout set”。对于这个集合中的每个状态，根据动作概率函数取样动作，即：<img src="ltximg/TRPO_ac062fcd6576b0b62144f798e51cdde474ab20d7.png" alt="TRPO_ac062fcd6576b0b62144f798e51cdde474ab20d7.png" />，在实验中，发现采用<img src="ltximg/TRPO_3d72bf2a885d7fba017b387391cadc3ec8bd4926.png" alt="TRPO_3d72bf2a885d7fba017b387391cadc3ec8bd4926.png" />的动作概率函数，在连续运动的问题上效果很好。
+在这种采样方法中，首先取样\(s_0 \sim \rho_0\)，利用策略函数\(\pi_{\theta_i}\)生成一些轨迹，然后从这些轨迹中取样\(s_1, s_2, \cdots, s_N\)，将这个取样集合称为“Rollout set”。对于这个集合中的每个状态，根据动作概率函数取样动作，即：\(a_{n, k} \sim q(\cdot \mid s_n)\)，在实验中，发现采用\(q(\cdot \mid s_n) = \pi_{\theta_i}(\cdot \mid s_n)\)的动作概率函数，在连续运动的问题上效果很好。
 </p>
 
 <p>
@@ -557,19 +641,21 @@ Total variation divergence 和 KL divergence 之间的关系为：
 </p>
 
 <p>
-<img src="ltximg/TRPO_a588b3786d2934eb47662dcdcbcf77df270e8058.png" alt="TRPO_a588b3786d2934eb47662dcdcbcf77df270e8058.png" />
+\[
+L_{n}(\theta) = \sum_{k=1}^{K}\pi_{\theta}(a_k \mid s_n)Q(s_n, a_k)
+\]
 </p>
 
 <p>
-其中，动作空间为：<img src="ltximg/TRPO_6a22b6549b1ffcbeb361d3ca5c6111e83abfd963.png" alt="TRPO_6a22b6549b1ffcbeb361d3ca5c6111e83abfd963.png" />。在连续型动作空间中，使用重要性采样方法逼近：
+其中，动作空间为：\(\mathcal{A} = \{a_1, a_2, \cdots, a_K\}\)。在连续型动作空间中，使用重要性采样方法逼近：
 </p>
 
-<p>
-<img src="ltximg/TRPO_e80400705fed67f44efda292ea400c221ad5eb8b.png" alt="TRPO_e80400705fed67f44efda292ea400c221ad5eb8b.png" />
-</p>
+\begin{equation*}
+L_n(\theta) = \frac{\sum_{k=1}^{K}\frac{\pi_{\theta}(a_{n,k} \mid s_n)}{\pi_{\theta_{old}}(a_{n,k} \mid s_n)}A(s_n, a_n, k)}{\sum_{k=1}^{K}\frac{\pi_{\theta}(a_{n,k} \mid s_n)}{\pi_{\theta_{old}}(a_{n,k} \mid s_n)}}
+\end{equation*}
 
 <p>
-其中，假设从<img src="ltximg/TRPO_e51ee31b83c00241da6f075fb9c6dd3c927e8e72.png" alt="TRPO_e51ee31b83c00241da6f075fb9c6dd3c927e8e72.png" />中采样了<img src="ltximg/TRPO_09ec6630e93e1efccb19669d351029b3dda70c1c.png" alt="TRPO_09ec6630e93e1efccb19669d351029b3dda70c1c.png" />个动作<img src="ltximg/TRPO_dd5ce119a9baaaad112bb07397b5ea8260429233.png" alt="TRPO_dd5ce119a9baaaad112bb07397b5ea8260429233.png" />。
+其中，假设从\(s_n\)中采样了\(K\)个动作\(a_{n,1}, a_{n,2}, \cdots, a_{n, K}\)。
 </p>
 
 <p>
@@ -615,19 +701,21 @@ Total variation divergence 和 KL divergence 之间的关系为：
 <li><a href="https://zhuanlan.zhihu.com/p/60257706">TRPO 论文推导</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/29918825">TRPO 和 PPO</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/26308073">强化学习进阶 第七讲</a></li>
+<li><a href="https://www.meltycriss.com/2018/02/03/summary-rl-drl/">学习总结《强化学习与深度学习》</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/41217212">重要性采样</a></li>
 </ul>
 </div>
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-03-29 日 16:00. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-05-09 六 08:54. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-03-26 四 16:53 -->
+<!-- 2020-05-10 日 10:09 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>概率论</title>
@@ -12,16 +12,16 @@
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
-             margin-bottom: .2em; }
+	     margin-bottom: .2em; }
   .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
   .todo   { font-family: monospace; color: red; }
   .done   { font-family: monospace; color: green; }
   .priority { font-family: monospace; color: orange; }
   .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
+	    padding: 2px; font-size: 80%; font-weight: normal; }
   .timestamp { color: #bebebe; }
   .timestamp-kwd { color: #5f9ea0; }
   .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
@@ -161,6 +161,19 @@
   .footdef  { margin-bottom: 1em; }
   .figure { padding: 1em; }
   .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
   .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -186,7 +199,7 @@
 @licstart  The following is the entire license notice for the
 JavaScript code in this tag.
 
-Copyright (C) 2012-2019 Free Software Foundation, Inc.
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
 
 The JavaScript code in this tag is free software: you can
 redistribute it and/or modify it under the terms of the GNU
@@ -227,6 +240,28 @@ for the JavaScript code in this tag.
  }
 /*]]>*///-->
 </script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	displayAlign: "center",
+	displayIndent: "0em",
+
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
+});
+</script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -253,9 +288,9 @@ for the JavaScript code in this tag.
 <ul class="org-ul">
 <li>互斥、对立（相加为全集）、独立</li>
 <li>相互独立（n个独立）、两两独立（任意两个独立）</li>
-<li><img src="ltximg/Probability_54edcb9c968c1a5321c3a9d0d9804f1d42784283.png" alt="Probability_54edcb9c968c1a5321c3a9d0d9804f1d42784283.png" />不能推出A是全集；<img src="ltximg/Probability_cfbdb52c68d5a14dcf1151eda60b2f8c9bae6a39.png" alt="Probability_cfbdb52c68d5a14dcf1151eda60b2f8c9bae6a39.png" />不能推出A是空集 连续概率密度</li>
+<li>\(P(A)=1\)不能推出A是全集；\(P(B)=\emptyset\)不能推出A是空集 连续概率密度</li>
 <li>易错点：没有条件概率的条件概率这种定义（贝叶斯公式使用）</li>
-<li><img src="ltximg/Probability_c66c578fdf72c1824f427b650e8c2ca83ed8002d.png" alt="Probability_c66c578fdf72c1824f427b650e8c2ca83ed8002d.png" /></li>
+<li>\(\sum\limits_{i=0}^{k} C_m^i C_n^{k-i} = C_{m+n}^{k}\)</li>
 </ul>
 </div>
 </div>
@@ -290,41 +325,41 @@ for the JavaScript code in this tag.
 <tbody>
 <tr>
 <td class="org-left">0-1 分布 B(1, p)</td>
-<td class="org-left"><img src="ltximg/Probability_cc034e5fbf73eea0a1b353e7af3332fd661f90ea.png" alt="Probability_cc034e5fbf73eea0a1b353e7af3332fd661f90ea.png" /></td>
+<td class="org-left">\(P{X=1}=p\)</td>
 <td class="org-left">p</td>
 <td class="org-left">p(1-p)</td>
 </tr>
 
 <tr>
 <td class="org-left">二项分布 B(n, p)</td>
-<td class="org-left"><img src="ltximg/Probability_0da8680985bf513c9c44ab4afb79ed17bc2172d2.png" alt="Probability_0da8680985bf513c9c44ab4afb79ed17bc2172d2.png" /></td>
+<td class="org-left">\(P{X=k}=C_n^k p^k (1-p)^{n-k}\)</td>
 <td class="org-left">np</td>
 <td class="org-left">np(1-p)</td>
 </tr>
 
 <tr>
-<td class="org-left">泊松分布 P(<img src="ltximg/Probability_b691777fbf46e4da20001bb59a69cf3347a22f87.png" alt="Probability_b691777fbf46e4da20001bb59a69cf3347a22f87.png" />)</td>
-<td class="org-left"><img src="ltximg/Probability_e0eb01084503ed539b5bc9d486e1dafbd242d343.png" alt="Probability_e0eb01084503ed539b5bc9d486e1dafbd242d343.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_b691777fbf46e4da20001bb59a69cf3347a22f87.png" alt="Probability_b691777fbf46e4da20001bb59a69cf3347a22f87.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_b691777fbf46e4da20001bb59a69cf3347a22f87.png" alt="Probability_b691777fbf46e4da20001bb59a69cf3347a22f87.png" /></td>
+<td class="org-left">泊松分布 P(\(\lambda\))</td>
+<td class="org-left">\(P{X=k}=\frac{\lambda^{k}}{k!} e^{-\lambda} (k=0,1,2...;\lambda > 0)\)</td>
+<td class="org-left">\(\lambda\)</td>
+<td class="org-left">\(\lambda\)</td>
 </tr>
 
 <tr>
 <td class="org-left">几何分布</td>
-<td class="org-left"><img src="ltximg/Probability_21310635e1fbd98f884a5d30866e150eae288dd9.png" alt="Probability_21310635e1fbd98f884a5d30866e150eae288dd9.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_b34fbfeb423ba2ac206019ac088ff2fefcc41170.png" alt="Probability_b34fbfeb423ba2ac206019ac088ff2fefcc41170.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_7e2be4e2495948579e0b78d67c35beead31c4d84.png" alt="Probability_7e2be4e2495948579e0b78d67c35beead31c4d84.png" /></td>
+<td class="org-left">\(P{X=k}=q^{k-1}p\)</td>
+<td class="org-left">\(\frac{1}{p}\)</td>
+<td class="org-left">\(\frac{1-p}{p^2}\)</td>
 </tr>
 
 <tr>
 <td class="org-left">超几何分布 H(n, N, M)</td>
-<td class="org-left"><img src="ltximg/Probability_94b1ae7abb04f29042b879603d6fff00f02b4112.png" alt="Probability_94b1ae7abb04f29042b879603d6fff00f02b4112.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_147077ba665548a20cef2bac0af70ba4bce0c955.png" alt="Probability_147077ba665548a20cef2bac0af70ba4bce0c955.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_b32e26ab4d00164707da42b9a90f74f72fe40faa.png" alt="Probability_b32e26ab4d00164707da42b9a90f74f72fe40faa.png" /></td>
+<td class="org-left">\(P{X=k}=\frac{C^k_M C^{n-k}_{N-M}}{C_N^n} (k=0,1,2...)\)</td>
+<td class="org-left">\(n\frac{M}{N}\)</td>
+<td class="org-left">\(\frac{nM(N-M)(N-n)}{N^2(N-1)}\)</td>
 </tr>
 </tbody>
 </table></li>
-<li>泊松定理：当n很大，p很小，<img src="ltximg/Probability_d427b068c8b810349d5f36fa8d02fbafd57eea6d.png" alt="Probability_d427b068c8b810349d5f36fa8d02fbafd57eea6d.png" />适中时，泊松分布可近似表示二项分布<img src="ltximg/Probability_cb387066dba045cb85fb38d59442a7e343871b0b.png" alt="Probability_cb387066dba045cb85fb38d59442a7e343871b0b.png" /></li>
+<li>泊松定理：当n很大，p很小，\(\lambda=np\)适中时，泊松分布可近似表示二项分布\(C^k_n p^k (1-p)^{n-k} = \frac{\lambda}{k!}e^{-\lambda}\)</li>
 <li><p>
 连续型随机变量
 </p>
@@ -354,26 +389,26 @@ for the JavaScript code in this tag.
 <tbody>
 <tr>
 <td class="org-left">均匀分布U(a,b)</td>
-<td class="org-left"><img src="ltximg/Probability_d991bdd777496932e3ba14f35466651c8e50b784.png" alt="Probability_d991bdd777496932e3ba14f35466651c8e50b784.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_1f14b08c5c66601ecdf30c2cb1845274782d0d29.png" alt="Probability_1f14b08c5c66601ecdf30c2cb1845274782d0d29.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_b95ae1ee076008548ba3781898537cb937d9a8ac.png" alt="Probability_b95ae1ee076008548ba3781898537cb937d9a8ac.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_7de5e292af6830a4eaa7a2bd7f089e4ce9379535.png" alt="Probability_7de5e292af6830a4eaa7a2bd7f089e4ce9379535.png" /></td>
+<td class="org-left">\(f(x)=\frac{1}{b-a},a<x<b\)</td>
+<td class="org-left">\(F(x)=\frac{x-a}{b-a}\)</td>
+<td class="org-left">\(\frac{a+b}{2}\)</td>
+<td class="org-left">\(\frac{(b-a)^2}{12}\)</td>
 </tr>
 
 <tr>
-<td class="org-left">指数分布<img src="ltximg/Probability_93b90986b1e1a519b0b89ec5eb875c7b36fa5321.png" alt="Probability_93b90986b1e1a519b0b89ec5eb875c7b36fa5321.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_f635b2c7ede2b1f68741a4031803a345d262b9e6.png" alt="Probability_f635b2c7ede2b1f68741a4031803a345d262b9e6.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_79e2d71f1a23384ef89588d4ebd6ff073a5c98d5.png" alt="Probability_79e2d71f1a23384ef89588d4ebd6ff073a5c98d5.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_b903fcfb7ef26d0260278bf1149fedb489936950.png" alt="Probability_b903fcfb7ef26d0260278bf1149fedb489936950.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_647a1aeb3883a6970a6409310f07716e07d72304.png" alt="Probability_647a1aeb3883a6970a6409310f07716e07d72304.png" /></td>
+<td class="org-left">指数分布\(E(\lambda)\)</td>
+<td class="org-left">\(f(x)=\lambda e^{-\lambda x}, x>0\)</td>
+<td class="org-left">\(F(x)=1-e^{-\lambda x}, x \geq 0\)</td>
+<td class="org-left">\(\frac{1}{\lambda}\)</td>
+<td class="org-left">\(\frac{1}{\lambda ^2}\)</td>
 </tr>
 
 <tr>
 <td class="org-left">正态分布N(&mu;, &sigma;<sup>2</sup>)</td>
-<td class="org-left"><img src="ltximg/Probability_eaf2614dcb4aa183a9b8ea5e54eba8fd45b710ad.png" alt="Probability_eaf2614dcb4aa183a9b8ea5e54eba8fd45b710ad.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_f627c9d31a7ebff49c17bec9fdc98d3d961ded35.png" alt="Probability_f627c9d31a7ebff49c17bec9fdc98d3d961ded35.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_9d04f79d4e097bf70296a959b3fa1fdbf179c9de.png" alt="Probability_9d04f79d4e097bf70296a959b3fa1fdbf179c9de.png" /></td>
-<td class="org-left"><img src="ltximg/Probability_13102d96d85aef72c2a3528180b6deaef69f2897.png" alt="Probability_13102d96d85aef72c2a3528180b6deaef69f2897.png" /></td>
+<td class="org-left">\(f(x)=\frac{1}{\sqrt{2\pi}\sigma} e^{\frac{1}{2}(\frac{x-\mu}{\sigma})^2}\)</td>
+<td class="org-left">\(F(X)=\frac{1}{\sqrt{2\pi}} \int_{-\infty}^x e^{-\frac{1}{2} t^2} dt\)</td>
+<td class="org-left">\(\mu\)</td>
+<td class="org-left">\(\sigma ^2\)</td>
 </tr>
 </tbody>
 </table></li>
@@ -387,26 +422,26 @@ for the JavaScript code in this tag.
 <h2 id="org9a19753"><span class="section-number-2">3</span> 二维随机变量</h2>
 <div class="outline-text-2" id="text-3">
 <ul class="org-ul">
-<li>条件分布函数：<img src="ltximg/Probability_d778353f6d83f6d4e9a683749906ca4f526c0718.png" alt="Probability_d778353f6d83f6d4e9a683749906ca4f526c0718.png" /></li>
-<li>二维正态随机变量 <img src="ltximg/Probability_da424c9c46fb6df483de907435346cd9b3ef0d3f.png" alt="Probability_da424c9c46fb6df483de907435346cd9b3ef0d3f.png" />
+<li>条件分布函数：\(F_{Y|X}(y|x)=\int_{-\infty}^y f_{Y|X}(v|x) dv\)</li>
+<li>二维正态随机变量 \(f(x,y)=\frac{1}{2\pi \sigma_1 \sigma_2 \sqrt{1-\rho^2}} exp\{-\frac{1}{2(1-\rho^2)}[(\frac{x-\mu_1}{\sigma_1})^2-2\rho(\frac{x-\mu_1}{\sigma_1})(\frac{x-\mu_2}{\sigma_2})+(\frac{y-\mu_2}{\sigma_2})^2]\}\)
 <ul class="org-ul">
 <li>X Y 的条件分布也都是正态分布</li>
 <li>aX+bY 也是正态分布</li>
 <li>X Y 相互独立的充要条件是X和Y不相关（其他分布没有这个性质）</li>
 </ul></li>
 <li>技巧 求离散型的随机分布直接求某点的概率P即可</li>
-<li>相互独立随机变量函数的分布 <img src="ltximg/Probability_eda879efe4cd9c042728ee65c0b714eea1d0374a.png" alt="Probability_eda879efe4cd9c042728ee65c0b714eea1d0374a.png" />
+<li>相互独立随机变量函数的分布 \((X,Y)\sim f(x,y)\)
 <ul class="org-ul">
-<li>可以先求出<img src="ltximg/Probability_dd615247e5b97c779dac0a9c8b55069110481efd.png" alt="Probability_dd615247e5b97c779dac0a9c8b55069110481efd.png" />的随机变量</li>
-<li>和的分布 <img src="ltximg/Probability_bad04be802903793f9b854f2566eafaa153185f5.png" alt="Probability_bad04be802903793f9b854f2566eafaa153185f5.png" /></li>
-<li>差的分布 <img src="ltximg/Probability_88707490006ef71a69a1367288be5ec21bd31b1e.png" alt="Probability_88707490006ef71a69a1367288be5ec21bd31b1e.png" /></li>
-<li>积的分布 <img src="ltximg/Probability_04343ce20fdfaf725c0dcb94276c69273ac98503.png" alt="Probability_04343ce20fdfaf725c0dcb94276c69273ac98503.png" /></li>
-<li>商的分布 <img src="ltximg/Probability_38480dca0b3db4a9e6e34ba5bb8e1b88edea59de.png" alt="Probability_38480dca0b3db4a9e6e34ba5bb8e1b88edea59de.png" /></li>
+<li>可以先求出\(F_Z(z)\)的随机变量</li>
+<li>和的分布 \(Z=X+Y, f_Z(z) = \int_{-\infty}^{+\infty} f(x, z-x) dx = \int_{-\infty}^{+\infty} f(z-y, y) dy\)</li>
+<li>差的分布 \(Z=X-Y, f_Z(z) = \int_{-\infty}^{+\infty} f(x, x-z) dx = \int_{-\infty}^{+\infty} f(y+z, y) dy\)</li>
+<li>积的分布 \(Z=XY, f_Z(z) = \int_{-\infty}^{+\infty} \frac{1}{|x|}f(x, \frac{z}{x}) dx = \int_{-\infty}^{+\infty} \frac{1}{|y|}f(\frac{z}{y}, y) dy\)</li>
+<li>商的分布 \(Z=\frac{X}{Y}, f_Z(z) = \int_{-\infty}^{+\infty} |y|f(yz, y) dy\)</li>
 </ul></li>
 <li>常见分布的可加性（相互独立）
 <ul class="org-ul">
-<li><img src="ltximg/Probability_23f8e2991621d8e3120cd2621b9edf9948ee03e9.png" alt="Probability_23f8e2991621d8e3120cd2621b9edf9948ee03e9.png" /></li>
-<li><img src="ltximg/Probability_d13266c35c80a6e6af0b8214f0221b1df7555159.png" alt="Probability_d13266c35c80a6e6af0b8214f0221b1df7555159.png" />（证明需要用到 <img src="ltximg/Probability_01dc57816c5a20e24e45575e32337fa6688071dd.png" alt="Probability_01dc57816c5a20e24e45575e32337fa6688071dd.png" />）</li>
+<li>\(X \sim B(n,p), Y \sim B(m, p), then X+Y \sim B(n+m, p)\)</li>
+<li>\(X \sim P(\lambda_1), Y \sim P(\lambda_2), then X+Y \sim P(\lambda_1+\lambda_2)\)（证明需要用到 \((a+b)^n = \sum\limits_{i=0}^{n} C_n^i a^i b^{n-i}\)）</li>
 </ul></li>
 <li>技巧 一个离散型，一个连续型随机变量分布问题，先确定随机变量的分布范围；再按照离散型变量分情况求概率，注意两个变量是否属于包含情况或者不是独立</li>
 </ul>
@@ -420,40 +455,41 @@ for the JavaScript code in this tag.
 <li>期望的实际意义：概率的平均值（非样本）</li>
 <li>期望相关公式
 <ul class="org-ul">
-<li><img src="ltximg/Probability_fe7f9e45a6dec40742ec0cf246671ef24662b503.png" alt="Probability_fe7f9e45a6dec40742ec0cf246671ef24662b503.png" /></li>
-<li><img src="ltximg/Probability_a109c994e47087177d9bbac93ac7f49c77685501.png" alt="Probability_a109c994e47087177d9bbac93ac7f49c77685501.png" /> （均值为常数c）</li>
-<li><img src="ltximg/Probability_2ac8d812ad590babcc6847c37352a6b50424e457.png" alt="Probability_2ac8d812ad590babcc6847c37352a6b50424e457.png" /></li>
-<li>当X Y相互独立，<img src="ltximg/Probability_a84ed89890a82dd447bf58de483c0f14a21270a9.png" alt="Probability_a84ed89890a82dd447bf58de483c0f14a21270a9.png" /></li>
+<li>\(E(\sum\limits_{i=1}^{n}a_i X_i) = \sum\limits_{i=1}^n a_i E(X_i) \)</li>
+<li>\(Ec = c\) （均值为常数c）</li>
+<li>\(E(aX+bY) = aEX + bEY\)</li>
+<li>当X Y相互独立，\(E(XY)=E(X)E(Y)\)</li>
 </ul></li>
 <li>方差的实际意义：概率分布的离散程度</li>
 <li>方差相关公式
 <ul class="org-ul">
-<li><img src="ltximg/Probability_761c2597ededd55571a991eba105ed90a2089423.png" alt="Probability_761c2597ededd55571a991eba105ed90a2089423.png" /></li>
-<li><img src="ltximg/Probability_947b09802e186483c4b088d86191a701f7cbe783.png" alt="Probability_947b09802e186483c4b088d86191a701f7cbe783.png" /></li>
-<li><img src="ltximg/Probability_f5d0a532069767d377113f62bdde3e0b95628abe.png" alt="Probability_f5d0a532069767d377113f62bdde3e0b95628abe.png" /></li>
-<li><img src="ltximg/Probability_7afa77d6f46c559b0eab3c03aafe35917f6be8a0.png" alt="Probability_7afa77d6f46c559b0eab3c03aafe35917f6be8a0.png" /></li>
-<li><b>对于任意常数，<img src="ltximg/Probability_80e198f34e7e437ca51a793e7b310ed011a9b8fb.png" alt="Probability_80e198f34e7e437ca51a793e7b310ed011a9b8fb.png" /></b></li>
+<li>\(DX = E(X-EX)^2 = E(X^2) - (EX)^2\)</li>
+<li>\(Dc=0\)</li>
+<li>\(D(aX+c) = a^2DX + c\)</li>
+<li>\(D(X \pm Y) = DX + DY \pm 2Cov(X,Y)\)</li>
+<li><b>对于任意常数，\(DX = E(X-EX)^2 \leq E(X-c)^2\)</b></li>
 </ul></li>
 <li>切比雪夫不等式<br />
-<img src="ltximg/Probability_c579f04c4569f70ba2a60b7f4746767d9678c21e.png" alt="Probability_c579f04c4569f70ba2a60b7f4746767d9678c21e.png" /><br />
+\(P{|X-EX| \geq \varepsilon} \leq \frac{DX}{\varepsilon}\\
+  P{|X-EX| < \varepsilon} \geq 1-\frac{DX}{\varepsilon}\)<br />
 实际意义：方差越小，X越趋于EX</li>
 <li>协方差
 <ul class="org-ul">
-<li>实际意义 刻画X Y 之间偏差的关联程度；<img src="ltximg/Probability_071ee52c83f998a0f8eb998a437b9413c1c15daa.png" alt="Probability_071ee52c83f998a0f8eb998a437b9413c1c15daa.png" />表示X Y之间有线性关系；<img src="ltximg/Probability_ae616ebdaea30e2a426844ace45a7d8cfcb40925.png" alt="Probability_ae616ebdaea30e2a426844ace45a7d8cfcb40925.png" />不表示X Y之间不存在相依关系</li>
-<li><img src="ltximg/Probability_2898e1e5b778917ef4ebe18dcbca5374530e49e7.png" alt="Probability_2898e1e5b778917ef4ebe18dcbca5374530e49e7.png" /><br />
-<img src="ltximg/Probability_e6a11ee068810362a5d4af9e6032620e397ff1f7.png" alt="Probability_e6a11ee068810362a5d4af9e6032620e397ff1f7.png" /></li>
-<li><img src="ltximg/Probability_aaa571908d52f7619b49838bee7dd458cce318b1.png" alt="Probability_aaa571908d52f7619b49838bee7dd458cce318b1.png" /></li>
-<li><img src="ltximg/Probability_5130a7cda8d57e08054f05c84201ac8a583829a3.png" alt="Probability_5130a7cda8d57e08054f05c84201ac8a583829a3.png" /></li>
-<li><img src="ltximg/Probability_0440fe06c18a9c863cbedc661475802d2b6e9888.png" alt="Probability_0440fe06c18a9c863cbedc661475802d2b6e9888.png" /></li>
+<li>实际意义 刻画X Y 之间偏差的关联程度；\(\rho=\pm 1\)表示X Y之间有线性关系；\(\rho=0\)不表示X Y之间不存在相依关系</li>
+<li>\(Cov(X, Y) = Cov(Y, X)\)<br />
+\(Cov(X, X) = DX\)</li>
+<li>\(Cov(X, c) = 0; Cov(aX+b, Y) = aCov(X, Y)\)</li>
+<li>\(Cov(X_1+X_2, Y) = Cov(X_1, Y) + Cov(X_2, Y)\)</li>
+<li>\(D(X+Y) = DX + DY + 2Cov(X,Y) = DX + DY + 2\rho \sqrt{DX} \sqrt{DY}\)</li>
 </ul></li>
 <li>矩与协方差矩阵
 <ul class="org-ul">
-<li>k阶原点矩：<img src="ltximg/Probability_e17e95ebe484d8bc38c8b9a136c4a4112ed04ef2.png" alt="Probability_e17e95ebe484d8bc38c8b9a136c4a4112ed04ef2.png" /></li>
-<li>k阶中心矩：<img src="ltximg/Probability_99ca998d113e361f8afa654e71f93efe8870db43.png" alt="Probability_99ca998d113e361f8afa654e71f93efe8870db43.png" /> （方差是 2阶中心矩）</li>
+<li>k阶原点矩：\(E(X^k)\)</li>
+<li>k阶中心矩：\(E[(X-EX)^k]\) （方差是 2阶中心矩）</li>
 <li>二维随机变量的协方差矩阵</li>
 </ul></li>
 <li>技巧 圆周类的均匀分布，要以角度为单位</li>
-<li>易错点 独立 <img src="ltximg/Probability_65851b9e00fe1696a4351d560abd561b4e8a20a4.png" alt="Probability_65851b9e00fe1696a4351d560abd561b4e8a20a4.png" /> 不相关，相关 <img src="ltximg/Probability_65851b9e00fe1696a4351d560abd561b4e8a20a4.png" alt="Probability_65851b9e00fe1696a4351d560abd561b4e8a20a4.png" /> 不独立；反之不可</li>
+<li>易错点 独立 \(\longrightarrow\) 不相关，相关 \(\longrightarrow\) 不独立；反之不可</li>
 </ul>
 </div>
 </div>
@@ -461,9 +497,9 @@ for the JavaScript code in this tag.
 <h2 id="orgb53557c"><span class="section-number-2">5</span> 大数定律</h2>
 <div class="outline-text-2" id="text-5">
 <ul class="org-ul">
-<li>伯努利大数定律 <img src="ltximg/Probability_1eb69de0bdd1d94c379e208b2f014678e9e9881c.png" alt="Probability_1eb69de0bdd1d94c379e208b2f014678e9e9881c.png" /></li>
-<li>辛钦大数定律 <img src="ltximg/Probability_b1617b59f87a62e889a6ceae4a32d597681fb189.png" alt="Probability_b1617b59f87a62e889a6ceae4a32d597681fb189.png" /></li>
-<li>实质 做<img src="ltximg/Probability_524b4e766cf2024d80604926a5dbe685c9e31443.png" alt="Probability_524b4e766cf2024d80604926a5dbe685c9e31443.png" />次实验，实验结果趋于 EX</li>
+<li>伯努利大数定律 \(\lim\limits_{n \rightarrow \infty} P\{|\frac{U_n}{n} - p| < \varepsilon\} = 1\)</li>
+<li>辛钦大数定律 \(\lim\limits_{n \rightarrow \infty} P\{|\frac{1}{n} \sum\limits_{i=1}{n} X_i - \mu| < \varepsilon\} = 1\)</li>
+<li>实质 做\(n(n \rightarrow \infty)\)次实验，实验结果趋于 EX</li>
 </ul>
 </div>
 </div>
@@ -472,14 +508,14 @@ for the JavaScript code in this tag.
 <div class="outline-text-2" id="text-6">
 <ul class="org-ul">
 <li>列维-林德伯格定理（独立同分布中心极限定理）<br />
-<img src="ltximg/Probability_911ad86090c897010b4cfd9ace7b678d6707b72f.png" alt="Probability_911ad86090c897010b4cfd9ace7b678d6707b72f.png" /></li>
+\(\lim\limits_{n \rightarrow \infty} P\{\frac{\sum\limits_{i=1}{n} X_i - n\mu}{\sqrt n \sigma} \leq x\} = \Phi(x)\)</li>
 <li>棣莫弗-拉普拉斯定理（n项伯努利分布）<br />
-<img src="ltximg/Probability_d250d11897b918b474f5bbf49e3e0cd7a37350e7.png" alt="Probability_d250d11897b918b474f5bbf49e3e0cd7a37350e7.png" /></li>
-<li>实质 做<img src="ltximg/Probability_524b4e766cf2024d80604926a5dbe685c9e31443.png" alt="Probability_524b4e766cf2024d80604926a5dbe685c9e31443.png" />次重复实验，<img src="ltximg/Probability_679dd9227401ee31cc0229b89a289ba65310ecab.png" alt="Probability_679dd9227401ee31cc0229b89a289ba65310ecab.png" />的结果可以使用正态分布刻画</li>
+\(\lim\limits_{n \rightarrow \infty} P\{\frac{Y_n-np}{\sqrt{np(1-p)}} \leq x\} = \Phi(x)\)</li>
+<li>实质 做\(n(n \rightarrow \infty)\)次重复实验，\(X(\sum\limits_{i=1}{n} X_i)\)的结果可以使用正态分布刻画</li>
 <li>技巧 对于二项分布B(n, p)，做n次重复实验，事件A发生次数的最大可能值为：
 <ul class="org-ul">
-<li>(n+1)p为整数，<img src="ltximg/Probability_61bb475c814118186b2b19f3c4d14dd486a4b397.png" alt="Probability_61bb475c814118186b2b19f3c4d14dd486a4b397.png" /></li>
-<li>(n+1)p为偶数，<img src="ltximg/Probability_f98e1599d15c95052fc2403a22e0d30c349cfe5e.png" alt="Probability_f98e1599d15c95052fc2403a22e0d30c349cfe5e.png" /></li>
+<li>(n+1)p为整数，\(k_0 = (n+1)p, (n+1)p -1\)</li>
+<li>(n+1)p为偶数，\(k_0 = [(n+1)p]\)</li>
 </ul></li>
 </ul>
 </div>
@@ -490,45 +526,45 @@ for the JavaScript code in this tag.
 <ul class="org-ul">
 <li>样本数字特征
 <ul class="org-ul">
-<li>样本均值 <img src="ltximg/Probability_8ddfed1a3d7aa51fcc03172cba97f7ff0468b05f.png" alt="Probability_8ddfed1a3d7aa51fcc03172cba97f7ff0468b05f.png" /></li>
-<li>样本方差 <img src="ltximg/Probability_d56c9c8e2199d7bc0ca31ae95092f12b3857665f.png" alt="Probability_d56c9c8e2199d7bc0ca31ae95092f12b3857665f.png" /></li>
-<li>样本k阶原点矩 <img src="ltximg/Probability_b46d4772c8c451a3494a7e31240c6d71a3aac5aa.png" alt="Probability_b46d4772c8c451a3494a7e31240c6d71a3aac5aa.png" /></li>
-<li>样本k阶中心矩 <img src="ltximg/Probability_52072890e5c59085c88d4a87f5bda8d5925fe0a7.png" alt="Probability_52072890e5c59085c88d4a87f5bda8d5925fe0a7.png" /></li>
-<li>第k顺序量 将样本值按从小到大的顺序排列，其中<img src="ltximg/Probability_4cac1c0a11664be2335e66f6336c64d0430ce08a.png" alt="Probability_4cac1c0a11664be2335e66f6336c64d0430ce08a.png" /></li>
+<li>样本均值 \(\overline X = \frac{1}{n} \sum\limits_{i=1}{n} X_i\)</li>
+<li>样本方差 \(S^2 = \frac{1}{n-1} \sum\limits_{i=1}^{n} (X_i - \overline X)^2 = \frac{1}{n-1} (\sum\limits_{i=1}^{n} X_i^2 - n\overline X)\)</li>
+<li>样本k阶原点矩 \(\frac{1}{n} \sum\limits_{i=1}^{n} X_i^k\)</li>
+<li>样本k阶中心矩 \(\frac{1}{n} \sum\limits_{i=1}^{n} (X_i - \overline X)^k\)</li>
+<li>第k顺序量 将样本值按从小到大的顺序排列，其中\(F_{(n)}(x) = [F(x)]^n\)</li>
 </ul></li>
 <li>常用统计量的性质（通用）
 <ul class="org-ul">
-<li><img src="ltximg/Probability_f8c1484fedc4b8a72bdf3f655d14bd3f4cf75251.png" alt="Probability_f8c1484fedc4b8a72bdf3f655d14bd3f4cf75251.png" /></li>
+<li>\(EX = E\overline X = \mu; DX = \sigma ^2; D\overline X = \frac{\sigma ^2}{n}; E(S^2) = \sigma ^2\)</li>
 </ul></li>
-<li><img src="ltximg/Probability_aa2718a233274325780eb8c8fe45a72603d4bbcd.png" alt="Probability_aa2718a233274325780eb8c8fe45a72603d4bbcd.png" />分布（取上<img src="ltximg/Probability_5c1aeb16a78832af401e0b7e63971b46d6e08ce1.png" alt="Probability_5c1aeb16a78832af401e0b7e63971b46d6e08ce1.png" />分位）
+<li>\(\chi ^2\)分布（取上\(\alpha\)分位）
 <ul class="org-ul">
-<li><img src="ltximg/Probability_865b1411d55169c0262414b85e26d2cd51a25e8f.png" alt="Probability_865b1411d55169c0262414b85e26d2cd51a25e8f.png" />相互独立，服从标准正态分布，<img src="ltximg/Probability_abf30d49205329adb6e8244d2d423daa5361730f.png" alt="Probability_abf30d49205329adb6e8244d2d423daa5361730f.png" />服从<img src="ltximg/Probability_aa2718a233274325780eb8c8fe45a72603d4bbcd.png" alt="Probability_aa2718a233274325780eb8c8fe45a72603d4bbcd.png" />分布</li>
+<li>\(X_i\)相互独立，服从标准正态分布，\(X = \sum\limits_{i=1}{n} X_i^2\)服从\(\chi ^2\)分布</li>
 <li>自由度 和式中独立变量的个数</li>
 <li>EX = n；DX = 2n</li>
 </ul></li>
-<li>t 分布（取上<img src="ltximg/Probability_5c1aeb16a78832af401e0b7e63971b46d6e08ce1.png" alt="Probability_5c1aeb16a78832af401e0b7e63971b46d6e08ce1.png" />分位）
+<li>t 分布（取上\(\alpha\)分位）
 <ul class="org-ul">
-<li><img src="ltximg/Probability_013691f4768bc2af6fd04611d677765f305fef76.png" alt="Probability_013691f4768bc2af6fd04611d677765f305fef76.png" />，X Y相互独立，<img src="ltximg/Probability_6031595b807c38106e4e907c2e247340a15a28b4.png" alt="Probability_6031595b807c38106e4e907c2e247340a15a28b4.png" /></li>
+<li>\(X \sim N(0, 1), Y \sim \chi ^2(n)\)，X Y相互独立，\(t = \frac{X}{\sqrt{Y/n}}\)</li>
 <li>图像关于 x=0 对称，EX=0</li>
 </ul></li>
 <li>F 分布
 <ul class="org-ul">
-<li><img src="ltximg/Probability_324dfd4ea907e80230930a42afa846fcd4836eaf.png" alt="Probability_324dfd4ea907e80230930a42afa846fcd4836eaf.png" /></li>
-<li>若<img src="ltximg/Probability_bf1f1ccb1ff710f1ceb942e361dcc6f43061f839.png" alt="Probability_bf1f1ccb1ff710f1ceb942e361dcc6f43061f839.png" />，那么<img src="ltximg/Probability_5783a7c20683fe49d7c4f1ee561a68b0b1ea16d5.png" alt="Probability_5783a7c20683fe49d7c4f1ee561a68b0b1ea16d5.png" /> （使用公式证明）</li>
-<li><img src="ltximg/Probability_727969ce5f2ab339e353fd1ea0ca03a6c39a2593.png" alt="Probability_727969ce5f2ab339e353fd1ea0ca03a6c39a2593.png" /></li>
+<li>\(X \sim \chi ^2(n_1), Y \sim \chi ^2(n_2), F = \frac{X/n_1}{Y/n_2}\)</li>
+<li>若\(F \sim F(n_1, n_2)\)，那么\(\frac{1}{F} \sim F(n_2, n_1)\) （使用公式证明）</li>
+<li>\(F_{1-\alpha}(n_1, n_2) = \frac{1}{F_{\alpha}(n_2, n_1)}\)</li>
 </ul></li>
-<li>单正态总体（<img src="ltximg/Probability_865b1411d55169c0262414b85e26d2cd51a25e8f.png" alt="Probability_865b1411d55169c0262414b85e26d2cd51a25e8f.png" />服从<img src="ltximg/Probability_47cee5a8302206b7d134c4d58afc81d388ebc6be.png" alt="Probability_47cee5a8302206b7d134c4d58afc81d388ebc6be.png" />）
+<li>单正态总体（\(X_i\)服从\(N(0,1)\)）
 <ul class="org-ul">
-<li><img src="ltximg/Probability_d80d8860d5532f79d8de291a02a69944fd9356f0.png" alt="Probability_d80d8860d5532f79d8de291a02a69944fd9356f0.png" /></li>
-<li><img src="ltximg/Probability_76f9244508b3e2bbd517c2ab1fde76bb9da67a9a.png" alt="Probability_76f9244508b3e2bbd517c2ab1fde76bb9da67a9a.png" /></li>
-<li><img src="ltximg/Probability_0e80a341fd1242bbe448f76ebecf6ee4eee4bd9c.png" alt="Probability_0e80a341fd1242bbe448f76ebecf6ee4eee4bd9c.png" /></li>
-<li><img src="ltximg/Probability_f4d06f495aa633ff5a1ca97facb9f88990238830.png" alt="Probability_f4d06f495aa633ff5a1ca97facb9f88990238830.png" />相互独立，<img src="ltximg/Probability_d03ef2801a25f3ec495dce5b81fbdc93730cf0d7.png" alt="Probability_d03ef2801a25f3ec495dce5b81fbdc93730cf0d7.png" /></li>
+<li>\(\overline X \sim N(\mu, \frac{\sigma ^2}{n})\)</li>
+<li>\(\frac{1}{\sigma ^2} \sum\limits_{i=1}{n} (X_i-\mu)^2 \sim \chi ^2(n)\)</li>
+<li>\(\frac{(n-1)S^2}{\sigma ^2} = \sum\limits_{i=1}^{n} (\frac{X_i-\overline X}{\sigma})^2 \sim \chi ^2\)</li>
+<li>\(\overline X , S^2\)相互独立，\(\frac{(\overline X - \mu)}{\frac{S}{\sqrt n}} \sim t(n-1)\)</li>
 </ul></li>
 <li>双正态总体
 <ul class="org-ul">
-<li><img src="ltximg/Probability_69aea299cbc537058c856ad4071d3dc035d90716.png" alt="Probability_69aea299cbc537058c856ad4071d3dc035d90716.png" /></li>
-<li><img src="ltximg/Probability_d98df46b0b2bd4a3f119c661d7aeb05c90afc3ca.png" alt="Probability_d98df46b0b2bd4a3f119c661d7aeb05c90afc3ca.png" /></li>
-<li><img src="ltximg/Probability_398d604be871e3a1f1d60a59d22f358d53ce5507.png" alt="Probability_398d604be871e3a1f1d60a59d22f358d53ce5507.png" /></li>
+<li>\(\overline X - \overline Y \sim N(\mu_1 - \mu_2, \frac{\sigma_1 ^2}{m}+\frac{\sigma_2 ^2}{n})\)</li>
+<li>\(\frac{\sum\limits_{i=1}{n} (X_i-\mu_1)^2/m\sigma_1 ^2}{\sum\limits_{i=1}{n} (Y_i-\mu_2)^2/n\sigma_2 ^2} \sim F(m, n)\)</li>
+<li>\(\frac{S_X^2/\sigma_1^2}{S_Y^2/\sigma_2^2} = \frac{\sum\limits_{i=1}{n} (X_i-\overline X)^2/(m-1)\sigma_1 ^2}{\sum\limits_{i=1}{n} (Y_i-\overline Y)^2/(n-1)\sigma_2 ^2} \sim F(m, n)\)</li>
 </ul></li>
 <li>统计量 不含任何未知参数的样本函数</li>
 </ul>
@@ -538,7 +574,7 @@ for the JavaScript code in this tag.
 <h2 id="org1761ec1"><span class="section-number-2">8</span> 参数估计</h2>
 <div class="outline-text-2" id="text-8">
 <ul class="org-ul">
-<li>矩估计法 求<img src="ltximg/Probability_28556fb98197cef38eb579e0d1cf249b74fb76f8.png" alt="Probability_28556fb98197cef38eb579e0d1cf249b74fb76f8.png" /></li>
+<li>矩估计法 求\(EX^t = \frac{1}{n}\sum\limits_{i=1}^{n} X_i^t; t=1,2,3...\)</li>
 <li>最大似然估计法 通过样本观测值估计概率最大的参数作为估计值。可以通过求最大似然函数，确定参数的估计值，这个参数需要使最大似然函数值最大</li>
 <li>估计标准 无偏性 有效性 一致性（相合性）</li>
 <li>置信区间</li>
@@ -547,14 +583,14 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro</p>
-            <script src="https://utteranc.es/client.js"
-        repo="nicehiro/nicehiro.github.io"
-        issue-term="pathname"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-        </script>
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
 </div>
 </body>
 </html>

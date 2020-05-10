@@ -1,11 +1,28 @@
 body {
     /* Adapted from https://www.zhihu.com/ */
     font-family: -apple-system,system-ui,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
+}
+
+h1.title {
+    padding: 3rem;
+}
+
+h2 {
+    background-color: #4d4d4d;
+    color: #CCC;
+    padding: 1rem;
+}
+
+#content {
+    font-size: 18px;
+    line-height: 1.6em;
     margin: 0 auto;
-    max-width: 50rem;
-    line-height: 30px;
-    font-size: large;
-    background: #fff8dc;
+    max-width: 40rem;
+    background: #ffffff;
+}
+
+a {
+    color: #80aaff;
 }
 
 nav {
@@ -21,11 +38,10 @@ nav a:hover {
     text-decoration: underline;
 }
 
-footer {
+p.postamble {
+    background-color: #333;
+    color: #CCC;
     text-align: center;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-size: 0.75rem;
 }
 
 code {
@@ -68,12 +84,16 @@ article time:first-of-type {
     color: DimGray;
 }
 
-h1.title {
+h1, h2, h3 {
     text-align: center;
 }
 
-.org-ul li {
-    font-size: 16px;
+p {
+    line-height: 2.0em;
+}
+
+ul {
+    line-height: 1.6em;
 }
 
 .outline-text-2 p {

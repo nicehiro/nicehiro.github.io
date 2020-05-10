@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-05-10 日 10:09 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>强化学习 &#x2013; 基础</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="hiro" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+	     margin-bottom: .2em; }
+  .subtitle { text-align: center;
+	      font-size: medium;
+	      font-weight: bold;
+	      margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+	    padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+	displayAlign: "center",
+	displayIndent: "0em",
+
+	"HTML-CSS": { scale: 100,
+			linebreaks: { automatic: "false" },
+			webFont: "TeX"
+		       },
+	SVG: {scale: 100,
+	      linebreaks: { automatic: "false" },
+	      font: "TeX"},
+	NativeMML: {scale: 100},
+	TeX: { equationNumbers: {autoNumber: "AMS"},
+	       MultLineWidth: "85%",
+	       TagSide: "right",
+	       TagIndent: ".8em"
+	     }
+});
+</script>
+<script type="text/javascript"
+	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">强化学习 &#x2013; 基础</h1>
+
+<div id="outline-container-org70c31eb" class="outline-2">
+<h2 id="org70c31eb"><span class="section-number-2">1</span> 强化学习中的术语</h2>
+<div class="outline-text-2" id="text-1">
+<div class="org-src-container">
+<pre class="src src-dot">digraph agent_environment {
+forcelabels=true
+splines=false
+  "Agent"[shape="ellipse"]
+  "Environment"[shape="ellipse"]
+  "Agent":sw-&gt;"Environment":nw[dir=forward, xlabel=" Action "]
+  "Environment":ne-&gt;"Agent":se[dir=backward, xlabel=" State, Reward "]
+}
+</pre>
+</div>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/agent-environment.png" alt="agent-environment.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+强化学习中的主要角色是 <b>客体（Agent）</b> 和 <b>环境（Environment）</b> ，环境就是此客体生存、可以进行交互的世界。客体和环境的每次交互时，客体会根据环境的状态决定下一个要执行的 <b>动作（Action）</b> ，而环境也会随着客体进行的动作进行相应的改变。客体还会收到来自环境的信号 <b>反馈（reward）</b> ，告诉客体当前环境的状态是好是坏；客体的目标是最大化这种累积的信号反馈（reward），这个过程叫做 <b>客体反馈（return）</b> 。强化学习就是客体不断从行为（反馈）中学习从而实现自己的目标的过程。
+</p>
+
+<div class="org-src-container">
+<pre class="src src-dot">digraph reward {
+  "环境给客体reward" -&gt; "客体通过强化学习算法得出当前最佳的动作（return）" -&gt; "环境给客体reward"
+}
+</pre>
+</div>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/反馈流.png" alt="反馈流.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge897e05" class="outline-3">
+<h3 id="orge897e05"><span class="section-number-3">1.1</span> 状态（States）和观察（observations）</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+状态（States）是对当前环境的最全面的描述，当前环境的所有信息都必须描述在状态中；而观察（Observation）只是当前状态的不全面的描述，可能会遗漏一些环境的信息。当客体能够观察到当前环境的所有信息，称为全面了解（fully observed），否则，称为部分了解（partially observed）。
+</p>
+
+<p>
+二者之间是有区别的。从理论上来分析，客体的动作应该根据环境的状态（Status）改变，但在实际情况中，客体只能通过观察来改变动作，因为客体是无法全面的了解环境的状态的。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2a50c20" class="outline-3">
+<h3 id="org2a50c20"><span class="section-number-3">1.2</span> 动作集（Action Spaces）</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+不同的环境包含有不同种的动作，给定环境中所有合法的状态被称为这个环境的动作集。
+在某些环境中，比如AlghaGo，它的动作集是离散的，包含一些有限的数代表客体可以移动的步数，这种动作集称为 <b>离散动作集（disecret action spaces）</b> ；而其他的环境（控制机器人在一块平地上追某个目标）中的动作集是持续性的，被称为 <b>持续动作集（continuous action spaces）</b> ，持续动作集中的动作用向量表示。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2a58816" class="outline-3">
+<h3 id="org2a58816"><span class="section-number-3">1.3</span> 决策（Policy）</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+决策是客体用来决定下一步采取什么动作（Actions）的规则。它可以是确定的，被\(\mu\)代表的函数决定：
+\[ a_t = \mu(s_t) \]
+也可以是随机的：
+\[ a_t = \pi(\cdotp|s_t) \]
+</p>
+
+<p>
+由于决策在本质上就是客体的“大脑”所做的决定，因此也经常把可以用决策来代替。
+</p>
+
+<p>
+强化学习中，我们只处理参数化的决策，所谓参数化的决策，就是接受一堆参数（环境中获取）的可计算的函数，之后可以通过优化算法去调整客体的行动。
+</p>
+</div>
+
+<div id="outline-container-orgd91d6cd" class="outline-4">
+<h4 id="orgd91d6cd"><span class="section-number-4">1.3.1</span> 随机决策（Stochastic Policies）</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+RL中最常见的随机决策方法有：分类决策（categories policies）和对角高斯决策（diagonal Gaussian policies）。
+</p>
+
+<p>
+使用和训练随机决策有两个很重要的步骤：
+</p>
+<ul class="org-ul">
+<li>Sampling 从决策中抽出接下来可以进行的动作</li>
+<li>Log-Likelihood 计算每个动作的对数似然性</li>
+</ul>
+</div>
+
+<div id="outline-container-org7aeccbb" class="outline-5">
+<h5 id="org7aeccbb"><span class="section-number-5">1.3.1.1</span> 分类决策（Categorical Policies）</h5>
+<div class="outline-text-5" id="text-1-3-1-1">
+<p>
+分类决策就像是个筛子，对离散的动作进行筛选，经过不同的中间步骤，把不同的离散动作筛选出来。最终返回一个线性对应关系（动作和此动作的概率）。
+</p>
+<ul class="org-ul">
+<li>Sampling</li>
+<li>Log-Likelihood</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org20820a8" class="outline-5">
+<h5 id="org20820a8"><span class="section-number-5">1.3.1.2</span> <span class="todo TODO">TODO</span> 对角高斯决策（Diagonal Gaussian Policies）</h5>
+<div class="outline-text-5" id="text-1-3-1-2">
+<p>
+多变量高斯分布（或者多变量正太分布）由平均向量（mean vector）和协方差（covariance matrix）描述。对角高斯分布是一种特殊情况，其中协方差矩阵仅在对角线上具有条目。因此，我们可以用矢量表示它。
+</p>
+
+<p>
+&#x2026; 看不懂
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4cdf013" class="outline-4">
+<h4 id="org4cdf013"><span class="section-number-4">1.3.2</span> 轨迹（Trajectories）</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+轨迹\(\tau\)表示状态和动作的一组序列：
+\[ \tau = (s_0, a_0, s_1, a_1, ...) \]
+</p>
+
+<p>
+环境最初的状态 \(s_0\) ，从起始状态分布中随机抽样，有时用\(\rho_0\)定义
+\[ s_0 \sim \rho_0 \]
+</p>
+
+<p>
+状态转移（状态随时间变化由\((t, s_t)\)转变为\((t+1, s_{t+1})\)）受到环境的约束，并且只取决于最近的动作，可以是确定的：
+\[ s_{t+1} = f(s_t, a_t) \]
+也可以是随机的：
+\[ s_{t+1} \sim P(\cdotp|s_t, a_t) \]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8dff499" class="outline-4">
+<h4 id="org8dff499"><span class="section-number-4">1.3.3</span> <span class="todo TODO">TODO</span> 反馈和返回（Reward &amp; Return）（没有理解这个段落，翻译不来）</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<p>
+反馈（Reward）在RL中相当重要，它取决于当前环境的状态，客体此刻采取的动作以及接下来环境的状态：
+\[ r_t = R(s_t, a_t, s_{t+1}) \]
+但也经常简化为只依赖于当前状态和客体此刻的动作（感觉本来就该如此）\(r_t = R(s_t, a_t)\)
+</p>
+
+<p>
+客体的目标是最大化这种累积的信号反馈，记作\(R(\tau)\)。一种返回是有限但未计数的返回（finite-horizon undiscounted return），只是在固定窗口的步骤中获取的反馈之和（sum of rewards）：
+\[ R(\tau) = \sum_{t=0}^{T} r_t \]
+</p>
+
+<p>
+另一种返回是无限期discounted返回（infinite-horizon discounted return），它是客体获得的奖励的总和，但是通过他们获取的未来距离来discount，这种奖励形式discount因子：\( \gamma \in (0, 1) \)
+\[ R(\tau) = \sum_{t=0}^{\infty} \gamma^{t}r_t \]
+</p>
+
+<p>
+Why would we ever want a discount factor, though? Don’t we just want to get all rewards? We do, but the discount factor is both intuitively appealing and mathematically convenient. On an intuitive level: cash now is better than cash later. Mathematically: an infinite-horizon sum of rewards may not converge to a finite value, and is hard to deal with in equations. But with a discount factor and under reasonable conditions, the infinite sum converges
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org94544e4" class="outline-3">
+<h3 id="org94544e4"><span class="section-number-3">1.4</span> RL解决的问题</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+不管选择的返回方法（return measure）是什么，也不管选择的策略（policy）是什么，RL要解决的是：当客体选择某个动作之后，RL选择一个能使期待反馈（expect return）结果最优的策略（policy）。
+</p>
+
+<p>
+假设当前环境下状态的转变（transitions）和策略（policy）都是随机的，那么T步轨迹的概率是：
+\[ P(\tau|\pi) = \rho_0 (s_0) \prod_{t=0}^{T-1} P(s_{t+1} | s_t, a_t) \pi(a_t | s_t) \]
+</p>
+
+<p>
+预计返回结果：
+\[ J(\pi) = \int_{\tau} P(\tau|\pi) R(\tau) = \underE{\tau\sim \pi}{R(\tau)} \]
+</p>
+
+<p>
+RL的中心优化问题可以表示为：
+\[ \pi^* = \arg \max_{\pi} J(\pi) \]
+\(\pi^*\)被称做最优策略。
+</p>
+</div>
+</div>
+<div id="outline-container-org5e57448" class="outline-3">
+<h3 id="org5e57448"><span class="section-number-3">1.5</span> 值函数</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+RL中知道一个状态，或者是状态-动作键值对映射是很有用的。有了描述上诉关系的值函数，之后就能根据特定的策略来执行接下来的动作。几乎每个RL算法都会这样实现。
+</p>
+<ul class="org-ul">
+<li>On-Policy Value Function：从一个状态开始一直依据策略进行下一步动作，会获得预期的结果</li>
+<li>On-Policy Action-Value Function：从一个状态开始，采取任意的动作（不管这个动作是否是通过策略获得到的），都会得到预期的结果</li>
+<li>Optimal-Value Function：从一个状态开始一直依据 <b>最佳</b> 策略进行下一步动作，获得预期结果</li>
+<li>Optimal Action-Value Function：从一个状态开始，采取任意的动作（不管这个动作是否是通过最佳策略获得到的），都会得到预期的结果</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
+	    <script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
+</div>
+</body>
+</html>
