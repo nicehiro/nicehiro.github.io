@@ -51,6 +51,10 @@ ol, ul {
     line-height: 2rem;
 }
 
+a {
+    color: #a66;
+}
+
 div p.postamble {
     text-align: center;
     border-top: 5px solid #a66;

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-10 日 10:09 -->
+<!-- 2020-05-10 日 15:47 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>LeetCode #84 Largest Rectangle Area in Histogram</title>
@@ -289,23 +289,19 @@ for the JavaScript code in this tag.
 <p>
 计算任意两个柱子之间的最大面积，取最小值。
 </p>
-<div class="SOURCE">
-<p>
-def direct(self):
+<div class="org-src-container">
+<pre class="src src-python">def direct(self):
     area = 0
     for i in range(len(self.heights)):
 	for j in range(i, len(self.heights)):
-</p>
-
-<p>
-	min<sub>h</sub> = self.heights[i]
-	for h in range(i, j):
-	    min<sub>h</sub> = self.heights[h] if min<sub>h</sub> &gt; self.heights[h] else min<sub>h</sub>
-	t = min<sub>h</sub> * (j - i + 1)
-	area = t if t &gt; area else area
-return area
-</p>
-
+	    # find miniest height between (i, j)
+	    min_h = self.heights[i]
+	    for h in range(i, j):
+		min_h = self.heights[h] if min_h &gt; self.heights[h] else min_h
+	    t = min_h * (j - i + 1)
+	    area = t if t &gt; area else area
+    return area
+</pre>
 </div>
 
 <ol class="org-ol">
@@ -331,9 +327,8 @@ return area
 求上诉三种情况（两个子问题）下的最大面积。
 </p>
 
-<div class="SOURCE">
-<p>
-def find<sub>min</sub><sub>position</sub>(self, l, r):
+<div class="org-src-container">
+<pre class="src src-python">def find_min_position(self, l, r):
     if l &gt;= r:
 	return -1
     m = self.heights[l]
@@ -343,17 +338,14 @@ def find<sub>min</sub><sub>position</sub>(self, l, r):
 	    p = i
 	    m = self.heights[i]
     return p
-</p>
 
-<p>
 def DC(self, l, r):
     if l &gt;= r:
 	return 0
-    m<sub>p</sub> = self.find<sub>min</sub><sub>position</sub>(l, r)
-    m<sub>area</sub> = (r - l) * self.heights[m<sub>p</sub>]
-    return max(m<sub>area</sub>, self.DC(l, m<sub>p</sub>), self.DC(m<sub>p</sub>+1, r))
-</p>
-
+    m_p = self.find_min_position(l, r)
+    m_area = (r - l) * self.heights[m_p]
+    return max(m_area, self.DC(l, m_p), self.DC(m_p+1, r))
+</pre>
 </div>
 
 <ol class="org-ol">
@@ -367,14 +359,9 @@ def DC(self, l, r):
 </div>
 </div>
 
-<div id="outline-container-org2eaa65d" class="outline-3">
-<h3 id="org2eaa65d"><span class="section-number-3">2.3</span> 优化后的分治法</h3>
-</div>
-
-
 <div id="outline-container-org2f56885" class="outline-3">
-<h3 id="org2f56885"><span class="section-number-3">2.4</span> 单调栈</h3>
-<div class="outline-text-3" id="text-2-4">
+<h3 id="org2f56885"><span class="section-number-3">2.3</span> 单调栈</h3>
+<div class="outline-text-3" id="text-2-3">
 <p>
 单调栈分为单调递增栈核单调递减栈。单调递增栈中，栈内元素都是单调递增的；同样的，单调递减栈中，栈内元素都是单调递减的。遇到使得栈内元素不能递增/递减的元素，从栈内弹出元素，直到插入元素可以使得栈符合定义。
 </p>
@@ -391,9 +378,8 @@ def DC(self, l, r):
 利用这个性质，可以考虑，以高度 <code>heights[i]</code> 为高，以右边第一个 <code>&lt; heights[i]</code> 的元素位置和左边第一个 <code>&gt; heights[i]</code> 的距离为宽，可以得到包含这个高度的矩形的最大面积。将这个思想运用到所有高度上即可。
 </p>
 
-<div class="SOURCE">
-<p>
-def STACK(self):
+<div class="org-src-container">
+<pre class="src src-python">def STACK(self):
     l = [(-1, -1)]
     res = 0
     for i in range(len(self.heights)):
@@ -408,8 +394,7 @@ def STACK(self):
     for i in range(len(l)-1, 0, -1):
 	res = max((len(self.heights) - l[i-1][0] - 1) * l[i][1], res)
     return res
-</p>
-
+</pre>
 </div>
 
 <ol class="org-ol">
@@ -430,7 +415,7 @@ def STACK(self):
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-04-24 五 12:04. Created by hiro.</p>
+<p class="postamble">Last Updated 2020-05-10 日 15:47. Created by hiro.</p>
 	    <script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"

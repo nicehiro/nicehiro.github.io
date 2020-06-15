@@ -29,7 +29,7 @@ h2 {
 }
 
 a {
-    color: #80aaff;
+    color: #a66;
 }
 
 nav {
@@ -101,7 +101,7 @@ p {
 }
 
 ul {
-    line-height: 1.6em;
+    font-size: 1.0rem;
 }
 
 .outline-text-2 p {
