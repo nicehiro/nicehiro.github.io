@@ -3,195 +3,195 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-06-15 一 14:12 -->
+<!-- 2020-09-07 Mon 14:16 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>深入强化学习之策略梯度的基础</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="hiro" />
+<meta name="author" content="王方圆" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-	     margin-bottom: .2em; }
-  .subtitle { text-align: center;
-	      font-size: medium;
-	      font-weight: bold;
-	      margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-	    padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: visible;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
@@ -222,21 +222,21 @@ for the JavaScript code in this tag.
 <!--/*--><![CDATA[/*><!--*/
  function CodeHighlightOn(elem, id)
  {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
+	 var target = document.getElementById(id);
+	 if(null != target) {
+		 elem.cacheClassElem = elem.className;
+		 elem.cacheClassTarget = target.className;
+		 target.className = "code-highlighted";
+		 elem.className   = "code-highlighted";
+	 }
  }
  function CodeHighlightOff(elem, id)
  {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
+	 var target = document.getElementById(id);
+	 if(elem.cacheClassElem)
+		 elem.className = elem.cacheClassElem;
+	 if(elem.cacheClassTarget)
+		 target.className = elem.cacheClassTarget;
  }
 /*]]>*///-->
 </script>
@@ -248,13 +248,13 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org52822dc">1. 假设和问题陈述</a></li>
-<li><a href="#org45df69f">2. 两步：对数导数技巧和对数概率的确定</a></li>
-<li><a href="#org7b75a45">3. 梯度的计算</a></li>
-<li><a href="#org5010f4c">4. 如何引入 Baseline</a></li>
-<li><a href="#org96ccb29">5. 理解 Baseline</a></li>
-<li><a href="#org1968f20">6. 折扣因子</a></li>
-<li><a href="#org8128a5e">7. 优势函数</a></li>
+<li><a href="#org08dbeda">1. 假设和问题陈述</a></li>
+<li><a href="#org32b4391">2. 两步：对数导数技巧和对数概率的确定</a></li>
+<li><a href="#org34c5e35">3. 梯度的计算</a></li>
+<li><a href="#orge153063">4. 如何引入 Baseline</a></li>
+<li><a href="#orgcbce6c9">5. 理解 Baseline</a></li>
+<li><a href="#org846660a">6. 折扣因子</a></li>
+<li><a href="#orgc11435b">7. 优势函数</a></li>
 </ul>
 </div>
 </div>
@@ -266,8 +266,8 @@ for the JavaScript code in this tag.
 正如我之前的文章所说，最近我非常急切的想要找新的 Paper 去阅读。这次我盯上了策略梯度，一个在当前研究领域相当火的方向。
 </p>
 
-<div id="outline-container-org52822dc" class="outline-2">
-<h2 id="org52822dc"><span class="section-number-2">1</span> 假设和问题陈述</h2>
+<div id="outline-container-org08dbeda" class="outline-2">
+<h2 id="org08dbeda"><span class="section-number-2">1</span> 假设和问题陈述</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 无论在什么研究领域中，我们总是要先去定义一些假设。（这里说的“我们”，指的的写这些 Paper 的研究人员。）在强化学习和策略梯度的领域，这些假设通常为 <b>episode</b> 的设置，即 <b>agent</b> 在其环境下进行多次训练的轨迹。例如，一个 agent 在玩 Ping-Pong 游戏，那么一个 episode 就包含了从游戏开始到结束的所有过程。
@@ -314,8 +314,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org45df69f" class="outline-2">
-<h2 id="org45df69f"><span class="section-number-2">2</span> 两步：对数导数技巧和对数概率的确定</h2>
+<div id="outline-container-org32b4391" class="outline-2">
+<h2 id="org32b4391"><span class="section-number-2">2</span> 两步：对数导数技巧和对数概率的确定</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 在开始计算梯度之前，我们先来看两个之后会用到的数学公式。第一个被称作“log-derivative”技巧，它告诉我们，如何在期望中插入 <img src="ltximg/Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients_e392641a1a33572363059982bacd812d2d0dc9dd.png" alt="Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients_e392641a1a33572363059982bacd812d2d0dc9dd.png" /> 函数。
@@ -353,8 +353,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org7b75a45" class="outline-2">
-<h2 id="org7b75a45"><span class="section-number-2">3</span> 梯度的计算</h2>
+<div id="outline-container-org34c5e35" class="outline-2">
+<h2 id="org34c5e35"><span class="section-number-2">3</span> 梯度的计算</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 有了上面介绍的两个工具之后，我们现在可以重新审视我们的目标了，即计算奖励之和的期望的梯度。我们使用 <img src="ltximg/Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients_3112984927928ef506d19dabe1976d70cf13ed48.png" alt="Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients_3112984927928ef506d19dabe1976d70cf13ed48.png" /> 表示我们想要优化的奖励函数，使用上面的两个公式，可以得到：
@@ -379,8 +379,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org5010f4c" class="outline-2">
-<h2 id="org5010f4c"><span class="section-number-2">4</span> 如何引入 Baseline</h2>
+<div id="outline-container-orge153063" class="outline-2">
+<h2 id="orge153063"><span class="section-number-2">4</span> 如何引入 Baseline</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 减少方法的标准方法是在期望函数中添加一个 Baseline 函数 <img src="ltximg/Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients_8d3db7bd7938f3bca5b96437ac11f8a87eefe238.png" alt="Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients_8d3db7bd7938f3bca5b96437ac11f8a87eefe238.png" /> 。
@@ -455,8 +455,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org96ccb29" class="outline-2">
-<h2 id="org96ccb29"><span class="section-number-2">5</span> 理解 Baseline</h2>
+<div id="outline-container-orgcbce6c9" class="outline-2">
+<h2 id="orgcbce6c9"><span class="section-number-2">5</span> 理解 Baseline</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 首先，我们先理一下为什么加入 Baseline 函数之后不会使我们的策略梯度有偏差。然后，将会讲解为什么 Baseline 加入之后可以减少方差。这两点抓住了两全其美的局面：保证无偏差且减少方差。
@@ -557,8 +557,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org1968f20" class="outline-2">
-<h2 id="org1968f20"><span class="section-number-2">6</span> 折扣因子</h2>
+<div id="outline-container-org846660a" class="outline-2">
+<h2 id="org846660a"><span class="section-number-2">6</span> 折扣因子</h2>
 <div class="outline-text-2" id="text-6">
 <p>
 到目前为止，我们知道想要优化的目标为期望回报，或者说是期望奖励之和。如果你之前学习过值迭代和策略迭代，你一定会记得我们通常会用到折扣因子 <img src="ltximg/Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients_6b9bcf211150819d8d3f6d0d67e3c7679eafdd3b.png" alt="Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients_6b9bcf211150819d8d3f6d0d67e3c7679eafdd3b.png" /> 。同样，我们将折扣因子引入到这里：
@@ -579,8 +579,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org8128a5e" class="outline-2">
-<h2 id="org8128a5e"><span class="section-number-2">7</span> 优势函数</h2>
+<div id="outline-container-orgc11435b" class="outline-2">
+<h2 id="orgc11435b"><span class="section-number-2">7</span> 优势函数</h2>
 <div class="outline-text-2" id="text-7">
 <p>
 这节中，我们将使用下列两个值函数来重写策略梯度方程：
@@ -646,8 +646,8 @@ for the JavaScript code in this tag.
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-06-15 一 14:11. Created by hiro.</p>
-	    <script src="https://utteranc.es/client.js"
+<p class="postamble">Last Updated 2020-07-11 Sat 15:04. Created by 王方圆.</p>
+			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
 	theme="github-light"

@@ -1,0 +1,849 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-09-09 Wed 10:15 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>强化学习 &#x2013; Sergey Levine Course</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="王方圆" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: visible;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
+
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+	 var target = document.getElementById(id);
+	 if(null != target) {
+		 elem.cacheClassElem = elem.className;
+		 elem.cacheClassTarget = target.className;
+		 target.className = "code-highlighted";
+		 elem.className   = "code-highlighted";
+	 }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+	 var target = document.getElementById(id);
+	 if(elem.cacheClassElem)
+		 elem.className = elem.cacheClassElem;
+	 if(elem.cacheClassTarget)
+		 target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+				displayAlign: "center",
+				displayIndent: "0em",
+
+				"HTML-CSS": { scale: 100,
+												linebreaks: { automatic: "false" },
+												webFont: "TeX"
+											 },
+				SVG: {scale: 100,
+							linebreaks: { automatic: "false" },
+							font: "TeX"},
+				NativeMML: {scale: 100},
+				TeX: { equationNumbers: {autoNumber: "AMS"},
+							 MultLineWidth: "85%",
+							 TagSide: "right",
+							 TagIndent: ".8em"
+						 }
+});
+</script>
+<script type="text/javascript"
+				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">强化学习 &#x2013; Sergey Levine Course</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org7d25bc1">1. #Lec10 Optimal Control and Planning</a>
+<ul>
+<li><a href="#org461580e">1.1. Model-based 强化学习简介</a></li>
+<li><a href="#org99c4fd1">1.2. Stochastic 优化方法</a>
+<ul>
+<li><a href="#org0eb342d">1.2.1. 目标</a>
+<ul>
+<li><a href="#org0d25aed">1.2.1.1. 确定性（Deterministic）环境下：</a></li>
+<li><a href="#orgdfbbb6d">1.2.1.2. 随机性（Stochastic）Open-loop 环境下：</a></li>
+<li><a href="#orgc789772">1.2.1.3. 随机性（Stochastic）Closed-loop 环境下：</a></li>
+</ul>
+</li>
+<li><a href="#orga41531b">1.2.2. 优化</a>
+<ul>
+<li><a href="#org41d4e29">1.2.2.1. Guess &amp; Check</a></li>
+<li><a href="#org732aa26">1.2.2.2. Cross-entropy method（CEM）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#orged944bb">1.3. Monte Carlo 树搜索 （MCTS）</a></li>
+<li><a href="#org2e3b65e">1.4. 导数求解</a>
+<ul>
+<li><a href="#orgb8254f2">1.4.1. 为什么使用二阶优化方法</a>
+<ul>
+<li><a href="#orgf8fe9e4">1.4.1.1. Shooting method</a></li>
+<li><a href="#orgc5269e1">1.4.1.2. Collocation method</a></li>
+</ul>
+</li>
+<li><a href="#orgb0f7f6d">1.4.2. LQR</a></li>
+<li><a href="#orgf8993c1">1.4.3. iLQR</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7d25bc1" class="outline-2">
+<h2 id="org7d25bc1"><span class="section-number-2">1</span> #Lec10 Optimal Control and Planning</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org461580e" class="outline-3">
+<h3 id="org461580e"><span class="section-number-3">1.1</span> Model-based 强化学习简介</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+先学习状态转移函数（Transition Dynamics），然后在学习在每个状态下如何作出选择。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org99c4fd1" class="outline-3">
+<h3 id="org99c4fd1"><span class="section-number-3">1.2</span> Stochastic 优化方法</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+<div id="outline-container-org0eb342d" class="outline-4">
+<h4 id="org0eb342d"><span class="section-number-4">1.2.1</span> 目标</h4>
+<div class="outline-text-4" id="text-1-2-1">
+</div>
+<div id="outline-container-org0d25aed" class="outline-5">
+<h5 id="org0d25aed"><span class="section-number-5">1.2.1.1</span> 确定性（Deterministic）环境下：</h5>
+<div class="outline-text-5" id="text-1-2-1-1">
+<p>
+当状态和动作确定时，下一状态也是确定的。即下一状态是由当前状态和动作相关的函数所确定的。在这种情况下，Agent 可以依据模型生成一系列的动作。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-10-1.png" alt="lec-10-1.png" />
+</p>
+</div>
+</div>
+<p>
+\[
+\mathbf{a}_{1}, \ldots, \mathbf{a}_{T}=\arg \max _{\mathbf{a}_{1}, \ldots, \mathbf{a}_{T}} \sum_{t=1}^{T} r\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right) \text { s.t. } \mathbf{a}_{t+1}=f\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right)
+\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdfbbb6d" class="outline-5">
+<h5 id="orgdfbbb6d"><span class="section-number-5">1.2.1.2</span> 随机性（Stochastic）Open-loop 环境下：</h5>
+<div class="outline-text-5" id="text-1-2-1-2">
+<p>
+当状态和动作确定时，下一状态无法确定，但有一定的分布概率。Agent 可以依据模型生成一系列的动作。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-10-2.png" alt="lec-10-2.png" />
+</p>
+</div>
+</div>
+\begin{array}{l}
+p_{\theta}\left(\mathbf{s}_{1}, \ldots, \mathbf{s}_{T} \mid \mathbf{a}_{1}, \ldots, \mathbf{a}_{T}\right)=p\left(\mathbf{s}_{1}\right) \prod_{t=1}^{T} p\left(\mathbf{s}_{t+1} \mid \mathbf{s}_{t}, \mathbf{a}_{t}\right) \\
+\mathbf{a}_{1}, \ldots, \mathbf{a}_{T}=\arg \max _{\mathbf{a}_{1}, \ldots, \mathbf{a}_{T}} E\left[\sum_{t} r\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right) \mid \mathbf{a}_{1}, \ldots, \mathbf{a}_{T}\right]
+\end{array}
+</div>
+</div>
+
+<div id="outline-container-orgc789772" class="outline-5">
+<h5 id="orgc789772"><span class="section-number-5">1.2.1.3</span> 随机性（Stochastic）Closed-loop 环境下：</h5>
+<div class="outline-text-5" id="text-1-2-1-3">
+<p>
+当状态和动作确定时，下一状态无法确定。Agent 可以依据模型生成一个策略。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-10-3.png" alt="lec-10-3.png" />
+</p>
+</div>
+</div>
+\begin{array}{c}
+p\left(\mathbf{s}_{1}, \mathbf{a}_{1}, \ldots, \mathbf{s}_{T}, \mathbf{a}_{T}\right)=p\left(\mathbf{s}_{1}\right) \prod_{t=1}^{T} \pi\left(\mathbf{a}_{t} \mid \mathbf{s}_{t}\right) p\left(\mathbf{s}_{t+1} \mid \mathbf{s}_{t}, \mathbf{a}_{t}\right) \\
+\pi=\arg \max _{\pi} E_{\tau \sim p(\tau)}\left[\sum_{t} r\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right)\right]
+\end{array}
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga41531b" class="outline-4">
+<h4 id="orga41531b"><span class="section-number-4">1.2.2</span> 优化</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+对于 Open-loop 环境下的 Agent，简化一下我们的优化目标：
+\[
+\mathbf{a}_{1}, \ldots, \mathbf{a}_{T}=\arg \max _{\mathbf{a}_{1}, \ldots, \mathbf{a}_{T}} J\left(\mathbf{a}_{1}, \ldots, \mathbf{a}_{T}\right)
+\]
+即：
+\[
+\mathbf{A}=\arg \max _{\mathbf{A}} J(\mathbf{A})
+\]
+</p>
+</div>
+<div id="outline-container-org41d4e29" class="outline-5">
+<h5 id="org41d4e29"><span class="section-number-5">1.2.2.1</span> Guess &amp; Check</h5>
+<div class="outline-text-5" id="text-1-2-2-1">
+<ol class="org-ol">
+<li>随便找一个分布函数（distribution），使用此分布函数选择不同状态的动作序列 \(A_1,\dots,A_N\)</li>
+<li>根据上诉公式选取使得 \(J(A_i)\) 最大的动作序列 \(A_i\)</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org732aa26" class="outline-5">
+<h5 id="org732aa26"><span class="section-number-5">1.2.2.2</span> Cross-entropy method（CEM）</h5>
+<div class="outline-text-5" id="text-1-2-2-2">
+<p>
+交叉熵方法一般适用于状态空间连续的环境，分布函数一般选择高斯分布。
+</p>
+<ol class="org-ol">
+<li>使用高斯分布 \(p(A)\) 生成动作序列 \(A_1,\dots,A_N\)</li>
+<li>计算 \(J(A_1),\dots,J(A_N)\)</li>
+<li>选取上诉计算结果中表现最好（\(J(A_i)\) 值最高）的几组动作序列 \(A_{i_1},\dots,A_{i_M}\) ，其中 \(M<N\)</li>
+<li>修改高斯分布参数，使得此高斯分布更加贴合 \(A_{i_1},\dots,A_{i_M}\) ，返回 1 步继续执行</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orged944bb" class="outline-3">
+<h3 id="orged944bb"><span class="section-number-3">1.3</span> Monte Carlo 树搜索 （MCTS）</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+MCTS 适用于离散动作空间和连续动作空间，这里以离散动作空间举例。
+</p>
+
+<p>
+初始状态为 \(s_1\) ，如果遍历了所有从 \(s_1\) 出发的路径，那么自然可以选出哪条路径是最佳路径。这样做的缺陷是遍历空间太大，而且浪费时间。我们需要选择那些有较高奖励（这个目的很明显）的状态，同时也会选经过很少次的状态（经过很少，说明对这个状态探索很少）。具体算法如下：
+MCTS:
+</p>
+<ol class="org-ol">
+<li>使用 <code>TreePolicy(s_1)</code> 得到一个叶子节点（新状态）\(s_l\)</li>
+<li>使用 <code>DefaultPolicy(s_l)</code> 计算叶子节点的得分（Q 值）</li>
+<li>更新从 \(s_1\) 到 \(s_l\) 之间的所有 Q 值，从 <code>s_1</code> 选取最佳动作</li>
+</ol>
+
+<p>
+TreePolicy(\(s_t\)):
+如果 \(s_t\) 没有完全被探索，那么就选取新动作 $a<sub>t</sub>$；否则选取具有最优 Q 值的动作。
+</p>
+
+<p>
+\[
+\operatorname{Q}\left(s_{t}\right)=\frac{Q\left(s_{t}\right)}{N\left(s_{t}\right)}+2 C \sqrt{\frac{2 \ln N\left(s_{t-1}\right)}{N\left(s_{t}\right)}}
+\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2e3b65e" class="outline-3">
+<h3 id="org2e3b65e"><span class="section-number-3">1.4</span> 导数求解</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+一般来说，有模型强化学习很少有问题可以使用导数来求解，因为我们无法知道它的状态转移方程（环境动力学函数），比如在玩 Atari 游戏的时候，下一状态我们是无法通过公式定义来得到的。假设我们现在知道状态转移方程，那么要如何通过导数来求得最优解呢？
+</p>
+
+<p>
+先来考虑一下确定性环境下：
+我们的目标是：
+\[
+\min _{\mathbf{u}_{1}, \ldots, \mathbf{u}_{T}} \sum_{t=1}^{T} c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \text { s.t. } \mathbf{x}_{t}=f\left(\mathbf{x}_{t-1}, \mathbf{u}_{t-1}\right)
+\]
+</p>
+
+<p>
+这是一个约束问题，我们可以把它转换为非约束问题：
+\[
+\min _{\mathbf{u}_{1}, \ldots, \mathbf{u}_{T}} c\left(\mathbf{x}_{1}, \mathbf{u}_{1}\right)+c\left(f\left(\mathbf{x}_{1}, \mathbf{u}_{1}\right), \mathbf{u}_{2}\right)+\cdots+c\left(f(f(\ldots) \ldots), \mathbf{u}_{T}\right)
+\]
+</p>
+
+<p>
+对于非约束最优化问题，我们可以求导，使用梯度下降相关的方法来解决，需要计算
+\[
+\frac{d f}{d \mathbf{x}_{t}}, \frac{d f}{d \mathbf{u}_{t}}, \frac{d c}{d \mathbf{x}_{t}}, \frac{d c}{d \mathbf{u}_{t}}
+\]
+</p>
+
+<p>
+但一般在解决这种问题的时候不使用基于梯度的一阶优化方法，而是使用二阶优化方法。
+</p>
+</div>
+
+<div id="outline-container-orgb8254f2" class="outline-4">
+<h4 id="orgb8254f2"><span class="section-number-4">1.4.1</span> 为什么使用二阶优化方法</h4>
+<div class="outline-text-4" id="text-1-4-1">
+</div>
+<div id="outline-container-orgf8fe9e4" class="outline-5">
+<h5 id="orgf8fe9e4"><span class="section-number-5">1.4.1.1</span> Shooting method</h5>
+<div class="outline-text-5" id="text-1-4-1-1">
+<p>
+前面提到的一阶优化方法被称作 <code>Shooting method</code> 。它只对动作进行求导，状态是关于动作的函数。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-10-4.png" alt="lec-10-4.png" />
+</p>
+</div>
+</div>
+
+<p>
+上图横轴是时间，纵轴是状态。给定初始位置之后，选择动作，根据状态转移方程得到下一个状态，直到结束。可以看到，如果开始的动作发生一个细微的变化，也会对最后的结果造成很大的影响。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc5269e1" class="outline-5">
+<h5 id="orgc5269e1"><span class="section-number-5">1.4.1.2</span> Collocation method</h5>
+<div class="outline-text-5" id="text-1-4-1-2">
+<p>
+<code>Collocation method</code> 对状态和动作求导，有约束性。
+\[
+\min _{\mathbf{u}_{1}, \ldots, \mathbf{u}_{T}, \mathbf{x}_{1}, \ldots, \mathbf{x}_{T}} \sum_{t=1}^{T} c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \text { s.t. } \mathbf{x}_{t}=f\left(\mathbf{x}_{t-1}, \mathbf{u}_{t-1}\right)
+\]
+</p>
+
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-10-5.png" alt="lec-10-5.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb0f7f6d" class="outline-4">
+<h4 id="orgb0f7f6d"><span class="section-number-4">1.4.2</span> LQR</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+我们先使用 <code>Shooting method</code> 求解。
+目标是：
+\[
+\min _{\mathbf{u}_{1}, \ldots, \mathbf{u}_{T}} c\left(\mathbf{x}_{1}, \mathbf{u}_{1}\right)+c\left(f\left(\mathbf{x}_{1}, \mathbf{u}_{1}\right), \mathbf{u}_{2}\right)+\cdots+c\left(f(f(\ldots) \ldots), \mathbf{u}_{T}\right)
+\]
+</p>
+
+<p>
+其中：
+\[
+f\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right)=\mathbf{F}_{t}\left[\begin{array}{c}
+\mathbf{x}_{t} \\
+\mathbf{u}_{t}
+\end{array}\right]+\mathbf{f}_{t}
+\] ，线性函数，\(F\) 为环境动力学相关的函数；
+\[
+c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right)=\frac{1}{2}\left[\begin{array}{c}
+\mathbf{x}_{t} \\
+\mathbf{u}_{t}
+\end{array}\right]^{T} \mathbf{C}_{t}\left[\begin{array}{c}
+\mathbf{x}_{t} \\
+\mathbf{u}_{t}
+\end{array}\right]+\left[\begin{array}{c}
+\mathbf{x}_{t} \\
+\mathbf{u}_{t}
+\end{array}\right]^{T} \mathbf{c}_{t}
+\] ，二次函数，\(C\) 为任意维度匹配的矩阵。
+</p>
+
+<p>
+目标方程只对动作 \(u_t\) 求导，且上一时刻的状态和动作会影响下一时刻的状态 （\(x_t=f(x_{t-1},u_{t-1})\)），进而影响下一时刻的损失 <code>c</code> 。因此，我们需要使用反向传播的方法，把梯度从最后一个状态开始，传回第一个状态。
+</p>
+
+<p>
+因此先计算对 \(u_T\) 的求导：
+最后一步执行后的损失为：（因为损失与状态和动作相关，所以使用 <code>Q</code> 来表示）
+\[
+Q\left(\mathbf{x}_{T}, \mathbf{u}_{T}\right)=\text { const }+\frac{1}{2}\left[\begin{array}{c}
+\mathbf{x}_{T} \\
+\mathbf{u}_{T}
+\end{array}\right]^{T} \mathbf{C}_{T}\left[\begin{array}{c}
+\mathbf{x}_{T} \\
+\mathbf{u}_{T}
+\end{array}\right]+\left[\begin{array}{c}
+\mathbf{x}_{T} \\
+\mathbf{u}_{T}
+\end{array}\right]^{T} \mathbf{c}_{T}
+\]
+设：
+\[
+\mathbf{C}_{T}=\left[\begin{array}{cc}
+\mathbf{C}_{\mathbf{x}_{T}, \mathbf{x}_{T}} & \mathbf{C}_{\mathbf{x}_{T}, \mathbf{u}_{T}} \\
+\mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}} & \mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}}
+\end{array}\right]
+\]
+\[
+\mathbf{c}_{T}=\left[\begin{array}{l}
+\mathbf{c}_{\mathbf{x}_{T}} \\
+\mathbf{c}_{\mathbf{u}_{T}}
+\end{array}\right]
+\]
+对 \(u_T\) 求导：
+</p>
+\begin{array}{c}
+\nabla_{\mathbf{u}_{T}} Q\left(\mathbf{x}_{T}, \mathbf{u}_{T}\right)=\mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}} \mathbf{x}_{T}+\mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}} \mathbf{u}_{T}+\mathbf{c}_{\mathbf{u}_{T}}^{T}=0 \\
+\mathbf{u}_{T}=-\mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}}^{-1}\left(\mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}} \mathbf{x}_{T}+\mathbf{c}_{\mathbf{u}_{T}}\right)
+\end{array}
+<p>
+化简：
+</p>
+\begin{array}{l}
+\mathbf{u}_{T}=\mathbf{K}_{T} \mathbf{x}_{T}+\mathbf{k}_{T} \\
+\mathbf{K}_{T}=-\mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}}^{-1} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}} \\
+\mathbf{k}_{T}=-\mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}}^{-1} \mathbf{c}_{\mathbf{u}_{T}}
+\end{array}
+
+<p>
+可以看到，动作可以由状态来确定，因此损失可以只用状态来表示（V）：
+\[
+V\left(\mathbf{x}_{T}\right)=\operatorname{const}+\frac{1}{2}\left[\begin{array}{c}
+\mathbf{x}_{T} \\
+\mathbf{K}_{T} \mathbf{x}_{T}+\mathbf{k}_{T}
+\end{array}\right]^{T} \mathbf{C}_{T}\left[\begin{array}{c}
+\mathbf{x}_{T} \\
+\mathbf{K}_{T} \mathbf{x}_{T}+\mathbf{k}_{T}
+\end{array}\right]+\left[\begin{array}{c}
+\mathbf{x}_{T} \\
+\mathbf{K}_{T} \mathbf{x}_{T}+\mathbf{k}_{T}
+\end{array}\right]^{T} \mathbf{c}_{T}
+\]
+</p>
+
+<p>
+展开：
+</p>
+\begin{aligned}
+V\left(\mathbf{x}_{T}\right)=& \frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{C}_{\mathbf{x}_{T}, \mathbf{x}_{T}} \mathbf{x}_{T}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{C}_{\mathbf{x}_{T}, \mathbf{u}_{T}} \mathbf{K}_{T} \mathbf{x}_{T}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}} \mathbf{x}_{T}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}} \mathbf{K}_{T} \mathbf{x}_{T}+\\
+& \mathbf{x}_{T}^{T} \mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}} \mathbf{k}_{T}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{C}_{\mathbf{x}_{T}, \mathbf{u}_{T}} \mathbf{k}_{T}+\mathbf{x}_{T}^{T} \mathbf{c}_{\mathbf{x}_{T}}+\mathbf{x}_{T}^{T} \mathbf{K}_{T}^{T} \mathbf{c}_{\mathbf{u}_{T}}+\mathrm{const}
+\end{aligned}
+<p>
+化简：
+</p>
+\begin{array}{l}
+V\left(\mathbf{x}_{T}\right)=\mathrm{const}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{V}_{T} \mathbf{x}_{T}+\mathbf{x}_{T}^{T} \mathbf{v}_{T} \\
+\mathbf{V}_{T}=\mathbf{C}_{\mathbf{x}_{T}, \mathbf{x}_{T}}+\mathbf{C}_{\mathbf{x}_{T}, \mathbf{u}_{T}} \mathbf{K}_{T}+\mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}}+\mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}} \mathbf{K}_{T} \\
+\mathbf{v}_{T}=\mathbf{c}_{\mathbf{x}_{T}}+\mathbf{C}_{\mathbf{x}_{T}, \mathbf{u}_{T}} \mathbf{k}_{T}+\mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}}+\mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}} \mathbf{k}_{T}
+\end{array}
+
+<p>
+接下来就可以计算目标函数对 \(u_{T-1}\) 的求导了。方法和之前相同，只不过这一步的损失要加上最后一步的损失，因为这一步的状态和动作会影响下一步的损失。
+</p>
+
+<p>
+当前步的损失（Q）：
+\[
+Q\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)=\operatorname{const}+\frac{1}{2}\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]^{T} \mathbf{C}_{T-1}\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]+\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]^{T} \mathbf{c}_{T-1}+V\left(f\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)\right)
+\]
+V:
+\[
+V\left(\mathbf{x}_{T}\right)=\operatorname{const}+\frac{1}{2}\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]^{T} \mathbf{F}_{T-1}^{T} \mathbf{V}_{T} \mathbf{F}_{T-1}\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]+\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]^{T} \mathbf{F}_{T-1}^{T} \mathbf{V}_{T} \mathbf{f}_{T-1}+\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]^{T} \mathbf{F}_{T-1}^{T}\mathbf{v}_{T}
+\]
+</p>
+
+<p>
+合并上诉两项：
+\[
+Q\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)=\text { const }+\frac{1}{2}\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]^{T} \mathbf{Q}_{T-1}\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]+\left[\begin{array}{c}
+\mathbf{x}_{T-1} \\
+\mathbf{u}_{T-1}
+\end{array}\right]^{T} \mathbf{q}_{T-1}
+\]
+其中：
+</p>
+\begin{array}{l}
+\mathbf{Q}_{T-1}=\mathbf{C}_{T-1}+\mathbf{F}_{T-1}^{T} \mathbf{V}_{T} \mathbf{F}_{T-1} \\
+\mathbf{q}_{T-1}=\mathbf{c}_{T-1}+\mathbf{F}_{T-1}^{T} \mathbf{V}_{T} \mathbf{f}_{T-1}+\mathbf{F}_{T-1}^{T} \mathbf{v}_{T}
+\end{array}
+
+<p>
+计算，令其导数为 0 ，
+\[
+\nabla_{\mathbf{u}_{T-1}} Q\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)=\mathbf{Q}_{\mathbf{u}_{T-1}, \mathbf{x}_{T-1}} \mathbf{x}_{T-1}+\mathbf{Q}_{\mathbf{u}_{T-1}, \mathbf{u}_{T-1}} \mathbf{u}_{T-1}+\mathbf{q}_{\mathbf{u}_{T-1}}^{T}=0
+\]
+得到：
+\[
+\mathbf{u}_{T-1}=\mathbf{K}_{T-1} \mathbf{x}_{T-1}+\mathbf{k}_{T-1}
+\]
+其中：
+</p>
+\begin{array}{l}
+\mathbf{K}_{T-1}=-\mathbf{Q}_{\mathbf{u}_{T-1}, \mathbf{u}_{T-1}}^{-1} \mathbf{Q}_{\mathbf{u}_{T-1}, \mathbf{x}_{T-1}} \\
+\mathbf{k}_{T-1}=-\mathbf{Q}_{\mathbf{u}_{T-1}, \mathbf{u}_{T-1}}^{-1} \mathbf{q}_{\mathbf{u}_{T-1}}
+\end{array}
+
+<p>
+通过上面的分析，我们可以得到 LQR 算法中反向传播部分的算法：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-10-6.png" alt="lec-10-6.png" />
+</p>
+</div>
+</div>
+
+<p>
+反向传播计算出 <code>k</code> 之后，正向传播就简单了：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-10-7.png" alt="lec-10-7.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgf8993c1" class="outline-4">
+<h4 id="orgf8993c1"><span class="section-number-4">1.4.3</span> iLQR</h4>
+<div class="outline-text-4" id="text-1-4-3">
+<p>
+LQR 方法适用于状态转移方程为线性的，损失函数为二次的环境中，但实际中很多问题都不满足这个条件。那么我们用一个线性方程来近似拟合现实问题的非线性环境动力学方程吗？
+</p>
+
+<p>
+可以使用泰勒展开来近似。
+</p>
+
+<p>
+\[
+f\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx f\left(\hat{\mathbf{x}}_{t}, \hat{\mathbf{u}}_{t}\right)+\nabla_{\mathbf{x}_{t}, \mathbf{u}_{t}} f\left(\hat{\mathbf{x}}_{t}, \hat{\mathbf{u}}_{t}\right)\left[\begin{array}{c}
+\mathbf{x}_{t}-\hat{\mathbf{x}}_{t} \\
+\mathbf{u}_{t}-\hat{\mathbf{u}}_{t}
+\end{array}\right]
+\]
+\[
+c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx c\left(\hat{\mathbf{x}}_{t}, \hat{\mathbf{u}}_{t}\right)+\nabla_{\mathbf{x}_{t}}, \mathbf{u}_{t} c\left(\hat{\mathbf{x}}_{t}, \hat{\mathbf{u}}_{t}\right)\left[\begin{array}{c}
+\mathbf{x}_{t}-\hat{\mathbf{x}}_{t} \\
+\mathbf{u}_{t}-\hat{\mathbf{u}}_{t}
+\end{array}\right]+\frac{1}{2}\left[\begin{array}{c}
+\mathbf{x}_{t}-\hat{\mathbf{x}}_{t} \\
+\mathbf{u}_{t}-\hat{\mathbf{u}}_{t}
+\end{array}\right]^{T} \nabla_{\mathbf{x}_{t}, \mathbf{u}_{t}}^{2} c\left(\hat{\mathbf{x}}_{t}, \hat{\mathbf{u}}_{t}\right)\left[\begin{array}{c}
+\mathbf{x}_{t}-\hat{\mathbf{x}}_{t} \\
+\mathbf{u}_{t}-\hat{\mathbf{u}}_{t}
+\end{array}\right]
+\]
+移项之后，化简：
+\[
+\bar{f}\left(\delta \mathbf{x}_{t}, \delta \mathbf{u}_{t}\right)=\mathbf{F}_{t}\left[\begin{array}{l}
+\delta \mathbf{x}_{t} \\
+\delta \mathbf{u}_{t}
+\end{array}\right]
+\]
+\[
+\bar{c}\left(\delta \mathbf{x}_{t}, \delta \mathbf{u}_{t}\right)=\frac{1}{2}\left[\begin{array}{c}
+\delta \mathbf{x}_{t} \\
+\delta \mathbf{u}_{t}
+\end{array}\right]^{T} \begin{array}{c}
+\mathbf{C}_{t}\left[\begin{array}{c}
+\delta \mathbf{x}_{t} \\
+\delta \mathbf{u}_{t}
+\end{array}\right]+\left[\begin{array}{c}
+\delta \mathbf{x}_{t} \\
+\delta \mathbf{u}_{t}
+\end{array}\right]^{T} \mathbf{c}_{t}
+\end{array}
+\]
+其中：
+\[
+\mathbf{F}_t=\nabla_{\mathbf{x}_t,\mathbf{u}_t}f\left(\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}\right)
+\]
+\[
+\mathbf{C}_t=\nabla^2_{\mathbf{x}_t,\mathbf{u}_t}c\left(\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}\righ)
+\]
+\[
+\mathbf{c}_t=\nabla_{\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}}c\left(\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}\right)
+\]
+\[
+\delta_{\mathbf{x}_t}=\mathbf{x}_t-\hat{\mathbf{x}_t}
+\]
+\[
+\delta_{\mathbf{u}_t}=\mathbf{u}_t-\hat{\mathbf{u}_t}
+\]
+</p>
+
+<p>
+我们将其转换成了一个 LQR 问题。至此，我们可以得到 iLQR 算法：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-10-8.png" alt="lec-10-8.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="postamble">Last Updated 2020-09-09 Wed 10:14. Created by 王方圆.</p>
+			<script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
+</div>
+</body>
+</html>
