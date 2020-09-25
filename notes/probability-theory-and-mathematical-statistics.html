@@ -1,0 +1,587 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-09-24 Thu 14:38 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>概率论与数理统计</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="王方圆" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: visible;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
+
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
+</style>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+	 var target = document.getElementById(id);
+	 if(null != target) {
+		 elem.cacheClassElem = elem.className;
+		 elem.cacheClassTarget = target.className;
+		 target.className = "code-highlighted";
+		 elem.className   = "code-highlighted";
+	 }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+	 var target = document.getElementById(id);
+	 if(elem.cacheClassElem)
+		 elem.className = elem.cacheClassElem;
+	 if(elem.cacheClassTarget)
+		 target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+<script type="text/x-mathjax-config">
+		MathJax.Hub.Config({
+				displayAlign: "center",
+				displayIndent: "0em",
+
+				"HTML-CSS": { scale: 100,
+												linebreaks: { automatic: "false" },
+												webFont: "TeX"
+											 },
+				SVG: {scale: 100,
+							linebreaks: { automatic: "false" },
+							font: "TeX"},
+				NativeMML: {scale: 100},
+				TeX: { equationNumbers: {autoNumber: "AMS"},
+							 MultLineWidth: "85%",
+							 TagSide: "right",
+							 TagIndent: ".8em"
+						 }
+});
+</script>
+<script type="text/javascript"
+				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">概率论与数理统计</h1>
+
+<div id="outline-container-org5277132" class="outline-2">
+<h2 id="org5277132">事件的概率</h2>
+<div class="outline-text-2" id="text-org5277132">
+<p>
+<b>事件的蕴含、包含和相等</b> ：在同一试验下的两个事件 A 和 B，如果当 A 发生时 B 必发生，则称 A 蕴含 B，或者说 B 包含 A，即为 \(A \subset B\) 。
+若 A，B 互相蕴含，即 \(A \subset B\) 且 \(B \subset A\) ，则称 A，B 两事件相等，即为 \(A=B\) 。
+</p>
+
+<p>
+<b>事件的互斥与对立</b> ：若两事件 A，B 不能在同以此试验中都发生（但可以都不发生），则称它们是互斥的。
+如果一些事件中任意两个都互斥，则称这些事件是两两互斥的，或简称互斥的。
+互斥的另一个重要情况是“对立事件”，若 A 为一事件，则事件 \(B={A 不发生}\) 为 A 的对立事件，记为 \(\bar{A}\) 。
+即： \(对立事件 \subset 互斥事件\) 。
+</p>
+
+<p>
+<b>事件的和（并）</b> ：设有两个事件 A，B，定义新事件 \(C={A 发生，或 B 发生}\) ，这样的事件称为事件 A 和 B 的和，记为 \(C=A+B\) 。
+事件的和也被称为事件的并，也常被记为 \(A\cup B\) 。
+</p>
+
+<p>
+<b>事件的积（交）</b> ：设有两个事件 A，B，定义新事件 \(C={A，B 都发生}\) ，这样的事件被称为事件 A 和 B 的积，记为 \(C=AB\) 。
+事件的积也被称为事件的交，也常被记为 \(A\cap B\) 。
+</p>
+
+<p>
+<b>事件的差</b> ：两个事件 A，B 之差，定义为 \(A-B={A 发生，B 不发生}={A\bar{B}}\) 。
+</p>
+
+<p>
+<b>条件概率</b> ：设有两个事件 A，B，而 \(P(B)\neq0\) 。则“在给定 B 发生的条件下 A 的条件概率”，记为 \(P(A|B)\) ，定义为：
+\[
+P(A|B)=P(AB)/P(B)
+\]
+</p>
+
+<p>
+<b>事件的独立性</b> ：若 \(P(A)=P(A|B)\) ，则 B 的发生与否对 A 发生的可能性毫无影响，这是称 A，B 两事件相互独立。可推出：
+\[
+P(AB)=P(B)P(A|B)=P(B)P(A)
+\]
+</p>
+
+<p>
+<b>多个事件的独立性</b> ：设 \(A_1,A_2,\dots\) 为有限或无限个事件，如果从其中任意取出有限个 \(A_{i_1},A_{i_2},\dots,A_{i_m}\) ，都成立
+\[
+P(A_{i_1} A_{i_2} \dots A_{i_m})=P(A_{i_1})P(A_{i_2})\dots P(A_{i_m})
+\]
+</p>
+<ol class="org-ol">
+<li>独立事件的任一部分也独立。</li>
+<li>相互独立必两两独立，反之不一定。</li>
+</ol>
+
+<p>
+<b>加法定理</b> ：若干个互斥事件之和的概率，等于各事件的概率之和。
+</p>
+
+<p>
+<b>乘法定理</b> ：若干个独立事件之积的概率，等于各事件的概率之积。
+</p>
+
+<p>
+<b>完备事件群</b> ：设 \(B_1,B_2,\dots\) 为有限个或无限个事件，它们两两互斥且在每次试验中至少发生一个，即：
+</p>
+\begin{align*}
+B_{i}B_j &= \varnothing \\
+B_1+B_2+\dots &=\Omega
+\end{align*}
+<p>
+把具有这些性质的一组事件称为一个“完备事件群”。
+</p>
+
+<p>
+<b>全概率公式</b> ： \(P(A)=P(B_1)P(A|B_1)+P(B_2)P(A|B_2)+\dots\)
+</p>
+
+<p>
+<b>贝叶斯公式</b> ： \(P(B_i|A)=P(AB_i)/P(A)=P(A|B_i)P(B_i)/\sum_jP(B_j)P(A|B_j)\)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org3ed65e0" class="outline-2">
+<h2 id="org3ed65e0">随机变量和概率分布</h2>
+<div class="outline-text-2" id="text-org3ed65e0">
+<p>
+<b>随机变量</b> ：随机变量是“其值随机会而定”的变量，是关于试验结果的函数。
+<b>分布函数</b> ：设 \(X\) 为一随机变量，则函数 \(P(X\leq x)=F(x) (-\infty<x<\infty)\) 称为 \(X\) 的分布函数。
+根据定义，很容易等到分布函数的两个性质：
+</p>
+<ol class="org-ol">
+<li>单调递增不减</li>
+<li>当 \(x\rightarrow\infty\) ， \(F(x)\rightarrow 1\) ；当 \(x\rightarrow-\infty\) ， \(F(X)\rightarrow0\)</li>
+</ol>
+</div>
+
+<div id="outline-container-orgd07db84" class="outline-3">
+<h3 id="orgd07db84">离散型随机变量</h3>
+<div class="outline-text-3" id="text-orgd07db84">
+<p>
+设 \(X\) 为离散型随机变量，其全部可能值为 \({a_1,a_2,\dots}\) ，则
+\[
+p_i=P(X=a_i)
+\]
+称为 \(X\) 的概率函数。
+</p>
+</div>
+
+<div id="outline-container-org6382d52" class="outline-4">
+<h4 id="org6382d52">二项分布</h4>
+<div class="outline-text-4" id="text-org6382d52">
+<p>
+设某事件 \(A\) 在一次试验中发生的概率为 \(p\) 。
+现把这个试验独立的重复 \(n\) 次，以 \(X\) 记 \(A\) 在这 \(n\) 次试验中发生的次数。
+\(X\) 的取值可以是 \(0,1,\dots,n\) 。\(X\) 的概率函数是：
+\[
+p_i=b(i;n,p)=\left(\begin{array}{c} n \\ i\end{array}\right)
+p^i(1-p)^{n-1}
+\]
+其遵循的概率分布称为二项分布，记为 \(X\sim B(n,p)\) 。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb013ca9" class="outline-4">
+<h4 id="orgb013ca9">泊松分布</h4>
+<div class="outline-text-4" id="text-orgb013ca9">
+<p>
+若随机变量 \(X\) 的可能取值为 \(0,1,2,\dots\) ，其概率分布为：
+\[
+P(X=i)=e^{-\lambda}\lambda^{i}/i!
+\]
+称 \(X\) 服从泊松分布，记为 \(X\sim P(\lambda)\) 。
+</p>
+
+<p>
+对于二项分布，当 \(n\) 很大， \(p\) 很小时， \(X\) 的分布接近于泊松分布 \(P(\lambda)\) 。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org3cc0e4b" class="outline-3">
+<h3 id="org3cc0e4b">连续型随机变量</h3>
+<div class="outline-text-3" id="text-org3cc0e4b">
+<p>
+设连续型随机变量 \(X\) 有概率分布函数 \(F(x)\) ，则 \(F(x)\) 的导数 \(f(x)=F^{\prime}(x)\) 称为 \(X\) 的概率密度函数。
+</p>
+
+<p>
+正太分布，指数分布，均匀分布都属于连续型随机变量。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org12f6917" class="outline-3">
+<h3 id="org12f6917">多维随机变量</h3>
+<div class="outline-text-3" id="text-org12f6917">
+<p>
+连续型随机变量的分布中，若 \(f(x_1,\dots,x_n)\) 是定义在 \(R^n\) 上的非负函数，使对 \(R^n\) 中的任何集合 \(A\) ，有：
+\[
+P(X\in A)={\int\cdots\int}_{A}f(x_1,\dots,x_n)dx_1\dots dx_n
+\]
+则称 \(f\) 是 \(X\) 的概率密度函数。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org99a250f" class="outline-3">
+<h3 id="org99a250f">边缘分布</h3>
+<div class="outline-text-3" id="text-org99a250f">
+<p>
+设 \(X=(X_1,X_2,\dots,X_n)\) 为一个 \(n\) 维随机变量， \(X\) 有一定的分布 \(F\) ，其每个分量 \(X_i\) 都是一维随机变量，有各自的分布 \(F_i\) 。
+</p>
+
+<p>
+对于离散型随机变量：
+\[
+P(X_1=a_{ik})=\sum_{j_2,\dots,j_n}p(k,j_2,\dots,j_n)
+\]
+</p>
+
+<p>
+对于连续型随机变量：
+\[
+f_1(x_1)=\int_{-\infty}^{\infty}\cdots\int_{-\infty}^{\infty}f(x_1,x_2,\dots,x_n)dx_2\cdots dx_n
+\]
+</p>
+
+<p>
+一个随机变量 \(X=(X_1,\cdots,X_n)\) 的分布函数 \(F\) 决定了每一个分量 \(X_i\) 的边缘分布 \(F_i\) ，但反过来不对。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgfc63640" class="outline-3">
+<h3 id="orgfc63640">条件概率分布</h3>
+<div class="outline-text-3" id="text-orgfc63640">
+<p>
+对于离散型随机变量：
+\[
+P(X_1=a_i|X_2=b_j)=P(X_1=a_i,X_2=b_j)/P(X_2=b_j)
+\]
+</p>
+
+<p>
+对于连续型随机变量，其条件分布函数为：
+</p>
+\begin{align*}
+&P(X_1\leq x_1|a\leq X_2\leq b) \\
+&= P(X_1\leq x_1,a\leq X_2\leq b)/P(a\leq X_2\leq b) \\
+&= \int_{-\infty}^{x_1}dt_1\int_a^bf(t_1,t_2)dt_2 / \int_a^b f_2(t_2) dt_2 \\
+\end{align*}
+
+<p>
+其条件密度函数为：
+\[
+f_1(x_1|a\leq X_2 \leq b)=\int_a^b f(x_1,t_2)dt_2 / \int_a^b f_2(t_2)dt_2
+\]
+</p>
+
+<p>
+联合密度函数：
+\[
+f(x_1,x_2)=f_2(x_2)f_1(x_1|x_2)=f_1(x_1)f_2(x_2|x_1)
+\]
+</p>
+
+<p>
+当边缘条件概率密度不依赖于其他随机变量，即：
+\[
+f_1(x_1|x_2)=f_1(x_1)
+\]
+那么联合密度函数为：
+\[
+f(x_1,x_2)=f_1(x_1)f_2(x_2)
+\]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org4231a55" class="outline-2">
+<h2 id="org4231a55">数学期望与中位数</h2>
+<div class="outline-text-2" id="text-org4231a55">
+</div>
+<div id="outline-container-org25959d1" class="outline-3">
+<h3 id="org25959d1">数学期望 ：</h3>
+<div class="outline-text-3" id="text-org25959d1">
+<ol class="org-ol">
+<li>对于离散概率分布， \(E(X)=a_{1}p_{1}+a_{2}p_{2}+\dots+a_{m}p_{m}\) ，此时，如果期望存在，要求 \(\sum_{i=1}^{m}|a_i|p_i<\infty\) ，即绝对收敛。</li>
+<li>对于连续概率分布， \(E(X)=\int_{-\infty}^{\infty}xf(x)dx\)</li>
+</ol>
+
+<p>
+性质：
+</p>
+<ol class="org-ol">
+<li>若干个随机变量之和的期望等于各变量的期望之和；</li>
+<li>若干个独立随机变量之积的期望等于各变量的期望之积；</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org03ca37b" class="outline-3">
+<h3 id="org03ca37b">方差</h3>
+<div class="outline-text-3" id="text-org03ca37b">
+<p>
+\[
+Var(X)=E(X-EX)^2
+\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf51c0bb" class="outline-3">
+<h3 id="orgf51c0bb">矩</h3>
+<div class="outline-text-3" id="text-orgf51c0bb">
+<p>
+设 \(X\) 为随机变量， \(c\) 为常数， \(k\) 为正整数，则量 \(E[(X-c)^k]\) 为 \(X\) 关于 \(c\) 点的 \(k\) 阶矩。
+若：
+</p>
+<ol class="org-ol">
+<li>\(c=0\) ， \(a_k=E(X)^k\) 称为 \(X\) 的 \(k\) 阶原点矩；</li>
+<li>\(c=E(X)\) ， \(\mu_k=E[(X-EX)^k]\) 称为 \(X\) 的 \(k\) 阶中心矩。</li>
+</ol>
+
+<p>
+\(\mu_3=E[X-E(X)]^3=0\) 可以用来判断分布是否有偏。如果 \(\mu_3>0\) 则右偏。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgd280e3e" class="outline-3">
+<h3 id="orgd280e3e">协方差和相关系数</h3>
+<div class="outline-text-3" id="text-orgd280e3e">
+<p>
+\[
+Cov(X,Y)=E[(X-EX)(Y-EY)]
+\]
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
+			<script src="https://utteranc.es/client.js"
+	repo="nicehiro/nicehiro.github.io"
+	issue-term="pathname"
+	theme="github-light"
+	crossorigin="anonymous"
+	async>
+	</script>
+</div>
+</body>
+</html>

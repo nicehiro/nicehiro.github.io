@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-09 Wed 10:15 -->
+<!-- 2020-09-25 Fri 19:36 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>强化学习 &#x2013; Sergey Levine Course</title>
@@ -270,52 +270,74 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org7d25bc1">1. #Lec10 Optimal Control and Planning</a>
+<li><a href="#orgdd09c77">Optimal Control and Planning</a>
 <ul>
-<li><a href="#org461580e">1.1. Model-based 强化学习简介</a></li>
-<li><a href="#org99c4fd1">1.2. Stochastic 优化方法</a>
+<li><a href="#org461580e">Model-based 强化学习简介</a></li>
+<li><a href="#org99c4fd1">Stochastic 优化方法</a>
 <ul>
-<li><a href="#org0eb342d">1.2.1. 目标</a>
+<li><a href="#org0eb342d">目标</a>
 <ul>
-<li><a href="#org0d25aed">1.2.1.1. 确定性（Deterministic）环境下：</a></li>
-<li><a href="#orgdfbbb6d">1.2.1.2. 随机性（Stochastic）Open-loop 环境下：</a></li>
-<li><a href="#orgc789772">1.2.1.3. 随机性（Stochastic）Closed-loop 环境下：</a></li>
+<li><a href="#org0d25aed">确定性（Deterministic）环境下：</a></li>
+<li><a href="#orgdfbbb6d">随机性（Stochastic）Open-loop 环境下：</a></li>
+<li><a href="#orgc789772">随机性（Stochastic）Closed-loop 环境下：</a></li>
 </ul>
 </li>
-<li><a href="#orga41531b">1.2.2. 优化</a>
+<li><a href="#orga41531b">优化</a>
 <ul>
-<li><a href="#org41d4e29">1.2.2.1. Guess &amp; Check</a></li>
-<li><a href="#org732aa26">1.2.2.2. Cross-entropy method（CEM）</a></li>
+<li><a href="#org41d4e29">Guess &amp; Check</a></li>
+<li><a href="#org732aa26">Cross-entropy method（CEM）</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orged944bb">1.3. Monte Carlo 树搜索 （MCTS）</a></li>
-<li><a href="#org2e3b65e">1.4. 导数求解</a>
+<li><a href="#orged944bb">Monte Carlo 树搜索 （MCTS）</a></li>
+<li><a href="#org2e3b65e">导数求解</a>
 <ul>
-<li><a href="#orgb8254f2">1.4.1. 为什么使用二阶优化方法</a>
+<li><a href="#orgb8254f2">为什么使用二阶优化方法</a>
 <ul>
-<li><a href="#orgf8fe9e4">1.4.1.1. Shooting method</a></li>
-<li><a href="#orgc5269e1">1.4.1.2. Collocation method</a></li>
+<li><a href="#orgf8fe9e4">Shooting method</a></li>
+<li><a href="#orgc5269e1">Collocation method</a></li>
 </ul>
 </li>
-<li><a href="#orgb0f7f6d">1.4.2. LQR</a></li>
-<li><a href="#orgf8993c1">1.4.3. iLQR</a></li>
+<li><a href="#orgb0f7f6d">LQR</a></li>
+<li><a href="#orgf8993c1">iLQR</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li><a href="#org45b808a">Model-Based Reinforcement Learning</a>
+<ul>
+<li><a href="#org9c8aca4">模型的不确定性</a>
+<ul>
+<li><a href="#org598b160">如何计算模型不确定性？</a>
+<ul>
+<li><a href="#org88bc8a4">Idea 1. 计算输出动作的交叉熵。熵越高，模型越不稳定。</a></li>
+<li><a href="#orgab19b60">Idea 2. 计算模型本身的不确定性</a></li>
+</ul>
+</li>
+<li><a href="#orge954271">计算模型不确定性的方法</a></li>
+</ul>
+</li>
+<li><a href="#orga9f44cf">Latent space models</a></li>
+</ul>
+</li>
+<li><a href="#orgfbca5e5">Model-Based Policy Learning</a>
+<ul>
+<li><a href="#org9960d62">使用模型的 Model-Free 方法</a></li>
+<li><a href="#org45d3ef6">Local Models</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org7d25bc1" class="outline-2">
-<h2 id="org7d25bc1"><span class="section-number-2">1</span> #Lec10 Optimal Control and Planning</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgdd09c77" class="outline-2">
+<h2 id="orgdd09c77">Optimal Control and Planning</h2>
+<div class="outline-text-2" id="text-orgdd09c77">
 </div>
 <div id="outline-container-org461580e" class="outline-3">
-<h3 id="org461580e"><span class="section-number-3">1.1</span> Model-based 强化学习简介</h3>
-<div class="outline-text-3" id="text-1-1">
+<h3 id="org461580e">Model-based 强化学习简介</h3>
+<div class="outline-text-3" id="text-org461580e">
 <p>
 先学习状态转移函数（Transition Dynamics），然后在学习在每个状态下如何作出选择。
 </p>
@@ -323,23 +345,24 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-org99c4fd1" class="outline-3">
-<h3 id="org99c4fd1"><span class="section-number-3">1.2</span> Stochastic 优化方法</h3>
-<div class="outline-text-3" id="text-1-2">
+<h3 id="org99c4fd1">Stochastic 优化方法</h3>
+<div class="outline-text-3" id="text-org99c4fd1">
 </div>
 <div id="outline-container-org0eb342d" class="outline-4">
-<h4 id="org0eb342d"><span class="section-number-4">1.2.1</span> 目标</h4>
-<div class="outline-text-4" id="text-1-2-1">
+<h4 id="org0eb342d">目标</h4>
+<div class="outline-text-4" id="text-org0eb342d">
 </div>
 <div id="outline-container-org0d25aed" class="outline-5">
-<h5 id="org0d25aed"><span class="section-number-5">1.2.1.1</span> 确定性（Deterministic）环境下：</h5>
-<div class="outline-text-5" id="text-1-2-1-1">
+<h5 id="org0d25aed">确定性（Deterministic）环境下：</h5>
+<div class="outline-text-5" id="text-org0d25aed">
 <p>
-当状态和动作确定时，下一状态也是确定的。即下一状态是由当前状态和动作相关的函数所确定的。在这种情况下，Agent 可以依据模型生成一系列的动作。
+当状态和动作确定时，下一状态也是确定的。即下一状态是由当前状态和动作相关的函数所确定的。
+在这种情况下，Agent 可以依据模型生成一系列的动作。
 </p>
 <div class="org-center">
 
 <div class="figure">
-<p><img src="../img/rl-sergey/lec-10-1.png" alt="lec-10-1.png" />
+<p><img src="../img/rl-sergey/lec-10-1.png" alt="lec-10-1.png" width="100%" />
 </p>
 </div>
 </div>
@@ -352,15 +375,15 @@ for the JavaScript code in this tag.
 </div>
 
 <div id="outline-container-orgdfbbb6d" class="outline-5">
-<h5 id="orgdfbbb6d"><span class="section-number-5">1.2.1.2</span> 随机性（Stochastic）Open-loop 环境下：</h5>
-<div class="outline-text-5" id="text-1-2-1-2">
+<h5 id="orgdfbbb6d">随机性（Stochastic）Open-loop 环境下：</h5>
+<div class="outline-text-5" id="text-orgdfbbb6d">
 <p>
 当状态和动作确定时，下一状态无法确定，但有一定的分布概率。Agent 可以依据模型生成一系列的动作。
 </p>
 <div class="org-center">
 
 <div class="figure">
-<p><img src="../img/rl-sergey/lec-10-2.png" alt="lec-10-2.png" />
+<p><img src="../img/rl-sergey/lec-10-2.png" alt="lec-10-2.png" width="100%" />
 </p>
 </div>
 </div>
@@ -372,15 +395,15 @@ p_{\theta}\left(\mathbf{s}_{1}, \ldots, \mathbf{s}_{T} \mid \mathbf{a}_{1}, \ldo
 </div>
 
 <div id="outline-container-orgc789772" class="outline-5">
-<h5 id="orgc789772"><span class="section-number-5">1.2.1.3</span> 随机性（Stochastic）Closed-loop 环境下：</h5>
-<div class="outline-text-5" id="text-1-2-1-3">
+<h5 id="orgc789772">随机性（Stochastic）Closed-loop 环境下：</h5>
+<div class="outline-text-5" id="text-orgc789772">
 <p>
 当状态和动作确定时，下一状态无法确定。Agent 可以依据模型生成一个策略。
 </p>
 <div class="org-center">
 
 <div class="figure">
-<p><img src="../img/rl-sergey/lec-10-3.png" alt="lec-10-3.png" />
+<p><img src="../img/rl-sergey/lec-10-3.png" alt="lec-10-3.png" width="100%" />
 </p>
 </div>
 </div>
@@ -393,8 +416,8 @@ p\left(\mathbf{s}_{1}, \mathbf{a}_{1}, \ldots, \mathbf{s}_{T}, \mathbf{a}_{T}\ri
 </div>
 
 <div id="outline-container-orga41531b" class="outline-4">
-<h4 id="orga41531b"><span class="section-number-4">1.2.2</span> 优化</h4>
-<div class="outline-text-4" id="text-1-2-2">
+<h4 id="orga41531b">优化</h4>
+<div class="outline-text-4" id="text-orga41531b">
 <p>
 对于 Open-loop 环境下的 Agent，简化一下我们的优化目标：
 \[
@@ -407,8 +430,8 @@ p\left(\mathbf{s}_{1}, \mathbf{a}_{1}, \ldots, \mathbf{s}_{T}, \mathbf{a}_{T}\ri
 </p>
 </div>
 <div id="outline-container-org41d4e29" class="outline-5">
-<h5 id="org41d4e29"><span class="section-number-5">1.2.2.1</span> Guess &amp; Check</h5>
-<div class="outline-text-5" id="text-1-2-2-1">
+<h5 id="org41d4e29">Guess &amp; Check</h5>
+<div class="outline-text-5" id="text-org41d4e29">
 <ol class="org-ol">
 <li>随便找一个分布函数（distribution），使用此分布函数选择不同状态的动作序列 \(A_1,\dots,A_N\)</li>
 <li>根据上诉公式选取使得 \(J(A_i)\) 最大的动作序列 \(A_i\)</li>
@@ -417,8 +440,8 @@ p\left(\mathbf{s}_{1}, \mathbf{a}_{1}, \ldots, \mathbf{s}_{T}, \mathbf{a}_{T}\ri
 </div>
 
 <div id="outline-container-org732aa26" class="outline-5">
-<h5 id="org732aa26"><span class="section-number-5">1.2.2.2</span> Cross-entropy method（CEM）</h5>
-<div class="outline-text-5" id="text-1-2-2-2">
+<h5 id="org732aa26">Cross-entropy method（CEM）</h5>
+<div class="outline-text-5" id="text-org732aa26">
 <p>
 交叉熵方法一般适用于状态空间连续的环境，分布函数一般选择高斯分布。
 </p>
@@ -434,14 +457,16 @@ p\left(\mathbf{s}_{1}, \mathbf{a}_{1}, \ldots, \mathbf{s}_{T}, \mathbf{a}_{T}\ri
 </div>
 
 <div id="outline-container-orged944bb" class="outline-3">
-<h3 id="orged944bb"><span class="section-number-3">1.3</span> Monte Carlo 树搜索 （MCTS）</h3>
-<div class="outline-text-3" id="text-1-3">
+<h3 id="orged944bb">Monte Carlo 树搜索 （MCTS）</h3>
+<div class="outline-text-3" id="text-orged944bb">
 <p>
 MCTS 适用于离散动作空间和连续动作空间，这里以离散动作空间举例。
 </p>
 
 <p>
-初始状态为 \(s_1\) ，如果遍历了所有从 \(s_1\) 出发的路径，那么自然可以选出哪条路径是最佳路径。这样做的缺陷是遍历空间太大，而且浪费时间。我们需要选择那些有较高奖励（这个目的很明显）的状态，同时也会选经过很少次的状态（经过很少，说明对这个状态探索很少）。具体算法如下：
+初始状态为 \(s_1\) ，如果遍历了所有从 \(s_1\) 出发的路径，那么自然可以选出哪条路径是最佳路径。
+这样做的缺陷是遍历空间太大，而且浪费时间。
+我们需要选择那些有较高奖励（这个目的很明显）的状态，同时也会选经过很少次的状态（经过很少，说明对这个状态探索很少）。具体算法如下：
 MCTS:
 </p>
 <ol class="org-ol">
@@ -452,7 +477,7 @@ MCTS:
 
 <p>
 TreePolicy(\(s_t\)):
-如果 \(s_t\) 没有完全被探索，那么就选取新动作 $a<sub>t</sub>$；否则选取具有最优 Q 值的动作。
+如果 \(s_t\) 没有完全被探索，那么就选取新动作 \(a_t\) ；否则选取具有最优 Q 值的动作。
 </p>
 
 <p>
@@ -464,10 +489,12 @@ TreePolicy(\(s_t\)):
 </div>
 
 <div id="outline-container-org2e3b65e" class="outline-3">
-<h3 id="org2e3b65e"><span class="section-number-3">1.4</span> 导数求解</h3>
-<div class="outline-text-3" id="text-1-4">
+<h3 id="org2e3b65e">导数求解</h3>
+<div class="outline-text-3" id="text-org2e3b65e">
 <p>
-一般来说，有模型强化学习很少有问题可以使用导数来求解，因为我们无法知道它的状态转移方程（环境动力学函数），比如在玩 Atari 游戏的时候，下一状态我们是无法通过公式定义来得到的。假设我们现在知道状态转移方程，那么要如何通过导数来求得最优解呢？
+一般来说，有模型强化学习很少有问题可以使用导数来求解，因为我们无法知道它的状态转移方程（环境动力学函数），
+比如在玩 Atari 游戏的时候，下一状态我们是无法通过公式定义来得到的。
+假设我们现在知道状态转移方程，那么要如何通过导数来求得最优解呢？
 </p>
 
 <p>
@@ -498,19 +525,19 @@ TreePolicy(\(s_t\)):
 </div>
 
 <div id="outline-container-orgb8254f2" class="outline-4">
-<h4 id="orgb8254f2"><span class="section-number-4">1.4.1</span> 为什么使用二阶优化方法</h4>
-<div class="outline-text-4" id="text-1-4-1">
+<h4 id="orgb8254f2">为什么使用二阶优化方法</h4>
+<div class="outline-text-4" id="text-orgb8254f2">
 </div>
 <div id="outline-container-orgf8fe9e4" class="outline-5">
-<h5 id="orgf8fe9e4"><span class="section-number-5">1.4.1.1</span> Shooting method</h5>
-<div class="outline-text-5" id="text-1-4-1-1">
+<h5 id="orgf8fe9e4">Shooting method</h5>
+<div class="outline-text-5" id="text-orgf8fe9e4">
 <p>
 前面提到的一阶优化方法被称作 <code>Shooting method</code> 。它只对动作进行求导，状态是关于动作的函数。
 </p>
 <div class="org-center">
 
 <div class="figure">
-<p><img src="../img/rl-sergey/lec-10-4.png" alt="lec-10-4.png" />
+<p><img src="../img/rl-sergey/lec-10-4.png" alt="lec-10-4.png" width="100%" />
 </p>
 </div>
 </div>
@@ -522,8 +549,8 @@ TreePolicy(\(s_t\)):
 </div>
 
 <div id="outline-container-orgc5269e1" class="outline-5">
-<h5 id="orgc5269e1"><span class="section-number-5">1.4.1.2</span> Collocation method</h5>
-<div class="outline-text-5" id="text-1-4-1-2">
+<h5 id="orgc5269e1">Collocation method</h5>
+<div class="outline-text-5" id="text-orgc5269e1">
 <p>
 <code>Collocation method</code> 对状态和动作求导，有约束性。
 \[
@@ -534,7 +561,7 @@ TreePolicy(\(s_t\)):
 <div class="org-center">
 
 <div class="figure">
-<p><img src="../img/rl-sergey/lec-10-5.png" alt="lec-10-5.png" />
+<p><img src="../img/rl-sergey/lec-10-5.png" alt="lec-10-5.png" width="100%" />
 </p>
 </div>
 </div>
@@ -543,8 +570,8 @@ TreePolicy(\(s_t\)):
 </div>
 
 <div id="outline-container-orgb0f7f6d" class="outline-4">
-<h4 id="orgb0f7f6d"><span class="section-number-4">1.4.2</span> LQR</h4>
-<div class="outline-text-4" id="text-1-4-2">
+<h4 id="orgb0f7f6d">LQR</h4>
+<div class="outline-text-4" id="text-orgb0f7f6d">
 <p>
 我们先使用 <code>Shooting method</code> 求解。
 目标是：
@@ -576,7 +603,8 @@ c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right)=\frac{1}{2}\left[\begin{array}{c}
 </p>
 
 <p>
-目标方程只对动作 \(u_t\) 求导，且上一时刻的状态和动作会影响下一时刻的状态 （\(x_t=f(x_{t-1},u_{t-1})\)），进而影响下一时刻的损失 <code>c</code> 。因此，我们需要使用反向传播的方法，把梯度从最后一个状态开始，传回第一个状态。
+目标方程只对动作 \(u_t\) 求导，且上一时刻的状态和动作会影响下一时刻的状态 （\(x_t=f(x_{t-1},u_{t-1})\)），进而影响下一时刻的损失 <code>c</code> 。
+因此，我们需要使用反向传播的方法，把梯度从最后一个状态开始，传回第一个状态。
 </p>
 
 <p>
@@ -607,12 +635,16 @@ Q\left(\mathbf{x}_{T}, \mathbf{u}_{T}\right)=\text { const }+\frac{1}{2}\left[\b
 \mathbf{c}_{\mathbf{u}_{T}}
 \end{array}\right]
 \]
+</p>
+
+<p>
 对 \(u_T\) 求导：
 </p>
 \begin{array}{c}
 \nabla_{\mathbf{u}_{T}} Q\left(\mathbf{x}_{T}, \mathbf{u}_{T}\right)=\mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}} \mathbf{x}_{T}+\mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}} \mathbf{u}_{T}+\mathbf{c}_{\mathbf{u}_{T}}^{T}=0 \\
 \mathbf{u}_{T}=-\mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}}^{-1}\left(\mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}} \mathbf{x}_{T}+\mathbf{c}_{\mathbf{u}_{T}}\right)
 \end{array}
+
 <p>
 化简：
 </p>
@@ -645,6 +677,7 @@ V\left(\mathbf{x}_{T}\right)=\operatorname{const}+\frac{1}{2}\left[\begin{array}
 V\left(\mathbf{x}_{T}\right)=& \frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{C}_{\mathbf{x}_{T}, \mathbf{x}_{T}} \mathbf{x}_{T}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{C}_{\mathbf{x}_{T}, \mathbf{u}_{T}} \mathbf{K}_{T} \mathbf{x}_{T}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{x}_{T}} \mathbf{x}_{T}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}} \mathbf{K}_{T} \mathbf{x}_{T}+\\
 & \mathbf{x}_{T}^{T} \mathbf{K}_{T}^{T} \mathbf{C}_{\mathbf{u}_{T}, \mathbf{u}_{T}} \mathbf{k}_{T}+\frac{1}{2} \mathbf{x}_{T}^{T} \mathbf{C}_{\mathbf{x}_{T}, \mathbf{u}_{T}} \mathbf{k}_{T}+\mathbf{x}_{T}^{T} \mathbf{c}_{\mathbf{x}_{T}}+\mathbf{x}_{T}^{T} \mathbf{K}_{T}^{T} \mathbf{c}_{\mathbf{u}_{T}}+\mathrm{const}
 \end{aligned}
+
 <p>
 化简：
 </p>
@@ -655,7 +688,8 @@ V\left(\mathbf{x}_{T}\right)=\mathrm{const}+\frac{1}{2} \mathbf{x}_{T}^{T} \math
 \end{array}
 
 <p>
-接下来就可以计算目标函数对 \(u_{T-1}\) 的求导了。方法和之前相同，只不过这一步的损失要加上最后一步的损失，因为这一步的状态和动作会影响下一步的损失。
+接下来就可以计算目标函数对 \(u_{T-1}\) 的求导了。方法和之前相同，只不过这一步的损失要加上最后一步的损失，
+因为这一步的状态和动作会影响下一步的损失。
 </p>
 
 <p>
@@ -690,6 +724,7 @@ V\left(\mathbf{x}_{T}\right)=\operatorname{const}+\frac{1}{2}\left[\begin{array}
 \]
 </p>
 
+
 <p>
 合并上诉两项：
 \[
@@ -704,6 +739,9 @@ Q\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)=\text { const }+\frac{1}{2}\lef
 \mathbf{u}_{T-1}
 \end{array}\right]^{T} \mathbf{q}_{T-1}
 \]
+</p>
+
+<p>
 其中：
 </p>
 \begin{array}{l}
@@ -716,10 +754,16 @@ Q\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)=\text { const }+\frac{1}{2}\lef
 \[
 \nabla_{\mathbf{u}_{T-1}} Q\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)=\mathbf{Q}_{\mathbf{u}_{T-1}, \mathbf{x}_{T-1}} \mathbf{x}_{T-1}+\mathbf{Q}_{\mathbf{u}_{T-1}, \mathbf{u}_{T-1}} \mathbf{u}_{T-1}+\mathbf{q}_{\mathbf{u}_{T-1}}^{T}=0
 \]
+</p>
+
+<p>
 得到：
 \[
 \mathbf{u}_{T-1}=\mathbf{K}_{T-1} \mathbf{x}_{T-1}+\mathbf{k}_{T-1}
 \]
+</p>
+
+<p>
 其中：
 </p>
 \begin{array}{l}
@@ -733,7 +777,7 @@ Q\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)=\text { const }+\frac{1}{2}\lef
 <div class="org-center">
 
 <div class="figure">
-<p><img src="../img/rl-sergey/lec-10-6.png" alt="lec-10-6.png" />
+<p><img src="../img/rl-sergey/lec-10-6.png" alt="lec-10-6.png" width="100%" />
 </p>
 </div>
 </div>
@@ -752,17 +796,15 @@ Q\left(\mathbf{x}_{T-1}, \mathbf{u}_{T-1}\right)=\text { const }+\frac{1}{2}\lef
 </div>
 
 <div id="outline-container-orgf8993c1" class="outline-4">
-<h4 id="orgf8993c1"><span class="section-number-4">1.4.3</span> iLQR</h4>
-<div class="outline-text-4" id="text-1-4-3">
+<h4 id="orgf8993c1">iLQR</h4>
+<div class="outline-text-4" id="text-orgf8993c1">
 <p>
-LQR 方法适用于状态转移方程为线性的，损失函数为二次的环境中，但实际中很多问题都不满足这个条件。那么我们用一个线性方程来近似拟合现实问题的非线性环境动力学方程吗？
+LQR 方法适用于状态转移方程为线性的，损失函数为二次的环境中，但实际中很多问题都不满足这个条件。
+那么我们用一个线性方程来近似拟合现实问题的非线性环境动力学方程吗？
 </p>
 
 <p>
 可以使用泰勒展开来近似。
-</p>
-
-<p>
 \[
 f\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx f\left(\hat{\mathbf{x}}_{t}, \hat{\mathbf{u}}_{t}\right)+\nabla_{\mathbf{x}_{t}, \mathbf{u}_{t}} f\left(\hat{\mathbf{x}}_{t}, \hat{\mathbf{u}}_{t}\right)\left[\begin{array}{c}
 \mathbf{x}_{t}-\hat{\mathbf{x}}_{t} \\
@@ -781,6 +823,9 @@ c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx c\left(\hat{\mathbf{x}}_{t}
 \mathbf{u}_{t}-\hat{\mathbf{u}}_{t}
 \end{array}\right]
 \]
+</p>
+
+<p>
 移项之后，化简：
 \[
 \bar{f}\left(\delta \mathbf{x}_{t}, \delta \mathbf{u}_{t}\right)=\mathbf{F}_{t}\left[\begin{array}{l}
@@ -802,12 +847,15 @@ c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx c\left(\hat{\mathbf{x}}_{t}
 \end{array}\right]^{T} \mathbf{c}_{t}
 \end{array}
 \]
+</p>
+
+<p>
 其中：
 \[
 \mathbf{F}_t=\nabla_{\mathbf{x}_t,\mathbf{u}_t}f\left(\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}\right)
 \]
 \[
-\mathbf{C}_t=\nabla^2_{\mathbf{x}_t,\mathbf{u}_t}c\left(\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}\righ)
+\mathbf{C}_t=\nabla^{2}_{\mathbf{x}_t,\mathbf{u}_t}c\left(\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}\right)
 \]
 \[
 \mathbf{c}_t=\nabla_{\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}}c\left(\hat{\mathbf{x}_t},\hat{\mathbf{u}_t}\right)
@@ -826,7 +874,7 @@ c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx c\left(\hat{\mathbf{x}}_{t}
 <div class="org-center">
 
 <div class="figure">
-<p><img src="../img/rl-sergey/lec-10-8.png" alt="lec-10-8.png" />
+<p><img src="../img/rl-sergey/lec-10-8.png" alt="lec-10-8.png" width="100%" />
 </p>
 </div>
 </div>
@@ -834,9 +882,376 @@ c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx c\left(\hat{\mathbf{x}}_{t}
 </div>
 </div>
 </div>
+
+<div id="outline-container-org45b808a" class="outline-2">
+<h2 id="org45b808a">Model-Based Reinforcement Learning</h2>
+<div class="outline-text-2" id="text-org45b808a">
+<p>
+一旦我们知道了环境动力学模型，那么我们就可以使用前面学到的知识进行动作的选择和规划了。
+最 Navie 的方法如下：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-1.png" alt="lec-11-1.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+如果有精心设计的初始策略，以及环境动力学函数（dynamics representation），将会大大提高这种方法的成功性。
+</p>
+
+<p>
+但这种方法对于训练集（随机策略探索到的数据）中没有的状态，无法作出很好的判断。
+如下图所示，假设随机策略探索到的只有红色线条的部分，它据此构建的模型为“越往右得分越高”。
+但真正的模型其实是“往右走时，得分先增高然后减小”。由于探索数据中没有很多的信息导致模型的不准确。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-3.png" alt="lec-11-3.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+引入 DAgger 算法，通过人工对数据标记，更新模型，来保证模型的准确性。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-2.png" alt="lec-11-2.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+现在还存在一个问题，之前的算法都是通过模型进行整个规划，
+是个 open-loop 模型，由于模型存在着误差，规划完整个动作轨迹会导致误差累积很大，使得后面的规划动作质量很差。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-4.png" alt="lec-11-4.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c8aca4" class="outline-3">
+<h3 id="org9c8aca4">模型的不确定性</h3>
+<div class="outline-text-3" id="text-org9c8aca4">
+<p>
+训练模型时，很容易就会陷入 overfit 的问题中。如下图所示，
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-5.png" alt="lec-11-5.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+真正的轨迹应该是黑色线条，我们用数据预测出来的模型是蓝色线条。
+可以看出来，有些地方的奖励预测过高，导致会在某些地方的选择与正确动作相差巨大。
+</p>
+
+<p>
+假设我们有一个关于模型准确率的函数，用来描述模型在当前状态下的预测的准确率。
+下图蓝色部分为 95% 的置信区间，它表示，模型有 95% 的概率确定下一个状态会在蓝色区间内，但模型无法知道到底在蓝色区间内的什么地方。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-6.png" alt="lec-11-6.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org598b160" class="outline-4">
+<h4 id="org598b160">如何计算模型不确定性？</h4>
+<div class="outline-text-4" id="text-org598b160">
+</div>
+<div id="outline-container-org88bc8a4" class="outline-5">
+<h5 id="org88bc8a4">Idea 1. 计算输出动作的交叉熵。熵越高，模型越不稳定。</h5>
+<div class="outline-text-5" id="text-org88bc8a4">
+<p>
+这种想法是不可行的。下图中蓝线表示生成的模型，可以看出，模型的方差基本上为 0，即模型的熵为 0，但这个模型是非常不稳定的。
+“Model is certain about the data, but we are not certain about the model.”
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-7.png" alt="lec-11-7.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+模型的不确定性其实体现在两个方面，一是数据的不确定性，二是模型本身的不确定性。计算交叉熵其实解决的只是数据的不确定性。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgab19b60" class="outline-5">
+<h5 id="orgab19b60">Idea 2. 计算模型本身的不确定性</h5>
+<div class="outline-text-5" id="text-orgab19b60">
+<p>
+我们希望生成的模型可以满足这个条件：
+\[
+\arg\max\log p(\theta|D)=\arg\max\log p(D|\theta)
+\]
+也就是说，模型参数可以通过数据生成，数据也可以使用模型参数来生成。
+</p>
+
+<p>
+其实， \(\log p(\theta|D)\) 就是说明模型不确定性的因素，它表示用这些数据生成一参数为 \(\theta\) 的模型的概率是多少。
+然后将模型不确定性和数据不确定性结合起来：
+\[
+\int p(s_{t+1}|s_t,a_t,\theta)p(\theta|D)d\theta
+\]
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge954271" class="outline-4">
+<h4 id="orge954271">计算模型不确定性的方法</h4>
+<div class="outline-text-4" id="text-orge954271">
+<p>
+<b>Bootstrap ensembles</b> 训练多个模型，那么其结果的期望可以近似看作多个模型的均值。
+\[
+\int p(s_{t+1}|s_t,a_t,\theta)p(\theta|D)d\theta\sim\frac{1}{N}\sum_{i}p(s_{t+1}|s_t,a_t,\theta_i)
+\]
+现在，目标函数就变成了：
+\[
+J\left(\mathbf{a}_{1}, \ldots, \mathbf{a}_{H}\right)=\frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{H} r\left(\mathbf{s}_{t, i}, \mathbf{a}_{t}\right), \text { where } \mathbf{s}_{t+1, i}=f_{i}\left(\mathbf{s}_{t, i}, \mathbf{a}_{t}\right)
+\]
+整体算法流程为：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-8.png" alt="lec-11-8.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga9f44cf" class="outline-3">
+<h3 id="orga9f44cf">Latent space models</h3>
+<div class="outline-text-3" id="text-orga9f44cf">
+<p>
+模型学习的好坏还与环境的复杂性有关。有些环境是部分可观测的，状态是高维的且存在较多冗余信息。
+这节将考虑如何从结构设计的角度使得模型的学习变得简单容易。
+我们需要考虑训练的模型有：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-9.png" alt="lec-11-9.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+在全部可观测模型中，我们通常做的是对网络的输出做最大似然化：
+\[
+\max _{\phi} \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} \log p_{\phi}\left(\mathbf{s}_{t+1, i} \mid \mathbf{s}_{t, i}, \mathbf{a}_{t, i}\right)
+\]
+但现在我们没有 \(s_t\) ，只能对其期望做最大似然化：
+\[
+\text { latent space model: } \max _{\phi} \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} E\left[\log p_{\phi}\left(\mathbf{s}_{t+1, i} \mid \mathbf{s}_{t, i}, \mathbf{a}_{t, i}\right)+\log p_{\phi}\left(\mathbf{o}_{t, i} \mid \mathbf{s}_{t, i}\right)\right]
+\]
+其中，
+\[
+\text { expectation w.r.t. }\left(\mathbf{s}_{t}, \mathbf{s}_{t+1}\right) \sim p\left(\mathbf{s}_{t}, \mathbf{s}_{t+1} \mid \mathbf{o}_{1: T}, \mathbf{a}_{1: T}\right)
+\]
+这个分布需要这么复杂吗？
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-10.png" alt="lec-11-10.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+这里我们使用简单的方法，使用：
+\[
+\text { expectation w.r.t. } \mathbf{s}_{t} \sim q_{\psi}\left(\mathbf{s}_{t} \mid \mathbf{o}_{t}\right), \mathbf{s}_{t+1} \sim q_{\psi}\left(\mathbf{s}_{t+1} \mid \mathbf{o}_{t+1}\right)
+\]
+为了简化讨论，这里的 observation model 是确定性的，
+\[
+q_{\psi}\left(\mathbf{s}_{t} \mid \mathbf{o}_{t}\right)=\delta\left(\mathbf{s}_{t}=g_{\psi}\left(\mathbf{o}_{t}\right)\right) \Rightarrow \mathbf{s}_{t}=g_{\psi}\left(\mathbf{o}_{t}\right)
+\]
+我们的目标函数也就转换为：
+\[
+\max _{\phi, \psi} \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} \log p_{\phi}\left(g_{\psi}\left(\mathbf{o}_{t+1, i}\right) \mid g_{\psi}\left(\mathbf{o}_{t, i}\right), \mathbf{a}_{t, i}\right)+\log p_{\phi}\left(\mathbf{o}_{t, i} \mid g_{\psi}\left(\mathbf{o}_{t, i}\right)\right)
+\]
+最后，在目标函数中加入关于奖励函数的优化：
+\[
+\max _{\phi, \psi} \frac{1}{N} \sum_{i=1}^{N} \sum_{t=1}^{T} \log p_{\phi}\left(g_{\psi}\left(\mathbf{o}_{t+1, i}\right) \mid g_{\psi}\left(\mathbf{o}_{t, i}\right), \mathbf{a}_{t, i}\right)+\log p_{\phi}\left(\mathbf{o}_{t, i} \mid g_{\psi}\left(\mathbf{o}_{t, i}\right)\right)+\log p_{\phi}\left(r_{t, i} \mid g_{\psi}\left(\mathbf{o}_{t, i}\right)\right)
+\]
+整理一下，得到算法：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-11-11.png" alt="lec-11-11.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgfbca5e5" class="outline-2">
+<h2 id="orgfbca5e5">Model-Based Policy Learning</h2>
+<div class="outline-text-2" id="text-orgfbca5e5">
+<p>
+像神经网络这类的策略，使用一个策略对所有状态输入进行动作的选择，我们称之为全局策略；
+像 LQR 中我们使用 \(K_{t}s_{t}+k_t\) 对每个状态都有对应的 \(K_t,k_t\) 矩阵的策略，我们称之为本地策略。
+显然，全局策略的改动对不同状态的影响更大。
+</p>
+
+<p>
+之前学习了如何训练好的环境动力学模型，以及基于模型的强化学习的基本训练方法，这节主要讲如何使用模型来训练策略。
+当然可以用我们最熟悉的梯度下降法。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-12-1.png" alt="lec-12-1.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+这种方法有什么缺点呢？
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-12-2.png" alt="lec-12-2.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+上图是基于模型的方法的反向传播示意图。其中，由于模型是训练到的函数，所以模型函数也会参与到梯度的传播过程中，就会导致一系列的梯度相乘叠加。
+由于梯度在传播过程中叠加性，越靠 Trajectory 结尾，其梯度越小，越靠 Trajectory 开头，梯度越大。
+所以很容易发生梯度爆炸的问题。其次就是之前提到的全局策略的缺点，牵一发而动全身，误差会不断累积增大。
+</p>
+
+<p>
+这节内容主要介绍两种方法来缓解上诉问题。
+一是避免梯度相乘的操作，使用模型生成数据，但利用 Model-Free 的方法来求解。
+第二是直接使用非神经网络这样的全局策略，使用简单的本地策略来避免参数敏感性问题。
+</p>
+</div>
+
+<div id="outline-container-org9960d62" class="outline-3">
+<h3 id="org9960d62">使用模型的 Model-Free 方法</h3>
+<div class="outline-text-3" id="text-org9960d62">
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-12-3.png" alt="lec-12-3.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+可以看出，免模型的策略梯度方法中，梯度不是相乘而是相加的，因此，如果给定足够多的样本数据，策略梯度是可以收敛的。
+但是，直接对模型进行梯度下降的时候，梯度是相乘的，因此很容易发生梯度爆炸。
+</p>
+
+<p>
+提出一种 Dyna 算法，它的本质是在线 Q-Learning 算法的一种改进。
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-12-4.png" alt="lec-12-4.png" width="100%" />
+</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org45d3ef6" class="outline-3">
+<h3 id="org45d3ef6">Local Models</h3>
+<div class="outline-text-3" id="text-org45d3ef6">
+<p>
+之前使用 LQR 解决这个优化问题时，我们假设环境动力学方程是线性，损失函数是二次的，
+而现在不知道环境动力学的情况下，如何将 LQR 运用到这个问题中呢？
+之前我们分析过，如果要在已知环境下运用梯度的方法求最优解，需要知道这几个值：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-12-5.png" alt="lec-12-5.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+与其利用神经网络去近似环境动力学方程，不如直接去近似 \(\frac{df}{dx_t}\) ， \(\frac{df}{du_t}\) 。
+</p>
+
+<p>
+不妨先假设环境动力学方程为：
+\[
+f\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx \mathbf{A}_{t} \mathbf{x}_{t}+\mathbf{B}_{t} \mathbf{u}_{t}
+\]
+其中：
+\[
+\mathbf{A}_{t}=\frac{d f}{d \mathbf{x}_{t}} \quad \mathbf{B}_{t}=\frac{d f}{d \mathbf{u}_{t}}
+\]
+可以加入随机扰动使得相同的状态下执行相同动作之后的下一个状态稍有不同：
+\[
+p\left(\mathbf{x}_{t+1} \mid \mathbf{x}_{t}, \mathbf{u}_{t}\right)=\mathcal{N}\left(f\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right), \Sigma\right)
+\]
+算法整体流程为：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-12-6.png" alt="lec-12-6.png" width="100%" />
+</p>
+</div>
+</div>
+
+<p>
+然后，可以直接使用 iLQR 求出来的动作，加上随机扰动。即：
+\[
+p\left(\mathbf{u}_{t} \mid \mathbf{x}_{t}\right)=\mathcal{N}\left(\mathbf{K}_{t}\left(\mathbf{x}_{t}-\hat{\mathbf{x}}_{t}\right)+\mathbf{k}_{t}+\hat{\mathbf{u}}_{t}, \Sigma_{t}\right)
+\]
+</p>
+
+<p>
+上诉的算法都是基于模型是线性的，如果模型不是线性的，那么发生的误差就可能会比较大。例如：
+</p>
+<div class="org-center">
+
+<div class="figure">
+<p><img src="../img/rl-sergey/lec-12-7.png" alt="lec-12-7.png" width="100%" />
+</p>
+</div>
+</div>
+<p>
+上图中，绿线表示实际的环境动力学，蓝色表示我们近似的假设，此时运行 LQR，有可能会生成和实际环境非常不相符的轨迹。
+</p>
+
+<p>
+这个问题在以前的策略梯度中也出现过。TRPO 中，为了使两个策略相差不是很大，使用 KL 散度对两策略进行了限制。
+这里也可以采用相同的方法。
+</p>
+</div>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-09-09 Wed 10:14. Created by 王方圆.</p>
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
 			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
