@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-25 Fri 19:36 -->
+<!-- 2020-09-26 Sat 09:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>强化学习 &#x2013; Sergey Levine Course</title>
@@ -284,7 +284,7 @@ for the JavaScript code in this tag.
 </li>
 <li><a href="#orga41531b">优化</a>
 <ul>
-<li><a href="#org41d4e29">Guess &amp; Check</a></li>
+<li><a href="#org9594e24">Guess &amp; Check (random shooting)</a></li>
 <li><a href="#org732aa26">Cross-entropy method（CEM）</a></li>
 </ul>
 </li>
@@ -339,7 +339,7 @@ for the JavaScript code in this tag.
 <h3 id="org461580e">Model-based 强化学习简介</h3>
 <div class="outline-text-3" id="text-org461580e">
 <p>
-先学习状态转移函数（Transition Dynamics），然后在学习在每个状态下如何作出选择。
+先学习状态转移函数（Transition Dynamics），然后再学习在每个状态下如何选择动作。
 </p>
 </div>
 </div>
@@ -378,7 +378,7 @@ for the JavaScript code in this tag.
 <h5 id="orgdfbbb6d">随机性（Stochastic）Open-loop 环境下：</h5>
 <div class="outline-text-5" id="text-orgdfbbb6d">
 <p>
-当状态和动作确定时，下一状态无法确定，但有一定的分布概率。Agent 可以依据模型生成一系列的动作。
+当状态和动作确定时，下一状态无法确定，但有一定的分布概率。Agent 依据模型生成一系列的动作。
 </p>
 <div class="org-center">
 
@@ -387,7 +387,7 @@ for the JavaScript code in this tag.
 </p>
 </div>
 </div>
-\begin{array}{l}
+\begin{array}{c}
 p_{\theta}\left(\mathbf{s}_{1}, \ldots, \mathbf{s}_{T} \mid \mathbf{a}_{1}, \ldots, \mathbf{a}_{T}\right)=p\left(\mathbf{s}_{1}\right) \prod_{t=1}^{T} p\left(\mathbf{s}_{t+1} \mid \mathbf{s}_{t}, \mathbf{a}_{t}\right) \\
 \mathbf{a}_{1}, \ldots, \mathbf{a}_{T}=\arg \max _{\mathbf{a}_{1}, \ldots, \mathbf{a}_{T}} E\left[\sum_{t} r\left(\mathbf{s}_{t}, \mathbf{a}_{t}\right) \mid \mathbf{a}_{1}, \ldots, \mathbf{a}_{T}\right]
 \end{array}
@@ -398,7 +398,7 @@ p_{\theta}\left(\mathbf{s}_{1}, \ldots, \mathbf{s}_{T} \mid \mathbf{a}_{1}, \ldo
 <h5 id="orgc789772">随机性（Stochastic）Closed-loop 环境下：</h5>
 <div class="outline-text-5" id="text-orgc789772">
 <p>
-当状态和动作确定时，下一状态无法确定。Agent 可以依据模型生成一个策略。
+当状态和动作确定时，下一状态无法确定。Agent 可以依据模型生成一个策略，即每走一步，生成一步的动作。
 </p>
 <div class="org-center">
 
@@ -429,9 +429,9 @@ p\left(\mathbf{s}_{1}, \mathbf{a}_{1}, \ldots, \mathbf{s}_{T}, \mathbf{a}_{T}\ri
 \]
 </p>
 </div>
-<div id="outline-container-org41d4e29" class="outline-5">
-<h5 id="org41d4e29">Guess &amp; Check</h5>
-<div class="outline-text-5" id="text-org41d4e29">
+<div id="outline-container-org9594e24" class="outline-5">
+<h5 id="org9594e24">Guess &amp; Check (random shooting)</h5>
+<div class="outline-text-5" id="text-org9594e24">
 <ol class="org-ol">
 <li>随便找一个分布函数（distribution），使用此分布函数选择不同状态的动作序列 \(A_1,\dots,A_N\)</li>
 <li>根据上诉公式选取使得 \(J(A_i)\) 最大的动作序列 \(A_i\)</li>
@@ -498,8 +498,7 @@ TreePolicy(\(s_t\)):
 </p>
 
 <p>
-先来考虑一下确定性环境下：
-我们的目标是：
+先来考虑一下确定性环境。我们的目标是：
 \[
 \min _{\mathbf{u}_{1}, \ldots, \mathbf{u}_{T}} \sum_{t=1}^{T} c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \text { s.t. } \mathbf{x}_{t}=f\left(\mathbf{x}_{t-1}, \mathbf{u}_{t-1}\right)
 \]
@@ -543,7 +542,8 @@ TreePolicy(\(s_t\)):
 </div>
 
 <p>
-上图横轴是时间，纵轴是状态。给定初始位置之后，选择动作，根据状态转移方程得到下一个状态，直到结束。可以看到，如果开始的动作发生一个细微的变化，也会对最后的结果造成很大的影响。
+上图横轴是时间，纵轴是状态。给定初始位置之后，选择动作，根据状态转移方程得到下一个状态，直到结束。
+可以看到，如果开始的动作发生一个细微的变化，也会对最后的结果造成很大的影响。
 </p>
 </div>
 </div>
@@ -958,7 +958,8 @@ c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx c\left(\hat{\mathbf{x}}_{t}
 
 <p>
 假设我们有一个关于模型准确率的函数，用来描述模型在当前状态下的预测的准确率。
-下图蓝色部分为 95% 的置信区间，它表示，模型有 95% 的概率确定下一个状态会在蓝色区间内，但模型无法知道到底在蓝色区间内的什么地方。
+下图蓝色部分为 95% 的置信区间，它表示，模型有 95% 的概率确定下一个状态会在蓝色区间内，
+但模型无法知道到底在蓝色区间内的什么地方。
 </p>
 <div class="org-center">
 
@@ -977,7 +978,8 @@ c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx c\left(\hat{\mathbf{x}}_{t}
 <h5 id="org88bc8a4">Idea 1. 计算输出动作的交叉熵。熵越高，模型越不稳定。</h5>
 <div class="outline-text-5" id="text-org88bc8a4">
 <p>
-这种想法是不可行的。下图中蓝线表示生成的模型，可以看出，模型的方差基本上为 0，即模型的熵为 0，但这个模型是非常不稳定的。
+这种想法是不可行的。下图中蓝线表示生成的模型，可以看出，模型的方差基本上为 0，即模型的熵为 0，
+但这个模型是非常不稳定的。
 “Model is certain about the data, but we are not certain about the model.”
 </p>
 <div class="org-center">
@@ -988,7 +990,8 @@ c\left(\mathbf{x}_{t}, \mathbf{u}_{t}\right) \approx c\left(\hat{\mathbf{x}}_{t}
 </div>
 </div>
 <p>
-模型的不确定性其实体现在两个方面，一是数据的不确定性，二是模型本身的不确定性。计算交叉熵其实解决的只是数据的不确定性。
+模型的不确定性其实体现在两个方面，一是数据的不确定性，二是模型本身的不确定性。
+计算交叉熵解决的只是数据的不确定性。
 </p>
 </div>
 </div>
@@ -1139,7 +1142,8 @@ q_{\psi}\left(\mathbf{s}_{t} \mid \mathbf{o}_{t}\right)=\delta\left(\mathbf{s}_{
 </div>
 </div>
 <p>
-上图是基于模型的方法的反向传播示意图。其中，由于模型是训练到的函数，所以模型函数也会参与到梯度的传播过程中，就会导致一系列的梯度相乘叠加。
+上图是基于模型的方法的反向传播示意图。其中，由于模型是训练到的函数，所以模型函数也会参与到梯度的传播过程中，
+就会导致一系列的梯度相乘叠加。
 由于梯度在传播过程中叠加性，越靠 Trajectory 结尾，其梯度越小，越靠 Trajectory 开头，梯度越大。
 所以很容易发生梯度爆炸的问题。其次就是之前提到的全局策略的缺点，牵一发而动全身，误差会不断累积增大。
 </p>

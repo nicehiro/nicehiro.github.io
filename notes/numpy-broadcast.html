@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-13 Tue 10:44 -->
+<!-- 2020-10-12 Mon 13:37 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hiro's Blog</title>
+<title>Numpy 广播</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="王方圆" />
 <style type="text/css">
@@ -193,7 +193,7 @@
 	.org-svg { width: 90%; }
 	/*]]>*/-->
 </style>
-<link rel="stylesheet" type="text/css" href="css/index.css"/>
+<link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
 /*
 @licstart  The following is the entire license notice for the
@@ -243,111 +243,128 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Hiro's Blog</h1>
+<h1 class="title">Numpy 广播</h1>
 <blockquote>
 <p>
-此笔记应该不适合别人当作博客阅读，阅读需谨慎。
+原文地址 <a href="https://numpy.org/doc/stable/user/basics.broadcasting.html">Broadcasting</a>
 </p>
 </blockquote>
 
-<div id="outline-container-orgf449bdf" class="outline-2">
-<h2 id="orgf449bdf"><span class="section-number-2">1</span> Notes</h2>
-<div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><a href="notes/Math.html">高数</a></li>
+<p>
+广播机制是 Numpy 在不同维度数组之间进行科学计算时对待数组的一种特殊方法。
+根据某些特定规则，小维度数组依据大维度数组做相应的“广播”操作，使得计算方法可以顺利进行。
+广播提供了一种对数组向量化的方法，从而使得循环出现在 C 中而不是 Python 中。
+它无需复制不必要的数据即可完成此操作，通常可以实现高效的算法。
+但是，在某些情况下，广播不是一个好主意，因为广播会导致内存使用效率地下，从而减慢计算速度。
+</p>
 
-<li><a href="notes/Probability.html">概率论</a></li>
-
-<li><a href="notes/线性代数.html">线性代数</a></li>
-
-<li><a href="notes/Network.html">计算机网络</a></li>
-
-<li><a href="notes/OS.html">操作系统</a></li>
-
-<li><a href="notes/Computer_Architecture.html">计算机组成原理</a></li>
-
-<li><a href="notes/Data_Structure.html">数据结构</a></li>
-
-<li><a href="notes/Python-笔记.html">Python笔记</a></li>
-
-<li><a href="notes/learn-lisp.html">Lisp笔记</a></li>
-
-<li><a href="notes/linux-shell-知识点总结.html">Shell笔记</a></li>
-
-<li><a href="notes/Sed-Learn.html">Sed 学习笔记</a></li>
-
-<li><a href="notes/pandas-and-numpy.html">Pandas &amp; Numpy</a></li>
-
-<li><a href="thesis/mastering-eshell.html">Mastering Eshell</a></li>
-</ul>
+<p>
+通常情况下，Numpy 计算操作会在逐个元素的数组对上完成。最简单的情况下，两个数组必须具有完全相同的维度：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">a = np.array([1.0, 2.0, 3.0])
+b = np.array([2.0, 2.0, 2.0])
+a * b
+</pre>
 </div>
+<div class="org-src-container">
+<pre class="src src-result">array([ 2.,  4.,  6.])
+</pre>
 </div>
 
-<div id="outline-container-org948563d" class="outline-2">
-<h2 id="org948563d"><span class="section-number-2">2</span> Reinforcement Learning</h2>
-<div class="outline-text-2" id="text-2">
-<ul class="org-ul">
-<li><a href="notes/RL-David-Silver.html">David Silver 课程学习笔记</a></li>
-
-<li><a href="notes/gradient-decent.html">Gradient Decent</a></li>
-
-<li><a href="notes/logistic-regression.html">罗辑回归</a></li>
-
-<li><a href="notes/back-propagation.html">反向传播算法 Back Propagation</a></li>
-
-<li><a href="notes/active-function.html">激活函数</a></li>
-
-<li><a href="thesis/TRPO.html">TRPO 置信空间策略优化</a></li>
-
-<li><a href="thesis/kl-divergence.html">KL 散度</a></li>
-
-<li><a href="tech/weight-initialization.html">如何进行权重初始化</a></li>
-
-<li><a href="notes/lstm.html">理解 LSTM</a></li>
-
-<li><a href="notes/Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients.html">策略梯度</a></li>
-
-<li><a href="./notes/RL-Sergey-Levine.html">Sergey Levine 课程学习笔记</a></li>
-
-<li><a href="./notes/linear-classification.html">线性分类器</a></li>
-</ul>
+<p>
+当数组的维度满足某些条件时，Numpy 会使用广播放松上诉约束条件。
+最简单的示例是数组和标量值一起的计算：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">a = np.array([1.0, 2.0, 3.0])
+b = 2.0
+a * b
+</pre>
 </div>
+<div class="org-src-container">
+<pre class="src src-result">array([ 2.,  4.,  6.])
+</pre>
 </div>
 
-<div id="outline-container-org51f59b8" class="outline-2">
-<h2 id="org51f59b8"><span class="section-number-2">3</span> Tech</h2>
-<div class="outline-text-2" id="text-3">
-<ul class="org-ul">
-<li><a href="tech/GFW-原理简析.html">GFW原理解析</a></li>
+<p>
+结果和上个示例相同。我们可以认为标量 <code>b=</code> 在算数计算中被拉伸成和 <code>a</code> 维度相同的数组。
+<code>b</code> 中被扩展的元素只是原始标量的复制。
+并且，所谓的延伸扩展只是改变上的，实际上 Numpy 并不会真的在内存空间中复制新的副本，
+因此广播可以尽可能节省内存并提高计算效率。
+</p>
 
-<li><a href="tech/Vim-进阶.html">Vim 进阶</a></li>
+<p>
+另外，第二个例子要比第一个更加高效，因为广播在乘法过程中移动的次数较少（ <code>b</code> 是标量而不是数组）。
+</p>
 
-<li><a href="tech/all_kinds_tech.html">技术杂集</a></li>
+<div id="outline-container-orga25d01a" class="outline-2">
+<h2 id="orga25d01a">一般广播规则</h2>
+<div class="outline-text-2" id="text-orga25d01a">
+<p>
+在对两个数组进行操作时，Numpy 从最后一维开始，向前比较每个维度的大小。如果：
+</p>
+<ol class="org-ol">
+<li>维数相等，或</li>
+<li>其中一个维数为 1</li>
+</ol>
+<p>
+那么这两数组可以进行广播计算。
+</p>
 
-<li><a href="tech/use-pyim.html">Emacs 使用 pyim ＋ rime ＋ double flypy 打字</a></li>
+<p>
+如果上诉条件不满足，会抛出 <code>ValueError: operands could not be broadcast together</code> 异常，表明两数组维度不满足计算条件。
+</p>
 
-<li><a href="tech/largest_rectangle_area.html">LeetCode #84 题解</a></li>
+<p>
+计算的两数组不需要由相同的维度。如果你有 <code>256x256x3</code> 的 RGB 数据，你想按不同的值缩放图像中的每个通道数据。
+可以直接与 1 维 3 个数据的向量相乘来解决。根据广播规则，这两个数组最后一维的大小是相等的，其他维度中有一个数据的维数为 1。
+</p>
+<pre class="example">
+Image  (3d array): 256 x 256 x 3
+Scale  (1d array):             3
+Result (3d array): 256 x 256 x 3
+</pre>
 
-<li><a href="./notes/numpy-broadcast.html">Numpy Broadcasting</a></li>
-</ul>
-</div>
-</div>
+<p>
+这里有一些例子：
+</p>
+<pre class="example">
+A      (4d array):  8 x 1 x 6 x 1
+B      (3d array):      7 x 1 x 5
+Result (4d array):  8 x 7 x 6 x 5
 
-<div id="outline-container-org1498f88" class="outline-2">
-<h2 id="org1498f88"><span class="section-number-2">4</span> Life</h2>
-<div class="outline-text-2" id="text-4">
-<ul class="org-ul">
-<li><a href="life/学校每日签到的自动化完成.html">学校每日签到的自动化完成</a></li>
-</ul>
-</div>
-</div>
+A      (2d array):  5 x 4
+B      (1d array):      1
+Result (2d array):  5 x 4
 
-<div id="outline-container-orgd8bc9c2" class="outline-2">
-<h2 id="orgd8bc9c2"><span class="section-number-2">5</span> Movies</h2>
-<div class="outline-text-2" id="text-5">
-<ul class="org-ul">
-<li><a href="notes/he-yi-wei-jia.html">何以为家</a></li>
-</ul>
+A      (2d array):  5 x 4
+B      (1d array):      4
+Result (2d array):  5 x 4
+
+A      (3d array):  15 x 3 x 5
+B      (3d array):  15 x 1 x 5
+Result (3d array):  15 x 3 x 5
+
+A      (3d array):  15 x 3 x 5
+B      (2d array):       3 x 5
+Result (3d array):  15 x 3 x 5
+
+A      (3d array):  15 x 3 x 5
+B      (2d array):       3 x 1
+Result (3d array):  15 x 3 x 5
+</pre>
+
+<p>
+以下案例是不满足广播条件的：
+</p>
+<pre class="example">
+A      (1d array):  3
+B      (1d array):  4 # trailing dimensions do not match
+
+A      (2d array):      2 x 1
+B      (3d array):  8 x 4 x 3 # second from last dimensions mismatched
+</pre>
 </div>
 </div>
 </div>
