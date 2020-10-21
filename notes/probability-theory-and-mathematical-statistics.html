@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-09-24 Thu 14:38 -->
+<!-- 2020-10-10 Sat 10:43 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>概率论与数理统计</title>
@@ -569,6 +569,228 @@ Var(X)=E(X-EX)^2
 Cov(X,Y)=E[(X-EX)(Y-EY)]
 \]
 </p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgdbb0622" class="outline-2">
+<h2 id="orgdbb0622">数理统计学的基本概念</h2>
+<div class="outline-text-2" id="text-orgdbb0622">
+<p>
+<b>统计量</b> ：完全有样本决定的量叫做统计量。统计量只依赖于样本，不能依赖与任何其他未知变量。
+特别的，它不能依赖于总体分布中所包含的任何参数。
+</p>
+
+<p>
+<b>样本方差</b> ： \(S^2=\sum_{i=1}^{n}(X_i-\bar{X})^2/(n-1)\)
+</p>
+
+<p>
+<b>k 阶样本原点矩</b> ： \(a_k=(X_{1}^{k}+\dots+X_{n}^{k})/n\)
+</p>
+
+<p>
+<b>k 阶样本中心矩</b> ： \(m_k=\sum_{i=1}^{n}(X_i-\bar{X})^k/n\)
+</p>
+
+<p>
+注意二阶样本中心矩和样本方差只有系数之差。
+</p>
+</div>
+
+<div id="outline-container-orgb1c5497" class="outline-3">
+<h3 id="orgb1c5497">矩估计</h3>
+<div class="outline-text-3" id="text-orgb1c5497">
+<p>
+利用样本矩去估计分布参数。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge1b03fb" class="outline-3">
+<h3 id="orge1b03fb">极大似然估计</h3>
+<div class="outline-text-3" id="text-orge1b03fb">
+<p>
+设总体有分布 \(f(x;\theta_1,\dots,\theta_k)\) ， \(X_1,\dots,X_n\) 为自这个总体中抽出的样本，
+则样本 \((X_1,\dots,X_n)\) 的分布（即其概率密度函数或概率函数）为：
+\[
+f(x_1;\theta_1,\dots,\theta_k)f(x_2;\theta_1,\dots,\theta_k)\dots f(x_n;\theta_1,\dots,\theta_k)
+\]
+记为 \(L(x_1,\dots,x_n;\theta_1,\dots,\theta_k)\) 。
+</p>
+
+<p>
+当参数 \(\theta_1,\dots,\theta_k\) 固定时，函数 \(L\) 是一个概率密度函数。
+其意义为，样本 \(X_1,\dots,X_n\) 出现的概率。反过来理解，当 \(X_1,\dots,X_n\) 固定时，函数 \(L\) 的意义为，
+给定样本，生成样本的参数为 \(\theta_1,\dots,\theta_k\) 的概率。但参数没有概率这个说法，就选用了“似然”这个词。
+</p>
+
+<p>
+因此，我们要找的参数，其实就是使得 \(L\) 最大的参数，即：
+\[
+L(X_1,\dots,X_n;\theta_1,\dots,\theta_n) = \max_{\theta_1,\dots,\theta_n}L(X_1,\dots,X_n;\theta_1,\dots,\theta_k)
+\]
+若 \(f\) 连续可导，
+\[
+\ln L=\sum_{i=1}^{n}\ln f(X_i;\theta_1,\dots,\theta_k)
+\]
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2ddce0f" class="outline-3">
+<h3 id="org2ddce0f">贝叶斯估计</h3>
+<div class="outline-text-3" id="text-org2ddce0f">
+<p>
+设总体有概率密度 \(f(X;\theta)\) ，从这个总体中抽样本 \(X_1,\dots,X_n\) ，
+则这组样本的密度为 \(f(X_1,\theta)\dots,f(X_n,\theta)\) 。
+\(\theta\) 的先验密度为 \(h(\theta)\) 。
+\(\theta,X_1,\dots,X_n\) 的联合密度为：
+\[
+h(\theta)f(X_1,\theta)\dots f(X_n,\theta)
+\]
+由此算出 \((X_1,\dots,X_n)\) 的边缘密度为：
+\[
+p(X_1,\dots,X_n)=\int{h(\theta)f(X_1,\theta),\dots,f(X_n,\theta)}d\theta
+\]
+在给定 \(X_1,\dots,X_n\) 的条件下， \(\theta\) 的条件密度为：
+\[
+h(\theta|X_1,\dots,X_n)=h(\theta)f(X_1,\theta)\dots f(X_n,\theta)/p(X_1.\dots,X_n)
+\]
+这个条件密度代表了现在（取得样本之后）对 \(\theta\) 的认识，它综合了先验信息（ \(h(\theta)\) ）以及样本信息。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge99d145" class="outline-3">
+<h3 id="orge99d145">点估计的优良准则</h3>
+<div class="outline-text-3" id="text-orge99d145">
+<p>
+在考虑估计量的优劣时，必须从某种整体性能上去衡量它，而不是看它在个别样本之下的表现如何。
+“整体性能”有两种意义：
+一是指估计量的某种特性，具有这种特性就是好的，否则就是不好的。如“无偏性”就是这类特性。
+二是指具体的数量性指标，两个数据量，标小者为优。
+</p>
+</div>
+
+<div id="outline-container-org7f24afa" class="outline-4">
+<h4 id="org7f24afa">无偏性</h4>
+<div class="outline-text-4" id="text-org7f24afa">
+<p>
+设总体的分布包含未知参数 \(\theta_1,\dots,\theta_k\) ， \(X_1,\dots,X_n\) 是从总体中抽出的样本，
+要估计 \(g(\theta_1,\dots,\theta_k)\) 。 \(g\) 为一已知函数。
+设 \(\hat{g}(X_1,\dots,X_n)\) 是一个估计量，如果对任何可能的 \((\theta_1,\dots,\theta_k)\) ，都有：
+\[
+E_{\theta_1,\dots,\theta_k}[\hat{g}(X_1,\dots,X_n)]=g(\theta_1,\dots,\theta_k)
+\]
+则称 \(\hat{g}\) 是 \(g\) 的一个无偏估计量。
+</p>
+
+<p>
+无偏估计不等于在任何时候都给出正确无误的估计，而是不论你用什么样的估计量 \(\hat{g}\) 去估计 \(g\) ，
+把这些正、负偏差在概率上平均起来，其值为 0 。
+</p>
+
+<p>
+样本均值 \(\bar{X}\) 是总体分布均值 \(\theta\) 的无偏估计。
+样本方差 \(S^2\) 是总体分布方差 \(\sigma^2\) 的无偏估计。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org04395de" class="outline-4">
+<h4 id="org04395de">最小方差无偏估计</h4>
+<div class="outline-text-4" id="text-org04395de">
+<p>
+设 \(X_1,\dots,X_n\) 是从某一带参数 \(\theta\) 的总体中抽出的样本，要估计 \(\theta\) 。
+若我们采用估计量 \(\hat{\theta}=\hat{\theta}(X_1,\dots,X_n)\) ，则其误差为 \(\hat{\theta}-\theta\) 。
+这个误差是随样本的具体值而定的，也是随机的。
+我们将其平方一消除符号，然后取均值，得到：
+\[
+M_{\hat{X}}(\theta)=E_{\theta}[\hat{\theta}(X_1,\dots,X_n)-\theta]^2
+\]
+这个误差越小，估计值越优。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org01f7fd6" class="outline-4">
+<h4 id="org01f7fd6">相合性</h4>
+<div class="outline-text-4" id="text-org01f7fd6">
+<p>
+设总体分布依赖于参数 \(\theta_1,\dots,\theta_k\) ，
+ \(g(\theta_1,\dots,\theta_k)\) 是 \(\theta_1,\dots,\theta_k\) 的给定函数。
+设 \(X_1,\dots,X_n\) 是从总体中抽出的样本， \(T(X_1,\dots,X_n)\) 是 \(g\) 的一个估计量。
+如果对任给 \(\epsilon>0\) ，有：
+\[
+lim_{n\rightarrow\infty}P_{\theta_1,\dots,\theta_k}(|T(X_1,\dots,X_n)-g(\theta_1,\dots,\theta_k)|\geq\epsilon)=0
+\]
+且这对 \((\theta_1,\dots,\theta_k)\) 一切可能取的值都成立，则称 \(T\) 为 \(g\) 的相合估计。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7591e39" class="outline-4">
+<h4 id="org7591e39">渐进正态性</h4>
+<div class="outline-text-4" id="text-org7591e39">
+<p>
+当样本大小 \(n\rightarrow\infty\) 时，其分布趋于正态分布。
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge2d70fc" class="outline-3">
+<h3 id="orge2d70fc">区间估计</h3>
+<div class="outline-text-3" id="text-orge2d70fc">
+<p>
+设 \(X_1,\dots,X_n\) 是从总体中抽出的样本， \(\theta\) 的估计区间为 \([\hat{\theta_1}(X_1,\dots,X_n),\hat{\theta_2}(X_1,\dots,X_n)]\) 。
+这里有两个要求：
+</p>
+<ol class="org-ol">
+<li>\(\theta\) 要以很大的可能性落在区间 \([\hat{\theta_1},\hat{\theta_2}]\) 之内，即概率：</li>
+</ol>
+<p>
+\(P_{\theta}(\hat{\theta_1}(X_1,\dots,X_n)\leq\theta\leq\hat{\theta_2}(X_1,\dots,X_n))\)
+要尽可能大。
+</p>
+<ol class="org-ol">
+<li>估计的精度要尽可能高，即要求区间的长度 \(\hat{\theta_2}-\hat{\theta_1}\) 尽可能小。</li>
+</ol>
+
+<p>
+给定一个很小的数 \(\alpha>0\) ，如果对参数 \(\theta\) 的任何值，上式概率都等于 \(1-\alpha\) ，
+则称区间估计 \([\hat{\theta_1},\hat{\theta_2}]\) 的置信系数为 \(1-\alpha\) 。
+区间估计也常称为置信区间。
+</p>
+
+<p>
+有时，我们无法证明上式对一切 \(\theta\) 都恰好等于 \(1-\alpha\) ，但知道它不会小于 \(1-\alpha\) ，
+则我们称 \(1-\alpha\) 是 \([\hat{\theta_1},\hat{\theta_2}]\) 的置信水平。
+可知，置信水平不是一个唯一的数，若 \(\beta\) 为置信水平，那么小于 \(\beta\) 的数也是置信水平，
+置信系数是置信水平中的最大值。
+</p>
+</div>
+
+<div id="outline-container-orge4140a7" class="outline-4">
+<h4 id="orge4140a7">枢轴变量法</h4>
+<div class="outline-text-4" id="text-orge4140a7">
+<ol class="org-ol">
+<li>找一个与要估计的参数 \(g(\theta)\) 有关的统计量 \(T\) ，一般是一个良好的点估计。</li>
+<li>设法找出 \(T\) 和 \(g(\theta)\) 的某一函数 \(S\) ，其分布 \(F\) 要与 \(\theta\) 无关， \(S\) 称为枢轴变量。</li>
+<li>对任意常数 \(a\leq b\) ，不等式 \(a\leq S(T,g(\theta))\leq b\) 要能改写成等价形式 \(A\leq g(\theta)\leq B\) 。</li>
+<li>取分布 \(F\) 的上 \(\alpha/2\) 分位点 \(w_{\alpha/2}\) 和 \(1-\alpha/2\) 分位点 \(w_{\alpha/2}\) ，则有 \(F(w_{\alpha/2})-F(w_{1-\alpha/2})=1-\alpha\) ，因此 \(P(w_{1-\alpha/2}\leq S(T,g{\theta})\leq w_{\alpha/2})=1-\alpha\) 。</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-org3cfaf21" class="outline-4">
+<h4 id="org3cfaf21">大样本法</h4>
+<div class="outline-text-4" id="text-org3cfaf21">
+<p>
+利用极限分布，主要是中心极限定理，建立枢轴变量。
+</p>
+</div>
 </div>
 </div>
 </div>
