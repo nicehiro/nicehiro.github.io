@@ -3,258 +3,234 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-10 日 10:09 -->
+<!-- 2021-01-04 Mon 19:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Python 学习笔记</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="hiro" />
+<meta name="author" content="王方圆" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-	     margin-bottom: .2em; }
-  .subtitle { text-align: center;
-	      font-size: medium;
-	      font-weight: bold;
-	      margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-	    padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: auto;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">Python 学习笔记</h1>
 
-<div id="outline-container-org6d049f5" class="outline-2">
-<h2 id="org6d049f5"><span class="section-number-2">1</span> 基础</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org6ecbc44" class="outline-2">
+<h2 id="org6ecbc44">基础</h2>
+<div class="outline-text-2" id="text-org6ecbc44">
 <ul class="org-ul">
 <li>Python中所有对象都是引用</li>
 </ul>
 </div>
-<div id="outline-container-org67f265a" class="outline-3">
-<h3 id="org67f265a"><span class="section-number-3">1.1</span> 计算</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-orgf180e53" class="outline-3">
+<h3 id="orgf180e53">计算</h3>
+<div class="outline-text-3" id="text-orgf180e53">
 <ul class="org-ul">
 <li>空值 None，java 中是 Null；</li>
 <li><code>/</code> 取精确值； <code>//</code> 取整； <code>%</code> 取余；</li>
@@ -263,9 +239,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgebaa262" class="outline-3">
-<h3 id="orgebaa262"><span class="section-number-3">1.2</span> 字符串</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-org091c4c6" class="outline-3">
+<h3 id="org091c4c6">字符串</h3>
+<div class="outline-text-3" id="text-org091c4c6">
 <ul class="org-ul">
 <li>python 中转义与 java 不同，java 需要两个 <code>\\</code> 完成一次转义，而 python 只需要一次；还可以使用 r 来表示字符串不需要转义；</li>
 <li>string 可以加、乘；字符串的本质是字符数组</li>
@@ -283,9 +259,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org4ea33a9" class="outline-3">
-<h3 id="org4ea33a9"><span class="section-number-3">1.3</span> 列表</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-org19504e4" class="outline-3">
+<h3 id="org19504e4">列表</h3>
+<div class="outline-text-3" id="text-org19504e4">
 <ul class="org-ul">
 <li>列表是 mutable 类型，字符串是 immutable类型，list可以被赋值</li>
 <li>append 把一个元素（可以是列表）添加到list之后；+ 可以把两个list合并为一个list</li>
@@ -309,9 +285,9 @@ del a[2:4]
 </div>
 </div>
 
-<div id="outline-container-orgb7d620d" class="outline-3">
-<h3 id="orgb7d620d"><span class="section-number-3">1.4</span> turple</h3>
-<div class="outline-text-3" id="text-1-4">
+<div id="outline-container-orgd188935" class="outline-3">
+<h3 id="orgd188935">turple</h3>
+<div class="outline-text-3" id="text-orgd188935">
 <ul class="org-ul">
 <li>元组 是不可变的，可以有不同类型的共同存放</li>
 </ul>
@@ -324,18 +300,18 @@ t = 123, #=&gt; one parameter's turple
 </div>
 </div>
 
-<div id="outline-container-org64765da" class="outline-3">
-<h3 id="org64765da"><span class="section-number-3">1.5</span> set</h3>
-<div class="outline-text-3" id="text-1-5">
+<div id="outline-container-org3ea1302" class="outline-3">
+<h3 id="org3ea1302">set</h3>
+<div class="outline-text-3" id="text-org3ea1302">
 <ul class="org-ul">
 <li>使用 {} 包起来，或者使用函数 set()，空集合不能使用 {} 表示</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgbca91f7" class="outline-3">
-<h3 id="orgbca91f7"><span class="section-number-3">1.6</span> dict</h3>
-<div class="outline-text-3" id="text-1-6">
+<div id="outline-container-orgf048387" class="outline-3">
+<h3 id="orgf048387">dict</h3>
+<div class="outline-text-3" id="text-orgf048387">
 <ul class="org-ul">
 <li>当关键字是字符串时，可以直接指定</li>
 </ul>
@@ -348,9 +324,9 @@ d = dick(jack=1, marry=2)
 </div>
 </div>
 
-<div id="outline-container-org7c21760" class="outline-3">
-<h3 id="org7c21760"><span class="section-number-3">1.7</span> for</h3>
-<div class="outline-text-3" id="text-1-7">
+<div id="outline-container-org67b61f2" class="outline-3">
+<h3 id="org67b61f2">for</h3>
+<div class="outline-text-3" id="text-org67b61f2">
 <ul class="org-ul">
 <li>如果循环过程中需要列表， 循环体最好提前复制一份，使用切片是个不错的选择 list[:]</li>
 <li>break 循环中的break只在for语句结束，或者while的条件判断为False时执行</li>
@@ -358,27 +334,27 @@ d = dick(jack=1, marry=2)
 </div>
 </div>
 
-<div id="outline-container-org023c1e1" class="outline-3">
-<h3 id="org023c1e1"><span class="section-number-3">1.8</span> range</h3>
-<div class="outline-text-3" id="text-1-8">
+<div id="outline-container-org31bd604" class="outline-3">
+<h3 id="org31bd604">range</h3>
+<div class="outline-text-3" id="text-org31bd604">
 <ul class="org-ul">
 <li>是一个对象，不是一个list，可以节省存储空间 在取某个数的时候返回这个数</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org66ffd81" class="outline-3">
-<h3 id="org66ffd81"><span class="section-number-3">1.9</span> zip</h3>
-<div class="outline-text-3" id="text-1-9">
+<div id="outline-container-org42f3436" class="outline-3">
+<h3 id="org42f3436">zip</h3>
+<div class="outline-text-3" id="text-org42f3436">
 <ul class="org-ul">
 <li>将集合 拆开 按首字母拆分</li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org1f67fae" class="outline-3">
-<h3 id="org1f67fae"><span class="section-number-3">1.10</span> 条件控制</h3>
-<div class="outline-text-3" id="text-1-10">
+<div id="outline-container-org2cc15b6" class="outline-3">
+<h3 id="org2cc15b6">条件控制</h3>
+<div class="outline-text-3" id="text-org2cc15b6">
 <ul class="org-ul">
 <li>in &amp; not in 和 is &amp; is not</li>
 <li>比较可以传递</li>
@@ -388,9 +364,9 @@ d = dick(jack=1, marry=2)
 </div>
 </div>
 
-<div id="outline-container-orgf753787" class="outline-2">
-<h2 id="orgf753787"><span class="section-number-2">2</span> 参数</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgd0516fb" class="outline-2">
+<h2 id="orgd0516fb">参数</h2>
+<div class="outline-text-2" id="text-orgd0516fb">
 <ul class="org-ul">
 <li>位置参数（position） 最普通</li>
 <li>默认参数（default）</li>
@@ -398,7 +374,7 @@ d = dick(jack=1, marry=2)
 </ul>
 <div class="org-src-container">
 <pre class="src src-python">def temp(*args):
-    ....
+		....
 </pre>
 </div>
 <ul class="org-ul">
@@ -408,9 +384,9 @@ d = dick(jack=1, marry=2)
 </ul>
 </div>
 </div>
-<div id="outline-container-orgb942f41" class="outline-2">
-<h2 id="orgb942f41"><span class="section-number-2">3</span> 高级特性（语法糖）</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgab7aedf" class="outline-2">
+<h2 id="orgab7aedf">高级特性（语法糖）</h2>
+<div class="outline-text-2" id="text-orgab7aedf">
 <ul class="org-ul">
 <li>切片</li>
 <li>generator：使用 yield 让函数在运行过程中停下来，使用 <code>next()</code> 不断拿到下一次计算的结果</li>
@@ -423,18 +399,18 @@ d = dick(jack=1, marry=2)
 
 it = iter([1,2,3,4])
 while True:
-    try:
+		try:
 	x = next(it)
-    except StopIteration:
+		except StopIteration:
 	break
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org008588c" class="outline-2">
-<h2 id="org008588c"><span class="section-number-2">4</span> 函数式编程（变量可以是函数）</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org38d08a9" class="outline-2">
+<h2 id="org38d08a9">函数式编程（变量可以是函数）</h2>
+<div class="outline-text-2" id="text-org38d08a9">
 <ul class="org-ul">
 <li>map(function, Iterable), returns iterator</li>
 <li>reduce</li>
@@ -445,13 +421,13 @@ while True:
 </ul>
 <div class="org-src-container">
 <pre class="src src-python">def log(func):
-    def wrapper(*args):
+		def wrapper(*args):
 	...
-    return wrapper
+		return wrapper
 
 @log
 def print_time:
-    ...
+		...
 
 =&gt; print_time = log(print_time)
 print_time.__name__ =&gt; wrapper
@@ -462,18 +438,18 @@ print_time.__name__ =&gt; wrapper
 </ul>
 </div>
 </div>
-<div id="outline-container-org5725a28" class="outline-2">
-<h2 id="org5725a28"><span class="section-number-2">5</span> 模块化</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org84170be" class="outline-2">
+<h2 id="org84170be">模块化</h2>
+<div class="outline-text-2" id="text-org84170be">
 <p>
 可以自定义一个包，包下必须有 <code>__init__.py</code> 才能被当作一个模块。
 </p>
 </div>
 </div>
 
-<div id="outline-container-org949e05d" class="outline-2">
-<h2 id="org949e05d"><span class="section-number-2">6</span> 面向对象</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-org63eb4b0" class="outline-2">
+<h2 id="org63eb4b0">面向对象</h2>
+<div class="outline-text-2" id="text-org63eb4b0">
 <ul class="org-ul">
 <li>class 命名一般大写</li>
 <li><code>__init__()</code> 方法相当于 java 的构造函数，必传参数 <code>self</code> ，相当于 java 的 <code>this</code> 指针</li>
@@ -504,11 +480,11 @@ s.set_age = Methodtype(set_age, s)
 </p>
 <div class="org-src-container">
 <pre class="src src-python">class Student():
-    @property
-    def score(self):
+		@property
+		def score(self):
 	return self.score
-    @score.setter
-    def score(self):
+		@score.setter
+		def score(self):
 	...
 	self.score = xx
 </pre>
@@ -525,18 +501,18 @@ s.set_age = Methodtype(set_age, s)
 </ul>
 <div class="org-src-container">
 <pre class="src src-python">class MyClass:
-    a = 1 # class variable
+		a = 1 # class variable
 
-    def t(self):
+		def t(self):
 	self.b = 2 # instance variable
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org78d62eb" class="outline-2">
-<h2 id="org78d62eb"><span class="section-number-2">7</span> IO</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-org898df19" class="outline-2">
+<h2 id="org898df19">IO</h2>
+<div class="outline-text-2" id="text-org898df19">
 <ul class="org-ul">
 <li>文件读： <code>f=open("file-path", r)</code> 拿到文件指针（返回的是 <code>file-like object</code> 对象 ）， <code>f.read()</code> 读文件到内存，最后 <code>f.close()</code> 关闭文件指针；读二进制文件需要使用 <code>'rb'</code></li>
 <li>文件写： <code>f.open("file-path", w)</code> ， <code>f.write('str')</code> ，追加文本使用 <code>'a'</code></li>
@@ -548,37 +524,37 @@ s.set_age = Methodtype(set_age, s)
 </ul>
 </div>
 </div>
-<div id="outline-container-orga03e0dc" class="outline-2">
-<h2 id="orga03e0dc"><span class="section-number-2">8</span> 线程</h2>
+<div id="outline-container-org69d4f78" class="outline-2">
+<h2 id="org69d4f78">线程</h2>
 </div>
 
-<div id="outline-container-orgea1e88f" class="outline-2">
-<h2 id="orgea1e88f"><span class="section-number-2">9</span> trick</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-org2077022" class="outline-2">
+<h2 id="org2077022">trick</h2>
+<div class="outline-text-2" id="text-org2077022">
 </div>
-<div id="outline-container-orgbcd5098" class="outline-3">
-<h3 id="orgbcd5098"><span class="section-number-3">9.1</span> for list</h3>
-<div class="outline-text-3" id="text-9-1">
+<div id="outline-container-org9ebf9ad" class="outline-3">
+<h3 id="org9ebf9ad">for list</h3>
+<div class="outline-text-3" id="text-org9ebf9ad">
 <div class="org-src-container">
 <pre class="src src-python"># Iterate list's key and value.
 for i in range(len(lst)):
-  "{}:{}".format(i, lst[i])
+	"{}:{}".format(i, lst[i])
 
 for k,v in enumerate(lst):
-  "{}:{}".format(k, v)
+	"{}:{}".format(k, v)
 
 # Iterate two list
 for a,b in zip(lst1, lst2):
-  "{}:{}".format(a, b)
+	"{}:{}".format(a, b)
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org40500a5" class="outline-2">
-<h2 id="org40500a5"><span class="section-number-2">10</span> 感触</h2>
-<div class="outline-text-2" id="text-10">
+<div id="outline-container-org6244c2d" class="outline-2">
+<h2 id="org6244c2d">感触</h2>
+<div class="outline-text-2" id="text-org6244c2d">
 <ul class="org-ul">
 <li>看似有很多语法糖，其实是有些罗嗦的。不如 lisp 只用 list 一种数据类型来拓展所有的数据类型。</li>
 <li>学会了如何查看 python library 而不是随随便便取网上乱搜……</li>
@@ -587,8 +563,8 @@ for a,b in zip(lst1, lst2):
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
-	    <script src="https://utteranc.es/client.js"
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
+			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
 	theme="github-light"

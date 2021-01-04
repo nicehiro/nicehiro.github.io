@@ -3,241 +3,217 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-10 日 10:09 -->
+<!-- 2021-01-04 Mon 19:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Sitemap for project org-notes</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="hiro" />
+<meta name="author" content="王方圆" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-	     margin-bottom: .2em; }
-  .subtitle { text-align: center;
-	      font-size: medium;
-	      font-weight: bold;
-	      margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-	    padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: auto;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
 </style>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -252,41 +228,65 @@ for the JavaScript code in this tag.
 </ul></li>
 <li>notes
 <ul class="org-ul">
+<li><a href="notes/2020.html">2020 年终总结</a></li>
 <li><a href="notes/awk-note.html">AWK</a></li>
 <li><a href="notes/mastering-comint.html">Comint: 实现自己的命令解释器</a></li>
+<li><a href="notes/rl-hui-series.html">Deep Reinforcement Learning Series 翻译</a></li>
+<li><a href="notes/gae.html">GAE</a></li>
 <li><a href="notes/git.html">Git Basic Usage</a></li>
 <li><a href="notes/gradient-decent.html">Gradient Decent 梯度下降</a></li>
+<li><a href="notes/js.html">JavaScript Basics</a></li>
+<li><a href="notes/intense-and-diffuse-mind.html">Learning How to Learn</a></li>
 <li><a href="notes/Learning-Python.html">Learning Python 5th 笔记</a></li>
 <li><a href="notes/Learning Python, 5th Edition.html">Learning Python, 5th Edition</a></li>
+<li><a href="notes/radix_sort.html">Leetcode #164 Maximum Gap</a></li>
 <li><a href="notes/linux-shell-知识点总结.html">Linux Shell 知识点总结</a></li>
 <li><a href="notes/learn-lisp.html">Lisp 学习笔记</a></li>
 <li><a href="notes/logistic-regression.html">Logistic Regression</a></li>
+<li><a href="notes/numpy-broadcast.html">Numpy 广播</a></li>
 <li><a href="notes/pandas-and-numpy.html">Pandas &amp; Numpy 上手</a></li>
 <li><a href="notes/Python-笔记.html">Python 学习笔记</a></li>
 <li><a href="notes/python-数据分析.html">Python 数据分析知识点总结</a></li>
+<li><a href="notes/RL-introduction.html">RL &#x2013; LQR &amp; iLQR Linear Quadratic Regulator 翻译</a></li>
 <li><a href="notes/Sed-Learn.html">Sed 学习笔记</a></li>
+<li><a href="notes/writing-in-the-science.html">Writing in the Sciences</a></li>
+<li><a href="notes/ledger.html">ledger</a></li>
+<li><a href="notes/server-config.html">server-config</a></li>
+<li><a href="notes/binary-tree-traversal.html">二叉树遍历</a></li>
+<li><a href="notes/bitwise-algorithms.html">位运算算法</a></li>
+<li><a href="notes/he-yi-wei-jia.html">何以为家</a></li>
 <li><a href="notes/back-propagation.html">反向传播算法 Back-Propagation</a></li>
 <li><a href="notes/MARL.html">多智能体深度强化学习</a></li>
 <li><a href="notes/MPE.html">多智能体环境 MPE 分析</a></li>
+<li><a href="notes/Notes-on-the-Generalized-Advantage-Estimation-Paper.html">广义优势估计论文的笔记</a></li>
 <li><a href="notes/RL-David-Silver.html">强化学习 &#x2013; David Silver Course</a></li>
+<li><a href="notes/RL-Sergey-Levine.html">强化学习 &#x2013; Sergey Levine Course</a></li>
 <li><a href="notes/RL-Learn.html">强化学习 &#x2013; 基础</a></li>
-<li><a href="notes/rl-algorithms.html">强化学习算法总结</a></li>
+<li><a href="notes/one-secret-to-becoming-a-great-software-engineer-read-code.html">成为杰出程序员的秘密——阅读源码</a></li>
+<li><a href="notes/my-neural-network-isnt-working.html">我的神经网络训练的很垃圾！我该怎么办？</a></li>
 <li><a href="notes/OS.html">操作系统</a></li>
 <li><a href="notes/Data_Structure.html">数据结构</a></li>
 <li><a href="notes/Probability.html">概率论</a></li>
+<li><a href="notes/probability-theory-and-mathematical-statistics.html">概率论与数理统计</a></li>
+<li><a href="notes/Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients.html">深入强化学习之策略梯度的基础</a></li>
 <li><a href="notes/active-function.html">激活函数</a></li>
+<li><a href="notes/understanding-the-backwards-pass-through-batch-normalization-layer.html">理解 Batch Normalization 层中反向传播的原理</a></li>
 <li><a href="notes/lstm.html">理解 LSTM 网络</a></li>
 <li><a href="notes/线性代数.html">线性代数</a></li>
+<li><a href="notes/linear-classification.html">线性分类</a></li>
+<li><a href="notes/good-posts-2020.html">网迹 2020</a></li>
 <li><a href="notes/Computer_Architecture.html">计算机组成原理</a></li>
 <li><a href="notes/Network.html">计算机网络总结</a></li>
-<li><a href="notes/Make-a-Server-for-Machine-Learning.html">选择最佳的机器学习显卡</a></li>
+<li><a href="notes/chenhao-blog-thoughts.html">酷壳博文心得</a></li>
 <li><a href="notes/Math.html">高数总结</a></li>
+<li><a href="notes/gaussian-process.html">高斯过程</a></li>
 </ul></li>
 <li>tech
 <ul class="org-ul">
 <li><a href="tech/use-pyim.html">Emacs 使用 pyim ＋ rime ＋ double flypy 打字</a></li>
 <li><a href="tech/GFW-原理简析.html">GFW 原理解析</a></li>
 <li><a href="tech/use-gym-for-rl.html">Gym Learning note</a></li>
+<li><a href="tech/JavaScript-Prototypes.html">JavaScript Prototype 详解</a></li>
 <li><a href="tech/largest_rectangle_area.html">LeetCode #84 Largest Rectangle Area in Histogram</a></li>
 <li><a href="tech/weight-initialization.html">TensorFlow 参数初始化</a></li>
 <li><a href="tech/Vim-进阶.html">Vim 进阶</a></li>
@@ -296,17 +296,18 @@ for the JavaScript code in this tag.
 </ul></li>
 <li>thesis
 <ul class="org-ul">
+<li><a href="thesis/GAAvernor.html">GAAvernor</a></li>
 <li><a href="thesis/kl-divergence.html">Kullback-Leibler Divergence Explained</a></li>
 <li><a href="thesis/mastering-eshell.html">Mastering Eshell</a></li>
-<li><a href="thesis/PPO.html">PPO</a></li>
-<li><a href="thesis/openai-seek-and-hide.html">openai-seek-and-hide</a></li>
+<li><a href="thesis/introduction.html">introduction</a></li>
+<li><a href="thesis/cs229-note-1.html">监督学习</a></li>
 <li><a href="thesis/TRPO.html">置信空间策略优化</a></li>
 </ul></li>
 </ul>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-05-10 日 10:09. Created by hiro.</p>
-	    <script src="https://utteranc.es/client.js"
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
+			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
 	theme="github-light"

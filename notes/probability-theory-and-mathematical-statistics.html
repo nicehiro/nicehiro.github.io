@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-10 Sat 10:43 -->
+<!-- 2021-01-04 Mon 19:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>概率论与数理统计</title>
@@ -40,7 +40,7 @@
 	}
 	pre.src {
 		position: relative;
-		overflow: visible;
+		overflow: auto;
 		padding-top: 1.2em;
 	}
 	pre.src:before {
@@ -195,50 +195,26 @@
 </style>
 <link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-	 var target = document.getElementById(id);
-	 if(null != target) {
-		 elem.cacheClassElem = elem.className;
-		 elem.cacheClassTarget = target.className;
-		 target.className = "code-highlighted";
-		 elem.className   = "code-highlighted";
-	 }
- }
- function CodeHighlightOff(elem, id)
- {
-	 var target = document.getElementById(id);
-	 if(elem.cacheClassElem)
-		 elem.className = elem.cacheClassElem;
-	 if(elem.cacheClassTarget)
-		 target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 <script type="text/x-mathjax-config">
 		MathJax.Hub.Config({
@@ -565,9 +541,24 @@ Var(X)=E(X-EX)^2
 <h3 id="orgd280e3e">协方差和相关系数</h3>
 <div class="outline-text-3" id="text-orgd280e3e">
 <p>
-\[
-Cov(X,Y)=E[(X-EX)(Y-EY)]
-\]
+\(Cov(X,Y)=E[(X-EX)(Y-EY)]\) 称为协方差。
+\(Corr(X,Y)=Cov(X,Y)/(\sigma_{1}\sigma_{2})\) 称为相关系数。
+</p>
+
+<p>
+若 \(X,Y\) 独立，则 \(Cov(X,Y)=0\) ， \(Corr(X,Y)=0\) 。
+</p>
+
+<p>
+\([Cov(X,Y)]^2\leq\sigma_{1}^{2}\sigma_{2}^2\) 等号当且仅当 \(X,Y\) 之间由严格的线性关系时成立。
+</p>
+
+<p>
+\(-1\leq Corr(X,Y)\leq 1\) 等号当且仅当 \(X\) 和 \(Y\) 有严格线性关系时存在。
+</p>
+
+<p>
+一般来说，协方差为 0 不能推出两变量独立，但在正态分布中可以。
 </p>
 </div>
 </div>

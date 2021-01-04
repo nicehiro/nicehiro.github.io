@@ -3,242 +3,218 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-10 日 10:09 -->
+<!-- 2021-01-04 Mon 19:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>技术渣的杂技术集</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="hiro" />
+<meta name="author" content="王方圆" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-	     margin-bottom: .2em; }
-  .subtitle { text-align: center;
-	      font-size: medium;
-	      font-weight: bold;
-	      margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-	    padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: auto;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -251,8 +227,8 @@ for the JavaScript code in this tag.
 </p>
 
 
-<div id="outline-container-orge12469d" class="outline-2">
-<h2 id="搜狗输入法一个英文两个字符"><span class="section-number-2">1</span> 搜狗输入法一个英文两个字符？？？</h2>
+<div id="outline-container-搜狗输入法一个英文两个字符" class="outline-2">
+<h2 id="搜狗输入法一个英文两个字符">搜狗输入法一个英文两个字符？？？</h2>
 <div class="outline-text-2" id="text-搜狗输入法一个英文两个字符">
 <p>
 solutions：shift + space
@@ -264,8 +240,8 @@ solutions：shift + space
 </div>
 </div>
 
-<div id="outline-container-org010b9fa" class="outline-2">
-<h2 id="python-元类理解"><span class="section-number-2">2</span> Python 元类理解</h2>
+<div id="outline-container-python-元类理解" class="outline-2">
+<h2 id="python-元类理解">Python 元类理解</h2>
 <div class="outline-text-2" id="text-python-元类理解">
 <p>
 号称是用 Python 的人在 99%
@@ -279,8 +255,8 @@ solutions：shift + space
 </div>
 </div>
 
-<div id="outline-container-org7be5628" class="outline-2">
-<h2 id="python-安装-wxpython-模块失败"><span class="section-number-2">3</span> Python 安装 wxpython 模块失败</h2>
+<div id="outline-container-python-安装-wxpython-模块失败" class="outline-2">
+<h2 id="python-安装-wxpython-模块失败">Python 安装 wxpython 模块失败</h2>
 <div class="outline-text-2" id="text-python-安装-wxpython-模块失败">
 <p>
 刚刚看到教程中关于 Python 中关于 GUI 的部分，一直自己安装该死的 wx
@@ -296,8 +272,8 @@ solutions：shift + space
 </div>
 </div>
 
-<div id="outline-container-orgfec54ac" class="outline-2">
-<h2 id="python-更改默认python版本2-or-3"><span class="section-number-2">4</span> Python 更改默认python版本（2 or 3）</h2>
+<div id="outline-container-python-更改默认python版本2-or-3" class="outline-2">
+<h2 id="python-更改默认python版本2-or-3">Python 更改默认python版本（2 or 3）</h2>
 <div class="outline-text-2" id="text-python-更改默认python版本2-or-3">
 <p>
 现在 Python3 刚发布出来，大部分程序都是需要跑在 Python2
@@ -310,7 +286,7 @@ solutions：shift + space
 alternatives 机制：
 </p>
 
-<pre class="example">
+<pre class="example" id="org5d42d04">
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
 </pre>
@@ -319,14 +295,14 @@ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
 此时已经切换为 python3 如果要切换 python2：
 </p>
 
-<pre class="example">
+<pre class="example" id="org58aa4b2">
 sudo update-alternatives --config python
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org2b492c3" class="outline-2">
-<h2 id="ubuntu-上e-sub-process-usrbindpkg-returned-an-error-code"><span class="section-number-2">5</span> ubuntu 上E: Sub-process /usr/bin/dpkg returned an error code</h2>
+<div id="outline-container-ubuntu-上e-sub-process-usrbindpkg-returned-an-error-code" class="outline-2">
+<h2 id="ubuntu-上e-sub-process-usrbindpkg-returned-an-error-code">ubuntu 上E: Sub-process /usr/bin/dpkg returned an error code</h2>
 <div class="outline-text-2" id="text-ubuntu-上e-sub-process-usrbindpkg-returned-an-error-code">
 <p>
 实话说，这种问题我第一次遇到，一直再用 debain 系的系统将近一年，我的 apt
@@ -338,7 +314,7 @@ sudo update-alternatives --config python
 是 dpkg 出问题了，但解决原理是什么我还没弄清楚：
 </p>
 
-<pre class="example">
+<pre class="example" id="org50b24c1">
 sudo mv /var/lib/dpkg/info /var/lib/dpkg/info.bak
 sudo mkdir /var/lib/dpkg/info
 sudo apt update
@@ -346,10 +322,10 @@ sudo apt update
 </div>
 </div>
 
-<div id="outline-container-org6a2a727" class="outline-2">
-<h2 id="ubuntu-server-上启动-supervisor-时"><span class="section-number-2">6</span> ubuntu server 上启动 supervisor 时：</h2>
+<div id="outline-container-ubuntu-server-上启动-supervisor-时" class="outline-2">
+<h2 id="ubuntu-server-上启动-supervisor-时">ubuntu server 上启动 supervisor 时：</h2>
 <div class="outline-text-2" id="text-ubuntu-server-上启动-supervisor-时">
-<pre class="example">
+<pre class="example" id="org81d99d5">
 error: &lt;class 'socket.error'&gt;, [Errno 2] No such file or directory: file: &lt;string&gt; line: 1
 </pre>
 
@@ -357,7 +333,7 @@ error: &lt;class 'socket.error'&gt;, [Errno 2] No such file or directory: file: 
 或是：
 </p>
 
-<pre class="example">
+<pre class="example" id="org024fd44">
 unix:///var/run/supervisor.sock no such file
 </pre>
 
@@ -369,14 +345,14 @@ unix:///var/run/supervisor.sock no such file
 大致就是说是因为 supervisord 进程没启动成功，需要自己启动才行：
 </p>
 
-<pre class="example">
+<pre class="example" id="orge823dc4">
 sudo supervisord
 </pre>
 </div>
 </div>
 
-<div id="outline-container-org01b43fa" class="outline-2">
-<h2 id="curl-用法"><span class="section-number-2">7</span> curl 用法</h2>
+<div id="outline-container-curl-用法" class="outline-2">
+<h2 id="curl-用法">curl 用法</h2>
 <div class="outline-text-2" id="text-curl-用法">
 <p>
 知道这个命令的存在，却从来不懂在网络开发中也可以用到。 参考这个文章：
@@ -385,8 +361,8 @@ sudo supervisord
 </div>
 </div>
 
-<div id="outline-container-org554fd9c" class="outline-2">
-<h2 id="linux-下结束进程"><span class="section-number-2">8</span> Linux 下结束进程</h2>
+<div id="outline-container-linux-下结束进程" class="outline-2">
+<h2 id="linux-下结束进程">Linux 下结束进程</h2>
 <div class="outline-text-2" id="text-linux-下结束进程">
 <p>
 每次用的时候都得查一下才行，今天决定把它记下来！
@@ -397,7 +373,7 @@ sudo supervisord
 记下最好用的一个： 查看进程 id：
 </p>
 
-<pre class="example">
+<pre class="example" id="org9988477">
 ➜  ~ pgrep emacs
 16848
 </pre>
@@ -406,14 +382,14 @@ sudo supervisord
 强制杀：
 </p>
 
-<pre class="example">
+<pre class="example" id="orged2b495">
 ➜  ~ kill -s KILL 16848
 </pre>
 </div>
 </div>
 
-<div id="outline-container-orgee8e580" class="outline-2">
-<h2 id="x86-x64-代表什么"><span class="section-number-2">9</span> x86 x64 代表什么？</h2>
+<div id="outline-container-x86-x64-代表什么" class="outline-2">
+<h2 id="x86-x64-代表什么">x86 x64 代表什么？</h2>
 <div class="outline-text-2" id="text-x86-x64-代表什么">
 <p>
 安装软件的时候经常会选择这东西。x86 就是对所有 <code>*86</code>
@@ -426,8 +402,8 @@ sudo supervisord
 </div>
 </div>
 
-<div id="outline-container-org4ce8f12" class="outline-2">
-<h2 id="android-应用间唤醒原理"><span class="section-number-2">10</span> Android 应用间唤醒原理</h2>
+<div id="outline-container-android-应用间唤醒原理" class="outline-2">
+<h2 id="android-应用间唤醒原理">Android 应用间唤醒原理</h2>
 <div class="outline-text-2" id="text-android-应用间唤醒原理">
 <p>
 最近有看了写关于 Android 的书，发现可以通过广播机制来实现 Android
@@ -450,8 +426,8 @@ sudo supervisord
 </div>
 </div>
 
-<div id="outline-container-org8b05841" class="outline-2">
-<h2 id="android-查看本地数据库"><span class="section-number-2">11</span> Android 查看本地数据库</h2>
+<div id="outline-container-android-查看本地数据库" class="outline-2">
+<h2 id="android-查看本地数据库">Android 查看本地数据库</h2>
 <div class="outline-text-2" id="text-android-查看本地数据库">
 <p>
 之前（Android 6.0）一直使用有了 root 权限的 root explorer
@@ -465,7 +441,7 @@ shell 中查看数据库中的内容。
 <a href="http://blog.csdn.net/napoay/article/details/51263348">http://blog.csdn.net/napoay/article/details/51263348</a>
 </p>
 
-<pre class="example">
+<pre class="example" id="org2779054">
 切换到数据库所在文件夹：
 run-as /com/packagename/
 
@@ -478,14 +454,14 @@ sqlite3 History.db
 </div>
 </div>
 
-<div id="outline-container-orgcefb4b2" class="outline-2">
-<h2 id="linux-下-man-手册不完整"><span class="section-number-2">12</span> linux 下 man 手册不完整</h2>
+<div id="outline-container-linux-下-man-手册不完整" class="outline-2">
+<h2 id="linux-下-man-手册不完整">linux 下 man 手册不完整</h2>
 <div class="outline-text-2" id="text-linux-下-man-手册不完整">
 <p>
 今天试着用了下=man read=，发现竟然没有这个条目，于是上网查了下：
 </p>
 
-<pre class="example">
+<pre class="example" id="orgb0f3d83">
 sudo apt install manpages-dev
 </pre>
 
@@ -495,9 +471,9 @@ sudo apt install manpages-dev
 </div>
 </div>
 
-<div id="outline-container-org7c2d1da" class="outline-2">
-<h2 id="org7c2d1da"><span class="section-number-2">13</span> Python ZipFile 读出来的 csv 是 bytes 无法直接使用</h2>
-<div class="outline-text-2" id="text-13">
+<div id="outline-container-orgc2b83a3" class="outline-2">
+<h2 id="orgc2b83a3">Python ZipFile 读出来的 csv 是 bytes 无法直接使用</h2>
+<div class="outline-text-2" id="text-orgc2b83a3">
 <p>
 很奇怪，且看代码先：
 </p>
@@ -546,9 +522,9 @@ l = csv.reader(data)
 </div>
 </div>
 
-<div id="outline-container-org737f271" class="outline-2">
-<h2 id="org737f271"><span class="section-number-2">14</span> Python 网络请求出现错误:ConnectionResetError: [Errno 104] Connection reset by peer</h2>
-<div class="outline-text-2" id="text-14">
+<div id="outline-container-org0ca9aef" class="outline-2">
+<h2 id="org0ca9aef">Python 网络请求出现错误:ConnectionResetError: [Errno 104] Connection reset by peer</h2>
+<div class="outline-text-2" id="text-org0ca9aef">
 <p>
 造成错误的原因是 server 的原因。可能是因为短时间内请求过多次。
 </p>
@@ -560,9 +536,9 @@ l = csv.reader(data)
 </div>
 </div>
 
-<div id="outline-container-org0ff9b47" class="outline-2">
-<h2 id="org0ff9b47"><span class="section-number-2">15</span> Linux &amp; Emacs 更换字体</h2>
-<div class="outline-text-2" id="text-15">
+<div id="outline-container-orga88f4bc" class="outline-2">
+<h2 id="orga88f4bc">Linux &amp; Emacs 更换字体</h2>
+<div class="outline-text-2" id="text-orga88f4bc">
 <p>
 字体这东西一开始不注意倒是也没什么关系，但你要是突然觉得它丑的不行，那就会浑身难受，不好好配一下真的受不了的。
 </p>
@@ -589,8 +565,8 @@ sudo fc-cache -fv
 (setq face-font-rescale-alist `(("STkaiti" . ,(/ 16.0 13))))
 
 (set-face-attribute 'default nil
-		    :height 150
-		    :font "Source Code Pro Bold")
+				:height 150
+				:font "Source Code Pro Bold")
 
 (set-fontset-font t 'han      (font-spec :family "STkaiti"))
 (set-fontset-font t 'cjk-misc (font-spec :family "STkaiti"))
@@ -603,9 +579,9 @@ sudo fc-cache -fv
 </div>
 </div>
 
-<div id="outline-container-orgfc7e542" class="outline-2">
-<h2 id="orgfc7e542"><span class="section-number-2">16</span> 合并两个 repo</h2>
-<div class="outline-text-2" id="text-16">
+<div id="outline-container-org5241ca1" class="outline-2">
+<h2 id="org5241ca1">合并两个 repo</h2>
+<div class="outline-text-2" id="text-org5241ca1">
 <p>
 参考这篇博文：<a href="http://blog.csdn.net/gouboft/article/details/8450696">http://blog.csdn.net/gouboft/article/details/8450696</a>
 </p>
@@ -616,9 +592,9 @@ sudo fc-cache -fv
 </div>
 </div>
 
-<div id="outline-container-org05ab67f" class="outline-2">
-<h2 id="org05ab67f"><span class="section-number-2">17</span> Linux 下包管理器安装时候发生冲突时怎么办？</h2>
-<div class="outline-text-2" id="text-17">
+<div id="outline-container-org931f18e" class="outline-2">
+<h2 id="org931f18e">Linux 下包管理器安装时候发生冲突时怎么办？</h2>
+<div class="outline-text-2" id="text-org931f18e">
 <p>
 在安装 python 的 basemap 模块时，arch 下可以直接使用 <code>sudo pacman -S python-basemap</code> 来安装，它会自动解决依赖包的问题。那么这个时候就会出现问题：以前使用 pip 工具安装的包不会被 pacman 识别，pacman 就会傻傻的报错：file exists in filesystem。
 </p>
@@ -628,17 +604,17 @@ sudo fc-cache -fv
 </p>
 </div>
 </div>
-<div id="outline-container-orgada3423" class="outline-2">
-<h2 id="orgada3423"><span class="section-number-2">18</span> Linux 中的 tty 是什么意思？</h2>
-<div class="outline-text-2" id="text-18">
+<div id="outline-container-orged62fa8" class="outline-2">
+<h2 id="orged62fa8">Linux 中的 tty 是什么意思？</h2>
+<div class="outline-text-2" id="text-orged62fa8">
 <p>
 tty(取自TeleTYperwritter)，是与文本终端想关联的设备文件。当用户生成一个新终端时，对应的设备文件就会出现在/dev/pts/中/可以通过输入并执行tty这个命令获得当前终端的设备路径。
 </p>
 </div>
 </div>
-<div id="outline-container-org4446f31" class="outline-2">
-<h2 id="org4446f31"><span class="section-number-2">19</span> Java JDBC 导入成功却无法找到？？</h2>
-<div class="outline-text-2" id="text-19">
+<div id="outline-container-orgf9fe928" class="outline-2">
+<h2 id="orgf9fe928">Java JDBC 导入成功却无法找到？？</h2>
+<div class="outline-text-2" id="text-orgf9fe928">
 <p>
 解决方法：<a href="https://stackoverflow.com/questions/1585811/classnotfoundexception-com-mysql-jdbc-driver">https://stackoverflow.com/questions/1585811/classnotfoundexception-com-mysql-jdbc-driver</a>
 The most common cause is that you have some conflict in where your classes are loaded from. For example if you have 2 locations and one has JDBC drivers and the other one not then if your classloader loads from the 1st location and some class from the 1st location wants to use the driver - the driver is not there. So look for the duplicate JARs that are using your driver
@@ -653,18 +629,18 @@ The most common cause is that you have some conflict in where your classes are l
 </div>
 </div>
 </div>
-<div id="outline-container-org654350d" class="outline-2">
-<h2 id="org654350d"><span class="section-number-2">20</span> Emacs url-retrieve-synchronously 出现错误</h2>
-<div class="outline-text-2" id="text-20">
+<div id="outline-container-org669f226" class="outline-2">
+<h2 id="org669f226">Emacs url-retrieve-synchronously 出现错误</h2>
+<div class="outline-text-2" id="text-org669f226">
 <p>
 这个真的是莫名其妙的错误。前一天晚上刚刚完成一个 api 的请求，返回了合适的 json 数据，但第二天刚开电脑就莫名报错。不知道是什么原因，折腾了一个上午，最后又莫名其妙的好了。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orga534051" class="outline-2">
-<h2 id="orga534051"><span class="section-number-2">21</span> Linux Emacs 无法输入中文</h2>
-<div class="outline-text-2" id="text-21">
+<div id="outline-container-org3e60a37" class="outline-2">
+<h2 id="org3e60a37">Linux Emacs 无法输入中文</h2>
+<div class="outline-text-2" id="text-org3e60a37">
 <p>
 我的桌面环境是 i3wm，修改 <code>~/.xprofile</code> 老是无效，最后直接修改 <code>/etc/locale.conf</code> 文件，加了这两行才奏效：
 </p>
@@ -676,9 +652,9 @@ export LC_ALL=zh_CN.UTF-8
 </div>
 </div>
 
-<div id="outline-container-orgd43f7d3" class="outline-2">
-<h2 id="orgd43f7d3"><span class="section-number-2">22</span> Arch rabbitmq server 无法正常启动</h2>
-<div class="outline-text-2" id="text-22">
+<div id="outline-container-org6e64b10" class="outline-2">
+<h2 id="org6e64b10">Arch rabbitmq server 无法正常启动</h2>
+<div class="outline-text-2" id="text-org6e64b10">
 <p>
 查看错误 log，发现是 <code>.erlang.cookie</code> 的问题，复制一份之后，还需要把这个文件的权限设为 rabbitmq:rabbitmq 才行。具体参考这个：
 <a href="https://stackoverflow.com/questions/24610367/unable-to-start-rabbitmq-server-on-ubuntu-10-04">https://stackoverflow.com/questions/24610367/unable-to-start-rabbitmq-server-on-ubuntu-10-04</a>
@@ -686,11 +662,11 @@ export LC_ALL=zh_CN.UTF-8
 </div>
 </div>
 
-<div id="outline-container-orgad17e47" class="outline-2">
-<h2 id="orgad17e47"><span class="section-number-2">23</span> Arch 蓝牙失效</h2>
-<div class="outline-text-2" id="text-23">
+<div id="outline-container-org3f73972" class="outline-2">
+<h2 id="org3f73972">Arch 蓝牙失效</h2>
+<div class="outline-text-2" id="text-org3f73972">
 <p>
-<span class="timestamp-wrapper"><span class="timestamp">&lt;2018-09-07 五&gt;</span></span>
+<span class="timestamp-wrapper"><span class="timestamp">&lt;2018-09-07 Fri&gt;</span></span>
 今天买的静电容蓝牙键盘到手了，刚开始蓝牙可以使用，但过了一会电脑蓝牙就整个没用了。设置里显示没有蓝牙可以使用，非常奇怪。
 </p>
 
@@ -699,9 +675,9 @@ export LC_ALL=zh_CN.UTF-8
 </p>
 <pre class="example">
 ● bluetooth.service - Bluetooth service
-   Loaded: loaded (/usr/lib/systemd/system/bluetooth.service; enabled; vendor preset: disabled)
-   Active: inactive (dead)
-     Docs: man:bluetoothd(8)
+	 Loaded: loaded (/usr/lib/systemd/system/bluetooth.service; enabled; vendor preset: disabled)
+	 Active: inactive (dead)
+		 Docs: man:bluetoothd(8)
 </pre>
 
 <p>
@@ -726,18 +702,18 @@ sudo systemctl restart bluetooth
 </div>
 </div>
 
-<div id="outline-container-org5f39850" class="outline-2">
-<h2 id="org5f39850"><span class="section-number-2">24</span> Linux 下 JetBrain 系软件字体问题</h2>
-<div class="outline-text-2" id="text-24">
+<div id="outline-container-orgc260905" class="outline-2">
+<h2 id="orgc260905">Linux 下 JetBrain 系软件字体问题</h2>
+<div class="outline-text-2" id="text-orgc260905">
 <p>
 使用网上多种方式尝试无解之后，突然发现基于Idea的Android studio的字体渲染出乎意料的好，必定是在启动的Jre上做了字体渲染的修改，于是将Idea的启动Jre替换成AS的Jre。字体渲染完美
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgf0ca9a8" class="outline-2">
-<h2 id="orgf0ca9a8"><span class="section-number-2">25</span> pip install memory error</h2>
-<div class="outline-text-2" id="text-25">
+<div id="outline-container-orga59711d" class="outline-2">
+<h2 id="orga59711d">pip install memory error</h2>
+<div class="outline-text-2" id="text-orga59711d">
 <p>
 一般是由于内存太小导致的，安装时不要缓存下载文件即可：
 </p>
@@ -749,8 +725,8 @@ sudo systemctl restart bluetooth
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-03-27 五 16:50. Created by hiro.</p>
-	    <script src="https://utteranc.es/client.js"
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
+			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
 	theme="github-light"

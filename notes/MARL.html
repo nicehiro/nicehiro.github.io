@@ -3,265 +3,241 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-10 日 10:09 -->
+<!-- 2021-01-04 Mon 19:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>多智能体深度强化学习</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="hiro" />
+<meta name="author" content="王方圆" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-	     margin-bottom: .2em; }
-  .subtitle { text-align: center;
-	      font-size: medium;
-	      font-weight: bold;
-	      margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-	    padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: auto;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-	displayAlign: "center",
-	displayIndent: "0em",
+		MathJax.Hub.Config({
+				displayAlign: "center",
+				displayIndent: "0em",
 
-	"HTML-CSS": { scale: 100,
-			linebreaks: { automatic: "false" },
-			webFont: "TeX"
-		       },
-	SVG: {scale: 100,
-	      linebreaks: { automatic: "false" },
-	      font: "TeX"},
-	NativeMML: {scale: 100},
-	TeX: { equationNumbers: {autoNumber: "AMS"},
-	       MultLineWidth: "85%",
-	       TagSide: "right",
-	       TagIndent: ".8em"
-	     }
+				"HTML-CSS": { scale: 100,
+												linebreaks: { automatic: "false" },
+												webFont: "TeX"
+											 },
+				SVG: {scale: 100,
+							linebreaks: { automatic: "false" },
+							font: "TeX"},
+				NativeMML: {scale: 100},
+				TeX: { equationNumbers: {autoNumber: "AMS"},
+							 MultLineWidth: "85%",
+							 TagSide: "right",
+							 TagIndent: ".8em"
+						 }
 });
 </script>
 <script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -270,47 +246,47 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orge8a405b">1. 博弈论基础</a>
+<li><a href="#orgc6182eb">博弈论基础</a>
 <ul>
-<li><a href="#org3998f00">1.1. 矩阵博弈</a>
+<li><a href="#org2f630b4">矩阵博弈</a>
 <ul>
-<li><a href="#org5725304">1.1.1. 纳什均衡</a></li>
-<li><a href="#orgc4f9ee5">1.1.2. 矩阵博弈纳什均衡</a></li>
-<li><a href="#org1ed3320">1.1.3. 完全混合策略</a></li>
-<li><a href="#orgdaee3cd">1.1.4. 纯策略</a></li>
+<li><a href="#org61039f1">纳什均衡</a></li>
+<li><a href="#orgfd5a63b">矩阵博弈纳什均衡</a></li>
+<li><a href="#org4e06825">完全混合策略</a></li>
+<li><a href="#org76c1b90">纯策略</a></li>
 </ul>
 </li>
-<li><a href="#org616364d">1.2. 两个智能体的矩阵博弈中的纳什均衡</a>
+<li><a href="#org797882f">两个智能体的矩阵博弈中的纳什均衡</a>
 <ul>
-<li><a href="#org71ba0a9">1.2.1. 零和博弈</a></li>
+<li><a href="#orgd2a6a34">零和博弈</a></li>
 </ul>
 </li>
 </ul>
 </li>
-<li><a href="#orge3f5958">2. 其他博弈概念</a>
+<li><a href="#org3a2e0d8">其他博弈概念</a>
 <ul>
-<li><a href="#org52f380e">2.1. 静态博弈</a></li>
-<li><a href="#orgd56be07">2.2. 阶段博弈</a></li>
-<li><a href="#orgd342ee6">2.3. 重复博弈</a></li>
+<li><a href="#org9b70b7f">静态博弈</a></li>
+<li><a href="#org983d297">阶段博弈</a></li>
+<li><a href="#org7a3849d">重复博弈</a></li>
 </ul>
 </li>
-<li><a href="#org971eba8">3. 多智能体强化学习</a>
+<li><a href="#org85f92d6">多智能体强化学习</a>
 <ul>
-<li><a href="#org9c70ef5">3.1. Minimax-Q</a></li>
+<li><a href="#org3ef94cd">Minimax-Q</a></li>
 </ul>
 </li>
-<li><a href="#org9880eb1">4. Ref</a></li>
+<li><a href="#org121fe3a">Ref</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orge8a405b" class="outline-2">
-<h2 id="orge8a405b"><span class="section-number-2">1</span> 博弈论基础</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-orgc6182eb" class="outline-2">
+<h2 id="orgc6182eb">博弈论基础</h2>
+<div class="outline-text-2" id="text-orgc6182eb">
 </div>
-<div id="outline-container-org3998f00" class="outline-3">
-<h3 id="org3998f00"><span class="section-number-3">1.1</span> 矩阵博弈</h3>
-<div class="outline-text-3" id="text-1-1">
+<div id="outline-container-org2f630b4" class="outline-3">
+<h3 id="org2f630b4">矩阵博弈</h3>
+<div class="outline-text-3" id="text-org2f630b4">
 <p>
 一个矩阵博弈可以表示为\((n, A_1, A_2, \cdots, A_n, R_1, R_2, \cdots, R_n)\)，其中：
 </p>
@@ -329,18 +305,18 @@ for the JavaScript code in this tag.
 </p>
 </div>
 
-<div id="outline-container-org5725304" class="outline-4">
-<h4 id="org5725304"><span class="section-number-4">1.1.1</span> 纳什均衡</h4>
-<div class="outline-text-4" id="text-1-1-1">
+<div id="outline-container-org61039f1" class="outline-4">
+<h4 id="org61039f1">纳什均衡</h4>
+<div class="outline-text-4" id="text-org61039f1">
 <p>
 一个策略组合被称为纳什均衡，当每个博弈者的均衡策略都是为了达到自己期望收益的最大值。不论其他博弈者采取什么策略，此博弈者采取这个策略都能获取最大的期望收益，那么该确定策略被称为支配性策略。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgc4f9ee5" class="outline-4">
-<h4 id="orgc4f9ee5"><span class="section-number-4">1.1.2</span> 矩阵博弈纳什均衡</h4>
-<div class="outline-text-4" id="text-1-1-2">
+<div id="outline-container-orgfd5a63b" class="outline-4">
+<h4 id="orgfd5a63b">矩阵博弈纳什均衡</h4>
+<div class="outline-text-4" id="text-orgfd5a63b">
 <p>
 在矩阵博弈中，如果联结策略\(\pi_1^*, \pi_2^*, \cdots, \pi_n^*\)满足：
 \[
@@ -355,18 +331,18 @@ V_i(\pi_1^*, \cdots, \pi_i^*, \cdots, \pi_n^*) \geq V_i(\pi_1^*, \cdots, \pi_i, 
 </div>
 </div>
 
-<div id="outline-container-org1ed3320" class="outline-4">
-<h4 id="org1ed3320"><span class="section-number-4">1.1.3</span> 完全混合策略</h4>
-<div class="outline-text-4" id="text-1-1-3">
+<div id="outline-container-org4e06825" class="outline-4">
+<h4 id="org4e06825">完全混合策略</h4>
+<div class="outline-text-4" id="text-org4e06825">
 <p>
 若智能体 i 对动作集\(A_i\)的所有动作的概率都大于 0，那么这个策略被称为完全混合策略。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgdaee3cd" class="outline-4">
-<h4 id="orgdaee3cd"><span class="section-number-4">1.1.4</span> 纯策略</h4>
-<div class="outline-text-4" id="text-1-1-4">
+<div id="outline-container-org76c1b90" class="outline-4">
+<h4 id="org76c1b90">纯策略</h4>
+<div class="outline-text-4" id="text-org76c1b90">
 <p>
 若智能体 i 对动作集\(A_i\)中一个动作概率为 1，其余为 0，那么这个策略被称为纯策略。
 </p>
@@ -374,9 +350,9 @@ V_i(\pi_1^*, \cdots, \pi_i^*, \cdots, \pi_n^*) \geq V_i(\pi_1^*, \cdots, \pi_i, 
 </div>
 </div>
 
-<div id="outline-container-org616364d" class="outline-3">
-<h3 id="org616364d"><span class="section-number-3">1.2</span> 两个智能体的矩阵博弈中的纳什均衡</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-org797882f" class="outline-3">
+<h3 id="org797882f">两个智能体的矩阵博弈中的纳什均衡</h3>
+<div class="outline-text-3" id="text-org797882f">
 <p>
 对于两个智能体的矩阵博弈，我们设计：
 </p>
@@ -386,9 +362,9 @@ V_i(\pi_1^*, \cdots, \pi_i^*, \cdots, \pi_n^*) \geq V_i(\pi_1^*, \cdots, \pi_i, 
 </ul>
 </div>
 
-<div id="outline-container-org71ba0a9" class="outline-4">
-<h4 id="org71ba0a9"><span class="section-number-4">1.2.1</span> 零和博弈</h4>
-<div class="outline-text-4" id="text-1-2-1">
+<div id="outline-container-orgd2a6a34" class="outline-4">
+<h4 id="orgd2a6a34">零和博弈</h4>
+<div class="outline-text-4" id="text-orgd2a6a34">
 <p>
 在零和博弈中，两个智能体处于完全竞争对抗状态。只有一个纳什均衡解。
 </p>
@@ -397,35 +373,35 @@ V_i(\pi_1^*, \cdots, \pi_i^*, \cdots, \pi_n^*) \geq V_i(\pi_1^*, \cdots, \pi_i, 
 </div>
 </div>
 
-<div id="outline-container-orge3f5958" class="outline-2">
-<h2 id="orge3f5958"><span class="section-number-2">2</span> 其他博弈概念</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org3a2e0d8" class="outline-2">
+<h2 id="org3a2e0d8">其他博弈概念</h2>
+<div class="outline-text-2" id="text-org3a2e0d8">
 <p>
 马尔科夫决策过程包含一个智能体和多个状态；矩阵博弈包含多个智能体和一个状态（不变）。随机博弈（Stochastic game or Markov game）是前面二者的结合，即多智能体强化学习。
 </p>
 </div>
 
-<div id="outline-container-org52f380e" class="outline-3">
-<h3 id="org52f380e"><span class="section-number-3">2.1</span> 静态博弈</h3>
-<div class="outline-text-3" id="text-2-1">
+<div id="outline-container-org9b70b7f" class="outline-3">
+<h3 id="org9b70b7f">静态博弈</h3>
+<div class="outline-text-3" id="text-org9b70b7f">
 <p>
 无状态 s 的博弈。例如矩阵博弈。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd56be07" class="outline-3">
-<h3 id="orgd56be07"><span class="section-number-3">2.2</span> 阶段博弈</h3>
-<div class="outline-text-3" id="text-2-2">
+<div id="outline-container-org983d297" class="outline-3">
+<h3 id="org983d297">阶段博弈</h3>
+<div class="outline-text-3" id="text-org983d297">
 <p>
 随机博弈的组成部分，状态 s 是固定的，相当于是状态固定的静态博弈。若干状态的阶段博弈构成随机博弈。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgd342ee6" class="outline-3">
-<h3 id="orgd342ee6"><span class="section-number-3">2.3</span> 重复博弈</h3>
-<div class="outline-text-3" id="text-2-3">
+<div id="outline-container-org7a3849d" class="outline-3">
+<h3 id="org7a3849d">重复博弈</h3>
+<div class="outline-text-3" id="text-org7a3849d">
 <p>
 智能体重复访问同一个状态的阶段博弈，并且在访问过程中收集环境和其他智能体的信息，用来不断更新 Q 值，更新策略。
 </p>
@@ -433,9 +409,9 @@ V_i(\pi_1^*, \cdots, \pi_i^*, \cdots, \pi_n^*) \geq V_i(\pi_1^*, \cdots, \pi_i, 
 </div>
 </div>
 
-<div id="outline-container-org971eba8" class="outline-2">
-<h2 id="org971eba8"><span class="section-number-2">3</span> 多智能体强化学习</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org85f92d6" class="outline-2">
+<h2 id="org85f92d6">多智能体强化学习</h2>
+<div class="outline-text-2" id="text-org85f92d6">
 <p>
 多智能体强化学习就是一个随机博弈，将每一个状态的阶段博弈的纳什均衡策略组合起来称为一个智能体在动态环境中的策略，并不断于环境交互来更新每一个状态的阶段博弈的策略。
 一个随机博弈可以写为\((n, S, A_1, \cdots, A_n, T_r, \gamma, R_1, \cdots, R_n)\)，其中：
@@ -478,9 +454,9 @@ Q_i^*(s, a_1, \cdots, a_n) = \sum_{s\prime \in S}T_r(s, a_1, \cdots, a_n, s\prim
 </p>
 </div>
 
-<div id="outline-container-org9c70ef5" class="outline-3">
-<h3 id="org9c70ef5"><span class="section-number-3">3.1</span> Minimax-Q</h3>
-<div class="outline-text-3" id="text-3-1">
+<div id="outline-container-org3ef94cd" class="outline-3">
+<h3 id="org3ef94cd">Minimax-Q</h3>
+<div class="outline-text-3" id="text-org3ef94cd">
 <p>
 在两个玩家的零和博弈中，可以使用 Minimax-Q 算法求解博弈的纳什均衡。Q 指的是使用 Q-Learning 中的方法迭代学习动作状态值函数。
 </p>
@@ -502,7 +478,7 @@ V_i^*(s) = \max \limits_{\pi_i(s, \cdot)} \min \limits_{a_{-i} \in A_{-i}} \sum_
 
 <div class="org-center">
 
-<div class="figure">
+<div id="orgc510e7d" class="figure">
 <p><img src="../img/rl-algorithms/minimax-q.png" alt="minimax-q.png" />
 </p>
 </div>
@@ -512,9 +488,9 @@ V_i^*(s) = \max \limits_{\pi_i(s, \cdot)} \min \limits_{a_{-i} \in A_{-i}} \sum_
 </div>
 
 
-<div id="outline-container-org9880eb1" class="outline-2">
-<h2 id="org9880eb1"><span class="section-number-2">4</span> Ref</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org121fe3a" class="outline-2">
+<h2 id="org121fe3a">Ref</h2>
+<div class="outline-text-2" id="text-org121fe3a">
 <ul class="org-ul">
 <li><a href="https://zhuanlan.zhihu.com/p/53474965">MARL 多智能体强化学习分享</a></li>
 </ul>
@@ -522,8 +498,8 @@ V_i^*(s) = \max \limits_{\pi_i(s, \cdot)} \min \limits_{a_{-i} \in A_{-i}} \sum_
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-02-05 三 17:50. Created by hiro.</p>
-	    <script src="https://utteranc.es/client.js"
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
+			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
 	theme="github-light"

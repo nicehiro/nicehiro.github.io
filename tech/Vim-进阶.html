@@ -3,242 +3,218 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-10 日 10:09 -->
+<!-- 2021-01-04 Mon 19:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Vim 进阶</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="hiro" />
+<meta name="author" content="王方圆" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-	     margin-bottom: .2em; }
-  .subtitle { text-align: center;
-	      font-size: medium;
-	      font-weight: bold;
-	      margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-	    padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: auto;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
@@ -248,9 +224,9 @@ for the JavaScript code in this tag.
 在接触 Emacs 不久之后，我结识了 Emacs 中一个很神奇的插件——Evil，这东西基本上可以将 Vim 的所有特性、操作（当然是我目前掌握的）都包含进去了。但在看 evil 文档介绍的时候，我发现我原先掌握的 Vim 操作技巧实在是太少了<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>，连一个插件都用不灵光。于是就决定顺便 Hack 一下 Vim。看的书是 Drew Neil 写的 《Vim使用技巧》。以下内容不断更新，我只记录一些当下我觉得神奇有用超级快速的东西，顺便也可以系统的学一下 Vim。
 </p>
 
-<div id="outline-container-org38eb384" class="outline-2">
-<h2 id="org38eb384"><span class="section-number-2">1</span> 复合命令</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org9f963a3" class="outline-2">
+<h2 id="org9f963a3">复合命令</h2>
+<div class="outline-text-2" id="text-org9f963a3">
 <p>
 很多命令其实都是复合命令，或许你用的不要繁琐的命令其实可以用 VIM 内置的复合命令就可以直接搞定。
 </p>
@@ -266,9 +242,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgbd8f8d7" class="outline-2">
-<h2 id="orgbd8f8d7"><span class="section-number-2">2</span> 特殊命令</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-orgcb69a99" class="outline-2">
+<h2 id="orgcb69a99">特殊命令</h2>
+<div class="outline-text-2" id="text-orgcb69a99">
 <ul class="org-ul">
 <li>c: clear 从当前位置</li>
 <li>f: search from current cursor</li>
@@ -287,9 +263,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org90207f4" class="outline-2">
-<h2 id="org90207f4"><span class="section-number-2">3</span> 组合命令</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org9d282d5" class="outline-2">
+<h2 id="org9d282d5">组合命令</h2>
+<div class="outline-text-2" id="text-org9d282d5">
 <ul class="org-ul">
 <li>guaw|gUaw: 反转一个单词的大小写</li>
 <li>daw: delete a word 切记需要三个同时使用</li>
@@ -298,9 +274,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org3358454" class="outline-2">
-<h2 id="org3358454"><span class="section-number-2">4</span> 插入模式下的命令</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org6d50417" class="outline-2">
+<h2 id="org6d50417">插入模式下的命令</h2>
+<div class="outline-text-2" id="text-org6d50417">
 <ul class="org-ul">
 <li>&lt;C-h&gt;: 相当于 BackSpace</li>
 <li>&lt;C-w&gt;: 删除一个单词</li>
@@ -317,9 +293,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orga8d9cea" class="outline-2">
-<h2 id="orga8d9cea"><span class="section-number-2">5</span> 可视模式</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-orga7fd53d" class="outline-2">
+<h2 id="orga7fd53d">可视模式</h2>
+<div class="outline-text-2" id="text-orga7fd53d">
 <ul class="org-ul">
 <li>面向字符、面向行、面向块的可视模式</li>
 <li>o: 切换活动的端点</li>
@@ -327,9 +303,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orge3a1109" class="outline-2">
-<h2 id="orge3a1109"><span class="section-number-2">6</span> EX 命令 | 命令行模式</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-orgf517dac" class="outline-2">
+<h2 id="orgf517dac">EX 命令 | 命令行模式</h2>
+<div class="outline-text-2" id="text-orgf517dac">
 <ul class="org-ul">
 <li>%: 所有行</li>
 <li>.: 当前行地址</li>
@@ -344,9 +320,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgce19cb5" class="outline-2">
-<h2 id="orgce19cb5"><span class="section-number-2">7</span> 缓存区</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-orgad5f061" class="outline-2">
+<h2 id="orgad5f061">缓存区</h2>
+<div class="outline-text-2" id="text-orgad5f061">
 <ul class="org-ul">
 <li>ls: 列出缓存区列表
 <ul class="org-ul">
@@ -360,22 +336,22 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org0ad0952" class="outline-2">
-<h2 id="org0ad0952"><span class="section-number-2">8</span> 技巧</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-org36fee89" class="outline-2">
+<h2 id="org36fee89">技巧</h2>
+<div class="outline-text-2" id="text-org36fee89">
 </div>
-<div id="outline-container-org26df408" class="outline-3">
-<h3 id="org26df408"><span class="section-number-3">8.1</span> 对一行中某一特定字符做修改</h3>
-<div class="outline-text-3" id="text-8-1">
+<div id="outline-container-org3cca465" class="outline-3">
+<h3 id="org3cca465">对一行中某一特定字符做修改</h3>
+<div class="outline-text-3" id="text-org3cca465">
 <p>
 先使用 <code>f</code> 来查找，然后修改第一处;使用 <code>;</code> 重复查找，使用 <code>.</code> 重复修改
 </p>
 </div>
 </div>
 
-<div id="outline-container-org5629029" class="outline-3">
-<h3 id="org5629029"><span class="section-number-3">8.2</span> 可重复操作及其回退</h3>
-<div class="outline-text-3" id="text-8-2">
+<div id="outline-container-orgb3ad1c8" class="outline-3">
+<h3 id="orgb3ad1c8">可重复操作及其回退</h3>
+<div class="outline-text-3" id="text-orgb3ad1c8">
 <ul class="org-ul">
 <li>f/F/t/T 行内查找操作: ; &amp; ,</li>
 <li>/pattern&lt;CR&gt; 全文查找操作: n &amp; N</li>
@@ -384,9 +360,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgeb36500" class="outline-3">
-<h3 id="orgeb36500"><span class="section-number-3">8.3</span> 重新映射 CapsLock 键</h3>
-<div class="outline-text-3" id="text-8-3">
+<div id="outline-container-org12ebb6a" class="outline-3">
+<h3 id="org12ebb6a">重新映射 CapsLock 键</h3>
+<div class="outline-text-3" id="text-org12ebb6a">
 <p>
 Why：误触那个键将会产生不同的命令，比如说最常用的 j、k 移动操作会因此而改变
 J: 拼接上下两行
@@ -394,9 +370,9 @@ K: 查看当前光标处单词的 help 文档
 </p>
 </div>
 </div>
-<div id="outline-container-org98755f7" class="outline-3">
-<h3 id="org98755f7"><span class="section-number-3">8.4</span> Vim 与 Shell 交互</h3>
-<div class="outline-text-3" id="text-8-4">
+<div id="outline-container-org0ca111e" class="outline-3">
+<h3 id="org0ca111e">Vim 与 Shell 交互</h3>
+<div class="outline-text-3" id="text-org0ca111e">
 <p>
 有三种方法。
 </p>
@@ -410,9 +386,9 @@ K: 查看当前光标处单词的 help 文档
 </div>
 </div>
 
-<div id="outline-container-org7f84ca8" class="outline-3">
-<h3 id="org7f84ca8"><span class="section-number-3">8.5</span> 相对于活动目录打开一个文件</h3>
-<div class="outline-text-3" id="text-8-5">
+<div id="outline-container-org27a1147" class="outline-3">
+<h3 id="org27a1147">相对于活动目录打开一个文件</h3>
+<div class="outline-text-3" id="text-org27a1147">
 <p>
 <code>%</code> 这个可以代表当前打开文件路径，比如说我正在编辑 init.el 文件:
 </p>
@@ -435,13 +411,13 @@ K: 查看当前光标处单词的 help 文档
 </div>
 </div>
 
-<div id="outline-container-org1443f0e" class="outline-3">
-<h3 id="org1443f0e"><span class="section-number-3">8.6</span> 超级移动</h3>
-<div class="outline-text-3" id="text-8-6">
+<div id="outline-container-org73cee64" class="outline-3">
+<h3 id="org73cee64">超级移动</h3>
+<div class="outline-text-3" id="text-org73cee64">
 </div>
-<div id="outline-container-orgc55cd3a" class="outline-4">
-<h4 id="orgc55cd3a"><span class="section-number-4">8.6.1</span> 手势</h4>
-<div class="outline-text-4" id="text-8-6-1">
+<div id="outline-container-org2811a50" class="outline-4">
+<h4 id="org2811a50">手势</h4>
+<div class="outline-text-4" id="text-org2811a50">
 <p>
 标准手势对 VIM 操作很有帮助，左手四指对应：a , s , d , f ，右手四指对应：j , k , l , ; 。
 </p>
@@ -452,9 +428,9 @@ K: 查看当前光标处单词的 help 文档
 </div>
 </div>
 
-<div id="outline-container-org3d81622" class="outline-4">
-<h4 id="org3d81622"><span class="section-number-4">8.6.2</span> 屏幕行 &amp; 实际行</h4>
-<div class="outline-text-4" id="text-8-6-2">
+<div id="outline-container-orgaa6118c" class="outline-4">
+<h4 id="orgaa6118c">屏幕行 &amp; 实际行</h4>
+<div class="outline-text-4" id="text-orgaa6118c">
 <p>
 如果使用 VIM 编辑一些文本文件，比如说 markdown 文件，此时我会选择启用 <code>wrap</code> 模式，可以把一行的文字（实际行）折行显示到屏幕上（屏幕行）。这样做的话，j,k 上下移动的只是实际行，移动到指定屏幕行位置的文字需要使用移动单词命令（或 h,l）来实现，但这样的效率是很低下的。
 </p>
@@ -469,9 +445,9 @@ K: 查看当前光标处单词的 help 文档
 </div>
 </div>
 
-<div id="outline-container-org34d9229" class="outline-4">
-<h4 id="org34d9229"><span class="section-number-4">8.6.3</span> 基于单词的移动</h4>
-<div class="outline-text-4" id="text-8-6-3">
+<div id="outline-container-org6ed79d1" class="outline-4">
+<h4 id="org6ed79d1">基于单词的移动</h4>
+<div class="outline-text-4" id="text-org6ed79d1">
 <p>
 告别使用 h,l 左右移动
 </p>
@@ -484,9 +460,9 @@ K: 查看当前光标处单词的 help 文档
 </div>
 </div>
 
-<div id="outline-container-orgfebc786" class="outline-4">
-<h4 id="orgfebc786"><span class="section-number-4">8.6.4</span> 行内查找单词</h4>
-<div class="outline-text-4" id="text-8-6-4">
+<div id="outline-container-orgd8e066d" class="outline-4">
+<h4 id="orgd8e066d">行内查找单词</h4>
+<div class="outline-text-4" id="text-orgd8e066d">
 <ul class="org-ul">
 <li>f{char}: 查找下一个字符</li>
 <li>F{char}: 查找上一个字符</li>
@@ -497,9 +473,9 @@ K: 查看当前光标处单词的 help 文档
 </p>
 </div>
 </div>
-<div id="outline-container-org0d14fd1" class="outline-4">
-<h4 id="org0d14fd1"><span class="section-number-4">8.6.5</span> 文本对象</h4>
-<div class="outline-text-4" id="text-8-6-5">
+<div id="outline-container-orgc482b49" class="outline-4">
+<h4 id="orgc482b49">文本对象</h4>
+<div class="outline-text-4" id="text-orgc482b49">
 <p>
 v 进入可视模式，然后就可以选择文本对象了。
 </p>
@@ -513,9 +489,9 @@ v 进入可视模式，然后就可以选择文本对象了。
 </p>
 </div>
 </div>
-<div id="outline-container-orgf7651a0" class="outline-4">
-<h4 id="orgf7651a0"><span class="section-number-4">8.6.6</span> 设置位置标记</h4>
-<div class="outline-text-4" id="text-8-6-6">
+<div id="outline-container-orgb4e5baf" class="outline-4">
+<h4 id="orgb4e5baf">设置位置标记</h4>
+<div class="outline-text-4" id="text-orgb4e5baf">
 <p>
 使用 <code>:m{a-zA-Z}</code> 或是 <code>:mark{a-zA-Z}</code> 可以为当前位置设置一个位置标记，小写字母设置仅在当前缓存区生效，大写字母全局生效。
 </p>
@@ -531,13 +507,13 @@ v 进入可视模式，然后就可以选择文本对象了。
 </div>
 </div>
 </div>
-<div id="outline-container-orgf21152c" class="outline-2">
-<h2 id="orgf21152c"><span class="section-number-2">9</span> Tips 详解</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-org256c68a" class="outline-2">
+<h2 id="org256c68a">Tips 详解</h2>
+<div class="outline-text-2" id="text-org256c68a">
 </div>
-<div id="outline-container-orgf53c9ab" class="outline-3">
-<h3 id="orgf53c9ab"><span class="section-number-3">9.1</span> rename-files</h3>
-<div class="outline-text-3" id="text-9-1">
+<div id="outline-container-orgc2d7a57" class="outline-3">
+<h3 id="orgc2d7a57">rename-files</h3>
+<div class="outline-text-3" id="text-orgc2d7a57">
 <p>
 在 vim 中重命名文件名，看完之后只是觉得思想不错，但还是不如 shell 中直接来的方便。
 </p>
@@ -572,8 +548,8 @@ v 进入可视模式，然后就可以选择文本对象了。
 </div>
 </div></div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
-	    <script src="https://utteranc.es/client.js"
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
+			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
 	theme="github-light"

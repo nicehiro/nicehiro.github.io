@@ -3,10 +3,10 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2021-01-04 Mon 19:30 -->
+<!-- 2021-01-04 Mon 19:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>反向传播算法 Back-Propagation</title>
+<title>理解 Batch Normalization 层中反向传播的原理</title>
 <meta name="generator" content="Org mode" />
 <meta name="author" content="王方圆" />
 <style type="text/css">
@@ -241,196 +241,289 @@
 </head>
 <body>
 <div id="content">
-<h1 class="title">反向传播算法 Back-Propagation</h1>
+<h1 class="title">理解 Batch Normalization 层中反向传播的原理</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org8a57601">背景</a></li>
-<li><a href="#org9ca78f3">链式求导法则</a></li>
-<li><a href="#org7c92066">反向传播</a>
+<li><a href="#orgb009b63">Batch Normalization</a></li>
+<li><a href="#org3f3b498">反向传播</a></li>
+<li><a href="#org3b9ea14">Batch Normalization 层的计算图</a></li>
+<li><a href="#org08841df">BarchNorm 层中的反向传播</a>
 <ul>
-<li><a href="#org3bec5ab">Forward Pass 前向传播</a></li>
-<li><a href="#orgb5e6c7c">Backward Pass 反向传播</a>
-<ul>
-<li><a href="#org0cfef14">输出层</a></li>
-<li><a href="#org42d6bb8">中间层</a></li>
+<li><a href="#orga273008">step 9</a></li>
+<li><a href="#org2f3c359">step 8</a></li>
+<li><a href="#orge14f084">step 7</a></li>
+<li><a href="#org738ac04">step 6</a></li>
+<li><a href="#orgc80aea9">step 5</a></li>
+<li><a href="#org9bd37f7">step 4</a></li>
+<li><a href="#org9bd2a75">step 3</a></li>
+<li><a href="#org955b69b">step 2</a></li>
+<li><a href="#org1894dc7">step 1</a></li>
+<li><a href="#orgd5ef9ae">step 0</a></li>
 </ul>
 </li>
 </ul>
-</li>
-<li><a href="#org5bb6761">总结</a></li>
-<li><a href="#orgcd5d7ef">Ref</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org8a57601" class="outline-2">
-<h2 id="org8a57601">背景</h2>
-<div class="outline-text-2" id="text-org8a57601">
-<p>
-在神经网络中更新参数时，经常需要使用梯度的方法来更新参数。反向传播就是用来有效的求输出值和每个参数导数的有效方法。
-</p>
-</div>
-</div>
-
-<div id="outline-container-org9ca78f3" class="outline-2">
-<h2 id="org9ca78f3">链式求导法则</h2>
-<div class="outline-text-2" id="text-org9ca78f3">
-\begin{equation}
-y = f(x) \\
-z = g(x) \\
-w = m(x) \\
-s = y + z + w \\
-
-\nabla_{x} = \frac{\partial{s}}{dx} = \frac{\partial{y}}{dx} + \frac{\partial{z}}{dx} + \frac{\partial{w}}{dx}
-\end{equation}
-</div>
-</div>
-
-<div id="outline-container-org7c92066" class="outline-2">
-<h2 id="org7c92066">反向传播</h2>
-<div class="outline-text-2" id="text-org7c92066">
-<p>
-在神经网络中截取一小段，不妨将我们的问题转化为求此段网络中输入\(x_1,x_2\)的梯度。
-</p>
-
-<div class="org-center">
-
-<div id="org164cca1" class="figure">
-<p><img src="../img/back-prop-1.png" alt="back-prop-1.png" width="80%" />
-</p>
-</div>
-</div>
-
-<p>
-取出其中一个神经元（Neuron），拆开分析：
-</p>
-
-<div class="org-center">
-
-<div id="orgf549e30" class="figure">
-<p><img src="../img/back-prop-2.png" alt="back-prop-2.png" width="80%" />
-</p>
 </div>
 </div>
 <p>
-可以看出，\(\nabla_w\)由两部分组成\(\frac{\partial{l}}{dz} \frac{\partial{z}}{dw}\)。
+本文翻译自 <a href="https://kratzert.github.io/2016/02/12/understanding-the-gradient-flow-through-the-batch-normalization-layer.html">Understanding the backward pass through Batch Normalization Layer</a> 。
 </p>
-</div>
 
-<div id="outline-container-org3bec5ab" class="outline-3">
-<h3 id="org3bec5ab">Forward Pass 前向传播</h3>
-<div class="outline-text-3" id="text-org3bec5ab">
+<div id="outline-container-orgb009b63" class="outline-2">
+<h2 id="orgb009b63">Batch Normalization</h2>
+<div class="outline-text-2" id="text-orgb009b63">
 <p>
-先来求求\(\frac{\partial{z}}{dw}\)。
-</p>
-
-<div class="org-center">
-
-<div id="org5e9b15a" class="figure">
-<p><img src="../img/back-prop-3.png" alt="back-prop-3.png" width="80%" />
-</p>
-</div>
-</div>
-
-<p>
-从前面向后面计算一次，相对于每个神经元来说，每个神经元的输入即是各自的\(\frac{\partial{z}}{dw}\)。
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgb5e6c7c" class="outline-3">
-<h3 id="orgb5e6c7c">Backward Pass 反向传播</h3>
-<div class="outline-text-3" id="text-orgb5e6c7c">
-<div class="org-center">
-
-<div id="orgc951893" class="figure">
-<p><img src="../img/back-prop-4.png" alt="back-prop-4.png" width="80%" />
-</p>
-</div>
-</div>
-
-<p>
-其中，\(a\)为激活函数（Activation Function）的输出。
-</p>
-
-\begin{equation}
-\begin{split}
-\frac{\partial{l}}{dz} &= \frac{\partial{l}}{da} \frac{\partial{a}}{dz} \\
-&= (\frac{\partial{l}}{dz^{\prime}} \frac{\partial{z^{\prime}}}{da} + \frac{\partial{l}}{dz^{\prime \prime}} \frac{pritial{z^{\prime \prime}}}{da}) \frac{\partial{a}}{dz} \\
-&= (\frac{\partial{l}}{dz^{\prime}} w_3 + \frac{\partial{l}}{dz^{\prime \prime}} w_4) \frac{\partial{a}}{dz}
-\end{split}
-\end{equation}
-
-<p>
-如果要从前往后的计算每一层的\(\frac{\partial{l}}{dz}\)，显然计算每一层都需要计算从这一层开始的之后所有层的输出；但我们如果换一种方法，从后向前计算，那么只需要计算一次就足够了。
-</p>
-</div>
-
-<div id="outline-container-org0cfef14" class="outline-4">
-<h4 id="org0cfef14">输出层</h4>
-<div class="outline-text-4" id="text-org0cfef14">
-<div class="org-center">
-
-<div id="org5a54cc6" class="figure">
-<p><img src="../img/back-prop-5.png" alt="back-prop-5.png" width="80%" />
-</p>
-</div>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org42d6bb8" class="outline-4">
-<h4 id="org42d6bb8">中间层</h4>
-<div class="outline-text-4" id="text-org42d6bb8">
-<div class="org-center">
-
-<div id="org57d57d7" class="figure">
-<p><img src="../img/back-prop-6.png" alt="back-prop-6.png" width="80%" />
-</p>
-</div>
-</div>
-
-<p>
-利用下一层的结果求本层的\(\frac{\sigma{l}}{z}\)：
+我们先来看看 Batch Normalization 算法：
 </p>
 <div class="org-center">
 
-<div id="orgff15360" class="figure">
-<p><img src="../img/back-prop-8.png" alt="back-prop-8.png" width="80%" />
+<div id="org7625cfb" class="figure">
+<p><img src="../img/bn_algorithm.PNG" alt="bn_algorithm.PNG" width="100%" />
 </p>
-</div>
-</div>
-</div>
-</div>
+<p><span class="figure-number">Figure 1: </span>批量标准化算法</p>
 </div>
 </div>
 
-<div id="outline-container-org5bb6761" class="outline-2">
-<h2 id="org5bb6761">总结</h2>
-<div class="outline-text-2" id="text-org5bb6761">
 <p>
-使用 Forward Pass 计算\(\frac{\partial{z}}{dx}\)，使用 Backward Pass 计算\(\frac{\partial{l}}{dz}\)，最后将两个值相乘，即是对应参数的梯度。
+观察算法的最后一行，在对 <code>x</code> 进行标准化之后，又将 <code>x</code> 带入到一个线性函数中，其中 \(\gamma\) 和 <code>\beta</code> 是 BatchNorm 层中可学习的参数，它所代表的意义类似于：“我不想要均值为 0 方差为 1 的输入，我想要原始的输入，那个数据对我才有用”。如果 <code>gamma=sqrt(var(x))</code> ， <code>beta=mean(x)</code> ，那么存储的数剧为原始数据。因此，在初始化时将输入初始化为均值为 0 ，标准差为 1 的分布，而在训练过程中，通过学习参数 <code>gamma</code> 和 <code>beta</code> 来让输入的分布更合理。如果你想了解更多关于 BatchNorm 的知识，可以去研究这篇 <a href="http://arxiv.org/abs/1502.03167">paper</a> 。
 </p>
+</div>
+</div>
 
+<div id="outline-container-org3f3b498" class="outline-2">
+<h2 id="org3f3b498">反向传播</h2>
+<div class="outline-text-2" id="text-org3f3b498">
+<p>
+这篇文章中，我并不想阐述反向传播和随机梯度下降的基本内容，我会假设读这篇文章的人已经懂了上诉两个知识点。对于那些没有懂的，我在这里引依据维基百科的定义：
+</p>
+<blockquote>
+<p>
+反向传播（BackPropagation）是“Backward propagation of errors”的缩写，是训练神经网络的一种常见方法。该方法计算损失函数相对于网络所有权重的梯度，然后相应的优化算法利用梯度来更新权重。
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-org3b9ea14" class="outline-2">
+<h2 id="org3b9ea14">Batch Normalization 层的计算图</h2>
+<div class="outline-text-2" id="text-org3b9ea14">
+<p>
+计算图是将复杂公式可视化的一种很好的方法。BatchNorm 层的计算图如下所示：
+</p>
 <div class="org-center">
 
-<div id="org165adab" class="figure">
-<p><img src="../img/back-prop-7.png" alt="back-prop-7.png" width="80%" />
+<div id="org1c9a084" class="figure">
+<p><img src="../img/BNcircuit.png" alt="BNcircuit.png" width="100%" />
 </p>
+<p><span class="figure-number">Figure 2: </span>Batch Normalization 计算图。黑色箭头是前向传播，红色箭头是反向传播。</p>
+</div>
+</div>
+
+<p>
+可以对照上面 BatchNorm 算法的计算过程理解计算图。
+</p>
+
+<p>
+简单实现：
+</p>
+<div class="org-src-container">
+<pre class="src src-python">def batchnorm_forward(x, gamma, beta, eps):
+
+	N, D = x.shape
+
+	#step1: calculate mean
+	mu = 1./N * np.sum(x, axis = 0)
+
+	#step2: subtract mean vector of every trainings example
+	xmu = x - mu
+
+	#step3: following the lower branch - calculation denominator
+	sq = xmu ** 2
+
+	#step4: calculate variance
+	var = 1./N * np.sum(sq, axis = 0)
+
+	#step5: add eps for numerical stability, then sqrt
+	sqrtvar = np.sqrt(var + eps)
+
+	#step6: invert sqrtwar
+	ivar = 1./sqrtvar
+
+	#step7: execute normalization
+	xhat = xmu * ivar
+
+	#step8: Nor the two transformation steps
+	gammax = gamma * xhat
+
+	#step9
+	out = gammax + beta
+
+	#store intermediate
+	cache = (xhat,gamma,xmu,ivar,sqrtvar,var,eps)
+
+	return out, cache
+</pre>
+</div>
+
+<p>
+<code>cache</code> 中存了每一步的输出结果。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org08841df" class="outline-2">
+<h2 id="org08841df">BarchNorm 层中的反向传播</h2>
+<div class="outline-text-2" id="text-org08841df">
+<p>
+我们根据计算图，从后往前，逐步分析反向传播：
+</p>
+</div>
+
+<div id="outline-container-orga273008" class="outline-3">
+<h3 id="orga273008">step 9</h3>
+<div class="outline-text-3" id="text-orga273008">
+<div class="org-center">
+
+<div id="org558f106" class="figure">
+<p><img src="../img/step9.png" alt="step9.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 3: </span>最后一步求和计算</p>
+</div>
+</div>
+<p>
+对于求和运算， <code>f = x + y</code> ， <code>f</code> 对 <code>x</code> 和 <code>y</code> 的导数都是 1。通过这一步，我们可以得到输出对 <code>beta</code> 的梯度。
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2f3c359" class="outline-3">
+<h3 id="org2f3c359">step 8</h3>
+<div class="outline-text-3" id="text-org2f3c359">
+<div class="org-center">
+
+<div id="orgdccc365" class="figure">
+<p><img src="../img/step8.png" alt="step8.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 4: </span>标准化结果和 \(\gamma\) 相乘</p>
+</div>
+</div>
+<p>
+对于乘法运算， <code>f = x * y</code> ，=f= 对 <code>x</code> 的导数为 <code>y</code> ，对 <code>y</code> 的导数为 <code>x</code> 。利用链式求导和之前前向传播存储的每步输出，可以求得 <code>gamma</code> 的梯度。
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge14f084" class="outline-3">
+<h3 id="orge14f084">step 7</h3>
+<div class="outline-text-3" id="text-orge14f084">
+<div class="org-center">
+
+<div id="org967ef43" class="figure">
+<p><img src="../img/step7.png" alt="step7.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 5: </span>计算标准化结果的最后一步</p>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcd5d7ef" class="outline-2">
-<h2 id="orgcd5d7ef">Ref</h2>
-<div class="outline-text-2" id="text-orgcd5d7ef">
-<ul class="org-ul">
-<li><a href="https://www.youtube.com/channel/UC2ggjtuuWvxrHHHiaDH1dlQ">李宏毅——机器学习</a></li>
-<li><a href="https://datawhalechina.github.io/leeml-notes/#/chapter14/chapter14">Data Whale 学习笔记</a></li>
-</ul>
+<div id="outline-container-org738ac04" class="outline-3">
+<h3 id="org738ac04">step 6</h3>
+<div class="outline-text-3" id="text-org738ac04">
+<div class="org-center">
+
+<div id="org8406be2" class="figure">
+<p><img src="../img/step6.png" alt="step6.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 6: </span>一输入一输出节点</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc80aea9" class="outline-3">
+<h3 id="orgc80aea9">step 5</h3>
+<div class="outline-text-3" id="text-orgc80aea9">
+<div class="org-center">
+
+<div id="orgcd8a6c1" class="figure">
+<p><img src="../img/step5.png" alt="step5.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 7: </span>一输入一输出节点 矩阵运算</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9bd37f7" class="outline-3">
+<h3 id="org9bd37f7">step 4</h3>
+<div class="outline-text-3" id="text-org9bd37f7">
+<div class="org-center">
+
+<div id="org0eab4f5" class="figure">
+<p><img src="../img/step4.png" alt="step4.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 8: </span>一输入一输出节点</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9bd2a75" class="outline-3">
+<h3 id="org9bd2a75">step 3</h3>
+<div class="outline-text-3" id="text-org9bd2a75">
+<div class="org-center">
+
+<div id="org7315fd9" class="figure">
+<p><img src="../img/step3.png" alt="step3.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 9: </span>一输入一输出节点</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org955b69b" class="outline-3">
+<h3 id="org955b69b">step 2</h3>
+<div class="outline-text-3" id="text-org955b69b">
+<div class="org-center">
+
+<div id="orga1bad32" class="figure">
+<p><img src="../img/step2.png" alt="step2.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 10: </span>两个输出，其梯度需要相加</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org1894dc7" class="outline-3">
+<h3 id="org1894dc7">step 1</h3>
+<div class="outline-text-3" id="text-org1894dc7">
+<div class="org-center">
+
+<div id="org441d3ce" class="figure">
+<p><img src="../img/step1.png" alt="step1.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 11: </span>一输入一输出</p>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd5ef9ae" class="outline-3">
+<h3 id="orgd5ef9ae">step 0</h3>
+<div class="outline-text-3" id="text-orgd5ef9ae">
+<div class="org-center">
+
+<div id="org9ae00f4" class="figure">
+<p><img src="../img/step0.png" alt="step0.png" width="100%" />
+</p>
+<p><span class="figure-number">Figure 12: </span>两个输出</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>

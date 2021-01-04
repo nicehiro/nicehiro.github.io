@@ -3,273 +3,249 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-10 日 10:09 -->
+<!-- 2021-01-04 Mon 19:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>数据结构</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="hiro" />
+<meta name="author" content="王方圆" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-	     margin-bottom: .2em; }
-  .subtitle { text-align: center;
-	      font-size: medium;
-	      font-weight: bold;
-	      margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-	    padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: auto;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-	displayAlign: "center",
-	displayIndent: "0em",
+		MathJax.Hub.Config({
+				displayAlign: "center",
+				displayIndent: "0em",
 
-	"HTML-CSS": { scale: 100,
-			linebreaks: { automatic: "false" },
-			webFont: "TeX"
-		       },
-	SVG: {scale: 100,
-	      linebreaks: { automatic: "false" },
-	      font: "TeX"},
-	NativeMML: {scale: 100},
-	TeX: { equationNumbers: {autoNumber: "AMS"},
-	       MultLineWidth: "85%",
-	       TagSide: "right",
-	       TagIndent: ".8em"
-	     }
+				"HTML-CSS": { scale: 100,
+												linebreaks: { automatic: "false" },
+												webFont: "TeX"
+											 },
+				SVG: {scale: 100,
+							linebreaks: { automatic: "false" },
+							font: "TeX"},
+				NativeMML: {scale: 100},
+				TeX: { equationNumbers: {autoNumber: "AMS"},
+							 MultLineWidth: "85%",
+							 TagSide: "right",
+							 TagIndent: ".8em"
+						 }
 });
 </script>
 <script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">数据结构</h1>
 
-<div id="outline-container-org307f25d" class="outline-2">
-<h2 id="org307f25d"><span class="section-number-2">1</span> 基础知识点</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org488cf06" class="outline-2">
+<h2 id="org488cf06">基础知识点</h2>
+<div class="outline-text-2" id="text-org488cf06">
 <ul class="org-ul">
 <li>数据元素 数据项 学生记录是一个数据元素，一个学生记录由多个数据项组成</li>
 <li>数据类型有：原子类型、结构类型、抽象数据类型（数据对象、数据关系、基本操作）</li>
@@ -282,9 +258,9 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org1e63626" class="outline-2">
-<h2 id="org1e63626"><span class="section-number-2">2</span> 线性表（逻辑结构）</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org6352ebf" class="outline-2">
+<h2 id="org6352ebf">线性表（逻辑结构）</h2>
+<div class="outline-text-2" id="text-org6352ebf">
 <ul class="org-ul">
 <li>顺序表：线性表的顺序存储</li>
 <li>单链表：线性表的链式存储（非随机存取）</li>
@@ -298,9 +274,9 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-orgda810d8" class="outline-2">
-<h2 id="orgda810d8"><span class="section-number-2">3</span> 栈（逻辑结构）</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org128ee8c" class="outline-2">
+<h2 id="org128ee8c">栈（逻辑结构）</h2>
+<div class="outline-text-2" id="text-org128ee8c">
 <ul class="org-ul">
 <li>只能一端插入、删除的线性表</li>
 <li>共享栈 为了有效的利用存储空间，让两个栈共享一个存储空间；对存储效率没有影响</li>
@@ -312,9 +288,9 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org0d92fa0" class="outline-2">
-<h2 id="org0d92fa0"><span class="section-number-2">4</span> 队列</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org794172d" class="outline-2">
+<h2 id="org794172d">队列</h2>
+<div class="outline-text-2" id="text-org794172d">
 <ul class="org-ul">
 <li>只允许在表的一端插入，另一端删除</li>
 <li>队列操作 rear 进，front 出（rear 中不存放元素）
@@ -345,9 +321,9 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-orge1e5143" class="outline-2">
-<h2 id="orge1e5143"><span class="section-number-2">5</span> 树与二叉树</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-org19bbb31" class="outline-2">
+<h2 id="org19bbb31">树与二叉树</h2>
+<div class="outline-text-2" id="text-org19bbb31">
 <ul class="org-ul">
 <li>结点的度 一个结点的子结点的个数</li>
 <li>树的度 一棵树中结点的最大度数</li>
@@ -389,9 +365,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-orgb8e1ae9" class="outline-2">
-<h2 id="orgb8e1ae9"><span class="section-number-2">6</span> 图</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-org3882c72" class="outline-2">
+<h2 id="org3882c72">图</h2>
+<div class="outline-text-2" id="text-org3882c72">
 <ul class="org-ul">
 <li>表可以是空表，树可以是空树，但图不可以是空图（不能没有一个顶点）</li>
 <li>简单图 1.不存在重复边 2.不存在到自身的边</li>
@@ -440,9 +416,9 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org2d8d6b4" class="outline-2">
-<h2 id="org2d8d6b4"><span class="section-number-2">7</span> 查找</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-org8a47463" class="outline-2">
+<h2 id="org8a47463">查找</h2>
+<div class="outline-text-2" id="text-org8a47463">
 <ul class="org-ul">
 <li>静态查找表 不做插入、删除操作的表</li>
 <li><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
@@ -536,9 +512,9 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org4a480c2" class="outline-2">
-<h2 id="org4a480c2"><span class="section-number-2">8</span> 排序</h2>
-<div class="outline-text-2" id="text-8">
+<div id="outline-container-org77016d9" class="outline-2">
+<h2 id="org77016d9">排序</h2>
+<div class="outline-text-2" id="text-org77016d9">
 <ul class="org-ul">
 <li><table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
@@ -658,22 +634,22 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org1b6690f" class="outline-2">
-<h2 id="org1b6690f"><span class="section-number-2">9</span> 伪代码（C）</h2>
-<div class="outline-text-2" id="text-9">
+<div id="outline-container-org28020c0" class="outline-2">
+<h2 id="org28020c0">伪代码（C）</h2>
+<div class="outline-text-2" id="text-org28020c0">
 </div>
-<div id="outline-container-org3d4f5c0" class="outline-3">
-<h3 id="org3d4f5c0"><span class="section-number-3">9.1</span> 代码常识</h3>
-<div class="outline-text-3" id="text-9-1">
+<div id="outline-container-orgb2bb6ee" class="outline-3">
+<h3 id="orgb2bb6ee">代码常识</h3>
+<div class="outline-text-3" id="text-orgb2bb6ee">
 <ul class="org-ul">
 <li>指针 存储数据所在位置，地址</li>
 <li>引用 数据</li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org0448b40" class="outline-3">
-<h3 id="org0448b40"><span class="section-number-3">9.2</span> 线性表</h3>
-<div class="outline-text-3" id="text-9-2">
+<div id="outline-container-org452e9e7" class="outline-3">
+<h3 id="org452e9e7">线性表</h3>
+<div class="outline-text-3" id="text-org452e9e7">
 <ul class="org-ul">
 <li>线性表中的元素是从1开始的，而数组中的顺序是从0开始的</li>
 <li><p>
@@ -682,8 +658,8 @@ for the JavaScript code in this tag.
 <div class="org-src-container">
 <pre class="src src-c">#define MaxSize 50
 typedef struct {
-  ElemType data[MaxSize];
-  int length;
+	ElemType data[MaxSize];
+	int length;
 } SqList;
 </pre>
 </div></li>
@@ -693,9 +669,9 @@ typedef struct {
 <div class="org-src-container">
 <pre class="src src-c">#define InitSize 20
 typedef struct {
-  // 指针
-  ElemType *data;
-  int MaxSize, length;
+	// 指针
+	ElemType *data;
+	int MaxSize, length;
 } SeqList;
 // 动态分配
 L.data = (ElemType) malloc(sizeof(ElemType) *InitSize);
@@ -708,18 +684,18 @@ L.data = new ElemType[InitSize]
 </p>
 <div class="org-src-container">
 <pre class="src src-C">bool ListInsert(SqList &amp;L, int i, ElemType e) {
-  // 将元素e插入到L的第i个位置；i从1开始
-  if (i &lt; 1 || i &gt; L.length + 1)
-    return false;
-  if (L.length &gt;= MaxSize)
-    return false;
-  // 后移
-  for (int j=L.length; j&gt;=i; j--) {
-    L.data[j] = L.data[j-1];
-  }
-  L.data[i-1] = e;
-  L.length ++;
-  return true;
+	// 将元素e插入到L的第i个位置；i从1开始
+	if (i &lt; 1 || i &gt; L.length + 1)
+		return false;
+	if (L.length &gt;= MaxSize)
+		return false;
+	// 后移
+	for (int j=L.length; j&gt;=i; j--) {
+		L.data[j] = L.data[j-1];
+	}
+	L.data[i-1] = e;
+	L.length ++;
+	return true;
 }
 </pre>
 </div></li>
@@ -728,32 +704,32 @@ L.data = new ElemType[InitSize]
 </p>
 <div class="org-src-container">
 <pre class="src src-C">bool ListDelete(SqList &amp;L, int i, ElemType &amp;e) {
-  // 将L中第i个元素删除，赋值给e
-  if (i &lt; 1 || i &gt; L.length)
-    return false;
-  e = L.data[i-1];
-  // 前移
-  for (int j=i; j&lt;L.length; j++)
-    L.data[j-1] = L.data[j];
-  L.length --;
-  return false;
+	// 将L中第i个元素删除，赋值给e
+	if (i &lt; 1 || i &gt; L.length)
+		return false;
+	e = L.data[i-1];
+	// 前移
+	for (int j=i; j&lt;L.length; j++)
+		L.data[j-1] = L.data[j];
+	L.length --;
+	return false;
 }
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org270b6e5" class="outline-3">
-<h3 id="org270b6e5"><span class="section-number-3">9.3</span> 单链表</h3>
-<div class="outline-text-3" id="text-9-3">
+<div id="outline-container-org5f400a1" class="outline-3">
+<h3 id="org5f400a1">单链表</h3>
+<div class="outline-text-3" id="text-org5f400a1">
 <ul class="org-ul">
 <li><p>
 结点定义
 </p>
 <div class="org-src-container">
 <pre class="src src-C">typedef struct LNode {
-  ElemType data;
-  struct LNode *next;
+	ElemType data;
+	struct LNode *next;
 } LNode, *LinkedList;
 </pre>
 </div></li>
@@ -762,19 +738,19 @@ L.data = new ElemType[InitSize]
 </p>
 <div class="org-src-container">
 <pre class="src src-C">LinkedList createList1(LinkList &amp;L) {
-  // 带头结点的单链表
-  LNode *s; int x;
-  L = (LinkedList)malloc(sizeof(LNode));
-  L -&gt; next = null;
-  scanf("%d", &amp;x);
-  while (x != 9999) {
-    s = (LNode*)malloc(sizeof(LNode));
-    s -&gt; data = x;
-    s -&gt; next = L -&gt; next;
-    L -&gt; next = s;
-    scanf("%d", &amp;x);
-  }
-  return L;
+	// 带头结点的单链表
+	LNode *s; int x;
+	L = (LinkedList)malloc(sizeof(LNode));
+	L -&gt; next = null;
+	scanf("%d", &amp;x);
+	while (x != 9999) {
+		s = (LNode*)malloc(sizeof(LNode));
+		s -&gt; data = x;
+		s -&gt; next = L -&gt; next;
+		L -&gt; next = s;
+		scanf("%d", &amp;x);
+	}
+	return L;
 }
 </pre>
 </div></li>
@@ -783,20 +759,20 @@ L.data = new ElemType[InitSize]
 </p>
 <div class="org-src-container">
 <pre class="src src-C">LinkedList createList2(LinkedList &amp;L) {
-  int x;
-  // malloc 分配出来的是指针类型
-  L = (LinkedList)malloc(sizeof(LNode));
-  LNode *s, *r = L;
-  scanf("%s", x);
-  while(x != 9999) {
-    s = (LNode*)malloc(sizeof(LNode));
-    s -&gt; data = x;
-    r -&gt; next = s;
-    r = s;
-    scanf("%d", x);
-  }
-  r -&gt; next = NULL;
-  return r;
+	int x;
+	// malloc 分配出来的是指针类型
+	L = (LinkedList)malloc(sizeof(LNode));
+	LNode *s, *r = L;
+	scanf("%s", x);
+	while(x != 9999) {
+		s = (LNode*)malloc(sizeof(LNode));
+		s -&gt; data = x;
+		r -&gt; next = s;
+		r = s;
+		scanf("%d", x);
+	}
+	r -&gt; next = NULL;
+	return r;
 }
 </pre>
 </div></li>
@@ -805,8 +781,8 @@ L.data = new ElemType[InitSize]
 </p>
 <div class="org-src-container">
 <pre class="src src-C">typedef struct DNode {
-  ElemType data;
-  Struct DNode *prior, *next;
+	ElemType data;
+	Struct DNode *prior, *next;
 } DNode, *DLinkList;
 </pre>
 </div></li>
@@ -816,17 +792,17 @@ L.data = new ElemType[InitSize]
 <div class="org-src-container">
 <pre class="src src-C">#define MaxSize 50
 typedef struct {
-  ElemType data;
-  int next;
+	ElemType data;
+	int next;
 } SLinkList[MaxSize];
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orga6bfadc" class="outline-3">
-<h3 id="orga6bfadc"><span class="section-number-3">9.4</span> 栈</h3>
-<div class="outline-text-3" id="text-9-4">
+<div id="outline-container-org174ad1a" class="outline-3">
+<h3 id="org174ad1a">栈</h3>
+<div class="outline-text-3" id="text-org174ad1a">
 <ul class="org-ul">
 <li><p>
 顺序栈（顺序存储）
@@ -834,17 +810,17 @@ typedef struct {
 <div class="org-src-container">
 <pre class="src src-C">#define MaxSize 50
 typedef struct {
-  ElemType data;
-  int top;
+	ElemType data;
+	int top;
 } SqStack;
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgbb23503" class="outline-3">
-<h3 id="orgbb23503"><span class="section-number-3">9.5</span> 队列</h3>
-<div class="outline-text-3" id="text-9-5">
+<div id="outline-container-org93b5c7b" class="outline-3">
+<h3 id="org93b5c7b">队列</h3>
+<div class="outline-text-3" id="text-org93b5c7b">
 <ul class="org-ul">
 <li><p>
 顺序队列
@@ -852,28 +828,28 @@ typedef struct {
 <div class="org-src-container">
 <pre class="src src-C">#define MaxSize 50
 typedef struct {
-  ElemType data;
-  int front, rear;
+	ElemType data;
+	int front, rear;
 } SqQueue;
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-orgea17281" class="outline-3">
-<h3 id="orgea17281"><span class="section-number-3">9.6</span> 二叉树</h3>
-<div class="outline-text-3" id="text-9-6">
+<div id="outline-container-orgb71af2e" class="outline-3">
+<h3 id="orgb71af2e">二叉树</h3>
+<div class="outline-text-3" id="text-orgb71af2e">
 <ul class="org-ul">
 <li><p>
 先序遍历
 </p>
 <div class="org-src-container">
 <pre class="src src-C">void PreOrder(BiTree T) {
-  if (T != NULL) {
-    visit(T);
-    PreOrder(T -&gt; lchild);
-    PreOrder(T -&gt; rchild);
-  }
+	if (T != NULL) {
+		visit(T);
+		PreOrder(T -&gt; lchild);
+		PreOrder(T -&gt; rchild);
+	}
 }
 </pre>
 </div></li>
@@ -882,11 +858,11 @@ typedef struct {
 </p>
 <div class="org-src-container">
 <pre class="src src-C">void InOrder(BiTree T) {
-  if (T != NULL) {
-    inOrder(T -&gt; lchild);
-    visit(T);
-    inOrder(T -&gt; rchild);
-  }
+	if (T != NULL) {
+		inOrder(T -&gt; lchild);
+		visit(T);
+		inOrder(T -&gt; rchild);
+	}
 }
 </pre>
 </div></li>
@@ -895,11 +871,11 @@ typedef struct {
 </p>
 <div class="org-src-container">
 <pre class="src src-C">void PostOrder(BiTree T) {
-  if (T != NULL) {
-    PostOrder(T -&gt; lchild);
-    PostOrder(T -&gt; rchild);
-    visit(T);
-  }
+	if (T != NULL) {
+		PostOrder(T -&gt; lchild);
+		PostOrder(T -&gt; rchild);
+		visit(T);
+	}
 }
 </pre>
 </div></li>
@@ -908,19 +884,19 @@ typedef struct {
 </p>
 <div class="org-src-container">
 <pre class="src src-C">void InOrder2(BiTree T) {
-  // 需要借助栈
-  InitStack(S);
-  BiTree p = T;
-  while (p || !IsEmpty(S)) {
-    if (p) {
-      Push(S, p);
-      p = p -&gt; lchild;
-    } else {
-      Pop(S, p);
-      visit(p);
-      p = p -&gt; rchild;
-    }
-  }
+	// 需要借助栈
+	InitStack(S);
+	BiTree p = T;
+	while (p || !IsEmpty(S)) {
+		if (p) {
+			Push(S, p);
+			p = p -&gt; lchild;
+		} else {
+			Pop(S, p);
+			visit(p);
+			p = p -&gt; rchild;
+		}
+	}
 }
 </pre>
 </div></li>
@@ -929,249 +905,249 @@ typedef struct {
 </p>
 <div class="org-src-container">
 <pre class="src src-C">void PreOrder2(BiTree T) {
-  InitStack(S);
-  BiTree p = T;
-  while (p || IsEmpty(S)) {
-    if (p) {
-      visit(p);
-      Push(p);
-      p = p -&gt; lchild;
-    } else {
-      Pop(p);
-      p = p -&gt; rchild;
-    }
-  }
+	InitStack(S);
+	BiTree p = T;
+	while (p || IsEmpty(S)) {
+		if (p) {
+			visit(p);
+			Push(p);
+			p = p -&gt; lchild;
+		} else {
+			Pop(p);
+			p = p -&gt; rchild;
+		}
+	}
 }
 </pre>
 </div></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org99310ed" class="outline-3">
-<h3 id="org99310ed"><span class="section-number-3">9.7</span> 顺序查找</h3>
-<div class="outline-text-3" id="text-9-7">
+<div id="outline-container-orged8ae82" class="outline-3">
+<h3 id="orged8ae82">顺序查找</h3>
+<div class="outline-text-3" id="text-orged8ae82">
 <div class="org-src-container">
 <pre class="src src-c">typedef struct {
-  ElemType *elem;
-  int TableInt;
+	ElemType *elem;
+	int TableInt;
 } SSTable;
 
 int Search_Seq(SSTable ST, ElemType key) {
-  // 哨兵存放查找值
-  ST.elem[0] = key;
-  for (i=ST.TableLen; ST.elem[i]!=key; --i)
-    // 从后往前找，找到或者到ST[0] 退出
-    return i;
+	// 哨兵存放查找值
+	ST.elem[0] = key;
+	for (i=ST.TableLen; ST.elem[i]!=key; --i)
+		// 从后往前找，找到或者到ST[0] 退出
+		return i;
 }
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-orgde94dfd" class="outline-3">
-<h3 id="orgde94dfd"><span class="section-number-3">9.8</span> 折半查找</h3>
-<div class="outline-text-3" id="text-9-8">
+<div id="outline-container-orgced5c91" class="outline-3">
+<h3 id="orgced5c91">折半查找</h3>
+<div class="outline-text-3" id="text-orgced5c91">
 <div class="org-src-container">
 <pre class="src src-c">int Binary_Search(SeqList L, ElemType key) {
-  int low = 0, high = L.TableLen-1, mid;
-  while (low &lt; high) {
-    mid = (low + high) / 2;
-    if (L.elem[mid] == key)
-      return mid;
-    else if (L.elem[mid] &gt; key)
-      high = mid - 1;
-    else
-      low = mid + 1;
-  }
-  return -1;
+	int low = 0, high = L.TableLen-1, mid;
+	while (low &lt; high) {
+		mid = (low + high) / 2;
+		if (L.elem[mid] == key)
+			return mid;
+		else if (L.elem[mid] &gt; key)
+			high = mid - 1;
+		else
+			low = mid + 1;
+	}
+	return -1;
 }
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org67749e0" class="outline-3">
-<h3 id="org67749e0"><span class="section-number-3">9.9</span> 直接插入排序</h3>
-<div class="outline-text-3" id="text-9-9">
+<div id="outline-container-orgbaf56a3" class="outline-3">
+<h3 id="orgbaf56a3">直接插入排序</h3>
+<div class="outline-text-3" id="text-orgbaf56a3">
 <div class="org-src-container">
 <pre class="src src-c">void InsertSort(ElemType A[], int n) {
-  int i, j;
-  for (i=2; i&lt;=n; i++) {
-    if (A[i].key &lt; A[i-1].key) {
-      A[0] = A[i];
-      for (j=i-1; A[0].key&lt;A[j].key; --j) {
+	int i, j;
+	for (i=2; i&lt;=n; i++) {
+		if (A[i].key &lt; A[i-1].key) {
+			A[0] = A[i];
+			for (j=i-1; A[0].key&lt;A[j].key; --j) {
 	// 向后挪位
 	A[j+1] = A[j];
-      }
-      A[j+1] = A[0];
-    }
-  }
+			}
+			A[j+1] = A[0];
+		}
+	}
 }
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org319f8a4" class="outline-3">
-<h3 id="org319f8a4"><span class="section-number-3">9.10</span> 折半插入排序</h3>
-<div class="outline-text-3" id="text-9-10">
+<div id="outline-container-orge8f02f9" class="outline-3">
+<h3 id="orge8f02f9">折半插入排序</h3>
+<div class="outline-text-3" id="text-orge8f02f9">
 <div class="org-src-container">
 <pre class="src src-c">void InserSort2(ElemType A[], int n) {
-  int i, j, low, high, mid;
-  for (i=2; i&lt;=n; i++) {
-    A[0] = A[i];
-    low = 1; high = i-1;
-    while (low &lt;= high) {
-      mid = (low + high) / 2;
-      if (A[mid].key &gt; A[0].key)
+	int i, j, low, high, mid;
+	for (i=2; i&lt;=n; i++) {
+		A[0] = A[i];
+		low = 1; high = i-1;
+		while (low &lt;= high) {
+			mid = (low + high) / 2;
+			if (A[mid].key &gt; A[0].key)
 	high = mid-1;
-      else if (A[mid].key &lt; A[0].key)
+			else if (A[mid].key &lt; A[0].key)
 	high = mid + 1;
-    }
-    for (j=i-1; j&gt;=high+1; --j) {
-      A[j+1] = A[j];
-    }
-    A[high+1] = A[0];
-  }
+		}
+		for (j=i-1; j&gt;=high+1; --j) {
+			A[j+1] = A[j];
+		}
+		A[high+1] = A[0];
+	}
 }
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org51ac152" class="outline-3">
-<h3 id="org51ac152"><span class="section-number-3">9.11</span> 希尔排序</h3>
-<div class="outline-text-3" id="text-9-11">
+<div id="outline-container-org507d545" class="outline-3">
+<h3 id="org507d545">希尔排序</h3>
+<div class="outline-text-3" id="text-org507d545">
 <div class="org-src-container">
 <pre class="src src-c">void ShellSort(ElemType A[], int n) {
-  for (dk=n/2; dk&gt;=1; dk=dk/2) {
-    for (i=dk+1; i&lt;=n; ++i) {
-      if (A[i].key &lt; A[i-dk].key) {
+	for (dk=n/2; dk&gt;=1; dk=dk/2) {
+		for (i=dk+1; i&lt;=n; ++i) {
+			if (A[i].key &lt; A[i-dk].key) {
 	A[0] = A[i];
 	for (j=i-dk; j&gt;0 &amp;&amp; A[0].key&lt;A[j].key; j-=dk) {
-	  A[j+dk] = A[j];
+		A[j+dk] = A[j];
 	}
 	A[j+dl] = A[0];
-      }
-    }
-  }
+			}
+		}
+	}
 }
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org3e9af47" class="outline-3">
-<h3 id="org3e9af47"><span class="section-number-3">9.12</span> 冒泡排序</h3>
-<div class="outline-text-3" id="text-9-12">
+<div id="outline-container-org2b54255" class="outline-3">
+<h3 id="org2b54255">冒泡排序</h3>
+<div class="outline-text-3" id="text-org2b54255">
 <div class="org-src-container">
 <pre class="src src-c">void BubbleSort(ElemType A[], int n) {
-  for (i=0; i&lt;n-1; i++) {
-    flag = false;
-    for (j=n-1; j&gt;i; i--) {
-      if (A[j-1].key &gt; A[j].key) {
-      // 可以先记住这个位置，最后找到最小的元素再交换
+	for (i=0; i&lt;n-1; i++) {
+		flag = false;
+		for (j=n-1; j&gt;i; i--) {
+			if (A[j-1].key &gt; A[j].key) {
+			// 可以先记住这个位置，最后找到最小的元素再交换
 	swap(A[j-1], A[j]);
 	flag = true;
-      }
-      if (flag == false) {
+			}
+			if (flag == false) {
 	return;
-      }
-    }
-  }
+			}
+		}
+	}
 }
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org65252ed" class="outline-3">
-<h3 id="org65252ed"><span class="section-number-3">9.13</span> 快速排序</h3>
-<div class="outline-text-3" id="text-9-13">
+<div id="outline-container-org552a195" class="outline-3">
+<h3 id="org552a195">快速排序</h3>
+<div class="outline-text-3" id="text-org552a195">
 <div class="org-src-container">
 <pre class="src src-c">void QuickSort(ElemType A[], int low, int high) {
-  if (low &lt; high) {
-    int pivotpos = Partition(A, low, high);
-    QuickSort(A, low, pivotpos-1);
-    QuickSort(A, pivotpos+1, high);
-  }
+	if (low &lt; high) {
+		int pivotpos = Partition(A, low, high);
+		QuickSort(A, low, pivotpos-1);
+		QuickSort(A, pivotpos+1, high);
+	}
 }
 
 int Partition(ElemType A[], int low, int high) {
-  ElemType pivot = A[low];
-  while (low &lt; high) {
-    while (low&lt;high &amp;&amp; A[high]&gt;=pivot) --high;
-    A[low] = A[high];
-    while (low&lt;high &amp;&amp; A[low]&lt;=pivot) ++low;
-    A[high] = A[low];
-  }
-  A[low] = pivot;
-  return low;
+	ElemType pivot = A[low];
+	while (low &lt; high) {
+		while (low&lt;high &amp;&amp; A[high]&gt;=pivot) --high;
+		A[low] = A[high];
+		while (low&lt;high &amp;&amp; A[low]&lt;=pivot) ++low;
+		A[high] = A[low];
+	}
+	A[low] = pivot;
+	return low;
 }
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgcc1ba1e" class="outline-3">
-<h3 id="orgcc1ba1e"><span class="section-number-3">9.14</span> 选择排序</h3>
-<div class="outline-text-3" id="text-9-14">
+<div id="outline-container-orgbdff284" class="outline-3">
+<h3 id="orgbdff284">选择排序</h3>
+<div class="outline-text-3" id="text-orgbdff284">
 <div class="org-src-container">
 <pre class="src src-c">void SelectSort(ElemType A[], int n) {
-  for (i=0; i&lt;n-1; i++) {
-    min = i;
-    for (j=i+1; j&lt;n; j++) {
-      if (A[j] &lt; A[min]) min=j;
-    }
-    if (min != i)
-      swap(A[i], A[min]);
-  }
+	for (i=0; i&lt;n-1; i++) {
+		min = i;
+		for (j=i+1; j&lt;n; j++) {
+			if (A[j] &lt; A[min]) min=j;
+		}
+		if (min != i)
+			swap(A[i], A[min]);
+	}
 }
 </pre>
 </div>
 </div>
 </div>
-<div id="outline-container-org6234822" class="outline-3">
-<h3 id="org6234822"><span class="section-number-3">9.15</span> 堆排序</h3>
-<div class="outline-text-3" id="text-9-15">
+<div id="outline-container-orgc4b0d24" class="outline-3">
+<h3 id="orgc4b0d24">堆排序</h3>
+<div class="outline-text-3" id="text-orgc4b0d24">
 <div class="org-src-container">
 <pre class="src src-c">// 建立大根堆
 void BuildMaxHeap(ElemType A[], int len) {
-  for (int i=len/2; i&gt;0; i--) {
-    AdjustDown(A, i, len);
-  }
+	for (int i=len/2; i&gt;0; i--) {
+		AdjustDown(A, i, len);
+	}
 }
 
 void AdjustDown(ElemType A[], int k, int len) {
-  // 自上向下
-  A[0] = A[k];
-  for (int i=2*k; i&lt;len; i*=2) {
-    if (i&lt;len &amp;&amp; A[i]&lt;A[i+1])
-      i ++;
-    if (A[0] &gt; A[i])
-      break;
-    else {
-      A[k] = A[i];
-      k = i;
-    }
-  }
-  A[k] = A[0];
+	// 自上向下
+	A[0] = A[k];
+	for (int i=2*k; i&lt;len; i*=2) {
+		if (i&lt;len &amp;&amp; A[i]&lt;A[i+1])
+			i ++;
+		if (A[0] &gt; A[i])
+			break;
+		else {
+			A[k] = A[i];
+			k = i;
+		}
+	}
+	A[k] = A[0];
 }
 
 void AdjustUp(ElemType A[], int k) {
-  // 自下向上
-  A[0] = A[k];
-  int i = k/2;
-  while (i&lt;0 &amp;&amp; A[i]&lt;A[0]) {
-    A[k] = A[i];
-    k = i;
-    i = k / 2;
-  }
-  A[k] = A[0];
+	// 自下向上
+	A[0] = A[k];
+	int i = k/2;
+	while (i&lt;0 &amp;&amp; A[i]&lt;A[0]) {
+		A[k] = A[i];
+		k = i;
+		i = k / 2;
+	}
+	A[k] = A[0];
 }
 
 void HeapSort(ElemType A[], int len) {
-  BuildMaxHeap(A, len);
-  for (int i=len; i&gt;1; i--) {
-    // 取最大值
-    Swap(A[i], A[l]);
-    // 将 n-1 个元素取最大值
-    AdjustDown(A, 1, i-1)
-  }
+	BuildMaxHeap(A, len);
+	for (int i=len; i&gt;1; i--) {
+		// 取最大值
+		Swap(A[i], A[l]);
+		// 将 n-1 个元素取最大值
+		AdjustDown(A, 1, i-1)
+	}
 }
 </pre>
 </div>
@@ -1180,8 +1156,8 @@ void HeapSort(ElemType A[], int len) {
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-01-14 二 17:14. Created by hiro.</p>
-	    <script src="https://utteranc.es/client.js"
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
+			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
 	theme="github-light"

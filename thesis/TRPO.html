@@ -3,265 +3,241 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-05-10 日 10:09 -->
+<!-- 2021-01-04 Mon 19:30 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>置信空间策略优化</title>
 <meta name="generator" content="Org mode" />
-<meta name="author" content="hiro" />
+<meta name="author" content="王方圆" />
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
-  .title  { text-align: center;
-	     margin-bottom: .2em; }
-  .subtitle { text-align: center;
-	      font-size: medium;
-	      font-weight: bold;
-	      margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-	    padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: visible;
-    padding-top: 1.2em;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    background-color: white;
-    top: -10px;
-    right: 10px;
-    padding: 3px;
-    border: 1px solid black;
-  }
-  pre.src:hover:before { display: inline;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+	.title  { text-align: center;
+						 margin-bottom: .2em; }
+	.subtitle { text-align: center;
+							font-size: medium;
+							font-weight: bold;
+							margin-top:0; }
+	.todo   { font-family: monospace; color: red; }
+	.done   { font-family: monospace; color: green; }
+	.priority { font-family: monospace; color: orange; }
+	.tag    { background-color: #eee; font-family: monospace;
+						padding: 2px; font-size: 80%; font-weight: normal; }
+	.timestamp { color: #bebebe; }
+	.timestamp-kwd { color: #5f9ea0; }
+	.org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+	.org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+	.org-center { margin-left: auto; margin-right: auto; text-align: center; }
+	.underline { text-decoration: underline; }
+	#postamble p, #preamble p { font-size: 90%; margin: .2em; }
+	p.verse { margin-left: 3%; }
+	pre {
+		border: 1px solid #ccc;
+		box-shadow: 3px 3px 3px #eee;
+		padding: 8pt;
+		font-family: monospace;
+		overflow: auto;
+		margin: 1.2em;
+	}
+	pre.src {
+		position: relative;
+		overflow: auto;
+		padding-top: 1.2em;
+	}
+	pre.src:before {
+		display: none;
+		position: absolute;
+		background-color: white;
+		top: -10px;
+		right: 10px;
+		padding: 3px;
+		border: 1px solid black;
+	}
+	pre.src:hover:before { display: inline;}
+	/* Languages per Org manual */
+	pre.src-asymptote:before { content: 'Asymptote'; }
+	pre.src-awk:before { content: 'Awk'; }
+	pre.src-C:before { content: 'C'; }
+	/* pre.src-C++ doesn't work in CSS */
+	pre.src-clojure:before { content: 'Clojure'; }
+	pre.src-css:before { content: 'CSS'; }
+	pre.src-D:before { content: 'D'; }
+	pre.src-ditaa:before { content: 'ditaa'; }
+	pre.src-dot:before { content: 'Graphviz'; }
+	pre.src-calc:before { content: 'Emacs Calc'; }
+	pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+	pre.src-fortran:before { content: 'Fortran'; }
+	pre.src-gnuplot:before { content: 'gnuplot'; }
+	pre.src-haskell:before { content: 'Haskell'; }
+	pre.src-hledger:before { content: 'hledger'; }
+	pre.src-java:before { content: 'Java'; }
+	pre.src-js:before { content: 'Javascript'; }
+	pre.src-latex:before { content: 'LaTeX'; }
+	pre.src-ledger:before { content: 'Ledger'; }
+	pre.src-lisp:before { content: 'Lisp'; }
+	pre.src-lilypond:before { content: 'Lilypond'; }
+	pre.src-lua:before { content: 'Lua'; }
+	pre.src-matlab:before { content: 'MATLAB'; }
+	pre.src-mscgen:before { content: 'Mscgen'; }
+	pre.src-ocaml:before { content: 'Objective Caml'; }
+	pre.src-octave:before { content: 'Octave'; }
+	pre.src-org:before { content: 'Org mode'; }
+	pre.src-oz:before { content: 'OZ'; }
+	pre.src-plantuml:before { content: 'Plantuml'; }
+	pre.src-processing:before { content: 'Processing.js'; }
+	pre.src-python:before { content: 'Python'; }
+	pre.src-R:before { content: 'R'; }
+	pre.src-ruby:before { content: 'Ruby'; }
+	pre.src-sass:before { content: 'Sass'; }
+	pre.src-scheme:before { content: 'Scheme'; }
+	pre.src-screen:before { content: 'Gnu Screen'; }
+	pre.src-sed:before { content: 'Sed'; }
+	pre.src-sh:before { content: 'shell'; }
+	pre.src-sql:before { content: 'SQL'; }
+	pre.src-sqlite:before { content: 'SQLite'; }
+	/* additional languages in org.el's org-babel-load-languages alist */
+	pre.src-forth:before { content: 'Forth'; }
+	pre.src-io:before { content: 'IO'; }
+	pre.src-J:before { content: 'J'; }
+	pre.src-makefile:before { content: 'Makefile'; }
+	pre.src-maxima:before { content: 'Maxima'; }
+	pre.src-perl:before { content: 'Perl'; }
+	pre.src-picolisp:before { content: 'Pico Lisp'; }
+	pre.src-scala:before { content: 'Scala'; }
+	pre.src-shell:before { content: 'Shell Script'; }
+	pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+	/* additional language identifiers per "defun org-babel-execute"
+			 in ob-*.el */
+	pre.src-cpp:before  { content: 'C++'; }
+	pre.src-abc:before  { content: 'ABC'; }
+	pre.src-coq:before  { content: 'Coq'; }
+	pre.src-groovy:before  { content: 'Groovy'; }
+	/* additional language identifiers from org-babel-shell-names in
+		 ob-shell.el: ob-shell is the only babel language using a lambda to put
+		 the execution function name together. */
+	pre.src-bash:before  { content: 'bash'; }
+	pre.src-csh:before  { content: 'csh'; }
+	pre.src-ash:before  { content: 'ash'; }
+	pre.src-dash:before  { content: 'dash'; }
+	pre.src-ksh:before  { content: 'ksh'; }
+	pre.src-mksh:before  { content: 'mksh'; }
+	pre.src-posh:before  { content: 'posh'; }
+	/* Additional Emacs modes also supported by the LaTeX listings package */
+	pre.src-ada:before { content: 'Ada'; }
+	pre.src-asm:before { content: 'Assembler'; }
+	pre.src-caml:before { content: 'Caml'; }
+	pre.src-delphi:before { content: 'Delphi'; }
+	pre.src-html:before { content: 'HTML'; }
+	pre.src-idl:before { content: 'IDL'; }
+	pre.src-mercury:before { content: 'Mercury'; }
+	pre.src-metapost:before { content: 'MetaPost'; }
+	pre.src-modula-2:before { content: 'Modula-2'; }
+	pre.src-pascal:before { content: 'Pascal'; }
+	pre.src-ps:before { content: 'PostScript'; }
+	pre.src-prolog:before { content: 'Prolog'; }
+	pre.src-simula:before { content: 'Simula'; }
+	pre.src-tcl:before { content: 'tcl'; }
+	pre.src-tex:before { content: 'TeX'; }
+	pre.src-plain-tex:before { content: 'Plain TeX'; }
+	pre.src-verilog:before { content: 'Verilog'; }
+	pre.src-vhdl:before { content: 'VHDL'; }
+	pre.src-xml:before { content: 'XML'; }
+	pre.src-nxml:before { content: 'XML'; }
+	/* add a generic configuration mode; LaTeX export needs an additional
+		 (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+	pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { width: 90%; }
-  /*]]>*/-->
+	table { border-collapse:collapse; }
+	caption.t-above { caption-side: top; }
+	caption.t-bottom { caption-side: bottom; }
+	td, th { vertical-align:top;  }
+	th.org-right  { text-align: center;  }
+	th.org-left   { text-align: center;   }
+	th.org-center { text-align: center; }
+	td.org-right  { text-align: right;  }
+	td.org-left   { text-align: left;   }
+	td.org-center { text-align: center; }
+	dt { font-weight: bold; }
+	.footpara { display: inline; }
+	.footdef  { margin-bottom: 1em; }
+	.figure { padding: 1em; }
+	.figure p { text-align: center; }
+	.equation-container {
+		display: table;
+		text-align: center;
+		width: 100%;
+	}
+	.equation {
+		vertical-align: middle;
+	}
+	.equation-label {
+		display: table-cell;
+		text-align: right;
+		vertical-align: middle;
+	}
+	.inlinetask {
+		padding: 10px;
+		border: 2px solid gray;
+		margin: 10px;
+		background: #ffffcc;
+	}
+	#org-div-home-and-up
+	 { text-align: right; font-size: 70%; white-space: nowrap; }
+	textarea { overflow-x: auto; }
+	.linenr { font-size: smaller }
+	.code-highlighted { background-color: #ffff00; }
+	.org-info-js_info-navigation { border-style: none; }
+	#org-info-js_console-label
+		{ font-size: 10px; font-weight: bold; white-space: nowrap; }
+	.org-info-js_search-highlight
+		{ background-color: #ffff00; color: #000000; font-weight: bold; }
+	.org-svg { width: 90%; }
+	/*]]>*/-->
 </style>
 <link rel="stylesheet" type="text/css" href="../css/xuchunyang.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-   var target = document.getElementById(id);
-   if(null != target) {
-     elem.cacheClassElem = elem.className;
-     elem.cacheClassTarget = target.className;
-     target.className = "code-highlighted";
-     elem.className   = "code-highlighted";
-   }
- }
- function CodeHighlightOff(elem, id)
- {
-   var target = document.getElementById(id);
-   if(elem.cacheClassElem)
-     elem.className = elem.cacheClassElem;
-   if(elem.cacheClassTarget)
-     target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 <script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-	displayAlign: "center",
-	displayIndent: "0em",
+		MathJax.Hub.Config({
+				displayAlign: "center",
+				displayIndent: "0em",
 
-	"HTML-CSS": { scale: 100,
-			linebreaks: { automatic: "false" },
-			webFont: "TeX"
-		       },
-	SVG: {scale: 100,
-	      linebreaks: { automatic: "false" },
-	      font: "TeX"},
-	NativeMML: {scale: 100},
-	TeX: { equationNumbers: {autoNumber: "AMS"},
-	       MultLineWidth: "85%",
-	       TagSide: "right",
-	       TagIndent: ".8em"
-	     }
+				"HTML-CSS": { scale: 100,
+												linebreaks: { automatic: "false" },
+												webFont: "TeX"
+											 },
+				SVG: {scale: 100,
+							linebreaks: { automatic: "false" },
+							font: "TeX"},
+				NativeMML: {scale: 100},
+				TeX: { equationNumbers: {autoNumber: "AMS"},
+							 MultLineWidth: "85%",
+							 TagSide: "right",
+							 TagIndent: ".8em"
+						 }
 });
 </script>
 <script type="text/javascript"
-	src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
+				src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"></script>
 </head>
 <body>
 <div id="content">
@@ -270,26 +246,26 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orged137ee">1. Introduction</a></li>
-<li><a href="#org874c685">2. Preliminaries</a></li>
-<li><a href="#orgf84416b">3. Monotonic Improvement Guarantee for General Stochastic Policies</a></li>
-<li><a href="#org27414dd">4. Optimization of Parameterized Policies</a></li>
-<li><a href="#org6d5f61f">5. Sample-Based Estimation of the Objective and Constraint</a>
+<li><a href="#org8a860dd">Introduction</a></li>
+<li><a href="#org7dd06b4">Preliminaries</a></li>
+<li><a href="#orgff21e9a">Monotonic Improvement Guarantee for General Stochastic Policies</a></li>
+<li><a href="#org1f4d2af">Optimization of Parameterized Policies</a></li>
+<li><a href="#orgaa4aa20">Sample-Based Estimation of the Objective and Constraint</a>
 <ul>
-<li><a href="#org50cc560">5.1. Importance Sampling</a></li>
-<li><a href="#org396344d">5.2. Single Path</a></li>
-<li><a href="#orgcd0582e">5.3. Vine</a></li>
+<li><a href="#orgce8eff0">Importance Sampling</a></li>
+<li><a href="#orgdd14e34">Single Path</a></li>
+<li><a href="#org027a2ee">Vine</a></li>
 </ul>
 </li>
-<li><a href="#org65273eb">6. Practical Algorithm</a></li>
-<li><a href="#orgb0733d4">7. Ref</a></li>
+<li><a href="#orgaef5cae">Practical Algorithm</a></li>
+<li><a href="#org3fcd919">Ref</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orged137ee" class="outline-2">
-<h2 id="orged137ee"><span class="section-number-2">1</span> Introduction</h2>
-<div class="outline-text-2" id="text-1">
+<div id="outline-container-org8a860dd" class="outline-2">
+<h2 id="org8a860dd">Introduction</h2>
+<div class="outline-text-2" id="text-org8a860dd">
 <p>
 大部分策略优化算法都可分为以下三类：
 </p>
@@ -305,9 +281,9 @@ for the JavaScript code in this tag.
 </div>
 </div>
 
-<div id="outline-container-org874c685" class="outline-2">
-<h2 id="org874c685"><span class="section-number-2">2</span> Preliminaries</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org7dd06b4" class="outline-2">
+<h2 id="org7dd06b4">Preliminaries</h2>
+<div class="outline-text-2" id="text-org7dd06b4">
 <ul class="org-ul">
 <li>MDP, \((\mathcal{S}, \mathcal{A}, \mathcal{P}, r, \rho_0, \gamma)\)</li>
 <li>\(\pi\)：随机策略</li>
@@ -421,9 +397,9 @@ L_{\pi_{\theta}_{old}}(\pi_{\theta}_{old}) &= \eta(\pi_{\theta_{old}})\\
 </div>
 </div>
 
-<div id="outline-container-orgf84416b" class="outline-2">
-<h2 id="orgf84416b"><span class="section-number-2">3</span> Monotonic Improvement Guarantee for General Stochastic Policies</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orgff21e9a" class="outline-2">
+<h2 id="orgff21e9a">Monotonic Improvement Guarantee for General Stochastic Policies</h2>
+<div class="outline-text-2" id="text-orgff21e9a">
 <p>
 上面推理已经确保了如何单调递增的更新策略，那么如何衡量\(\theta_{old}\)和\(\theta_{new}\)之间的距离呢？
 </p>
@@ -496,9 +472,9 @@ where \quad C = \frac{4\epsilon\gamma}{(1-\gamma)^2}
 </div>
 </div>
 
-<div id="outline-container-org27414dd" class="outline-2">
-<h2 id="org27414dd"><span class="section-number-2">4</span> Optimization of Parameterized Policies</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-org1f4d2af" class="outline-2">
+<h2 id="org1f4d2af">Optimization of Parameterized Policies</h2>
+<div class="outline-text-2" id="text-org1f4d2af">
 <p>
 以下讨论的策略\(\pi\)都是以向量\(\theta\)为参数的策略\(\pi_{\theta}\)。集中规约以下变量：
 </p>
@@ -552,9 +528,9 @@ maximize\limits_{\theta}[L_{\theta_{old}}(\theta) - CD_{KL}^{\max}(\theta_{old},
 </div>
 </div>
 
-<div id="outline-container-org6d5f61f" class="outline-2">
-<h2 id="org6d5f61f"><span class="section-number-2">5</span> Sample-Based Estimation of the Objective and Constraint</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-orgaa4aa20" class="outline-2">
+<h2 id="orgaa4aa20">Sample-Based Estimation of the Objective and Constraint</h2>
+<div class="outline-text-2" id="text-orgaa4aa20">
 <p>
 上一节提出了关于策略函数参数优化的问题，该问题优化了对预期总回报的估计，该估计受到每次更新时策略变化的约束。这一节提出如何使用 Monte Carlo Simulation 估计目标函数和约束条件。
 </p>
@@ -591,9 +567,9 @@ maximize\limits_{\theta}[L_{\theta_{old}}(\theta) - CD_{KL}^{\max}(\theta_{old},
 </p>
 </div>
 
-<div id="outline-container-org50cc560" class="outline-3">
-<h3 id="org50cc560"><span class="section-number-3">5.1</span> Importance Sampling</h3>
-<div class="outline-text-3" id="text-5-1">
+<div id="outline-container-orgce8eff0" class="outline-3">
+<h3 id="orgce8eff0">Importance Sampling</h3>
+<div class="outline-text-3" id="text-orgce8eff0">
 <p>
 重要性采样的思想是：从与原分布不同的另一个分布中取样，而对原先分布的性质进行估计。
 </p>
@@ -620,18 +596,18 @@ maximize\limits_{\theta}[L_{\theta_{old}}(\theta) - CD_{KL}^{\max}(\theta_{old},
 </div>
 </div>
 
-<div id="outline-container-org396344d" class="outline-3">
-<h3 id="org396344d"><span class="section-number-3">5.2</span> Single Path</h3>
-<div class="outline-text-3" id="text-5-2">
+<div id="outline-container-orgdd14e34" class="outline-3">
+<h3 id="orgdd14e34">Single Path</h3>
+<div class="outline-text-3" id="text-orgdd14e34">
 <p>
 使用策略\(\pi_{\theta_{old}}\)生成一些轨迹\(Trajectory: s_0, a_0, s_1, a_1, \cdots, s_{t-1}, a_{t-1}, s_{t}\)。可以看出，\(q(a \mid s) = \pi_{\theta_{old}}\)。\(Q_{\theta_{old}}(s, a)\)可以使用每个状态的衰减奖励值表示。策略梯度算法中的\(\mathbf{REINFORCE}\)。
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgcd0582e" class="outline-3">
-<h3 id="orgcd0582e"><span class="section-number-3">5.3</span> Vine</h3>
-<div class="outline-text-3" id="text-5-3">
+<div id="outline-container-org027a2ee" class="outline-3">
+<h3 id="org027a2ee">Vine</h3>
+<div class="outline-text-3" id="text-org027a2ee">
 <p>
 在这种采样方法中，首先取样\(s_0 \sim \rho_0\)，利用策略函数\(\pi_{\theta_i}\)生成一些轨迹，然后从这些轨迹中取样\(s_1, s_2, \cdots, s_N\)，将这个取样集合称为“Rollout set”。对于这个集合中的每个状态，根据动作概率函数取样动作，即：\(a_{n, k} \sim q(\cdot \mid s_n)\)，在实验中，发现采用\(q(\cdot \mid s_n) = \pi_{\theta_i}(\cdot \mid s_n)\)的动作概率函数，在连续运动的问题上效果很好。
 </p>
@@ -665,9 +641,9 @@ L_n(\theta) = \frac{\sum_{k=1}^{K}\frac{\pi_{\theta}(a_{n,k} \mid s_n)}{\pi_{\th
 </div>
 </div>
 
-<div id="outline-container-org65273eb" class="outline-2">
-<h2 id="org65273eb"><span class="section-number-2">6</span> Practical Algorithm</h2>
-<div class="outline-text-2" id="text-6">
+<div id="outline-container-orgaef5cae" class="outline-2">
+<h2 id="orgaef5cae">Practical Algorithm</h2>
+<div class="outline-text-2" id="text-orgaef5cae">
 <p>
 之前我们介绍了两种方法来进行策略优化，总结起来步骤如下：
 </p>
@@ -694,9 +670,9 @@ L_n(\theta) = \frac{\sum_{k=1}^{K}\frac{\pi_{\theta}(a_{n,k} \mid s_n)}{\pi_{\th
 
 
 
-<div id="outline-container-orgb0733d4" class="outline-2">
-<h2 id="orgb0733d4"><span class="section-number-2">7</span> Ref</h2>
-<div class="outline-text-2" id="text-7">
+<div id="outline-container-org3fcd919" class="outline-2">
+<h2 id="org3fcd919">Ref</h2>
+<div class="outline-text-2" id="text-org3fcd919">
 <ul class="org-ul">
 <li><a href="https://zhuanlan.zhihu.com/p/60257706">TRPO 论文推导</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/29918825">TRPO 和 PPO</a></li>
@@ -708,8 +684,8 @@ L_n(\theta) = \frac{\sum_{k=1}^{K}\frac{\pi_{\theta}(a_{n,k} \mid s_n)}{\pi_{\th
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="postamble">Last Updated 2020-05-09 六 08:54. Created by hiro.</p>
-	    <script src="https://utteranc.es/client.js"
+<p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
+			<script src="https://utteranc.es/client.js"
 	repo="nicehiro/nicehiro.github.io"
 	issue-term="pathname"
 	theme="github-light"

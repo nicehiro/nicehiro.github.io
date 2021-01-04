@@ -118,6 +118,15 @@ ul {
 		font-size: 1.0rem;
 }
 
+ul li {
+		display: list-item;
+		text-align: -webkit-match-parent;
+}
+
+ul li::marker {
+
+}
+
 .outline-text-2 p {
 		font-size: 16px;
 }

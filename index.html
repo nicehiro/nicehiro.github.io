@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-10-21 Wed 15:35 -->
+<!-- 2021-01-04 Mon 19:29 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hiro's Blog</title>
@@ -40,7 +40,7 @@
 	}
 	pre.src {
 		position: relative;
-		overflow: visible;
+		overflow: auto;
 		padding-top: 1.2em;
 	}
 	pre.src:before {
@@ -195,107 +195,33 @@
 </style>
 <link rel="stylesheet" type="text/css" href="css/index.css"/>
 <script type="text/javascript">
-/*
-@licstart  The following is the entire license notice for the
-JavaScript code in this tag.
-
-Copyright (C) 2012-2020 Free Software Foundation, Inc.
-
-The JavaScript code in this tag is free software: you can
-redistribute it and/or modify it under the terms of the GNU
-General Public License (GNU GPL) as published by the Free Software
-Foundation, either version 3 of the License, or (at your option)
-any later version.  The code is distributed WITHOUT ANY WARRANTY;
-without even the implied warranty of MERCHANTABILITY or FITNESS
-FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
-
-As additional permission under GNU GPL version 3 section 7, you
-may distribute non-source (e.g., minimized or compacted) forms of
-that code without the copy of the GNU GPL normally required by
-section 4, provided you include this license notice and a URL
-through which recipients can access the Corresponding Source.
-
-
-@licend  The above is the entire license notice
-for the JavaScript code in this tag.
-*/
+// @license magnet:?xt=urn:btih:e95b018ef3580986a04669f1b5879592219e2a7a&dn=public-domain.txt Public Domain
 <!--/*--><![CDATA[/*><!--*/
- function CodeHighlightOn(elem, id)
- {
-	 var target = document.getElementById(id);
-	 if(null != target) {
-		 elem.cacheClassElem = elem.className;
-		 elem.cacheClassTarget = target.className;
-		 target.className = "code-highlighted";
-		 elem.className   = "code-highlighted";
-	 }
- }
- function CodeHighlightOff(elem, id)
- {
-	 var target = document.getElementById(id);
-	 if(elem.cacheClassElem)
-		 elem.className = elem.cacheClassElem;
-	 if(elem.cacheClassTarget)
-		 target.className = elem.cacheClassTarget;
- }
-/*]]>*///-->
+		 function CodeHighlightOn(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.add("code-highlighted");
+				 target.classList.add("code-highlighted");
+			 }
+		 }
+		 function CodeHighlightOff(elem, id)
+		 {
+			 var target = document.getElementById(id);
+			 if(null != target) {
+				 elem.classList.remove("code-highlighted");
+				 target.classList.remove("code-highlighted");
+			 }
+		 }
+		/*]]>*///-->
+// @license-end
 </script>
 </head>
 <body>
 <div id="content">
 <h1 class="title">Hiro's Blog</h1>
-<blockquote>
-<p>
-此笔记应该不适合别人当作博客阅读，阅读需谨慎。
-</p>
-</blockquote>
-
-<div id="outline-container-orgf449bdf" class="outline-2">
-<h2 id="orgf449bdf"><span class="section-number-2">1</span> Notes</h2>
-<div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><a href="notes/Math.html">高数</a></li>
-
-<li><a href="notes/Probability.html">概率论</a></li>
-
-<li><a href="notes/线性代数.html">线性代数</a></li>
-
-<li><a href="notes/Network.html">计算机网络</a></li>
-
-<li><a href="notes/OS.html">操作系统</a></li>
-
-<li><a href="notes/Computer_Architecture.html">计算机组成原理</a></li>
-
-<li><a href="notes/Data_Structure.html">数据结构</a></li>
-
-<li><a href="notes/Python-笔记.html">Python笔记</a></li>
-
-<li><a href="notes/learn-lisp.html">Lisp笔记</a></li>
-
-<li><a href="notes/linux-shell-知识点总结.html">Shell笔记</a></li>
-
-<li><a href="notes/Sed-Learn.html">Sed 学习笔记</a></li>
-
-<li><a href="notes/pandas-and-numpy.html">Pandas &amp; Numpy</a></li>
-
-<li><a href="thesis/mastering-eshell.html">Mastering Eshell</a></li>
-
-<li><a href="./notes/probability-theory-and-mathematical-statistics.html">概率论与数理统计</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org948563d" class="outline-2">
-<h2 id="org948563d"><span class="section-number-2">2</span> Reinforcement Learning</h2>
-<div class="outline-text-2" id="text-2">
 <ul class="org-ul">
 <li><a href="notes/RL-David-Silver.html">David Silver 课程学习笔记</a></li>
-
-<li><a href="notes/gradient-decent.html">Gradient Decent</a></li>
-
-<li><a href="notes/logistic-regression.html">罗辑回归</a></li>
-
-<li><a href="notes/back-propagation.html">反向传播算法 Back Propagation</a></li>
 
 <li><a href="notes/active-function.html">激活函数</a></li>
 
@@ -307,22 +233,9 @@ for the JavaScript code in this tag.
 
 <li><a href="notes/lstm.html">理解 LSTM</a></li>
 
-<li><a href="notes/Going-Deeper-Into-Reinforcement-Learning:-Fundamentals-of-Policy-Gradients.html">策略梯度</a></li>
-
 <li><a href="./notes/RL-Sergey-Levine.html">Sergey Levine 课程学习笔记</a></li>
 
 <li><a href="./notes/linear-classification.html">线性分类器</a></li>
-</ul>
-</div>
-</div>
-
-<div id="outline-container-org51f59b8" class="outline-2">
-<h2 id="org51f59b8"><span class="section-number-2">3</span> Tech</h2>
-<div class="outline-text-2" id="text-3">
-<ul class="org-ul">
-<li><a href="tech/GFW-原理简析.html">GFW原理解析</a></li>
-
-<li><a href="tech/Vim-进阶.html">Vim 进阶</a></li>
 
 <li><a href="tech/all_kinds_tech.html">技术杂集</a></li>
 
@@ -330,28 +243,10 @@ for the JavaScript code in this tag.
 
 <li><a href="tech/largest_rectangle_area.html">LeetCode #84 题解</a></li>
 
-<li><a href="./notes/numpy-broadcast.html">Numpy Broadcasting</a></li>
-</ul>
-</div>
-</div>
+<li><a href="notes/2020.html">2020 年终总结</a></li>
 
-<div id="outline-container-org1498f88" class="outline-2">
-<h2 id="org1498f88"><span class="section-number-2">4</span> Life</h2>
-<div class="outline-text-2" id="text-4">
-<ul class="org-ul">
-<li><a href="life/学校每日签到的自动化完成.html">学校每日签到的自动化完成</a></li>
+<li><a href="notes/one-secret-to-becoming-a-great-software-engineer-read-code.html">成为杰出程序员的秘密：阅读源码</a></li>
 </ul>
-</div>
-</div>
-
-<div id="outline-container-orgd8bc9c2" class="outline-2">
-<h2 id="orgd8bc9c2"><span class="section-number-2">5</span> Movies</h2>
-<div class="outline-text-2" id="text-5">
-<ul class="org-ul">
-<li><a href="notes/he-yi-wei-jia.html">何以为家</a></li>
-</ul>
-</div>
-</div>
 </div>
 <div id="postamble" class="status">
 <p class="postamble"><a href="http://www.gnu.org/software/emacs/">Emacs</a> 27 (<a href="https://orgmode.org">Org</a> mode 9)</p>
