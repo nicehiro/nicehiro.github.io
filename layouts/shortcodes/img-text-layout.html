@@ -1,0 +1,15 @@
+<!-- <div class="img-text-layout"> -->
+<!--   <img src="{{ .Get "src" }}" alt="Image" style="float:left; margin-right:20px; width:20%"> -->
+<!--   <p>{{ .Get "text" }}</p> -->
+<!-- <div style="clear: both;"></div> -->
+<!-- </div> -->
+
+<div class="img-text-layout">
+  <div style="display: flex; align-items: center;">
+    <img src="{{ .Get "src" }}" alt="Image" style="float:left; margin-right:20px; width:20%">
+    <p>{{ .Get "text" }}
+      {{ if .Get "url" }}<a href="{{ .Get "url" }}">Link</a>{{ end }}
+    </p>
+  </div>
+  <div style="clear: both;"></div>
+</div>
