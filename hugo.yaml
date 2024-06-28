@@ -14,6 +14,12 @@ minify:
   disableXML: true
   minifyOutput: true
 
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON # necessary for search
+
 params:
   env: production # to enable google analytics, opengraph, twitter-cards and schema.
   title: FF's blog
@@ -25,6 +31,7 @@ params:
   DateFormat: "January 2, 2006"
   defaultTheme: auto # dark, light
   disableThemeToggle: false
+  math: true
 
   ShowReadingTime: true
   ShowShareButtons: true
@@ -98,9 +105,6 @@ menu:
     - name: Archive
       url: /archives
       weight: 10
-    - name: Categories
-      url: /categories/
-      weight: 15
     - name: Tags
       url: /tags/
       weight: 20
@@ -109,6 +113,9 @@ menu:
     - name: Search
       url: /search
       weight: 5
+    - name: Notes
+      url: /notes
+      weight: 15
     # - identifier: example
     #   name: example.org
     #   url: https://example.org
