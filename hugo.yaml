@@ -113,8 +113,8 @@ menu:
     - name: Search
       url: /search
       weight: 5
-    - name: Notes
-      url: /notes
+    - name: Org-Roam Notes
+      url: /org-roam
       weight: 15
     # - identifier: example
     #   name: example.org
