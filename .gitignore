@@ -13,3 +13,5 @@ hugo.linux
 /.hugo_build.lock
 
 *test.org
+
+.DS_Store

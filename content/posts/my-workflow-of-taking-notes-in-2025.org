@@ -1,0 +1,327 @@
+#+TITLE: How I Capture, Organize & Publish Research Notes with Emacs
+#+DATE: 2025-06-05T23:22:18+08:00
+#+DRAFT: nil
+#+CATEGORIES[]: workflow emacs
+#+TAGS[]: org‑roam citar zotero elfeed freshrss quartz
+#+DESCRIPTION: From arXiv RSS to a public Quartz site—my complete, automated note‑taking workflow.
+
+
+Keeping on top of the daily flood of arXiv papers is hard enough; turning what you read into something you can retrieve later is even harder.  This post walks through my end‑to‑end solution that
+
+1. discovers relevant papers automatically,
+2. stores & annotates them with Zotero,
+3. links every paper to an Org‑roam note via /citar/ inside Emacs,
+4. generates a browsable graph (Org‑roam‑UI) and a Hugo‑compatible Markdown version of each note, and
+5. publishes both to GitHub Pages with zero manual steps.
+
+Bird’s-Eye View of the Stack
+#+begin_quote
+FreshRSS → Elfeed (+ Score) → Zotero (+ Better‑BibTeX) → Org‑roam (+ citar) → GitHub Actions → Org-roam-UI & Quartz
+#+end_quote
+
+| Stage         | Purpose                                                |
+|--|--|
+| FreshRSS                            | Self‑hosted RSS aggregator that normalises arXiv feeds |
+| Elfeed                              | Pull feeds into Emacs; =elfeed‑score= ranks them       |
+| Zotero                              | Reference manager & PDF annotator                      |
+| Better-BibTeX                      | Keeps a single live =library.bib= file in sync         |
+| Citar                              | Bridges Zotero ↔ Org‑roam via org-cite                |
+| Org-roam                           | Zettelkasten / knowledge graph within Emacs            |
+| GitHub Actions                     | Build static graph (Org-roam-UI) + Quartz web site   |
+
+
+* From RSS to Ranked Paper List
+
+** FreshRSS – My Personal Feed Backend
+I run FreshRSS on a tiny VPS.  The important bits are:
+
+- Fever API support → lets Elfeed treat FreshRSS as if it were a Fever client.
+- Tagging inside FreshRSS → those tags come through to Elfeed.
+
+** Elfeed – Reading & Scoring Feeds inside Emacs
+:PROPERTIES:
+:ID:       E2F0E29A-F8D8-426B-BBC6-924B39AE459A
+:END:
+The snippet below loads Elfeed plus two add‑ons:
+
+- =elfeed‑protocol= for Fever API access.
+- =elfeed‑score= for keyword‑based ranking.
+
+#+begin_src emacs-lisp
+  (straight-use-package 'elfeed)
+  (straight-use-package 'elfeed-protocol)
+  (straight-use-package 'elfeed-score)
+
+  (use-package elfeed
+    :config
+    (setq-default elfeed-search-filter "@1-years-old +unread")
+    (defun elfeed-mark-all-as-read ()
+      (interactive)
+      (mark-whole-buffer)
+      (elfeed-search-untag-all-unread)))
+
+  (use-package elfeed-protocol
+    :config
+    (setq elfeed-use-curl t)
+    (elfeed-set-timeout 36000)
+    (setq elfeed-curl-extra-arguments '("--insecure"))
+    (setq elfeed-protocol-fever-fetch-category-as-tag t)
+
+    (defun hiro/get-fever-pwd ()
+      (replace-regexp-in-string "[[:space:]\n]+"
+                                ""
+                                (with-temp-buffer
+                                  (insert-file-contents "~/Documents/keys/fever/pwd.txt")
+                                  (buffer-string))))
+
+    (setq elfeed-protocol-feeds `(("fever+https://fy@freshrss.nicehiro.org"
+                                   :api-url "https://freshrss.nicehiro.org/api/fever.php"
+                                   :password ,(hiro/get-fever-pwd))))
+    (setq elfeed-protocol-enabled-protocols '(fever))
+    (elfeed-protocol-enable))
+
+  (use-package elfeed-score
+    :config
+    (elfeed-score-enable)
+    (define-key elfeed-search-mode-map "=" elfeed-score-map)
+    (elfeed-score-serde-load-score-file "~/.config/emacs/elfeed.score")
+    (setq elfeed-search-print-entry-function #'elfeed-score-print-entry))
+#+end_src
+
+{{< figure src="https://nicehiro.github.io/imgs/note-taking/elfeed.png" alt="elfeed" >}}
+
+
+* Collecting & Annotating PDFs with Zotero
+Zotero’s job is heavy-lifting storage: full-text PDFs, annotations on iPad, quick tags, and sharing libraries with collaborators. The magic glue is Better-BibTeX (BBT), which:
+
+- auto‑exports every item to =~/Documents/roam/library.bib=
+- assigns human‑readable citekeys (e.g. =brohan2023rt2=)
+
+Because BBT writes directly to disk, Emacs always sees an up‑to‑date BibTeX file.
+
+* Making Notes in Emacs
+
+** citar – Org-cite Backend + Zotero Bridge
+/citar/ turns every BibTeX entry into a first‑class Emacs object.  Press =C‑c b= inside Org and you get a Helm/Vertico‑powered picker.  The following configuration:
+
+- sets /citar/ as the insert/follow/activate processor for =org‑cite=
+- teaches /citar/ where the bibliography lives
+- adds citar-org-roam so that ‘create-note’ drops you straight into an Org-roam buffer whose filename matches the citekey.
+
+#+begin_src emacs-lisp
+  ;; Ensure :zotero: links are redirected to org-mode
+  (use-package org
+    :custom
+    (org-link-set-parameters "zotero" :follow
+                             (lambda (zpath)
+                               (browse-url
+                                (format "zotero:%s" zpath)))))
+
+  (use-package oc
+    :custom
+    (setq org-cite-global-bibliography '("~/Documents/roam/library.bib")))
+
+  ;; Use `citar' with `org-cite'
+  (straight-use-package 'citar)
+  (use-package citar
+    :after oc
+    :custom
+    (org-cite-insert-processor 'citar)
+    (org-cite-follow-processor 'citar)
+    (org-cite-activate-processor 'citar)
+    (citar-bibliography '("~/Documents/roam/library.bib"))
+    (citar-org-roam-note-title-template "${title}")
+    (add-to-list 'citar-file-open-functions '("pdf" . citar-file-open-external))
+    :bind
+    (:map org-mode-map :package org ("C-c b" . #'org-cite-insert)))
+
+  (straight-use-package 'citar-org-roam)
+  (use-package citar-org-roam
+    :after (citar org-roam)
+    :config (citar-org-roam-mode))
+#+end_src
+
+{{< figure src="https://nicehiro.github.io/imgs/note-taking/citar.png" alt="citar" >}}
+
+** Org-roam – The Knowledge Graph
+Below we:
+- point Org‑roam at =~/Documents/roam/=
+- use autosync so the graph DB stays current
+- define two capture templates: a generic one and a literature note that pre‑populates metadata from /citar/.
+
+#+begin_src emacs-lisp
+  (straight-use-package 'org-roam)
+
+  (use-package org-roam
+    :diminish
+    :bind (("C-c n a" . org-id-get-create)
+           ("C-c n l" . org-roam-buffer-toggle)
+           ("C-c n f" . org-roam-node-find)
+           ("C-c n g" . org-roam-graph)
+           ("C-c n i" . org-roam-node-insert)
+           ("C-c n c" . org-roam-capture)
+           ("C-c n j" . org-roam-dailies-capture-today)
+           ("C-c n r" . org-roam-ref-find)
+           ("C-c n R" . org-roam-ref-add)
+           ("C-c n s" . org-roam-db-sync))
+    :custom
+    ;; (org-roam-database-connector 'sqlite-builtin)
+    (org-roam-directory (expand-file-name "~/Documents/roam/"))
+    (org-roam-dailies-directory (expand-file-name "~/Documents/roam/journal"))
+    (org-roam-db-location "~/Documents/roam/roam.db")
+    (org-roam-db-gc-threshold most-positive-fixnum)
+    (with-eval-after-load "org-roam"
+      (org-roam-setup)
+      (org-roam-db-autosync-mode)))
+
+  (straight-use-package 'consult-org-roam)
+
+  (use-package consult-org-roam
+    :after org-roam consult
+    :init
+    (require 'consult-org-roam)
+    ;; Activate the minor mode
+    (consult-org-roam-mode 1)
+    :custom
+    ;; Use `ripgrep' for searching with `consult-org-roam-search'
+    (consult-org-roam-grep-func #'consult-ripgrep)
+    ;; Configure a custom narrow key for `consult-buffer'
+    (consult-org-roam-buffer-narrow-key ?r)
+    ;; Display org-roam buffers right after non-org-roam buffers
+    ;; in consult-buffer (and not down at the bottom)
+    (consult-org-roam-buffer-after-buffers t)
+    :config
+    ;; Eventually suppress previewing for certain functions
+    (consult-customize
+     consult-org-roam-forward-links
+     :preview-key (kbd "M-."))
+    :bind
+    ;; Define some convenient keybindings as an addition
+    ("C-c n e" . consult-org-roam-file-find)
+    ("C-c n b" . consult-org-roam-backlinks)
+    ("C-c n l" . consult-org-roam-forward-links)
+    ("C-c n r" . consult-org-roam-search))
+
+  ;; Capture templates
+  (use-package org-roam
+    :config
+    (setq org-roam-capture-templates
+        '(("d" "default" plain
+           "%?"
+           :target
+           (file+head
+            "%<%Y%m%d%H%M%S>-${slug}.org"
+            "#+title: ${note-title}\n")
+           :unnarrowed t)
+          ("n" "literature note" plain
+           "%?"
+           :target
+           (file+head
+            "%(expand-file-name (or citar-org-roam-subdir \"\") org-roam-directory)/${citar-citekey}.org"
+            "#+title: ${citar-citekey} (${citar-date}). ${note-title}.\n#+created: %U\n#+last_modified: %U\n\n")
+           :unnarrowed t))))
+#+end_src
+
+{{< figure src="https://nicehiro.github.io/imgs/note-taking/roam.png" alt="Org-roam" >}}
+
+* Publishing Automatically
+
+** Static Graph via Org-roam-UI
+
+The GitHub Action below takes the =roam.db= file committed to the repo, renders the interactive graph, and pushes it to GitHub Pages.
+
+#+begin_src yaml
+  name: Generate static org-roam-ui page
+
+  permissions:
+    contents: read
+    pages: write
+    id-token: write
+
+  on:
+    push:
+      branches:
+        - master
+
+  jobs:
+    main:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Generate org-roam-ui page
+          uses: ikoamu/publish-org-roam-ui@main
+          with:
+            org-roam-db-filename: roam.db
+            deploy-to-pages: true
+#+end_src
+
+You can check [[https://nicehiro.github.io/org-roam/][here]] to preview the Org-roam-UI website.
+
+** Quartz Site via =ox-hugo=
+
+- ox‑hugo converts each Org note to GitHub‑friendly Markdown.
+- A simple after‑save hook calls my wrapper =hiro/org-publish-to-quartz= so I never forget to export.
+
+#+begin_src emacs-lisp
+  (straight-use-package 'ox-hugo)
+
+  (use-package ox-hugo
+    :after ox
+    :config
+    (setq org-hugo-export-attachment t))
+
+  (defun hiro/org-publish-to-quartz ()
+    "Export current org‑roam buffer to Quartz‑compatible markdown."
+    (interactive)
+    (let ((org-hugo-auto-export-on-save t))
+      (org-hugo-export-to-md)))
+  (add-hook 'org-mode-hook
+            (lambda () (add-hook 'after-save-hook #'hiro/org-publish-to-quartz 0 t)))
+#+end_src
+
+I also write a function to export a directory of org-roam notes to markdown notes.
+
+#+begin_src emacs-lisp
+  (defun my/hugo-export-org-directory (org-dir &optional recursive)
+    "Export every *.org file in ORG-DIR to Markdown with ox‑hugo.
+
+  With a prefix argument (C-u) the search is RECURSIVE, so it walks
+  into sub‑directories as well.
+
+  Each file is exported with `org-hugo-export-to-md' (whole‑file
+  workflow).  You still control the output location and front‑matter
+  via #+hugo_* keywords or your usual ox‑hugo variables."
+    (interactive (list (read-directory-name "Org notes directory: ")
+                       current-prefix-arg))
+    (let* ((files (if recursive
+                      (directory-files-recursively org-dir "\\.org\\'")
+                    (directory-files org-dir t "\\.org\\'")))
+           (org-hugo-export-front-matter-format "yaml")
+           ;; don’t pop up a temporary *Org Export* buffer for every file
+           (org-export-show-temporary-export-buffer nil))
+      (message "ox‑hugo: exporting %d file%s …"
+               (length files) (if (= (length files) 1) "" "s"))
+      (dolist (f files)
+        (with-current-buffer (find-file-noselect f)
+          (message "  → %s" (file-name-nondirectory f))
+          ;; nil nil nil nil = (async subtreep visible-only body-only)
+          (org-hugo-export-to-md)          ; whole‑file export
+          (save-buffer)                    ; keep any :EXPORT_ props you added
+          (kill-buffer)))
+      (message "ox‑hugo: done – %d file%s exported."
+               (length files) (if (= (length files) 1) "" "s"))))
+
+  ;; Optional convenience alias:
+  ;; M-x hugo-export-this-directory  (recursive with C-u)
+  (defalias 'hugo-export-this-directory #'my/hugo-export-org-directory)
+#+End_src
+
+*** Quartz Tips & Gotchas
+
+1. Set =org-hugo-default-section-directory= to =/=.  Otherwise Quartz will nest every note under =posts/=.
+2. Update =quartz.config.ts= so its FrontMatter parser looks for =title=, =date=, =tags=, etc.
+
+
+You can check [[https://nicehiro.github.io/Quartz-OrgRoam/][here]] to preview the Quartz website.
+
+
+And that’s the whole pipeline—fully reproducible, mostly automated, and entirely powered by open‑source tools.
