@@ -1,0 +1,24 @@
+# Org-mode temporary files
+*~
+*.bak
+\#*\#
+.\#*
+
+# Org-mode export temporary files
+*.tex
+*.aux
+*.log
+*.out
+*.toc
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+
+# Don't ignore the generated HTML (we want to commit it)
+# index.html should be committed for GitHub Pages

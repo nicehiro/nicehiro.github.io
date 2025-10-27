@@ -1,0 +1,153 @@
+#+TITLE: Academic Personal Website
+#+AUTHOR: Fangyuan Wang, Claude Code
+#+OPTIONS: toc:nil num:nil
+
+Static simple academic website built with org-mode. No build system. No complexity.
+
+* Structure
+
+#+begin_example
+/
+├── index.org          # Your content (edit this)
+├── index.html         # Generated (don't edit directly)
+├── style.css          # Styling
+├── cv.pdf             # Your CV (add this)
+└── README.org         # This file
+#+end_example
+
+* Workflow
+
+** 1. Edit Your Content
+
+Open =index.org= in Emacs and fill in your information:
+- Replace =[Your Name]=, =[Your Position]=, etc. with your actual details
+- Add your publications, teaching, projects
+- Update contact information
+
+** 2. Export to HTML
+
+In Emacs, with =index.org= open:
+
+*Method 1: Keyboard shortcut*
+#+begin_example
+C-c C-e h h
+#+end_example
+
+*Method 2: Full command*
+#+begin_example
+M-x org-html-export-to-html
+#+end_example
+
+This creates/updates =index.html= in the same directory.
+
+** 3. Preview Locally
+
+Open =index.html= in your browser to see how it looks.
+
+** 4. Commit and Push
+
+#+begin_src bash
+git add index.org index.html style.css
+git commit -m "Update personal site"
+git push
+#+end_src
+
+* GitHub Pages Setup
+
+** First Time Setup
+
+1. Go to your repository on GitHub: =https://github.com/yourusername/yourusername.github.io=
+
+2. Click *Settings* → *Pages*
+
+3. Under "Source", select:
+   - Source: =Deploy from a branch=
+   - Branch: =main= (or =master=)
+   - Folder: =/ (root)=
+
+4. Click *Save*
+
+5. Wait 1-2 minutes, then visit: =https://yourusername.github.io=
+
+** For This Repo (nicehiro.github.io)
+
+If this is already set up as a GitHub Pages repo, just push and it will auto-deploy.
+
+* Adding Your CV
+
+1. Export your CV as =cv.pdf=
+2. Place it in this directory
+3. The link in the Contact section will work automatically
+
+* Org-Mode Tips
+
+** Basic Formatting
+
+#+begin_example
+*bold*
+/italic/
+_underlined_
+=code=
+~verbatim~
+#+end_example
+
+** Links
+
+#+begin_example
+[[https://example.com][Link Text]]
+[[file:cv.pdf][CV (PDF)]]
+[[mailto:email@example.com][email@example.com]]
+#+end_example
+
+** Sections
+
+#+begin_example
+* Top Level Heading
+** Second Level
+*** Third Level
+#+end_example
+
+* Customization
+
+** Styling
+
+Edit =style.css= to change fonts, colors, spacing, etc.
+
+** Org Export Options
+
+Add these to the top of =index.org=:
+
+#+begin_example
+#+OPTIONS: toc:t          # Enable table of contents
+#+OPTIONS: num:t          # Enable section numbering
+#+OPTIONS: author:nil     # Hide author name
+#+end_example
+
+See [[https://orgmode.org/manual/Export-Settings.html][Org Export Options]] for more.
+
+* Troubleshooting
+
+** "Command not found: C-c C-e"
+
+You're not in Emacs. Open =index.org= in Emacs first.
+
+** HTML export not working
+
+1. Check you have org-mode installed: =M-x org-version=
+2. If needed, update org-mode: =M-x package-refresh-contents= then =M-x package-install RET org=
+
+** Changes not showing on GitHub Pages
+
+1. Check GitHub Actions tab for deployment status
+2. Hard refresh your browser: =Cmd+Shift+R= (Mac) or =Ctrl+F5= (Windows)
+3. Wait 1-2 minutes for GitHub's CDN to update
+
+* Philosophy
+
+This setup is intentionally simple:
+- *One source file*: =index.org=
+- *One build step*: Export to HTML
+- *Zero dependencies*: Just org-mode (comes with Emacs)
+- *No build pipeline*: No webpack, npm, Jekyll, Hugo, etc.
+
+Edit. Export. Push. Done.
