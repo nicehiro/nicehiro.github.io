@@ -17,60 +17,49 @@ body {
 }
 
 /* Typography */
-h1, h2, h3, h4 {
-  line-height: 1.2;
-  margin-top: 2.5rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-  color: #1a202c;
-}
-
 h1 {
   font-size: 2.5rem;
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  border: none;
-  padding-bottom: 0;
+  margin-bottom: 2.5rem;
   font-weight: 700;
+  color: #1a202c;
 }
 
 h2 {
   font-size: 1.5rem;
   margin-top: 3.5rem;
-  border-bottom: none;
-  padding-bottom: 0;
+  margin-bottom: 1.5rem;
   font-weight: 600;
-}
-
-h3 {
-  font-size: 1.1rem;
-  margin-top: 2rem;
-  font-weight: 600;
-  color: #4a5568;
+  color: #1a202c;
 }
 
 p {
   margin-bottom: 1rem;
 }
 
-/* Hide About heading */
-#about {
-  display: none;
+/* Links */
+a {
+  color: #2563eb;
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-/* About section - Two-column layout */
-.outline-2:first-of-type {
-  margin-top: 2.5rem;
+a:hover {
+  color: #1d4ed8;
+  text-decoration: underline;
 }
 
-.outline-2:first-of-type .outline-text-2 {
+a:visited {
+  color: #7c3aed;
+}
+
+/* About section */
+.about-section {
   display: flex;
   gap: 2.5rem;
   align-items: flex-start;
   margin-bottom: 2rem;
 }
 
-/* Profile column (photo + contact links stacked) */
 .profile-column {
   flex-shrink: 0;
   display: flex;
@@ -78,23 +67,14 @@ p {
   gap: 1rem;
 }
 
-/* Profile photo container and image */
-.profile-column .figure {
+.profile-photo {
   width: 250px;
   height: 250px;
-  margin: 0;
-}
-
-.profile-photo {
-  width: 100%;
-  height: 100%;
   object-fit: cover;
-  display: block;
   border-radius: 12px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
 }
 
-/* Contact links styling */
 .contact-links {
   display: flex;
   flex-direction: column;
@@ -108,7 +88,6 @@ p {
   font-size: 0.9rem;
   color: #4a5568;
   text-decoration: none;
-  transition: color 0.2s ease;
 }
 
 .contact-links a:hover {
@@ -129,100 +108,28 @@ p {
   color: #718096;
 }
 
-/* About text content */
 .about-text {
   flex: 1;
 }
 
 .about-text p {
-  margin: 0;
-  line-height: 1.8;
-}
-
-/* Links */
-a {
-  color: #2563eb;
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: #1d4ed8;
-  text-decoration: underline;
-}
-
-a:visited {
-  color: #7c3aed;
-}
-
-/* Lists */
-ul {
-  margin-left: 1.5rem;
-  margin-bottom: 1.5rem;
-  padding-left: 0.5rem;
-}
-
-li {
-  margin-bottom: 0.75rem;
-  line-height: 1.8;
-}
-
-/* Special Elements */
-em {
-  font-style: italic;
-  color: #666;
-}
-
-strong {
-  font-weight: 600;
-}
-
-/* Footer */
-.footer {
-  margin-top: 5rem;
-  padding-top: 2rem;
-  border-top: 1px solid #e2e8f0;
-  font-size: 0.875rem;
-  color: #718096;
-}
-
-.footer h2 {
-  display: none;
-}
-
-.footer p {
   margin-bottom: 0.5rem;
+  line-height: 1.8;
 }
 
-/* Profile/Contact Section */
-.title {
-  margin-bottom: 0.25rem;
+/* Publications */
+.pub-legend {
+  margin-bottom: 2rem;
+  padding: 0.75rem 1rem;
+  background-color: #f7fafc;
+  border-left: 3px solid #cbd5e0;
+  font-size: 0.85rem;
+  color: #4a5568;
 }
 
-/* Research Interests */
-.outline-3 ul.org-ul {
-  margin-top: 0.5rem;
-}
-
-/* Publications Section - Year headings */
-.outline-2 .outline-3 > h3 {
-  color: #1a202c;
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 2.5rem;
-  margin-bottom: 1.5rem;
-  letter-spacing: normal;
-}
-
-/* Paper entry container */
 .paper {
   margin-bottom: 2rem;
   line-height: 1.6;
-}
-
-/* Paper title */
-.paper-title {
-  margin-bottom: 0.25rem;
 }
 
 .paper-title a {
@@ -230,7 +137,6 @@ strong {
   font-weight: 500;
   color: #dc2626;
   text-decoration: none;
-  transition: color 0.2s ease;
 }
 
 .paper-title a:hover {
@@ -238,29 +144,26 @@ strong {
   text-decoration: underline;
 }
 
-/* Paper authors */
 .paper-authors {
   color: #4a5568;
   font-size: 0.95rem;
-  margin-bottom: 0.15rem;
+  margin-top: 0.25rem;
 }
 
-/* Paper venue */
 .paper-venue {
   color: #718096;
   font-size: 0.9rem;
+  margin-top: 0.15rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
 
-/* Highlight author name (bold) */
 .author-highlight {
   font-weight: 600;
   color: #2d3748;
 }
 
-/* Oral/Spotlight badge */
 .oral-badge {
   display: inline-block;
   padding: 0.15rem 0.5rem;
@@ -271,10 +174,8 @@ strong {
   border: 1px solid #fecaca;
   border-radius: 4px;
   text-transform: uppercase;
-  letter-spacing: 0.025em;
 }
 
-/* Paper links container */
 .paper-links {
   margin-top: 0.5rem;
   display: flex;
@@ -282,20 +183,23 @@ strong {
   flex-wrap: wrap;
 }
 
-/* Code badge */
-.code-badge {
+.code-badge,
+.project-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
   padding: 0.15rem 0.5rem;
   font-size: 0.75rem;
   font-weight: 600;
-  color: #2563eb;
-  background-color: #dbeafe;
-  border: 1px solid #bfdbfe;
   border-radius: 4px;
   text-decoration: none;
   transition: all 0.2s ease;
+}
+
+.code-badge {
+  color: #2563eb;
+  background-color: #dbeafe;
+  border: 1px solid #bfdbfe;
 }
 
 .code-badge:hover {
@@ -308,24 +212,10 @@ strong {
   color: #2563eb;
 }
 
-.code-badge i {
-  font-size: 0.85rem;
-}
-
-/* Project badge */
 .project-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  padding: 0.15rem 0.5rem;
-  font-size: 0.75rem;
-  font-weight: 600;
   color: #059669;
   background-color: #d1fae5;
   border: 1px solid #a7f3d0;
-  border-radius: 4px;
-  text-decoration: none;
-  transition: all 0.2s ease;
 }
 
 .project-badge:hover {
@@ -338,33 +228,13 @@ strong {
   color: #059669;
 }
 
-.project-badge i {
-  font-size: 0.85rem;
-}
-
-/* Publication legend */
-.pub-legend {
-  margin-top: 0.5rem;
-  margin-bottom: 2rem;
-  padding: 0.75rem 1rem;
-  background-color: #f7fafc;
-  border-left: 3px solid #cbd5e0;
-  font-size: 0.85rem;
-  color: #4a5568;
-  line-height: 1.6;
-}
-
-/* Postamble */
-#postamble {
-  margin-top: 3rem;
-  padding-top: 1.5rem;
+/* Footer */
+.footer {
+  margin-top: 5rem;
+  padding-top: 2rem;
   border-top: 1px solid #e2e8f0;
-  font-size: 0.8rem;
-  color: #a0aec0;
-}
-
-#postamble p {
-  margin-bottom: 0.25rem;
+  font-size: 0.875rem;
+  color: #718096;
 }
 
 /* Responsive Design */
@@ -376,14 +246,15 @@ strong {
 
   h1 {
     font-size: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   h2 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
+    margin-top: 2.5rem;
   }
 
-  /* Stack profile column and text vertically on mobile */
-  .outline-2:first-of-type .outline-text-2 {
+  .about-section {
     flex-direction: column;
     gap: 1.5rem;
     align-items: center;
@@ -391,38 +262,18 @@ strong {
 
   .profile-column {
     align-items: center;
-    width: 100%;
   }
 
-  .profile-column .figure {
+  .profile-photo {
     width: 160px;
     height: 160px;
   }
 
   .contact-links {
-    width: 100%;
     align-items: center;
   }
 
   .contact-links a {
     font-size: 0.85rem;
-  }
-
-  .about-text {
-    width: 100%;
-    text-align: left;
-  }
-}
-
-/* Print Styles */
-@media print {
-  body {
-    max-width: 100%;
-    font-size: 12pt;
-  }
-
-  a {
-    color: #000;
-    text-decoration: underline;
   }
 }

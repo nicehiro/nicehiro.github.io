@@ -1,33 +1,26 @@
 #+TITLE: Fangyuan Wang
-#+AUTHOR: Fangyuan Wang, Claude Code
+#+AUTHOR: Fangyuan Wang
 #+EMAIL: fangyuan.wang@connect.polyu.hk
-#+OPTIONS: toc:nil num:nil html-style:nil html-postamble:nil
+#+OPTIONS: toc:nil num:nil html-style:nil html-postamble:nil title:nil
 #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="style.css" />
 #+HTML_HEAD: <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-* About
-:PROPERTIES:
-:CUSTOM_ID: about
-:END:
-
 #+BEGIN_EXPORT html
-<div class="profile-column">
-  <div class="figure">
+<h1>Fangyuan Wang</h1>
+
+<div class="about-section">
+  <div class="profile-column">
     <img src="./imgs/me.jpg" alt="Fangyuan Wang" class="profile-photo" />
+    <div class="contact-links">
+      <a href="mailto:fangyuan.wang@connect.polyu.hk"><i class="fas fa-envelope"></i> fangyuan.wang@connect.polyu.hk</a>
+      <a href="https://github.com/nicehiro"><i class="fab fa-github"></i> nicehiro</a>
+      <a href="https://nicehiro.github.io/Quartz-OrgRoam"><i class="fas fa-sticky-note"></i> roam notes</a>
+    </div>
   </div>
-  <div class="contact-links">
-    <a href="mailto:fangyuan.wang@connect.polyu.hk"><i class="fas fa-envelope"></i> fangyuan.wang@connect.polyu.hk</a>
-    <a href="https://github.com/nicehiro"><i class="fab fa-github"></i> nicehiro</a>
-    <a href="https://nicehiro.github.io/Quartz-OrgRoam"><i class="fa-sticky-note"></i> roam notes</a>
+  <div class="about-text">
+    <p>I am a joint Ph.D. student at The Hong Kong Polytechnic University and Eastern Institute of Technology, focusing on subgoal planning in robotics and deep reinforcement learning. I'm currently working in <a href="https://www.romi-lab.org/">romi-lab</a> under the supervision of <a href="https://www.polyu.edu.hk/me/david/">Prof. David Navarro-Alarcon</a>.</p>
+    <p>You can download my CV <a href="./Resume.pdf">here</a>.</p>
   </div>
-</div>
-<div class="about-text">
-  <p>I am a joint Ph.D. student at The Hong Kong Polytechnic University and Eastern Institute of Technology, focusing on subgoal planning in robotics and deep reinforcement learning. I'm now work in <a href="https://www.romi-lab.org/">romi-lab</a> under supervision of <a href="https://www.polyu.edu.hk/me/david/">Prof. David Navarro</a>.
-  </p>
-
-  </br>
-
-  <p>You can download my CV <a href="./Resume.pdf">here</a>. </p>
 </div>
 #+END_EXPORT
 
@@ -35,11 +28,9 @@
 
 #+BEGIN_EXPORT html
 <div class="pub-legend">
-  <strong>*</strong> Equal contribution &nbsp;&nbsp; <strong>†</strong> First student author (first author is supervisor)
+  <strong>*</strong> Equal contribution &nbsp;&nbsp; <strong>†</strong> First student author
 </div>
-#+END_EXPORT
 
-#+BEGIN_EXPORT html
 <div class="paper">
   <div class="paper-title"><a href="https://doi.org/10.1609/aaai.v39i14.33610">Instruction-Augmented Long-Horizon Planning: Embedding Grounding Mechanisms in Embodied Mobile Manipulation</a></div>
   <div class="paper-authors"><span class="author-highlight">Fangyuan Wang</span>, Shipeng Lyu, Peng Zhou, Anqing Duan, Guodong Guo, David Navarro-Alarcon</div>
@@ -52,9 +43,7 @@
     <a href="https://nicehiro.github.io/IALP/" class="project-badge"><i class="fas fa-globe"></i> Project</a>
   </div>
 </div>
-#+END_EXPORT
 
-#+BEGIN_EXPORT html
 <div class="paper">
   <div class="paper-title"><a href="https://doi.org/10.1109/TASE.2025.3574162">Explicit-Implicit Subgoal Planning for Long-Horizon Tasks With Sparse Rewards</a></div>
   <div class="paper-authors"><span class="author-highlight">Fangyuan Wang</span>, Anqing Duan, Peng Zhou, Shengzeng Huo, Guodong Guo, Chenguang Yang, David Navarro-Alarcon</div>
@@ -63,17 +52,13 @@
     <a href="https://sites.google.com/view/vaesi/" class="project-badge"><i class="fas fa-globe"></i> Project</a>
   </div>
 </div>
-#+END_EXPORT
 
-#+BEGIN_EXPORT html
 <div class="paper">
-  <div class="paper-title"><a href="https://doi.org/10.1109/TASE.2025.3574162">Understanding via Exploration: Discovery of Interpretable Features With Deep Reinforcement Learning</a></div>
+  <div class="paper-title"><a href="https://doi.org/10.1109/TNNLS.2022.3164538">Understanding via Exploration: Discovery of Interpretable Features With Deep Reinforcement Learning</a></div>
   <div class="paper-authors">Jiawen Wei, Zhifeng Qiu, <span class="author-highlight">Fangyuan Wang</span>, Wenwei Lin, Ning Gui, Weihua Gui</div>
   <div class="paper-venue">IEEE Transactions on Neural Networks and Learning Systems, 2022</div>
 </div>
-#+END_EXPORT
 
-#+BEGIN_EXPORT html
 <div class="paper">
   <div class="paper-title"><a href="https://doi.org/10.1109/tdsc.2022.3183337">Credibility Assessment Based Byzantine-Resilient Decentralized Learning</a></div>
   <div class="paper-authors">Jian Hou, <span class="author-highlight">Fangyuan Wang†</span>, Chunling Wei, Hongyun Huang, Yong Hu, Ning Gui</div>
@@ -82,9 +67,7 @@
     <a href="https://github.com/nicehiro/GAA-Consensus" class="code-badge"><i class="fab fa-github"></i> Code</a>
   </div>
 </div>
-#+END_EXPORT
 
-#+BEGIN_EXPORT html
 <div class="paper">
   <div class="paper-title"><a href="https://doi.org/10.1145/3534678.3539290">An Embedded Feature Selection Framework for Control</a></div>
   <div class="paper-authors">Jiawen Wei*, <span class="author-highlight">Fangyuan Wang*</span>, Wanxin Zeng, Wenwei Lin, Ning Gui</div>
@@ -93,9 +76,7 @@
     <a href="https://github.com/G-AILab/DAFSFluid" class="code-badge"><i class="fab fa-github"></i> Code</a>
   </div>
 </div>
-#+END_EXPORT
 
-#+BEGIN_EXPORT html
 <div class="paper">
   <div class="paper-title"><a href="https://doi.org/10.1609/aaai.v35i9.16945">Reinforcement Learning Based Multi-Agent Resilient Control: From Deep Neural Networks to an Adaptive Law</a></div>
   <div class="paper-authors">Jian Hou, <span class="author-highlight">Fangyuan Wang†</span>, Lili Wang, Zhiyong Chen</div>
@@ -108,9 +89,8 @@
 
 
 
-* Footer
-:PROPERTIES:
-:HTML_CONTAINER_CLASS: footer
-:END:
-
-Last updated: [2025-10-27] | Built with Org-mode
+#+BEGIN_EXPORT html
+<div class="footer">
+  Last updated: 2025-10-27 | Built with Org-mode
+</div>
+#+END_EXPORT
