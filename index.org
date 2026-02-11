@@ -24,11 +24,20 @@
 </div>
 #+END_EXPORT
 
-* Publications
+* Selected Publications
 
 #+BEGIN_EXPORT html
 <div class="pub-legend">
   <strong>*</strong> Equal contribution &nbsp;&nbsp; <strong>†</strong> First student author
+</div>
+
+<div class="paper">
+  <div class="paper-title"><a href="https://arxiv.org/abs/2602.06575">Think Proprioceptively: Embodied Visual Reasoning for VLA Manipulation</a></div>
+  <div class="paper-authors"><span class="author-highlight">Fangyuan Wang</span>, Peng Zhou, Jiaming Qi, Shipeng Lyu, David Navarro-Alarcon, Guodong Guo</div>
+  <div class="paper-venue">arXiv preprint, 2026</div>
+  <div class="paper-links">
+    <a href="https://nicehiro.github.io/ThinkProprio/" class="project-badge"><i class="fas fa-globe"></i> Project</a>
+  </div>
 </div>
 
 <div class="paper">
@@ -91,6 +100,6 @@
 
 #+BEGIN_EXPORT html
 <div class="footer">
-  Last updated: 2025-10-27 | Built with Org-mode
+  Last updated: 2026-02-11 | Built with Org-mode
 </div>
 #+END_EXPORT
