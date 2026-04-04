@@ -1,119 +1,76 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2026-02-11 Wed 20:21 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Fangyuan Wang</title>
-<meta name="author" content="Fangyuan Wang" />
-<meta name="generator" content="Org Mode" />
-<link rel="stylesheet" type="text/css" href="style.css" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fangyuan Wang - PhD Student in Robotics and Reinforcement Learning">
+    <meta name="keywords" content="Robotics, Reinforcement Learning, Subgoal Planning, VLA, Deep Learning">
+    <meta name="author" content="Fangyuan Wang">
+    <meta property="og:title" content="Fangyuan Wang - PhD Student">
+    <meta property="og:description" content="Research in robotics, reinforcement learning, and embodied AI.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nicehiro.github.io">
+    <title>Fangyuan Wang</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body>
-<div id="content" class="content">
-<h1>Fangyuan Wang</h1>
+<body id="top">
+    <header>
+        <div class="header-content">
+            <h1>Fangyuan Wang</h1>
+            <p>Ph.D. Student • The Hong Kong Polytechnic University</p>
+            <div class="social-links-header">
+                <a href="mailto:fangyuan.wang@connect.polyu.hk"><i class="fas fa-envelope"></i>Email</a>
+                <a href="https://github.com/nicehiro"><i class="fab fa-github"></i>GitHub</a>
+                <a href="https://scholar.google.com/citations?user=YOUR_ID"><i class="fas fa-graduation-cap"></i>Scholar</a>
+                <a href="https://nicehiro.github.io/org-roam/"><i class="fas fa-sticky-note"></i>Notes</a>
+            </div>
+        </div>
+        <div class="header-image">
+            <img src="images/profile.jpg" alt="Fangyuan Wang">
+        </div>
+    </header>
 
-<div class="about-section">
-  <div class="profile-column">
-    <img src="./imgs/me.jpg" alt="Fangyuan Wang" class="profile-photo" />
-    <div class="contact-links">
-      <a href="mailto:fangyuan.wang@connect.polyu.hk"><i class="fas fa-envelope"></i> fangyuan.wang@connect.polyu.hk</a>
-      <a href="https://github.com/nicehiro"><i class="fab fa-github"></i> nicehiro</a>
-      <a href="https://nicehiro.github.io/org-roam/"><i class="fas fa-sticky-note"></i> roam notes</a>
+    <main>
+        <section id="about">
+            <p>I am a Ph.D. student at The Hong Kong Polytechnic University, focusing on subgoal planning in robotics and deep reinforcement learning. I'm currently working in <a href="https://www.romi-lab.org/">romi-lab</a> under the supervision of <a href="https://www.polyu.edu.hk/me/david/">Prof. David Navarro-Alarcon</a>. I was also a visiting student at the National University of Singapore, supervised by <a href="https://www.marmotlab.org/bio.html">Prof. Guillaume Sartoretti</a>.</p>
+            <p>You can download my CV <a href="./Resume.pdf">here</a>.</p>
+        </section>
+
+        <section id="research">
+            <h2>Research</h2>
+            <p>My research focuses on <strong>robotics</strong> and <strong>deep reinforcement learning</strong>. My recent works explore:</p>
+            <ul>
+                <li>Embodied visual reasoning for VLA manipulation (<a href="https://arxiv.org/abs/2602.06575">arXiv'26</a>)</li>
+                <li>Instruction-augmented long-horizon planning for mobile manipulation (<a href="https://doi.org/10.1609/aaai.v39i14.33610">AAAI'25</a>)</li>
+                <li>Subgoal planning for long-horizon tasks with sparse rewards (<a href="https://doi.org/10.1109/TASE.2025.3574162">TASE'25</a>)</li>
+                <li>Cross-embodiment humanoid robot control (<a href="https://arxiv.org/abs/2508.19002">RLJ'25</a>)</li>
+            </ul>
+        </section>
+
+        <section id="publications">
+            <div class="publications-header">
+                <h2 id="toggle-header">Selected Publications</h2>
+                <button id="toggle-publications" class="toggle-publications">Show All</button>
+            </div>
+            <div class="pub-legend">
+                <strong>*</strong> Equal contribution &nbsp;&nbsp; <strong>†</strong> First student author (supervisor is the first author)
+            </div>
+            <div id="publications-container">
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Last updated: 2026-04. Design and source code from
+           <a href="https://cs.stanford.edu/~yuhuiz/">Yuhui Zhang's website</a>.</p>
+    </footer>
+
+    <div id="imageModal" class="modal">
+        <span class="modal-close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="modalImage">
     </div>
-  </div>
-  <div class="about-text">
-    <p>I am a joint Ph.D. student at The Hong Kong Polytechnic University and Eastern Institute of Technology, focusing on subgoal planning in robotics and deep reinforcement learning. I'm currently working in <a href="https://www.romi-lab.org/">romi-lab</a> under the supervision of <a href="https://www.polyu.edu.hk/me/david/">Prof. David Navarro-Alarcon</a>.</p>
-    <p>You can download my CV <a href="./Resume.pdf">here</a>.</p>
-  </div>
-</div>
-<div id="outline-container-orgd24dc21" class="outline-2">
-<h2 id="orgd24dc21">Selected Publications</h2>
-<div class="outline-text-2" id="text-orgd24dc21">
-<div class="pub-legend">
-  <strong>*</strong> Equal contribution &nbsp;&nbsp; <strong>†</strong> First student author
-</div>
-
-<div class="paper">
-  <div class="paper-title"><a href="https://arxiv.org/abs/2602.06575">Think Proprioceptively: Embodied Visual Reasoning for VLA Manipulation</a></div>
-  <div class="paper-authors"><span class="author-highlight">Fangyuan Wang</span>, Peng Zhou, Jiaming Qi, Shipeng Lyu, David Navarro-Alarcon, Guodong Guo</div>
-  <div class="paper-venue">arXiv preprint, 2026</div>
-  <div class="paper-links">
-    <a href="https://nicehiro.github.io/ThinkProprio/" class="project-badge"><i class="fas fa-globe"></i> Project</a>
-  </div>
-</div>
-
-<div class="paper">
-  <div class="paper-title"><a href="https://doi.org/10.1609/aaai.v39i14.33610">Instruction-Augmented Long-Horizon Planning: Embedding Grounding Mechanisms in Embodied Mobile Manipulation</a></div>
-  <div class="paper-authors"><span class="author-highlight">Fangyuan Wang</span>, Shipeng Lyu, Peng Zhou, Anqing Duan, Guodong Guo, David Navarro-Alarcon</div>
-  <div class="paper-venue">
-    <span>Proceedings of the AAAI Conference on Artificial Intelligence, 2025</span>
-    <span class="oral-badge">Oral</span>
-  </div>
-  <div class="paper-links">
-    <a href="https://github.com/nicehiro/IALP-Code" class="code-badge"><i class="fab fa-github"></i> Code</a>
-    <a href="https://nicehiro.github.io/IALP/" class="project-badge"><i class="fas fa-globe"></i> Project</a>
-  </div>
-</div>
-
-<div class="paper">
-  <div class="paper-title"><a href="https://doi.org/10.1109/TASE.2025.3574162">Explicit-Implicit Subgoal Planning for Long-Horizon Tasks With Sparse Rewards</a></div>
-  <div class="paper-authors"><span class="author-highlight">Fangyuan Wang</span>, Anqing Duan, Peng Zhou, Shengzeng Huo, Guodong Guo, Chenguang Yang, David Navarro-Alarcon</div>
-  <div class="paper-venue">IEEE Transactions on Automation Science and Engineering, 2025</div>
-  <div class="paper-links">
-    <a href="https://sites.google.com/view/vaesi/" class="project-badge"><i class="fas fa-globe"></i> Project</a>
-  </div>
-</div>
-
-<div class="paper">
-  <div class="paper-title"><a href="https://arxiv.org/abs/2508.19002">HuBE: Cross-Embodiment Human-like Behavior Execution for Humanoid Robots</a></div>
-  <div class="paper-authors">Shipeng Lyu*, <span class="author-highlight">Fangyuan Wang*</span>, Weiwei Lin, Luhao Zhu, David Navarro-Alarcon, Guodong Guo</div>
-  <div class="paper-venue">arXiv preprint, 2025</div>
-</div>
-
-<div class="paper">
-  <div class="paper-title"><a href="https://doi.org/10.1109/TNNLS.2022.3164538">Understanding via Exploration: Discovery of Interpretable Features With Deep Reinforcement Learning</a></div>
-  <div class="paper-authors">Jiawen Wei, Zhifeng Qiu, <span class="author-highlight">Fangyuan Wang</span>, Wenwei Lin, Ning Gui, Weihua Gui</div>
-  <div class="paper-venue">IEEE Transactions on Neural Networks and Learning Systems, 2022</div>
-</div>
-
-<div class="paper">
-  <div class="paper-title"><a href="https://doi.org/10.1109/tdsc.2022.3183337">Credibility Assessment Based Byzantine-Resilient Decentralized Learning</a></div>
-  <div class="paper-authors">Jian Hou, <span class="author-highlight">Fangyuan Wang†</span>, Chunling Wei, Hongyun Huang, Yong Hu, Ning Gui</div>
-  <div class="paper-venue">IEEE Transactions on Dependable and Secure Computing, 2022</div>
-  <div class="paper-links">
-    <a href="https://github.com/nicehiro/GAA-Consensus" class="code-badge"><i class="fab fa-github"></i> Code</a>
-  </div>
-</div>
-
-<div class="paper">
-  <div class="paper-title"><a href="https://doi.org/10.1145/3534678.3539290">An Embedded Feature Selection Framework for Control</a></div>
-  <div class="paper-authors">Jiawen Wei*, <span class="author-highlight">Fangyuan Wang*</span>, Wanxin Zeng, Wenwei Lin, Ning Gui</div>
-  <div class="paper-venue">Proceedings of the 28th ACM SIGKDD Conference on Knowledge Discovery and Data Mining, 2022</div>
-  <div class="paper-links">
-    <a href="https://github.com/G-AILab/DAFSFluid" class="code-badge"><i class="fab fa-github"></i> Code</a>
-  </div>
-</div>
-
-<div class="paper">
-  <div class="paper-title"><a href="https://doi.org/10.1609/aaai.v35i9.16945">Reinforcement Learning Based Multi-Agent Resilient Control: From Deep Neural Networks to an Adaptive Law</a></div>
-  <div class="paper-authors">Jian Hou, <span class="author-highlight">Fangyuan Wang†</span>, Lili Wang, Zhiyong Chen</div>
-  <div class="paper-venue">Proceedings of the AAAI Conference on Artificial Intelligence, 2021</div>
-  <div class="paper-links">
-    <a href="https://github.com/nicehiro/byzantine-resilient" class="code-badge"><i class="fab fa-github"></i> Code</a>
-  </div>
-</div>
-
-
-
-<div class="footer">
-  Last updated: 2026-02-11 | Built with Org-mode
-</div>
-</div>
-</div>
-</div>
+    <script src="scripts.js"></script>
 </body>
 </html>
