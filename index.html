@@ -2,29 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script>
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)');
+        let themePreference;
+        try { themePreference = localStorage.getItem('site-theme'); } catch {}
+        if (!['light', 'dark'].includes(themePreference)) themePreference = null;
+        document.documentElement.dataset.theme = themePreference || (systemTheme.matches ? 'dark' : 'light');
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Fangyuan Wang - PhD Student in Robotics and Reinforcement Learning">
+    <meta name="description" content="Fangyuan Wang, Ph.D. - Robot Learning and Embodied AI">
     <meta name="keywords" content="Robotics, Reinforcement Learning, Subgoal Planning, VLA, Deep Learning">
     <meta name="author" content="Fangyuan Wang">
-    <meta property="og:title" content="Fangyuan Wang - PhD Student">
+    <meta property="og:title" content="Fangyuan Wang, Ph.D.">
     <meta property="og:description" content="Research in robotics, reinforcement learning, and embodied AI.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://nicehiro.github.io">
     <title>Fangyuan Wang</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;500;600&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css?v=20260907-dates">
 </head>
-<body id="top">
+<body id="top" class="academic-home">
     <header>
         <div class="header-content">
             <h1>Fangyuan Wang</h1>
-            <p>Ph.D. Student • The Hong Kong Polytechnic University</p>
+            <p>Ph.D. • Robot Learning &amp; Embodied AI</p>
             <div class="social-links-header">
                 <a href="mailto:fangyuan.wang@connect.polyu.hk"><i class="fas fa-envelope"></i>Email</a>
                 <a href="https://github.com/nicehiro"><i class="fab fa-github"></i>GitHub</a>
-                <a href="https://scholar.google.com/citations?user=YOUR_ID"><i class="fas fa-graduation-cap"></i>Scholar</a>
+                <a href="https://scholar.google.com/citations?user=9D9p7YAAAAAJ&amp;hl=en"><i class="fas fa-graduation-cap"></i>Scholar</a>
                 <a href="https://nicehiro.github.io/org-roam/"><i class="fas fa-sticky-note"></i>Notes</a>
+                <button id="theme-toggle" type="button">☾ Dark mode</button>
             </div>
         </div>
         <div class="header-image">
@@ -34,18 +42,17 @@
 
     <main>
         <section id="about">
-            <p>I am a Ph.D. student at The Hong Kong Polytechnic University, focusing on subgoal planning in robotics and deep reinforcement learning. I'm currently working in <a href="https://www.romi-lab.org/">romi-lab</a> under the supervision of <a href="https://www.polyu.edu.hk/me/david/">Prof. David Navarro-Alarcon</a>. I was also a visiting student at the National University of Singapore, supervised by <a href="https://www.marmotlab.org/bio.html">Prof. Guillaume Sartoretti</a>.</p>
-            <p>You can download my CV <a href="./Resume.pdf">here</a>.</p>
+            <p>I earned my Ph.D. in Mechanical Engineering from The Hong Kong Polytechnic University, where I worked in <a href="https://www.romi-lab.org/">romi-lab</a> under the supervision of <a href="https://www.polyu.edu.hk/me/david/">Prof. David Navarro-Alarcon</a>. I was also a visiting student at the National University of Singapore, supervised by <a href="https://www.marmotlab.org/bio.html">Prof. Guillaume Sartoretti</a>.</p>
+            <p>My research explores how robots can reason, plan, and learn to act in the physical world. I work on <strong>long-horizon planning</strong>, <strong>vision-language-action models</strong>, and <strong>world models</strong>, drawing on reinforcement learning and imitation learning.</p>
+            <p>You can download my CV <a href="./Resume.pdf?v=20260907">here</a>.</p>
         </section>
 
-        <section id="research">
-            <h2>Research</h2>
-            <p>My research focuses on <strong>robotics</strong> and <strong>deep reinforcement learning</strong>. My recent works explore:</p>
-            <ul>
-                <li>Embodied visual reasoning for VLA manipulation (<a href="https://arxiv.org/abs/2602.06575">arXiv'26</a>)</li>
-                <li>Instruction-augmented long-horizon planning for mobile manipulation (<a href="https://doi.org/10.1609/aaai.v39i14.33610">AAAI'25</a>)</li>
-                <li>Subgoal planning for long-horizon tasks with sparse rewards (<a href="https://doi.org/10.1109/TASE.2025.3574162">TASE'25</a>)</li>
-                <li>Cross-embodiment humanoid robot control (<a href="https://arxiv.org/abs/2508.19002">RLJ'25</a>)</li>
+        <section id="news">
+            <h2>News</h2>
+            <ul class="recent-news">
+                <li><time datetime="2026-09-04">Sep 4, 2026</time><span><a href="https://arxiv.org/abs/2602.06575">ThinkProprio</a> accepted at <strong>CoRL 2026</strong>.</span></li>
+                <li><time datetime="2026-05-15">May 15, 2026</time><span>Recognized as an <strong>ICML Golden Reviewer</strong>.</span></li>
+                <li><time datetime="2025-10-29">Oct 29, 2025</time><span>Our team <strong>Omni-mani</strong> won the <strong>Domestic Robotics Track championship</strong> at the 2025 International Dexterity Challenge in Zhuhai.</span></li>
             </ul>
         </section>
 
@@ -63,14 +70,19 @@
     </main>
 
     <footer>
-        <p>Last updated: 2026-04. Design and source code from
-           <a href="https://cs.stanford.edu/~yuhuiz/">Yuhui Zhang's website</a>.</p>
+        <p>Last updated: 2026-09.</p>
     </footer>
 
-    <div id="imageModal" class="modal">
-        <span class="modal-close" onclick="closeModal()">&times;</span>
-        <img class="modal-content" id="modalImage">
-    </div>
-    <script src="scripts.js"></script>
+    <dialog id="imageModal" class="modal" aria-labelledby="figure-caption">
+        <div class="figure-viewer">
+            <div class="figure-toolbar">
+                <a id="figure-original" target="_blank" rel="noopener">Open original ↗</a>
+                <button type="button" class="modal-close" onclick="closeModal()" aria-label="Close figure" autofocus>&times;</button>
+            </div>
+            <img class="modal-content" id="modalImage" alt="">
+            <p id="figure-caption"></p>
+        </div>
+    </dialog>
+    <script src="scripts.js?v=20260907-theme"></script>
 </body>
 </html>
